@@ -37,10 +37,10 @@ module.exports = {
     ]
   },
   watch: true,
-  devtool: 'inline-source-map',
+  devtool: 'cheap-eval-source-map',
   devServer: {
     colors: true,
-    contentBase: __dirname,
+    // contentBase: __dirname,
     noInfo: false,
     hot: true,
     inline: true,
@@ -48,12 +48,18 @@ module.exports = {
     host: 'localhost'
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    new webpack.HotModuleReplacementPlugin()
+    // new webpack.DefinePlugin({
+    //   'process.env': {
+    //     'NODE_ENV': JSON.stringify('production')
+    //   }
+    // }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false },
+      output: { comments: false },
+      sourceMap: false
+    })
   ],
   stats: {
     colors: true,

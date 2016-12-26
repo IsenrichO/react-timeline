@@ -15,15 +15,18 @@
   },
   "keywords": [
     "React-Timeline",
-    "React",
     "Visualization",
-    "Oliver",
-    "Isenrich"
+    "Oliver Isenrich"
   ],
-  "author": "Oliver Isenrich",
+  "author": {
+    "name": "Oliver Isenrich",
+    "email": "isenrich@yahoo.com",
+    "url": "http://isenrich.io"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/IsenrichO/react-timeline/issues"
+    "url": "https://github.com/IsenrichO/react-timeline/issues",
+    "email": "isenrich@yahoo.com"
   },
   "homepage": "https://github.com/IsenrichO/react-timeline#readme",
   "devDependencies": {
