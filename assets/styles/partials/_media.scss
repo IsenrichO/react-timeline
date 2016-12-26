@@ -1,0 +1,25 @@
+
+/* Sass Media Queries
+ * ----------------------------- */
+
+@media only screen
+and (max-device-width: 700px) {
+  .tl {
+    &:before { left: 7.5vw; }
+    > li {
+      width: 75vw;
+      // width: calc(92vw - 7.5vw);
+      float: left !important;
+      left: 11vw;
+    }
+    .tl-marker { left: calc(-7.5vw + 5px); }
+    .tl-event {
+      // float: right;
+      &-panel:after {
+        left: -1.5rem;
+        border-left: none;
+        border-right: 1.5rem solid gray;
+      }
+    }
+  }
+}
