@@ -1,4 +1,13 @@
 
+/* Sass $variable Declarations:
+ * ------------------------------------ */
+$theme-primary: #000;
+$theme-red: #B15B5B;
+$theme-content-light: #FFF;
+$theme-content-lt-gray: #BBB;
+$theme-primary-focus: #AB5252;
+
+
 /* Sass @mixin Declarations:
  * ------------------------------------ */
 @mixin flex($flex: flex, $dir: row, $justify: space-around, $align: center) {
@@ -22,7 +31,12 @@
        -o-transition: unquote($shorthand);
           transition: unquote($shorthand);
 };
-@mixin cbbBoxShadow($shadow) {
+@mixin cbBorderRadii($radius: 0) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+          border-radius: $radius;
+};
+@mixin cbbBoxShadow($shadow: 0 0 10px 0.1px rgba(0, 0, 0, 0.175)) {
   -webkit-box-shadow: $shadow;
      -moz-box-shadow: $shadow;
           box-shadow: $shadow;
@@ -66,6 +80,24 @@
   border-right: calc(1.5rem + 2px) solid #CCC;
   border-left: 0 solid #CCC;
 };
+%primaryBtn {
+  // @include fade(0.25s, 0s, ease-in-out);
+  @include cbBorderRadii(4px);
+  border: none;
+  font: bolder 4rem/1 Arial, sans-serif;
+  background-color: $theme-red;
+  color: $theme-content-light;
+  text-align: center;
+  cursor: pointer;
+};
+%br-circle {
+  @include cbBorderRadii(50%);
+};
+%txt-of {
+  white-space: nowrap;
+  overflow: hidden;
+  word-break: break-all;
+};
 %hidden {
   opacity: 0;
   visibility: hidden;
@@ -74,10 +106,22 @@
   opacity: 1;
   visibility: visible;
 };
+%no-select {
+  -ms-pointer-events: visiblePainted;
+      pointer-events: visiblePainted;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+         -o-user-select: none;
+            user-select: none;
+};
 
 
 /* Sass @import Declarations:
  * ------------------------------------ */
 @import './partials/global';  // Include base-level HTML element styles
 @import './partials/main';    // Include primary style declarations
+@import './partials/event-modal'; // Include event-editing modal styles
 @import './partials/media';   // Include CSS media queries
