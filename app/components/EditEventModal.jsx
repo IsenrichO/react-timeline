@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
 import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.json';
@@ -27,18 +28,23 @@ export default class EditEventModal extends React.Component {
     for (var i = 0, currImg; currImg = Images[i]; i++) {
       // Secondary check to ensure only allowable MIME types pass through for image processing:
       if (!/image(\/.*)?/.test(currImg.type)) { continue; }
-      this.readInNewImage(currImg, OutputBin);
+      this.readInNewImage(currImg, i, OutputBin);
     }
   }
 
-  readInNewImage(file, output) {
+  readInNewImage(file, index, output) {
     (function(file) {
       let Reader = new FileReader();
       Reader.onload = (e) => {
-        // let newImage = document.createElement('IMG');
-        // newImage.setAttribute('src', Reader.result);
-        let newImage = (<ImageThumbnail src={ Reader.result } title={ escape(file.name) } />);
-        output.insertBefore(newImage, null);
+        let newThumb = document.createElement('DIV');
+        newThumb.className = 'thumb';
+        newThumb.innerHTML = (
+          `<img \
+            src='${e.target.result}'\
+            alt='ThumbnailImage_${index}:\t${escape(file.name)}'\
+            title='${file.name.replace(/['"]/gm, '')}' />`
+        );
+        output.insertBefore(newThumb, null);
       };
 
       // Read in the image file as a data URL:
@@ -114,7 +120,53 @@ export default class EditEventModal extends React.Component {
           onClick={ this.props.toggleModal }>
           &times;
         </i>
-        { this.renderForm() }
+        <form id="edit-event-form">
+          <fieldset>
+            <label htmlFor="title-inpt">Title</label>
+            <input
+              id="title-inpt"
+              type="text"
+              defaultValue={ this.props.modalData ? this.props.modalData.name : 'Working Title' }
+              required />
+          </fieldset>
+
+          <fieldset>
+            <label htmlFor="date-inpt">Date</label>
+            <input
+              id="date-inpt"
+              type="date"
+              defaultValue={ this.props.modalData ? this.props.modalData.date : this.constructCurrentFormattedDate() } />
+
+            <label htmlFor="location-inpt">Location</label>
+            <input
+              id="location-inpt"
+              type="text"
+              defaultValue={ this.props.modalData ? this.props.modalData.location : 'Oklahoma City, OK' } />
+          </fieldset>
+
+          <fieldset>
+            <label htmlFor="description-inpt">Description</label>
+            <textarea
+              id="description-inpt"
+              placeholder="Event description">
+              { this.props.modalData ? this.props.modalData.description : 'Event description' }
+            </textarea>
+          </fieldset>
+
+          <fieldset id="editing-modal-pics">
+            <div className="dropzone"></div>
+            <input
+              id="file-upload-btn"
+              type="file"
+              accept="image/*"
+              onChange={ this.loadSelectedImages }
+              multiple />
+            <output
+              htmlFor="file-upload-btn"
+              ref="fileContainer">
+            </output>
+          </fieldset>
+        </form>
       </Modal>
     );
   }
