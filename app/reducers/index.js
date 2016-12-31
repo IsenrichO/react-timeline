@@ -1,11 +1,13 @@
 'use strict';
 import { combineReducers } from 'redux';
 
-import eventEditingModal from './editEventModal';
+import eventEditingModalData from './logEventModalData';
+import eventEditingModalState from './editEventModal';
 
 
 const rootReducer = combineReducers({
-  eventEditingModal
+  eventEditingModalData,
+  eventEditingModalState
 });
 
 export default rootReducer;
