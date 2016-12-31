@@ -4,18 +4,20 @@ const webpack = require('webpack'),
 
 module.exports = {
   entry: [
-    path.join(__dirname, 'app/App')
+    'webpack/hot/dev-server',
+    path.join(__dirname, './app/components/App')
   ],
   output: {
     path: path.join(__dirname, 'assets'),
-    filename: './dist/bundle.js'
+    filename: './dist/bundle.js',
+    publicPath: '/'
   },
   module: {
     loaders: [
       {
         test: /\.jsx?$/i,
         exclude: /node_modules/,
-        loaders: ['babel']
+        loaders: ['react-hot', 'babel']
       }, {
         test: /\.scss$/,
         loaders: [
@@ -37,10 +39,10 @@ module.exports = {
     ]
   },
   watch: true,
-  devtool: 'cheap-eval-source-map',
+  devtool: 'cheap-module-eval-source-map',
   devServer: {
     colors: true,
-    // contentBase: __dirname,
+    contentBase: __dirname,
     noInfo: false,
     hot: true,
     inline: true,
@@ -48,11 +50,11 @@ module.exports = {
     host: 'localhost'
   },
   plugins: [
-    // new webpack.DefinePlugin({
-    //   'process.env': {
-    //     'NODE_ENV': JSON.stringify('production')
-    //   }
-    // }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
@@ -71,3 +73,5 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   }
 };
+
+// module.exports = require('webpack.config.js');

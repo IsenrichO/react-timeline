@@ -5,33 +5,37 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "start:dev": "webpack-dev-server --inline --colors",
+    "dev:start": "npm run watch & webpack-dev-server",
+    "lint": "eslint app",
+    "start": "nodemon",
+    "stats": "webpack --json > stats.json",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/IsenrichO/react-timeline.git"
   },
   "keywords": [
     "React-Timeline",
     "Visualization",
     "Oliver Isenrich"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsenrichO/react-timeline.git"
+  },
   "author": {
     "name": "Oliver Isenrich",
     "email": "isenrich@yahoo.com",
     "url": "http://isenrich.io"
   },
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/IsenrichO/react-timeline/issues",
     "email": "isenrich@yahoo.com"
   },
   "homepage": "https://github.com/IsenrichO/react-timeline#readme",
+  "license": "MIT",
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
     "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
@@ -42,14 +46,22 @@
     "file-loader": "^0.9.0",
     "json-loader": "^0.5.4",
     "node-sass": "^4.1.1",
-    "react": "^15.4.1",
+    "nodemon": "^1.11.0",
     "react-addons-test-utils": "^15.4.1",
-    "react-dom": "^15.4.1",
     "react-hot-loader": "^1.3.1",
+    "react-modal": "^1.6.4",
+    "redux-promise": "^0.5.3",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-redux": "^5.0.1",
+    "redux": "^3.6.0"
   }
 }
