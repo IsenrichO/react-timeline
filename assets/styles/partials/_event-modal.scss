@@ -1,0 +1,22 @@
+
+/* Sass Styles for Event-Editing Modal:
+ * ------------------------------------ */
+.close-btn {
+  @extend %primaryBtn;
+  @extend %br-circle;
+  @extend %no-select;
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  right: -2rem;
+  top: -2rem;
+  &:hover { background-color: $theme-primary-focus; }
+}
+.dropzone {
+  @include cbBorderRadii(5px);
+  border: 2px dashed $theme-content-lt-gray;
+  padding: 25px;
+  text-align: center;
+  font: bold 20pt 'Vollkorn';
+  color: $theme-content-lt-gray;
+}
