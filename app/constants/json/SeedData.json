@@ -23,5 +23,11 @@
     "description": "Started university majoring in polymer chemistry and with ambitions of becoming a research scientist.",
     "location": "Chapel Hill, NC",
     "date": "17 August 2010"
+  }, {
+    "name": "Graduated From Hack Reactor",
+    "type": "Education",
+    "description": "Date of matriculation from the world's premier software engineering immersive — Hack Reactor!",
+    "location": "San Francisco, CA",
+    "date": "26 August 2016"
   }
 ]
