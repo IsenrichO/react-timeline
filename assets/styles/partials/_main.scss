@@ -44,7 +44,7 @@
     background-color: #EEE;
   }
   .tl-event-panel {
-    @include cbbBoxShadow(0 1px 6px rgba(0, 0, 0, 0.175));
+    @include cbBoxShadow(0 1px 6px rgba(0, 0, 0, 0.175));
     position: relative;
     width: 40vw;
     left: 2.5vw;
@@ -66,12 +66,12 @@
     }
     &:hover .tl-toolbar { @extend %visible; }
     .tl-toolbar {
-      @include cbbTransition(0.25s 0.25s cubic-bezier(0, 0.25, 0.7, 0.4));
+      @include cbTransition(0.25s 0.25s cubic-bezier(0, 0.25, 0.7, 0.4));
       @extend %hidden;
       position: absolute;
       right: calc(100% + 1rem);
       > button {
-        @include cbbBoxShadow(0 0 10px 1px rgba(0, 0, 0, 0.175));
+        @include cbBoxShadow(0 0 10px 1px rgba(0, 0, 0, 0.175));
         background: #FFF;
         width: 2.5rem;
         height: 2.5rem;
