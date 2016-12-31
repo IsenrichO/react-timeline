@@ -1,55 +1,21 @@
 'use strict';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
 import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.json';
-import ImageThumbnail from './ImageThumbnail';
+import FileUploadAPI from './FileUploadAPI';
 
 
 export default class EditEventModal extends React.Component {
   constructor(props) {
     super(props);
     this.constructCurrentFormattedDate = this.constructCurrentFormattedDate.bind(this);
-    this.loadSelectedImages = this.loadSelectedImages.bind(this);
-    this.readInNewImage = this.readInNewImage.bind(this);
     this.renderForm = this.renderForm.bind(this);
   }
 
   constructCurrentFormattedDate() {
     const DATE = new Date();
     return `${DATE.getUTCMonth() + 1}/${DATE.getUTCDate()}/${DATE.getUTCFullYear()}`;
-  }
-
-  loadSelectedImages(evt) {
-    const [Images, OutputBin] = [evt.target.files, this.refs.fileContainer];
-
-    // Loop through selected images and render as thumbnails:
-    for (var i = 0, currImg; currImg = Images[i]; i++) {
-      // Secondary check to ensure only allowable MIME types pass through for image processing:
-      if (!/image(\/.*)?/.test(currImg.type)) { continue; }
-      this.readInNewImage(currImg, i, OutputBin);
-    }
-  }
-
-  readInNewImage(file, index, output) {
-    (function(file) {
-      let Reader = new FileReader();
-      Reader.onload = (e) => {
-        let newThumb = document.createElement('DIV');
-        newThumb.className = 'thumb';
-        newThumb.innerHTML = (
-          `<img \
-            src='${e.target.result}'\
-            alt='ThumbnailImage_${index}:\t${escape(file.name)}'\
-            title='${file.name.replace(/['"]/gm, '')}' />`
-        );
-        output.insertBefore(newThumb, null);
-      };
-
-      // Read in the image file as a data URL:
-      Reader.readAsDataURL(file);
-    })(file);
   }
 
   renderForm() {
@@ -88,10 +54,17 @@ export default class EditEventModal extends React.Component {
         </fieldset>
 
         <fieldset id="editing-modal-pics">
-          <div className="dropzone"></div>
+          <div
+            className="dropzone"
+            onDrop={ this.handleFileSelect }
+            onDragEnter={ this.handleDragEnter }
+            onDragOver={ this.handleDragOver }>
+            <p>Drop Your Images Here!</p>
+          </div>
           <input
             id="file-upload-btn"
             type="file"
+            name="files[]"
             accept="image/*"
             onChange={ this.loadSelectedImages }
             multiple />
@@ -152,20 +125,7 @@ export default class EditEventModal extends React.Component {
               { this.props.modalData ? this.props.modalData.description : 'Event description' }
             </textarea>
           </fieldset>
-
-          <fieldset id="editing-modal-pics">
-            <div className="dropzone"></div>
-            <input
-              id="file-upload-btn"
-              type="file"
-              accept="image/*"
-              onChange={ this.loadSelectedImages }
-              multiple />
-            <output
-              htmlFor="file-upload-btn"
-              ref="fileContainer">
-            </output>
-          </fieldset>
+          <FileUploadAPI />
         </form>
       </Modal>
     );
