@@ -5,7 +5,7 @@ const webpack = require('webpack'),
 module.exports = {
   entry: [
     'webpack/hot/dev-server',
-    path.join(__dirname, './app/components/App')
+    path.join(__dirname, './app/App')
   ],
   output: {
     path: path.join(__dirname, 'assets'),
@@ -17,7 +17,7 @@ module.exports = {
       {
         test: /\.jsx?$/i,
         exclude: /node_modules/,
-        loaders: ['react-hot', 'babel']
+        loaders: ['babel']
       }, {
         test: /\.scss$/,
         loaders: [
