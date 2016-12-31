@@ -3,9 +3,13 @@
  * ------------------------------------ */
 $theme-primary: #000;
 $theme-red: #B15B5B;
+$theme-black: #625F5F;
 $theme-content-light: #FFF;
 $theme-content-lt-gray: #BBB;
 $theme-primary-focus: #AB5252;
+$theme-lt-white: #F1E5E6;
+$bckg-black-op: rgba(94, 94, 94, 0.65);
+$bckg-gray-op: rgba(212, 212, 212, 0.47);
 
 
 /* Sass @mixin Declarations:
@@ -16,7 +20,25 @@ $theme-primary-focus: #AB5252;
   justify-content: $justify;
   align-items: $align;
 };
-@mixin cbbTransition($transition, $properties: all) {
+@mixin center($axes: all) {
+  @if $axes == all {
+    left: 50%;
+    top: 50%;
+  }
+  @else if $axes == horizontal { left: 50%; }
+  @else if $axes == vertical { top: 50%; }
+
+  @include cbTransform(translate(-50%, -50%));
+  position: absolute;
+};
+@mixin cbTransform($transform) {
+  -webkit-transform: $transform;
+     -moz-transform: $transform;
+      -ms-transform: $transform;
+       -o-transform: $transform;
+          transform: $transform;
+};
+@mixin cbTransition($transition, $properties: all) {
   $shorthand: '';
   @each $property in $properties {
     @if index($properties, $property) < length($properties) {
@@ -36,7 +58,7 @@ $theme-primary-focus: #AB5252;
      -moz-border-radius: $radius;
           border-radius: $radius;
 };
-@mixin cbbBoxShadow($shadow: 0 0 10px 0.1px rgba(0, 0, 0, 0.175)) {
+@mixin cbBoxShadow($shadow: 0 0 10px 0.1px rgba(0, 0, 0, 0.175)) {
   -webkit-box-shadow: $shadow;
      -moz-box-shadow: $shadow;
           box-shadow: $shadow;
@@ -122,6 +144,8 @@ $theme-primary-focus: #AB5252;
 /* Sass @import Declarations:
  * ------------------------------------ */
 @import './partials/global';  // Include base-level HTML element styles
+@import './partials/atomic';  // Include atomic style declarations
 @import './partials/main';    // Include primary style declarations
+@import './partials/svg';     // Include inline-rendered SVG element styles
 @import './partials/event-modal'; // Include event-editing modal styles
 @import './partials/media';   // Include CSS media queries

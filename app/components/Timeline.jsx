@@ -17,13 +17,9 @@ class Timeline extends Component {
     this.renderOrderedEvents = this.renderOrderedEvents.bind(this);
   }
   
-  toggleModal() {
-    this.props.toggleEventModal();
-  }
+  toggleModal() { this.props.toggleEventModal(); }
 
-  logModalData(data) {
-    this.props.logEventModalData(data);
-  }
+  logModalData(data) { this.props.logEventModalData(data); }
 
   orderTimelineEvents(events) {
     return events
@@ -69,21 +65,3 @@ let mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timeline);
-
-
-// const Timeline = ({ data }) => ( );
-// export default Timeline;
-
-// const OrderedEvents = (events) => events
-//   .sort((evt1, evt2) => new Date(evt2.date).getTime() - new Date(evt1.date).getTime());
-
-// const mapEvents = (events) => events.map((evt, index) =>
-//   <TimelineEvent
-//     key={ `Evt${evt.name}${index}` }
-//     evt={ evt }
-//     evtName={ evt.name }
-//     evtLocation={ evt.location }
-//     evtAlign={ new Array('', '-invert')[index % 2] }
-//     evtDescription={ evt.description }
-//     evtNote={ evt.type } />
-// );
