@@ -11,10 +11,9 @@ const DefaultState = {
 };
 
 export default function eventEditingModalData(state = DefaultState, action) {
-  console.log('STATE:', state);
   switch (action.type) {
     case LOG_EVENT_MODAL_DATA:
-      console.log(`Action ${action.type} executed with payload `, action.payload);
+      // console.log(`Action ${action.type} executed with payload `, action.payload);
       return Object.assign({}, action.payload);
     default:
       return state;
