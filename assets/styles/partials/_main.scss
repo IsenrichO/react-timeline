@@ -1,0 +1,98 @@
+
+/* Main Sass Style Declarations
+ * ------------------------------------ */
+ #tl-container {
+   min-height: 75vh;
+ }
+
+.tl {
+  position: relative;
+  display: table;
+  width: 92vw;
+  height: 100%;
+  list-style: none;
+  margin: 2rem 4vw;
+  padding: 0;
+  > li {
+    position: relative;
+    width: 42.5vw;
+    margin-bottom: 2.5rem;
+    float: left;
+    clear: both;
+    &:first-child { margin-top: 3.571429rem; }    // Add space above for beginning of timeline
+    &:last-child { margin-bottom: 3.571429rem; }  // Add space below for end of timeline
+    &.tl-event-invert {
+      float: right;
+      .tl-marker { left: calc(-7.5vw + 5px); }
+      .tl-toolbar { left: calc(100% + 1rem); }
+      .tl-event-panel {
+        left: 0;
+        &:before { @extend %tt-left-shadow; }
+        &:after { @extend %tt-left; }
+      }
+    }
+  }
+  &:before {
+    position: absolute;
+    content: '';
+    width: 5px;
+    height: 100%;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    margin-left: -2.5px;
+    background-color: #EEE;
+  }
+  .tl-event-panel {
+    @include cbbBoxShadow(0 1px 6px rgba(0, 0, 0, 0.175));
+    position: relative;
+    width: 40vw;
+    left: 2.5vw;
+    border: 1px solid #CCC;
+    &:before { @extend %tt-right-shadow; }
+    &:after { @extend %tt-right; }
+    .panel {
+      &-header,
+      &-body,
+      &-footer {
+        padding: 1.25rem;
+        border: none;
+      }
+      &-footer { background-color: #F4F4F4; }
+    }
+    .tl-location {
+      margin: 1rem 0 0;
+      em { margin-left: 1rem; }
+    }
+    &:hover .tl-toolbar { @extend %visible; }
+    .tl-toolbar {
+      @include cbbTransition(0.25s 0.25s cubic-bezier(0, 0.25, 0.7, 0.4));
+      @extend %hidden;
+      position: absolute;
+      right: calc(100% + 1rem);
+      > button {
+        @include cbbBoxShadow(0 0 10px 1px rgba(0, 0, 0, 0.175));
+        background: #FFF;
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-bottom: 1rem;
+        border: none;
+        border-radius: 50%;
+        text-align: center;
+        font: 700 1.5rem/2.5rem 'Helvetica Neue', sans-serif;
+      }
+    }
+  }
+  .tl-marker {
+    position: absolute;
+    width: calc(7.5vw - 2.5px);
+    height: 2rem;
+    right: calc(5px - 7.5vw);
+    text-align: center;
+    > i {
+      top: -0.75rem;
+      font-size: 1.5rem;
+    }
+  }
+}
+ 
