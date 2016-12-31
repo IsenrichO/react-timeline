@@ -4,30 +4,30 @@
     "type": "Life",
     "description": "Moved to SF from Raleigh, NC to begin the Hack Reactor software engineering immersive.",
     "location": "San Francisco, CA",
-    "date": "26 May 2016"
+    "date": "2016-05-26"
   }, {
     "name": "Began Work At Robert Half",
     "type": "Professional",
     "description": "Accepted offer to work at Robert Half Technology, beginning January 2017.",
     "location": "San Ramon, CA",
-    "date": "03 January 2017"
+    "date": "2017-01-03"
   }, {
     "name": "Date of Birth",
     "type": "Life",
     "description": "The day I came into this world. Alas... to be alive!",
     "location": "Jonesboro, AK",
-    "date": "13 October 1991"
+    "date": "1991-10-13"
   }, {
     "name": "Began School At The University of North Carolina at Chapel Hill",
     "type": "Education",
     "description": "Started university majoring in polymer chemistry and with ambitions of becoming a research scientist.",
     "location": "Chapel Hill, NC",
-    "date": "17 August 2010"
+    "date": "2010-08-17"
   }, {
     "name": "Graduated From Hack Reactor",
     "type": "Education",
     "description": "Date of matriculation from the world's premier software engineering immersive — Hack Reactor!",
     "location": "San Francisco, CA",
-    "date": "26 August 2016"
+    "date": "2016-08-26"
   }
 ]
