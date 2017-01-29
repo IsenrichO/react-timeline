@@ -1,0 +1,54 @@
+
+/* Sass Global Style Declarations
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+*,
+*:before,
+*:after {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  font: normal 14px/1 'Helvetica Neue', sans-serif;
+  -webkit-text-size-adjust: 100%;
+     -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  font: inherit;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+textarea {
+  display: block;
+  width: inherit;
+  -moz-resize: vertical;
+       resize: vertical;
+}
+
+button:active,
+button:focus,
+button:visited {
+  outline: none;
+}
+
+strong,
+em { color: $theme-black; }
+
+img {
+  vertical-align: bottom !important;
+}

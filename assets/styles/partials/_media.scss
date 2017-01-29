@@ -1,0 +1,45 @@
+
+/* Sass Media Queries
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+@media only screen
+and (max-device-width: 700px) {
+  .tl {
+    &:before { left: 7.5vw; }
+    > li {
+      width: 75vw;
+      float: left !important;
+      left: 11vw;
+    }
+    .tl-marker { left: calc(-7.5vw + 2px); }
+    .tl-event-panel {
+      left: 4.0vw !important;
+      width: inherit;
+      // &-panel:after {
+      //   left: -1.5rem;
+      //   border-left: none;
+      //   border-right: 1.5rem solid gray;
+      // }
+      &:before {
+        // @extend %tt-left-shadow;
+        position: absolute;
+        left: calc(-1.5rem - 2px);
+        top: -1px;
+        content: '';
+        border-bottom: calc(1.5rem + 2px) solid transparent;
+        border-right: calc(1.5rem + 2px) solid #CCC;
+        border-left: 0 solid #CCC;
+      }
+      &:after {
+        // @extend %tt-left;
+        position: absolute;
+        left: -1.5rem;
+        top: 0;
+        content: '';
+        border-bottom: 1.5rem solid transparent;
+        border-left: 0 solid #FFF;
+        border-right: 1.5rem solid #FFF;
+      }
+    }
+  }
+}
