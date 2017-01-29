@@ -156,41 +156,9 @@ const AGGREGATE_CONFIG = isProdEnv
 
 export default AGGREGATE_CONFIG;
 
-//   watch: true,
-//   devtool: 'cheap-module-eval-source-map',
-//   devServer: {
-//     colors: true,
-//     contentBase: __dirname,
-//     noInfo: false,
-//     hot: true,
-//     inline: true,
-//     port: 3000,
-//     historyApiFallback: true,
-//     host: 'localhost'
-//   },
-//   plugins: [
-//     new Webpack.DefinePlugin({
-//       'process.env': {
-//         'NODE_ENV': JSON.stringify('production')
-//       }
-//     }),
-//     new Webpack.HotModuleReplacementPlugin(),
 //     new Webpack.optimize.DedupePlugin(),
 //     new Webpack.optimize.UglifyJsPlugin({
 //       compress: { warnings: false },
 //       output: { comments: false },
 //       sourceMap: false
 //     })
-//   ],
-//   stats: {
-//     colors: true,
-//     modules: true,
-//     reasons: true,
-//     errorDetails: true
-//   },
-//   resolve: {
-//     extensions: ['', '.js', '.jsx']
-//   }
-// };
-
-// module.exports = require('webpack.config.js');
