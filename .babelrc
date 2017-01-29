@@ -1,4 +1,27 @@
+
 {
-  "presets": ["es2015", "stage-0", "react"],
-  "plugins": ["react-hot-loader/babel"]
+  "presets": [
+    ["env", {
+      "debug": false,
+      "targets": {
+        "chrome": 52,
+        "edge": 14,
+        // "safari": ">10%",
+        "browsers": [
+          "last 3 versions",
+          "Safari >= 7",
+          "not IE <= 6"
+        ]
+      }
+    }],
+    ["es2015", {
+      "loose": true,
+      "modules": false
+    }],
+    "react"
+  ],
+  "plugins": [
+    "react-hot-loader/babel",
+    "transform-object-rest-spread"
+  ]
 }
