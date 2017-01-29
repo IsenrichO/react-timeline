@@ -1,7 +1,20 @@
 
-/* Inline-Rendered SVG Sass Style Declarations:
- * ------------------------------------ */
+/* Inline-Rendered SVG Sass Style Declarations
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 .file-upload-glyph {
   height: 4rem;
   fill: $theme-red;
+  overflow: visible !important;
+  cursor: pointer;
+  * {
+    transition: all 0.45s ease-in-out;
+    transform-origin: center;
+  }
+  &:hover {
+    g {
+      transform: scale(1.25);
+      transform-origin: bottom center;
+      .upload-arrow { animation: bounceArrow .45s .3s infinite alternate forwards; }
+    }
+  }
 }

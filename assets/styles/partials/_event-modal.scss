@@ -1,6 +1,6 @@
 
-/* Sass Styles for Event-Editing Modal:
- * ------------------------------------ */
+/* Sass Styles for Event-Editing Modal
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 #edit-event-form {
   fieldset {
     width: 90%;
@@ -16,7 +16,7 @@
     .dz-box {
       @include cbBorderRadii(8px);
       margin: 0.65rem;
-      padding: 1.785714rem;
+      padding: 2.5rem 1.785714rem 1.785714rem;
       background-color: $bckg-gray-op;
       border-radius: 8px;
       > div { margin-top: 1.5rem; }

@@ -143,9 +143,10 @@ $bckg-gray-op: rgba(212, 212, 212, 0.47);
 
 /* Sass @import Declarations:
  * ------------------------------------ */
-@import './partials/global';  // Include base-level HTML element styles
-@import './partials/atomic';  // Include atomic style declarations
-@import './partials/main';    // Include primary style declarations
-@import './partials/svg';     // Include inline-rendered SVG element styles
+@import './partials/global';      // Include base-level HTML element styles
+@import './partials/atomic';      // Include atomic style declarations
+@import './partials/main';        // Include primary style declarations
+@import './partials/svg';         // Include inline-rendered SVG element styles
 @import './partials/event-modal'; // Include event-editing modal styles
-@import './partials/media';   // Include CSS media queries
+@import './partials/media';       // Include CSS media queries
+@import './partials/keyframes';   // Include CSS animation @keyframes

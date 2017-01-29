@@ -1,6 +1,6 @@
 
 /* Sass Media Queries
- * ----------------------------- */
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 @media only screen
 and (max-device-width: 700px) {
@@ -11,9 +11,10 @@ and (max-device-width: 700px) {
       float: left !important;
       left: 11vw;
     }
-    .tl-marker { left: calc(-7.5vw + 5px); }
+    .tl-marker { left: calc(-7.5vw + 2px); }
     .tl-event-panel {
-      left: 0;
+      left: 4.0vw !important;
+      width: inherit;
       // &-panel:after {
       //   left: -1.5rem;
       //   border-left: none;

@@ -1,6 +1,6 @@
 
 /* Main Sass Style Declarations
- * ------------------------------------ */
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
  #tl-container {
    min-height: 75vh;
  }
@@ -63,6 +63,15 @@
     .tl-location {
       margin: 1rem 0 0;
       em { margin-left: 1rem; }
+      .map-toggle { float: right; }
+      .static-map-wrapper {
+        height: 0;
+        overflow: hidden;
+        &.active {
+          height: auto;
+        }
+        img { width: 100%; }
+      }
     }
     &:hover .tl-toolbar { @extend %visible; }
     .tl-toolbar {
