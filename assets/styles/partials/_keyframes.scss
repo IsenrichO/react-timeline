@@ -1,0 +1,7 @@
+
+/* CSS @keyframe Animations
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@keyframes bounceArrow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-0.357143rem); }
+}
