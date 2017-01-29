@@ -1,6 +1,6 @@
 
-/* Sass Global Style Declarations:
- * ------------------------------------ */
+/* Sass Global Style Declarations
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 *,
 *:before,
 *:after {
@@ -48,3 +48,7 @@ button:visited {
 
 strong,
 em { color: $theme-black; }
+
+img {
+  vertical-align: bottom !important;
+}

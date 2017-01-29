@@ -8,7 +8,6 @@
   }
   .dz {
     @include cbBorderRadii(8px);
-    margin: 0.714286rem;
     border: 0.357143rem dashed $theme-content-lt-gray;
     text-align: center;
     font: bold 20pt 'Vollkorn';
