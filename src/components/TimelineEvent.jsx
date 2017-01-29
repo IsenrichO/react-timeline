@@ -6,11 +6,14 @@ import StaticGMap from './StaticMapEventLocation';
 
 
 const handleToggle = function(evt) {
-  const $toggleArrow = $(evt.target);
+  const $target = $(evt.currentTarget),
+        $mapWrapper = $target.find('.static-map-wrapper'),
+        $toggleArrow = $target.find('.map-toggle');
+
   $toggleArrow.hasClass('glyphicon-menu-right')
     ? $toggleArrow.removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down')
     : $toggleArrow.removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
-  $(evt.target).next().toggleClass('active');
+  $mapWrapper.toggleClass('active');
 };
 
 const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, evtNote, logModalData, toggleModal }) => (
@@ -28,12 +31,12 @@ const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, ev
       </div>
       <div className="panel-body">
         { evtDescription }
-        <div className="tl-location">
+        <div
+          className="tl-location"
+          onClick={ handleToggle }>
           <i className="glyphicon glyphicon-map-marker" />
           <em key={ `Location_${evtLocation}` }>{ evtLocation }</em>
-          <i
-            className="map-toggle glyphicon glyphicon-menu-right"
-            onClick={ handleToggle } />
+          <i className="map-toggle glyphicon glyphicon-menu-right" />
           <StaticGMap
             evtLocation={ evtLocation } />
         </div>

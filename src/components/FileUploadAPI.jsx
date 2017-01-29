@@ -113,7 +113,9 @@ export default class FileUploadAPI extends Component {
               multiple />
             <div className="d-full">
               {[
-                <label htmlFor="file-upload-btn">
+                <label
+                  key={ `FileUploadSVG_Glyph` }
+                  htmlFor="file-upload-btn">
                   <strong>Choose files</strong>
                 </label>,
                 ' or drop them here'

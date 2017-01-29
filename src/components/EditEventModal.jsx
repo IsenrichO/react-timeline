@@ -48,9 +48,8 @@ export default class EditEventModal extends React.Component {
           <label htmlFor="description-inpt">Description</label>
           <textarea
             id="description-inpt"
-            placeholder="Event description">
-            { this.props.modalData ? this.props.modalData.description : 'Event description' }
-          </textarea>
+            placeholder="Event description"
+            defaultValue={ this.props.modalData ? this.props.modalData.description : 'Event description' } />
         </fieldset>
 
         <fieldset id="editing-modal-pics">
@@ -122,9 +121,8 @@ export default class EditEventModal extends React.Component {
             <label htmlFor="description-inpt">Description</label>
             <textarea
               id="description-inpt"
-              placeholder="Event description">
-              { this.props.modalData ? this.props.modalData.description : 'Event description' }
-            </textarea>
+              placeholder="Event description"
+              defaultValue={ this.props.modalData ? this.props.modalData.description : 'Event description' } />
           </fieldset>
           <FileUploadAPI />
         </form>
