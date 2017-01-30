@@ -64,7 +64,11 @@
       margin: 1rem 0 0;
       cursor: pointer;
       em { margin-left: 1rem; }
-      .map-toggle { float: right; }
+      .map-toggle {
+        transition: transform 0.25s ease;
+        float: right;
+        &.active { transform: rotateZ(90deg); }
+      }
       .static-map-wrapper {
         position: relative;
         height: 0;
