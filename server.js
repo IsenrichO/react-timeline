@@ -1,7 +1,7 @@
 'use strict';
 
 const App = require('./server/router.jsx'),
-      PORT = 3000;  // process.env.PORT || 3000
+      PORT = (process.env.PORT || 3000);
 
 App.listen(PORT, () => {
   console.log(`\

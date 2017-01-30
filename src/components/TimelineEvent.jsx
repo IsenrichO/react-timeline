@@ -3,18 +3,11 @@ import React, { Component } from 'react';
 
 import TimelineEventToolbar from './TimelineEventToolbar';
 import StaticGMap from './StaticMapEventLocation';
+import { debounce, toggleAccordionSection } from '../Utilities';
 
 
-const handleToggle = function(evt) {
-  const $target = $(evt.currentTarget),
-        $mapWrapper = $target.find('.static-map-wrapper'),
-        $toggleArrow = $target.find('.map-toggle');
+const debounceToggle = (evt) => debounce(toggleAccordionSection(evt), 2000, true);
 
-  $toggleArrow.hasClass('glyphicon-menu-right')
-    ? $toggleArrow.removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down')
-    : $toggleArrow.removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
-  $mapWrapper.toggleClass('active');
-};
 
 const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, evtNote, logModalData, toggleModal }) => (
   <li className={ `tl-event${evtAlign}` }>
@@ -33,7 +26,7 @@ const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, ev
         { evtDescription }
         <div
           className="tl-location"
-          onClick={ handleToggle }>
+          onClick={ debounceToggle }>
           <i className="glyphicon glyphicon-map-marker" />
           <em key={ `Location_${evtLocation}` }>{ evtLocation }</em>
           <i className="map-toggle glyphicon glyphicon-menu-right" />
