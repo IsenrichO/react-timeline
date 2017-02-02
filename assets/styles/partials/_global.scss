@@ -25,6 +25,7 @@ body {
   margin: 0;
   font: inherit;
   overflow-x: hidden;
+  background-color: $theme-bckg;
 }
 
 h1,
@@ -32,6 +33,17 @@ h2,
 h3 {
   margin: 0;
 }
+
+a {
+  color: inherit;
+  &:focus,
+  &:active,
+  &:visited {
+    color: initial;
+    text-decoration: none;
+  }
+}
+
 
 textarea {
   display: block;

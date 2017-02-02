@@ -4,6 +4,7 @@
 $theme-primary: #000;
 $theme-red: #B15B5B;
 $theme-black: #625F5F;
+$theme-bckg: #F5F8FA;
 $theme-content-light: #FFF;
 $theme-content-lt-gray: #BBB;
 $theme-border: #CCC;
@@ -148,6 +149,8 @@ $note-blue: #C4D8FB;
 // @import 'compass';
 @import './partials/global';      // Include base-level HTML element styles
 @import './partials/atomic';      // Include atomic style declarations
+@import './partials/utility';     // Include reusable CSS utility classes
+@import './partials/bloks';       // Reusable 'Blok' library styles
 @import './partials/main';        // Include primary style declarations
 @import './partials/svg';         // Include inline-rendered SVG element styles
 @import './partials/event-modal'; // Include event-editing modal styles

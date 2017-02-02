@@ -1,32 +1,34 @@
 
 /* Main Sass Style Declarations
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
- #tl-container {
-   min-height: 75vh;
- }
+ #tl-container { min-height: 75vh; }
 
 .tl {
   position: relative;
   display: table;
-  width: 92vw;
+  width: 75vw;
   height: 100%;
   list-style: none;
-  margin: 2rem 4vw;
+  margin: 2rem 12.5vw;
   padding: 0;
   > li {
     position: relative;
-    width: 42.5vw;
+    width: 50%;
     margin-bottom: 2.5rem;
     float: left;
     clear: both;
     &:first-child { margin-top: 3.571429rem; }    // Add space above for beginning of timeline
     &:last-child { margin-bottom: 3.571429rem; }  // Add space below for end of timeline
     &.tl-event-invert {
+      width: 50%;
+      left: 0;
       float: right;
-      .tl-marker { left: calc(-7.5vw + 5px); }
+      .tl-marker { left: -2.5%; }
       .tl-toolbar { left: calc(100% + 1rem); }
       .tl-event-panel {
         left: 0;
+        margin-right: 22.5%;
+        float: right;
         &:before { @extend %tt-left-shadow; }
         &:after { @extend %tt-left; }
       }
@@ -46,9 +48,10 @@
   .tl-event-panel {
     @include cbBoxShadow(0 1px 6px rgba(0, 0, 0, 0.175));
     position: relative;
-    width: 40vw;
-    left: 2.5vw;
+    width: 70%;
+    left: 22.5%;
     border: 1px solid $theme-border;
+    background-color: #FFF;
     &:before { @extend %tt-right-shadow; }
     &:after { @extend %tt-right; }
     .panel {
@@ -103,14 +106,13 @@
   }
   .tl-marker {
     position: absolute;
-    width: calc(7.5vw - 2.5px);
+    width: 5%;
     height: 2rem;
-    right: calc(5px - 7.5vw);
+    right: -2.5%;
     text-align: center;
     > i {
       top: -0.75rem;
       font-size: 1.5rem;
     }
   }
-}
- 
+} 

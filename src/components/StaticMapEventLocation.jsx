@@ -1,5 +1,5 @@
 'use strict';
-import React, { Component } from 'react';
+import React from 'react';
 
 
   // &zoom=12
@@ -25,6 +25,7 @@ const MapStyle = `\
   &style=feature:administrative.neighborhood%7Celement:labels%7Cvisibility:off\
   &style=feature:landscape%7Celement:geometry.fill%7Ccolor:0xB15B5B%7Clightness:45\
   &style=feature:landscape.natural.landcover%7Celement:geometry.stroke%7Cvisibility:simplified\
+  &style=feature:landscape.natural.terrain%7Cvisibility:off\
   &style=feature:poi%7Cvisibility:off\
   &style=feature:road.arterial%7Ccolor:0xD2D0D4%7Cvisibility:simplified\
   &style=feature:road.highway%7Ccolor:0xD7D5D8%7Cvisibility:off\

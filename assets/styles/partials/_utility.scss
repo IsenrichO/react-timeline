@@ -1,0 +1,35 @@
+
+/* Reusable CSS Utility Classes
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+// Apply where `text-overlay` should be constrain and delimited by an ending ellipsis:
+.text-of {
+  word-break: break-word;
+  word-wrap: break-word;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* Clearfix
+ * For modern browsers...
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ *
+ * See <http://nicolasgallagher.com/micro-clearfix-hack/>
+ */
+.cf {
+  &:before,
+  &:after {
+    content: " ";   // 1.
+    display: table; // 2.
+  }
+  &:after { clear: both; }
+}
+
+// Include this rule to trigger hasLayout and contain floats for IE 6/7 only:
+.cf { *zoom: 1; }
