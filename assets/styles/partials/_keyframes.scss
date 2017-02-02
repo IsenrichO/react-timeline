@@ -1,6 +1,22 @@
 
 /* CSS @keyframe Animations
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+@-webkit-keyframes bounceArrow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-0.357143rem); }
+}
+@-moz-keyframes bounceArrow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-0.357143rem); }
+}
+@-ms-keyframes bounceArrow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-0.357143rem); }
+}
+@-o-keyframes bounceArrow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-0.357143rem); }
+}
 @keyframes bounceArrow {
   0% { transform: translateY(0); }
   100% { transform: translateY(-0.357143rem); }

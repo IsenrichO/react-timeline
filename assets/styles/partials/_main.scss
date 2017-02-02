@@ -1,14 +1,11 @@
 
 /* Main Sass Style Declarations
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
- #tl-container {
-   min-height: 75vh;
- }
+ #tl-container { min-height: 75vh; }
 
 .tl {
   position: relative;
   display: table;
-  // width: 92vw;
   width: 75vw;
   height: 100%;
   list-style: none;
@@ -16,7 +13,6 @@
   padding: 0;
   > li {
     position: relative;
-    // width: 42.5vw;
     width: 50%;
     margin-bottom: 2.5rem;
     float: left;
@@ -52,11 +48,10 @@
   .tl-event-panel {
     @include cbBoxShadow(0 1px 6px rgba(0, 0, 0, 0.175));
     position: relative;
-    // width: 40vw;
     width: 70%;
-    // left: 2.5vw;
     left: 22.5%;
     border: 1px solid $theme-border;
+    background-color: #FFF;
     &:before { @extend %tt-right-shadow; }
     &:after { @extend %tt-right; }
     .panel {
@@ -120,5 +115,4 @@
       font-size: 1.5rem;
     }
   }
-}
- 
+} 
