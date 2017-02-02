@@ -24,7 +24,7 @@ class Timeline extends Component {
   orderTimelineEvents(events) {
     return events && events.length
       ? events
-        .sort((evt1, evt2) => new Date(evt2.date).getTime() - new Date(evt1.date).getTime())
+          .sort((evt1, evt2) => new Date(evt2.date).getTime() - new Date(evt1.date).getTime())
       : [];
   }
 
