@@ -22,8 +22,10 @@ class Timeline extends Component {
   logModalData(data) { this.props.logEventModalData(data); }
 
   orderTimelineEvents(events) {
-    return events
-      .sort((evt1, evt2) => new Date(evt2.date).getTime() - new Date(evt1.date).getTime());
+    return events && events.length
+      ? events
+        .sort((evt1, evt2) => new Date(evt2.date).getTime() - new Date(evt1.date).getTime())
+      : [];
   }
 
   renderOrderedEvents(events) {
