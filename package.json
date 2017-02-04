@@ -6,7 +6,9 @@
   "scripts": {
     "build": "NODE_ENV=production npm run clean && webpack -p",
     "clean": "rimraf dist",
+    "db:drop": "node db/drop.js",
     "db:rs": "brew services restart mongodb",
+    "db:seed": "node db/seeds/seed.js",
     "db:start": "mongod --dbpath=/data/db",
     "db:start1": "brew services start mongodb",
     "db:stop": "brew services stop mongodb",
@@ -14,7 +16,6 @@
     "dev:start": "npm run watch & webpack-dev-server -d",
     "lint": "eslint src",
     "rf-mods": "rm -rf node_modules && npm cache clean && npm i",
-    "seed": "seed",
     "serve": "NODE_ENV=development webpack-dev-server -d",
     "start": "nodemon",
     "stats": "webpack --json > stats.json",
