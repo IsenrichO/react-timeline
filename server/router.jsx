@@ -6,8 +6,8 @@ const Express = require('express'),
       PathnameBase = '/api/v1/',
       Request = require('request');
 
-const UU = require('./models/Seedo');
-const Event = require('./models/Event');
+const UU = require('../db/models/Seedo');
+const Event = require('../db/models/Event');
 
 
 // Invoke Express's `static` middleware for configuring `assets`
@@ -53,11 +53,13 @@ db.once('open', function(callback) {
 
   // Log seed events:
   Event.find({}, function(error, evts) {
-    let eventsMap = {};
+    // let eventsMap = {};
     evts.forEach(evt => {
-      eventsMap[evt._id] = evt;
+      // eventsMap[evt._id] = evt;
+      process.stdout.write(evt.id);
     });
-    process.stdout.write(eventsMap);
+
+    // eventsMap.forEach( (event) => process.stdout.write(event.toString) );
   });
 });
 
