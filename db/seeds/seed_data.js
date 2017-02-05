@@ -31,7 +31,7 @@ const seedData = [
     "name": "Graduated From Hack Reactor",
     "noteID": "5kso",
     "type": "Education",
-    "description": "Date of matriculation from the world's 2nd best (after App Academy) software engineering immersive — Hack Reactor!",
+    "description": "Date of matriculation from the world's best software engineering immersive — Hack Reactor!",
     "location": "San Francisco, CA",
     "date": Date.now() - 8000000
   }
