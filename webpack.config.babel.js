@@ -56,8 +56,8 @@ const BASE_CONFIG = {
         //   'autoprefixer?browsers=last 3 versions',
         //   'sass?outputStyle=expanded'
         // ]
-      }, { 
-        test: /\.json$/i, 
+      }, {
+        test: /\.json$/i,
         use: 'json'
       }, {
         test: /\.(bmp|gif|jpe?g|png|svg|ttif)$/i,
@@ -105,7 +105,8 @@ const BASE_CONFIG = {
   },
   cache: true,
   watch: true,
-  devtool: `${isProdEnv ? 'inline' : 'cheap-eval'}-source-map`,
+  // devtool: `${isProdEnv ? 'inline' : 'cheap-eval'}-source-map`,
+  devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx']
   },
