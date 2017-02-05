@@ -21,12 +21,6 @@ const db = Mongoose.connection;
 Mongoose.set('debug', true);
 db.on('error', console.error.bind(console, 'Connection Error:'));
 
-// let x = new Event({name: 'asdaf'});
-// x.save()
-// console.log(x);
-// let y = Event.find({name: 'asdaf'});
-// console.log(y);
-
 App.get('/api/events/:number', (req, res, next) => {
   const sendResponse = (err, docs) => { res.send(docs); }
   Event.find({}).limit(+req.params.number).sort('-date').exec(sendResponse);
@@ -67,14 +61,25 @@ App.patch('/api/events/:id', (req, res, next) => {
     if (err) {
       console.error(`Error Not Found`);
     } else {
-      // console.log(docs);
       console.log(`Update Successful: ${docs}`);
       sendResponse(err, docs);
-      // Event.update(...paramsToUpdate).exec(handleSave);
     }
   };
 
   Event.update({ _id: req.params.id }, ...paramsToUpdate).exec(handleUpdate);
+});
+
+App.delete('/api/events/:id', (req, res, next) => {
+  const sendResponse = (err, docs) => { res.send(docs); }
+  const handleDelete = (err, docs) => {
+    if (err) {
+      console.error(`Error: Object Delete Failed`);
+    } else {
+      console.log(`Delete Successful: ${docs._id}`);
+      sendResponse(err, docs);
+    }
+  };
+  Event.findByIdAndRemove(req.params.id, handleDelete);
 });
 
 App.get('/test', (req, res, next) => {
