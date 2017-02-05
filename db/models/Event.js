@@ -7,7 +7,7 @@ let EventSchema = new Schema({
   type: String,
   description: String,
   location: String,
-  date: String
+  date: Date
 }, {
   collection: 'EventData'
 });
