@@ -27,6 +27,11 @@ App.get('/api/getMostRecentEvents/:number', (req, res, next) => {
   Event.find({}).limit(+req.params.number).sort('-date').exec(sendResponse);
 });
 
+App.post('/api/createEvent', (req, res, next) => {
+  console.log(req.body);
+  // res.send(req.body);
+});
+
 App.get('/test', (req, res, next) => {
   console.log('TEST');
   Event.find({noteID: "2kk1"}, (err, docs) => {
