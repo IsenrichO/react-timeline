@@ -5,7 +5,7 @@ const seedData = [
     "type": "Life",
     "description": "Moved to SF from Raleigh, NC to begin the Hack Reactor software engineering immersive.",
     "location": "San Francisco, CA",
-    "date": Date.now() - 500000;
+    "date": Date.now() - 500000
   }, {
     "name": "Began Work At Robert Half",
     "noteID": "2kk1",
@@ -31,7 +31,7 @@ const seedData = [
     "name": "Graduated From Hack Reactor",
     "noteID": "5kso",
     "type": "Education",
-    "description": "Date of matriculation from the world's premier software engineering immersive — Hack Reactor!",
+    "description": "Date of matriculation from the world's best software engineering immersive — Hack Reactor!",
     "location": "San Francisco, CA",
     "date": Date.now() - 8000000
   }
