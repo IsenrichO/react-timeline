@@ -12,6 +12,8 @@ const isProdEnv = (process.env.NODE_EV === 'production');
 
 const VENDOR_LIBS = [
   'body-parser',
+  'bson',
+  'cloudinary',
   'lodash',
   'react',
   'react-dom',
