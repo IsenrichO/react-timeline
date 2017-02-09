@@ -2,21 +2,22 @@
 Visualize timelines in a beautiful layout with React
 
 ### What's This Project About?
-Pretty simple. You got times you want to remember. We got an app. On the off chance you're looking to visualize some interval of time or another, [React-Timeline](https://github.io/IsenrichO/react-timeline) affords itself as a niche web application built for just these purposes. The scope remains limited now, but hopefully other uses will arise. See the [Roadmap](#Roadmap) for more.
+Pretty simple. You got times you want to remember. We got an app. On the off chance you're looking to have yourself a visualization of some period in time or another, [React-Timeline](https://github.io/IsenrichO/react-timeline) affords itself as a niche web application built for just these purposes. The scope remains limited now, but hopefully other uses will arise. See the [Roadmap](#Roadmap) for more.
 
 ## Tech Stack
-This project makes use of the [MERN stack](http://mern.io/) — [MEAN](http://mean.io/)'s younger brother. Data persistence with [**M**ongoDB](https://docs.mongodb.com/) is, in part, managed using the popular [MongooseJS](http://mongoosejs.com/index.html) ORM. On the front-end, Facebook's astronomically popular [**R**eact](https://facebook.github.io/react/) view manager (as in M**V**C) is utilized. However great it may be, a full-stack web application's functionality would nonetheless be hampered without the aid of certain complementary technologies. Chief among these is, of course, [Redux](http://redux.js.org/) — the go-to choice of many for front-end state management. From the side of the server, the [**N**odeJS](https://nodejs.org/en/) JavaScript runtime environment is employed in conjunction with [**E**xpress](http://expressjs.com/) — the _de facto_ standard insofar as back-end JavaScript frameworks go.
+This project makes use of the [MERN stack](http://mern.io/) — [MEAN](http://mean.io/)'s younger brother. Data persistence with [**M**ongoDB](https://docs.mongodb.com/) is, in part, managed using the popular [MongooseJS](http://mongoosejs.com/index.html) ORM. On the front-end, Facebook's astronomically popular [**R**eact](https://facebook.github.io/react/) view manager (as in [M**V**C](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)) is utilized. However great it may be, a full-stack web application's functionality would nonetheless be hampered without the aid of certain complementary technologies. Chief among these is, of course, [Redux](http://redux.js.org/) — the go-to choice of many for front-end state management. From the side of the server, the [**N**odeJS](https://nodejs.org/en/) JavaScript runtime environment is employed in conjunction with [**E**xpress](http://expressjs.com/) — the _de facto_ standard insofar as back-end JavaScript frameworks go.
 
 A bevy of other tools/packages/modules/libraries are indispensable to the app as a whole. Among these are:
 + **[Webpack](https://webpack.github.io/):** An awesome build tool
-+ Babel: Helps achieve cross-browser compliance by transpilation to (near) universally supported JavaScript standards (_i.e._, the ES5 spec)
-+ Sass: A stylesheet language for more logically organized CSS and with support for functions, state (_i.e._, `@mixins`, `%placeholders`, _etc_.)
-+ PostCSS: A modular framework for individually including the tools necessary to your workflow (_e.g._, Autoprefixer)
-+ Lodash/jQuery: General-purpose utility libraries for all your functional programming needs
-+ React-Router: Front-end router technology
-+ Redux-Thunk:
-+ ESLint: Code syntax linter
-+ Mocha/Chai: Unit-testing suite
++ **[Babel](https://babeljs.io/):** Helps achieve cross-browser compliance by transpilation to (near) universally supported JavaScript standards (_i.e._, the ES5 spec). Of the many plugins and presets it provides, [_babel-preset-env_](https://babeljs.io/docs/plugins/preset-env/), [_babel-register_](https://babeljs.io/docs/usage/babel-register/), [_babel-preset-react_](https://babeljs.io/docs/plugins/preset-react/) and [_babel-plugin-transform-object-rest-spread_](https://babeljs.io/docs/plugins/transform-object-rest-spread/) are particularly noteworthy.
++ **[NPM](https://docs.npmjs.com/):** A widely-used package manager for building applications and capitalizing on the labors of others
++ **[Sass](http://sass-lang.com/):** A stylesheet language for more logically organized CSS and with support for functions, state (_i.e._, [`@mixins`](http://sass-lang.com/guide#topic-6), [`%placeholders`](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#placeholder_selectors_), _etc_.)
++ **[PostCSS](http://postcss.org/):** A modular framework allowing _ad hoc_ inclusion of the tools (and only those tools) necessary to your workflow (_e.g._, [Autoprefixer](https://github.com/postcss/autoprefixer), [svgo](https://github.com/ben-eb/postcss-svgo), [cssnext](https://github.com/cssnext/cssnext), [import](https://github.com/postcss/postcss-import) among a great many more)
++ **[Lodash](https://lodash.com/)/[jQuery](https://jquery.com/):*** General-purpose utility libraries for all your functional programming needs
++ **[React-Router](https://github.com/ReactTraining/react-router/tree/master/docs):** Front-end router technology
++ **[Redux-Thunk](https://github.com/gaearon/redux-thunk):** An integration for using **thunks** in conjunction with asynchronous Redux code, thereby helping assimilate `Promise`ified structures inside your app's workflow
++ **[ESLint](http://eslint.org/):** Code syntax linting tool that is holistically configurable and helps to maintain standards of code quality
++ **[Mocha](https://mochajs.org/)/[Chai](http://chaijs.com/):** Unit-testing suite
 
 
 ## Running The Project
@@ -42,7 +43,8 @@ A bevy of other tools/packages/modules/libraries are indispensable to the app as
 + **`rf-mods`:** Recursively deletes the contents of the _node_modules_ package folder, cleans the NPM cache registry and reinstalls declared dev/depencies (as per what's listed in [_package.json_](https://docs.npmjs.com/getting-started/using-a-package.json))
 + **`serve`:** Runs _webpack-dev-server_ with additional CLI options. This is ideal for development purposes.
 + **`start`:** Runs the root-level _server.js_ file inside the Node.js runtime
-+ **`stats`:** Writes a _stats.json_ file to the project folder's root in JSON format
++ **`stats`:** Writes a JSON-file format analysis file [Ref. _stats.json_] to the project folder's root. This is useful in conjunction with freely available [Webpack](https://webpack.github.io/analyse/) [bundle](https://github.com/robertknight/webpack-bundle-size-analyzer) [analyzers](https://chrisbateman.github.io/webpack-visualizer/) that can provide insight into where optimizations may be had.
+![Module dependency Webpack bloat](https://lh3.googleusercontent.com/81GGtbBHDIHWIFZgtH8NPYs7XSnAg6qbBkhfBUZCgT6sP3R_ZYaYCb3yF7eClctg4sS8PsCpbWCa7gBtbcxjRZyFVR1aKfIgX-R_f3FqGmhR0YfSJLOjXO8k4-g6mOOV0HGiC4rKW5iPyVa-7JW1pIPIRdEqEuzN-R1-VUGiEQ1mXVt2Dlz4UtdsLA9f5H0jQJWOFBvq8mExqOl9efKxfn8f7JOnn2hDYhzCjALFEwsxmGkfi7mK4xd6epx2nL5MqPhhg0xfH6xfJ4L_CoOfgUeoJQFC6kCFpCbwT4lMgBK73WAC0zpzogCM90Y07oVHGoR6g6ww6zoz_oYdDoHQWJd32ob-Z5g4RndIBO8jGPS5D3WutkDn6nIWH6KCR4VpEjpLzdGP2NQESHcQkeEBwoJQlNopKZ07NRz8hDzTPNyYtKw72tCBxiOMaVQXxm694ZrDF3S46jgeYttKrVidEm7vlsSPKjP5RI5fytmYEXOE58ljinwgncRWrP4mZ0qIvBQcq62Z_qdHj8umAlwcp19zoysMW34Zrx8Xuw_z3VjWHjBT4q5lPiYjpzKZ-Dx_Nyqj2pAjbAeFGDCey2x195rKpiaXJwjq3MQTsDfnuK1yVN9OnA=w298-h249-no)
 + **`test`:** Runs all written tests (via the [Mocha](https://mochajs.org/) test suite in conjunction with the [Chai](http://chaijs.com/) helper library)
 + **`watch`:** Instructs Webpack to [`watch`](http://webpack.github.io/docs/troubleshooting.html#watching) (or `-w`) for all file changes, avoiding the tedium of manually rerunning the compilation command (_i.e._, `webbpack`). Note that changes made to the Webpack configuration itself fall outside the scope of the `watch` command and require a manual restart before changes are made evident.
 
@@ -51,4 +53,5 @@ At this juncture, the project is still very much in its infancy. As such, we're 
 
 ## Support & Contact
 Got problems? [Submit an issue](https://github.com/IsenrichO/react-timeline/issues) with details so we can squash dem bugs. Something missing? Or just want to make the project better? [Submit a PR](https://github.com/IsenrichO/react-timeline/pulls) and help us out. I promise we're friendly. For comments, questions or other concerns, get at me:
-[email](mailto:isenrich@yahoo.com)
+
+[&#x2709; Email](mailto:isenrich@yahoo.com)
