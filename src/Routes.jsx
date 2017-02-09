@@ -1,33 +1,25 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import { Router, Route } from 'react-router';
 
 import App from './components/pages/App';
 import NoteItem from './components/pages/NotePage';
-import reducers from './reducers/index';
+import { fetchSeedData } from './actions/asyncActions';
+import { History, Store } from './store/configureStore';
 
 
-// Add the reducer to your store on the `routing` key:
-const store = createStore(reducers);
-// const store = createStore(
-//   combineReducers({
-//     ...reducers,
-//     routing: routerReducer
-//   })
-// );
-
-// Create an enhanced history that syncs navigation events with the store:
-const history = syncHistoryWithStore(browserHistory, store);
+function loadEvts() {
+  console.log('loadEvts Function Called');
+  Store.dispatch(fetchSeedData());
+}
 
 // 
 const RouterConfig = () => (
-  <Provider store={ store }>
-    <Router history={ history }>
-      <Route path="/" component={ App } />
+  <Provider store={ Store }>
+    <Router history={ History }>
+      <Route path="/" component={ App } onEnter={ loadEvts } />
       <Route path="notes/:noteID" component={ NoteItem } />
     </Router>
   </Provider>
