@@ -1,5 +1,5 @@
 'use strict';
-import { TOGGLE_EVENT_MODAL } from '../actions/index';
+import { TOGGLE_EVENT_MODAL } from '../actions/types';
 
 
 export default function eventEditingModalState(state = false, action) {

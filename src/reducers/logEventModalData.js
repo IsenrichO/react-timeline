@@ -1,5 +1,5 @@
 'use strict';
-import { LOG_EVENT_MODAL_DATA } from '../actions/index';
+import { LOG_EVENT_MODAL_DATA } from '../actions/types';
 
 
 const DefaultState = {
