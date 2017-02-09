@@ -14,9 +14,11 @@
   > li {
     position: relative;
     width: 50%;
+    max-height: 1000px;
     margin-bottom: 2.5rem;
     float: left;
     clear: both;
+    transition: all 1s ease;
     &:first-child { margin-top: 3.571429rem; }    // Add space above for beginning of timeline
     &:last-child { margin-bottom: 3.571429rem; }  // Add space below for end of timeline
     &.tl-event-invert {
@@ -31,6 +33,16 @@
         float: right;
         &:before { @extend %tt-left-shadow; }
         &:after { @extend %tt-left; }
+        .panel {
+          &-header {
+            .collapse-up {
+              left: auto;
+              right: -0.5rem;
+              order: 1;
+              transition: transform 0.5s ease;
+            }
+          }
+        }
       }
     }
   }
@@ -43,7 +55,10 @@
     top: 0;
     bottom: 0;
     margin-left: -2.5px;
-    background-color: #EEE;
+    border-radius: 1rem;
+    background-color: $theme-content-lt;  // $theme-red-no-op;
+    -webkit-filter: drop-shadow(0 0 7.5px #999);
+    filter:         drop-shadow(0 0 7.5px #999);
   }
   .tl-event-panel {
     @include cbBoxShadow(0 1px 6px rgba(0, 0, 0, 0.175));
@@ -61,7 +76,30 @@
         padding: 1.25rem;
         border: none;
       }
-      &-footer { background-color: #F4F4F4; }
+      &-header {
+        display: flex;
+        justify-content: space-around;
+        align-items: baseline;
+        h3 {
+          width: 95%;
+          color: $theme-red;
+        }
+        .collapse-up {
+          transition: transform 0.5s ease;
+          position: relative;
+          top: -0.5rem;
+          left: -0.5rem;
+          font-size: 1.5rem;
+          cursor: pointer;
+        }
+      }
+      &-footer {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #F4F4F4;
+      }
     }
     .tl-location {
       margin: 1rem 0 0;
@@ -93,7 +131,7 @@
       right: calc(100% + 1rem);
       > button {
         @include cbBoxShadow(0 0 10px 1px rgba(0, 0, 0, 0.175));
-        background: $theme-content-light;
+        background: $theme-content-lt;
         width: 2.5rem;
         height: 2.5rem;
         margin-bottom: 1rem;
@@ -116,3 +154,25 @@
     }
   }
 } 
+
+.btn-controls {
+  @extend %br-circle;
+  position: fixed;
+  width: 5rem;
+  height: 5rem;
+  right: 3rem;
+  bottom: 3rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  font-size: 5rem;
+  background: $theme-red url(https://ssl.gstatic.com/s2/oz/images/quark/a7367650055ae3cf32ee3b7023c1ed88ic_create_wht_24dp.png) no-repeat center / 50%;
+  color: $theme-content-lt;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+  i {
+    display: block;
+    height: 5rem;
+    font-size: 3.5rem;
+    line-height: 5rem;
+  }
+}
