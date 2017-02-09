@@ -1,6 +1,0 @@
-{
-  "undefined": "mongodb://localhost:27017/test",
-  "db": "localhost/test_seed",
-	"dev": "localhost/DEV_DB_NAME",
-	"prod": "localhost/PROD_DB_NAME"
-}

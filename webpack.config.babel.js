@@ -14,13 +14,15 @@ const VENDOR_LIBS = [
   'body-parser',
   'bson',
   'cloudinary',
+  'jquery',
   'lodash',
   'react',
   'react-dom',
   'react-redux',
   'react-router',
   'react-router-redux',
-  'redux'
+  'redux',
+  'redux-thunk'
 ];
 
 const BASE_CONFIG = {
@@ -43,14 +45,14 @@ const BASE_CONFIG = {
       }, {
         test: /\.css$/i,
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style',
-          loader: 'css'
+          fallback: 'style',
+          use: 'css'
         })
       }, {
         test: /\.(scss|sass)$/i,
         loaders: ExtractTextPlugin.extract({
-          fallbackLoader: 'style',
-          loader: ['css', 'postcss', 'sass']
+          fallback: 'style',
+          use: ['css', 'postcss', 'sass']
         })
         // [
         //   'style',
@@ -107,8 +109,8 @@ const BASE_CONFIG = {
   },
   cache: true,
   watch: true,
-  // devtool: `${isProdEnv ? 'inline' : 'cheap-eval'}-source-map`,
-  devtool: 'source-map',
+  devtool: `${isProdEnv ? 'inline' : 'cheap-eval'}-source-map`,
+  // devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx']
   },

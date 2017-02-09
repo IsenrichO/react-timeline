@@ -33,3 +33,16 @@
 
 // Include this rule to trigger hasLayout and contain floats for IE 6/7 only:
 .cf { *zoom: 1; }
+
+// Styles to apply for collapsed `.panel-body` and `.panel-footer` elements:
+.tl-collapsed {
+  @extend %hidden;
+  max-height: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+.panel-body,
+.panel-footer {
+  transition: all 0.5s ease;
+}

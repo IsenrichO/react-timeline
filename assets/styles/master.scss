@@ -3,10 +3,13 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 $theme-primary: #000;
 $theme-red: #B15B5B;
+$theme-red-op: rgba(177, 91, 91, 0.3);
+$theme-red-no-op: #CDABAC;
 $theme-black: #625F5F;
 $theme-bckg: #F5F8FA;
-$theme-content-light: #FFF;
+$theme-content-lt: #FFF;
 $theme-content-lt-gray: #BBB;
+$theme-trans: transparent;
 $theme-border: #CCC;
 $theme-primary-focus: #AB5252;
 $theme-lt-white: #F1E5E6;
@@ -111,7 +114,7 @@ $note-blue: #C4D8FB;
   border: none;
   font: bolder 4rem/1 Arial, sans-serif;
   background-color: $theme-red;
-  color: $theme-content-light;
+  color: $theme-content-lt;
   text-align: center;
   cursor: pointer;
 };

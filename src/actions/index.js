@@ -1,21 +1,19 @@
 'use strict';
 import Axios from 'axios';
 
-export const FETCH_SEED_DATA = 'FETCH_SEED_DATA';
-export const LOG_EVENT_MODAL_DATA = 'LOG_EVENT_MODAL_DATA';
-export const TOGGLE_EVENT_MODAL = 'TOGGLE_EVENT_MODAL';
+import * as Types from './types';
 
 
-export const fetchSeedData = () => ({
-  type: FETCH_SEED_DATA,
-  payload: Axios.get('/api/sd')
+export const loadSeedData = (JSON) => ({
+  type: Types.LOAD_SEED_DATA,
+  payload: JSON 
 });
 
 export const logEventModalData = (payload) => ({
-  type: LOG_EVENT_MODAL_DATA,
+  type: Types.LOG_EVENT_MODAL_DATA,
   payload
 });
 
 export const toggleEventModal = () => ({
-  type: TOGGLE_EVENT_MODAL
+  type: Types.TOGGLE_EVENT_MODAL
 });

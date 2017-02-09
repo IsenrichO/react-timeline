@@ -14,4 +14,11 @@ let EventSchema = new Schema({
 
 const Event = Mongoose.model('Event', EventSchema);
 
+// Event.find(function(err, evts) {
+//   if (err) { return console.error(err); }
+//   console.log('EVENTS:\t', evts);
+//   // res.send(evts);
+//   return evts;
+// });
+
 module.exports = Event;

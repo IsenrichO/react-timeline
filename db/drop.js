@@ -1,13 +1,14 @@
 'use strict';
-const Express = require('express');
-const Mongoose = require('mongoose');
+const Express = require('express'),
+      Mongoose = require('mongoose');
 
-Mongoose.connect('mongodb://localhost:27017/test');
+
+Mongoose.connect('mongodb://localhost:27017/events');
 const db = Mongoose.connection;
 
 db.once('open', () => {
-  Mongoose.connection.db.dropDatabase(function (err) {
-    console.log('db dropped');
+  Mongoose.connection.db.dropDatabase(err => {
+    console.log('DB dropped!');
     process.exit(0);
   });
 });

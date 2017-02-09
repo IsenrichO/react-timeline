@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import TimelineEvent from './TimelineEvent';
+import TimelineEvent from './tl-event/TimelineEvent';
 import EditEventModal from './EditEventModal';
+import ButtonControls from './ButtonControls';
 import { logEventModalData, toggleEventModal } from '../actions/index';
 
 
@@ -51,6 +52,7 @@ class Timeline extends Component {
           modalStatus={ this.props.eventEditingModalState }
           toggleModal={ this.toggleModal }
           modalData={ this.props.eventEditingModalData } />
+        <ButtonControls />
       </div>
     );
   }
