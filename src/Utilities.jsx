@@ -1,11 +1,11 @@
 'use strict';
-import React, { Component } from 'react';
+import React from 'react';
 
 
 // Returns a function, that, as long as it continues to be invoked, will not
-// be triggered. The function will be called after it stops being called for
-// N milliseconds. If `immediate` is passed, trigger the function on the
-// leading edge, instead of the trailing.
+//  be triggered. The function will be called after it stops being called for
+//  N milliseconds. If `immediate` is passed, trigger the function on the
+//  leading edge, instead of the trailing.
 const debounce = (func, wait, immediate) => {
   let timeout;
   return function() {
@@ -21,22 +21,52 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
-// Usage
-// var myEfficientFn = debounce(function() {
-  // All the taxing stuff you do
-// }, 250);
-// window.addEventListener('resize', myEfficientFn);
-
 export { debounce };
 
-
-const toggleAccordionSection = function(evt) {
+// Controller for animation/behavior of Google Static Maps image wrapper:
+const toggleAccordionSection = (evt) => {
   const $target = $(evt.currentTarget),
-        $mapWrapper = $target.find('.static-map-wrapper'),
-        $toggleArrow = $target.find('.map-toggle');
+        [$mapWrapper, $toggleArrow] = [$('.static-map-wrapper', $target), $('.map-toggle', $target)];
 
-  $toggleArrow.toggleClass('active');
-  $mapWrapper.toggleClass('active');
+  $.each([$toggleArrow, $mapWrapper], (index, el) => {
+    el.toggleClass('active');
+  });
 };
 
 export { toggleAccordionSection };
+
+
+//
+const dayNames = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+],
+monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
+const formatDate = (date) => {
+  let dateStr = date
+    .replace(/T.+Z/, '')
+    .split('-');
+  [...dateStr] = [dateStr[2], monthNames[+dateStr[1]], dateStr[0]];
+  return dateStr.join(' ');
+};
+
+export { dayNames, monthNames, formatDate };

@@ -22,9 +22,9 @@ class Timeline extends Component {
 
   logModalData(data) { this.props.logEventModalData(data); }
 
-  orderTimelineEvents(events) {
-    return events && events.length
-      ? events
+  orderTimelineEvents(evts) {
+    return evts && evts.length
+      ? evts
           .sort((evt1, evt2) => new Date(evt2.date).getTime() - new Date(evt1.date).getTime())
       : [];
   }
@@ -38,6 +38,8 @@ class Timeline extends Component {
         evtLocation={ evt.location }
         evtAlign={ new Array('', '-invert')[index % 2] }
         evtDescription={ evt.description }
+        evtDate={ evt.date }
+        evtFormattedDate={ evt.formattedDate }
         evtNote={ evt.type }
         logModalData={ this.logModalData }
         toggleModal={ this.toggleModal } />

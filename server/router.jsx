@@ -18,16 +18,57 @@ const seedData = require('../src/constants/json/SeedData.json');
 //  file location therein.
 App.use(Express.static(Path.join(__dirname, '../dist')));
 App.use(BodyParser.json());
+
+// Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
+//  This assignment addresses the Mongoose mpromise library deprecation warning.
+Mongoose.Promise = global.Promise;
+
 // Connect to the database:
 Mongoose.connect('mongodb://localhost:27017/events');
 const db = Mongoose.connection;
 
 Mongoose.set('debug', true);
-db.on('error', console.error.bind(console, 'Connection Error:'));
+db.on('error', (err) => {
+  console.error.call(console, `Connection Error:\t${err}`)
+});
 
+
+
+
+
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
+const formatDate = (date) => {
+  let dateStr = date
+    .replace(/T.+Z/, '')
+    .split('-');
+  [...dateStr] = [dateStr[2], monthNames[+dateStr[1]], dateStr[0]];
+  return dateStr.join(' ');
+};
+
+db.once('open', (callback) => {
+  Mongoose.connection.collections.EventData.drop();
+
+  seedData.forEach((evt) => {
+    [evt.formattedDate, evt.photos] = [formatDate(evt.date), new Array()];
+    new Event(evt).save();
+  });
+});
 // db.once('open', function(callback) {
-//   console.log('LINK OPENED');
-//   console.log('# Mongo DB:  Connected to server!');
+//   console.log('Connection to MongoDB established.');
 //   let numSeeds = seedData.length;
 //   let done = 0;
 
@@ -53,7 +94,11 @@ db.on('error', console.error.bind(console, 'Connection Error:'));
 
 App.get('/api/events/:number', (req, res, next) => {
   const sendResponse = (err, docs) => { res.send(docs); }
-  Event.find({}).limit(+req.params.number).sort('-date').exec(sendResponse);
+  Event
+    .find({})
+    .limit(+req.params.number)
+    .sort('-date')
+    .exec(sendResponse);
 });
 
 

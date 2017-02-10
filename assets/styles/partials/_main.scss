@@ -73,6 +73,7 @@
       &-header,
       &-body,
       &-footer {
+        position: relative;
         padding: 1.25rem;
         border: none;
       }
@@ -93,34 +94,36 @@
           cursor: pointer;
         }
       }
+      &-body {
+        [class^='tl-'] {
+          margin: 1rem 0 0;
+          .toggle-glyph {
+            transition: transform 0.25s ease;
+            float: right;
+            &.active { transform: rotateZ(90deg); }
+          }
+        }
+        .tl-location,
+        .tl-photos { cursor: pointer; }
+        .static-map-wrapper {
+          position: relative;
+          height: 0;
+          margin: 0.5rem 1rem 0 0.5rem;
+          border-left: thin dashed $theme-red;
+          overflow: hidden;
+          &.active { height: auto; }
+          img {
+            width: calc(100% - 0.714286rem);
+            margin-left: 0.714286rem;
+          }
+        }
+      }
       &-footer {
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
         align-items: center;
         background-color: #F4F4F4;
-      }
-    }
-    .tl-location {
-      margin: 1rem 0 0;
-      cursor: pointer;
-      em { margin-left: 1rem; }
-      .map-toggle {
-        transition: transform 0.25s ease;
-        float: right;
-        &.active { transform: rotateZ(90deg); }
-      }
-      .static-map-wrapper {
-        position: relative;
-        height: 0;
-        margin: 5px 0 0 5px;
-        border-left: 5px solid $theme-red;
-        overflow: hidden;
-        &.active { height: auto; }
-        img {
-          width: calc(100% - 0.714286rem);
-          margin-left: 0.714286rem;
-        }
       }
     }
     &:hover .tl-toolbar { @extend %visible; }
@@ -174,5 +177,14 @@
     height: 5rem;
     font-size: 3.5rem;
     line-height: 5rem;
+  }
+}
+
+.glyphicon {
+  &-tags { padding-right: 0.5rem; }
+  .panel-body &:first-child,
+  .panel-footer &:first-child {
+    margin-right: 1rem;
+    color: $theme-red;
   }
 }
