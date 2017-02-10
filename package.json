@@ -21,6 +21,7 @@
     "start": "nodemon",
     "stats": "webpack --json > stats.json",
     "test": "mocha --compilers js:babel-register",
+    "test:watch": "nodemon --exec 'mocha -R min'",
     "watch": "webpack -w"
   },
   "keywords": [
