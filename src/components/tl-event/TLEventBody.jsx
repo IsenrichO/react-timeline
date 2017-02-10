@@ -7,9 +7,13 @@ import { debounce, toggleAccordionSection } from '../../Utilities';
 
 const debounceToggle = (evt) => debounce(toggleAccordionSection(evt), 2000, true);
 
-const TLEventBody = ({ evtDescription, evtLocation }) => (
+const TLEventBody = ({ evtDate, evtDescription, evtLocation }) => (
   <div className="panel-body">
     { evtDescription }
+    <div className="tl-date">
+      <i className="glyphicon glyphicon-calendar" />
+      <em>{ evtDate }</em>
+    </div>
     <div
       className="tl-location"
       onClick={ debounceToggle }>
