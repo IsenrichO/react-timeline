@@ -20,8 +20,8 @@
     "serve": "NODE_ENV=development webpack-dev-server -d",
     "start": "nodemon",
     "stats": "webpack --json > stats.json",
-    "test": "mocha --compilers js:babel-register",
-    "test:watch": "nodemon --exec 'mocha -R min'",
+    "test": "mocha test/**/*.js --compilers js:babel-register",
+    "test:watch": "nodemon --exec 'mocha test/**/*.js -R min'",
     "watch": "webpack -w"
   },
   "keywords": [
