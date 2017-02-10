@@ -1,24 +1,20 @@
-var Mongoose = require('mongoose');
+'use strict';
+const Mongoose = require('mongoose'),
+      Schema = Mongoose.Schema;
 
-let Schema = Mongoose.Schema;
-let EventSchema = new Schema({
+
+const EventSchema = new Schema({
   name: String,
   noteID: String,
   type: String,
   description: String,
   location: String,
-  date: Date
+  date: Date,
+  formattedDate: String,
+  photos: Array
 }, {
   collection: 'EventData'
 });
 
 const Event = Mongoose.model('Event', EventSchema);
-
-// Event.find(function(err, evts) {
-//   if (err) { return console.error(err); }
-//   console.log('EVENTS:\t', evts);
-//   // res.send(evts);
-//   return evts;
-// });
-
 module.exports = Event;
