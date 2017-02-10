@@ -18,16 +18,18 @@ const seedData = require('../src/constants/json/SeedData.json');
 //  file location therein.
 App.use(Express.static(Path.join(__dirname, '../dist')));
 App.use(BodyParser.json());
+
 // Connect to the database:
 Mongoose.connect('mongodb://localhost:27017/events');
 const db = Mongoose.connection;
 
 Mongoose.set('debug', true);
-db.on('error', console.error.bind(console, 'Connection Error:'));
+db.on('error', (err) => {
+  console.error.call(console, `Connection Error:\t${err}`)
+});
 
 // db.once('open', function(callback) {
-//   console.log('LINK OPENED');
-//   console.log('# Mongo DB:  Connected to server!');
+//   console.log('Connection to MongoDB established.');
 //   let numSeeds = seedData.length;
 //   let done = 0;
 
