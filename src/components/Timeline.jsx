@@ -39,6 +39,7 @@ class Timeline extends Component {
         evtAlign={ new Array('', '-invert')[index % 2] }
         evtDescription={ evt.description }
         evtDate={ evt.date }
+        evtFormattedDate={ evt.formattedDate }
         evtNote={ evt.type }
         logModalData={ this.logModalData }
         toggleModal={ this.toggleModal } />

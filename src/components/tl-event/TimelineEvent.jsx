@@ -22,7 +22,7 @@ import TLEventFooter from './TLEventFooter';
 //   $parentListItem.css({ maxHeight: !isCollapsed ? $(evt.target).parent()[0].getClientRects()[0].height : '1000px' });
 // };
 
-const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, evtDate, evtNote, logModalData, toggleModal }) => (
+const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, evtDate, evtFormattedDate, evtNote, logModalData, toggleModal }) => (
   <li className={ `tl-event${evtAlign}` }>
     <div className="tl-marker">
       <i className="glyphicon glyphicon-record" />
@@ -37,7 +37,8 @@ const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, ev
       <TLEventBody
         evtDescription={ evtDescription }
         evtLocation={ evtLocation }
-        evtDate={ evtDate } />
+        evtDate={ evtDate }
+        evtFormattedDate={ evtFormattedDate } />
       <TLEventFooter
         evtNote={ evtNote } />
     </div>
