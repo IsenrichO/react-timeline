@@ -37,8 +37,8 @@ const listEvents = (req, res) => {
     .find({})
     .sort({ date: 'desc'})
     .limit(20)
-    .exec(function(err, docs) {
-      res.send(docs);
+    .exec((err, records) => {
+      res.send(records);
     });
     // .exec(handleResponse);
 };
@@ -49,7 +49,9 @@ const addEvents = (req, res, next) => {
   const params = req.body;
   Object
     .keys(Event.schema.obj)
-    .forEach(datum => { params[datum] = params[datum] || '' });
+    .forEach(datum => {
+      params[datum] = params[datum] || '';
+    });
   new Event(params).save(handleResponse);
 };
 
