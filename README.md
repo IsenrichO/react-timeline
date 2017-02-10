@@ -4,6 +4,13 @@ Visualize timelines in a beautiful layout with React
 ### What's This Project About?
 Pretty simple. You got times you want to remember. We got an app. On the off chance you're looking to have yourself a visualization of some period in time or another, [React-Timeline](https://github.io/IsenrichO/react-timeline) affords itself as a niche web application built for just these purposes. The scope remains limited now, but hopefully other uses will arise. See the [Roadmap](#Roadmap) for more.
 
+## Running The Project
+1. Clone down the repo: `$ git clone https://github.com/IsenrichO/react-timeline`
+2. Navigate to the newly created folder on your machine: `$ cd react-timeline`
+3. Install the project's dependencies: `$ npm i`
+4. To run the app using Webpack's virtual server, execute `$ npm run serve`
+5. In your browser, navigate to the running instance of the app: [localhost:3000](http://localhost:3000/)
+
 ## Tech Stack
 This project makes use of the [MERN stack](http://mern.io/) — [MEAN](http://mean.io/)'s younger brother. Data persistence with [**M**ongoDB](https://docs.mongodb.com/) is, in part, managed using the popular [MongooseJS](http://mongoosejs.com/index.html) ORM. On the front-end, Facebook's astronomically popular [**R**eact](https://facebook.github.io/react/) view manager (as in [M**V**C](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)) is utilized. However great it may be, a full-stack web application's functionality would nonetheless be hampered without the aid of certain complementary technologies. Chief among these is, of course, [Redux](http://redux.js.org/) — the go-to choice of many for front-end state management. From the side of the server, the [**N**odeJS](https://nodejs.org/en/) JavaScript runtime environment is employed in conjunction with [**E**xpress](http://expressjs.com/) — the _de facto_ standard insofar as back-end JavaScript frameworks go.
 
@@ -18,14 +25,7 @@ A bevy of other tools/packages/modules/libraries are indispensable to the app as
 + **[Redux-Thunk](https://github.com/gaearon/redux-thunk):** An integration for using **thunks** in conjunction with asynchronous Redux code, thereby helping assimilate `Promise`ified structures inside your app's workflow
 + **[ESLint](http://eslint.org/):** Code syntax linting tool that is holistically configurable and helps to maintain standards of code quality
 + **[Mocha](https://mochajs.org/)/[Chai](http://chaijs.com/):** Unit-testing suite
-
-
-## Running The Project
-1. Clone down the repo: `$ git clone https://github.com/IsenrichO/react-timeline`
-2. Navigate to the newly created folder on your machine: `$ cd react-timeline`
-3. Install the project's dependencies: `$ npm i`
-4. To run the app using Webpack's virtual server, execute `$ npm run serve`
-5. In your browser, navigate to the running instance of the app: [localhost:3000](http://localhost:3000/)
++ **[Nodemon](https://nodemon.io/):** A Node.js development utility and file watcher for automated server restart
 
 ## General Utility [NPM](https://www.npmjs.com/) Scripts:
 + **`build`:** Deletes existing _dist/_ directory (if any) and outputs a recompiled build
@@ -47,6 +47,7 @@ A bevy of other tools/packages/modules/libraries are indispensable to the app as
 
 ![Module dependency Webpack bloat](https://lh3.googleusercontent.com/81GGtbBHDIHWIFZgtH8NPYs7XSnAg6qbBkhfBUZCgT6sP3R_ZYaYCb3yF7eClctg4sS8PsCpbWCa7gBtbcxjRZyFVR1aKfIgX-R_f3FqGmhR0YfSJLOjXO8k4-g6mOOV0HGiC4rKW5iPyVa-7JW1pIPIRdEqEuzN-R1-VUGiEQ1mXVt2Dlz4UtdsLA9f5H0jQJWOFBvq8mExqOl9efKxfn8f7JOnn2hDYhzCjALFEwsxmGkfi7mK4xd6epx2nL5MqPhhg0xfH6xfJ4L_CoOfgUeoJQFC6kCFpCbwT4lMgBK73WAC0zpzogCM90Y07oVHGoR6g6ww6zoz_oYdDoHQWJd32ob-Z5g4RndIBO8jGPS5D3WutkDn6nIWH6KCR4VpEjpLzdGP2NQESHcQkeEBwoJQlNopKZ07NRz8hDzTPNyYtKw72tCBxiOMaVQXxm694ZrDF3S46jgeYttKrVidEm7vlsSPKjP5RI5fytmYEXOE58ljinwgncRWrP4mZ0qIvBQcq62Z_qdHj8umAlwcp19zoysMW34Zrx8Xuw_z3VjWHjBT4q5lPiYjpzKZ-Dx_Nyqj2pAjbAeFGDCey2x195rKpiaXJwjq3MQTsDfnuK1yVN9OnA=w298-h249-no)
 + **`test`:** Runs all written tests (via the [Mocha](https://mochajs.org/) test suite in conjunction with the [Chai](http://chaijs.com/) helper library)
++ **`test:watch`:** Analogues to Webpack's `--watch` flag for continuous monitoring of file changes, this command likewise `watch`es for changes to the project and, in the event such are detected, will automagically rerun our Mocha test suite files. Note that while Mocha comes equipped with a [`--watch` flag](https://mochajs.org/#usage) (or, in the equivalent shorthand, `-w`) out of the box, usage with MongoDB can be quarrelsome and is prone to [issues](https://github.com/Automattic/mongoose/issues/1251). Consequently, this script instead relies on _Nodemon_ to re-run all tests by executing the `mocha` CLI command (via its [`--exec` flag](https://github.com/remy/nodemon/#running-non-node-scripts)), additionally passing the `-R min` options. The latter instructs Mocha to run these tests using the [min](https://mochajs.org/#min) [reporter](https://mochajs.org/#reporters) — an option that restricts terminal test output to only a summary view (save for errors hit) while also clearing the terminal to ensure this test summary remains in view.
 + **`watch`:** Instructs Webpack to [`watch`](http://webpack.github.io/docs/troubleshooting.html#watching) (or `-w`) for all file changes, avoiding the tedium of manually rerunning the compilation command (_i.e._, `webbpack`). Note that changes made to the Webpack configuration itself fall outside the scope of the `watch` command and require a manual restart before changes are made evident.
 
 ## Roadmap
