@@ -102,9 +102,7 @@
       }
     }
     .tl-location {
-      margin: 1rem 0 0;
       cursor: pointer;
-      em { margin-left: 1rem; }
       .map-toggle {
         transition: transform 0.25s ease;
         float: right;
@@ -123,6 +121,8 @@
         }
       }
     }
+    .tl-location,
+    .tl-date { margin: 1rem 0 0; }
     &:hover .tl-toolbar { @extend %visible; }
     .tl-toolbar {
       @include cbTransition(0.25s 0.25s cubic-bezier(0, 0.25, 0.7, 0.4));
@@ -174,5 +174,14 @@
     height: 5rem;
     font-size: 3.5rem;
     line-height: 5rem;
+  }
+}
+
+.glyphicon {
+  &-tags { padding-right: 0.5rem; }
+  .panel-body &:first-child,
+  .panel-footer &:first-child {
+    margin-right: 1rem;
+    color: $theme-red;
   }
 }
