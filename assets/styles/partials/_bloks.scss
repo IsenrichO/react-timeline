@@ -7,9 +7,11 @@
   vertical-align: middle;
 }
 
-.input-group {
+.input-gr {
   position: relative;
   display: table;
+  width: 100%;
+  margin-bottom: 1rem;
   border-collapse: separate;
   &-addon {
     @extend %input-group;
@@ -22,6 +24,47 @@
     text-align: center;
     background-color: #EEE;
     border: 1px solid $theme-border;
-    border-radius: 4px;
+    border-radius: 4px 0 0 4px;
   }
 }
+
+.form-cont {
+  display: block;
+  width: 100%;
+  padding: 0.5rem .75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #464A4C;
+  background-color: #FFF;
+  background-image: none;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  -webkit-transition: border-color ease-in-out 0.15s,
+                      -webkit-box-shadow ease-in-out 0.15s;
+  -moz-transition:    border-color ease-in-out 0.15s,
+                      -webkit-box-shadow ease-in-out 0.15s;
+  transition:         border-color ease-in-out 0.15s,
+                      -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition:      border-color ease-in-out 0.15s,
+                      box-shadow ease-in-out 0.15s;
+  transition:         border-color ease-in-out 0.15s,
+                      box-shadow ease-in-out 0.15s;
+  transition:         border-color ease-in-out 0.15s,
+                      box-shadow ease-in-out 0.15s,
+                      -webkit-box-shadow ease-in-out 0.15s;
+  &:focus {
+    border-color: #B9E2F2;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+                        0 0 8px rgb(177, 91, 91);
+    box-shadow:         inset 0 1px 1px rgba(0, 0, 0, 0.075),
+                        0 0 8px rgba(0, 183, 255, 0.42);
+  }
+  .input-gr-addon + & {
+    border-radius: 0 4px 4px 0;
+    border-left: none;
+  }
+}
+textarea.form-cont { max-height: 150px; }

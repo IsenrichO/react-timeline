@@ -188,3 +188,15 @@
     color: $theme-red;
   }
 }
+
+
+
+
+.tl-event .panel-header h3 {
+  width: 80% !important;
+  text-align: end;
+}
+.tl-event-invert .panel-header h3 {
+  width: 80% !important;
+  text-align: start;
+}
