@@ -1,6 +1,6 @@
 'use strict';
-const assert = require('assert');
-const Event = require('../db/models/Event');
+const assert = require('assert'),
+      Event = require('../db/models/Event');
 
 
 describe('Updating records', () => {
@@ -13,7 +13,8 @@ describe('Updating records', () => {
       type: 'Testing',
       description: 'Mocha test to confirm Event records are updated in MongoDB',
       location: 'San Francisco, CA',
-      date: new Date()
+      date: new Date(),
+      numRevisions: 0
     });
 
     updateTestEvt
@@ -68,6 +69,18 @@ describe('Updating records', () => {
       Event.findByIdAndUpdate(updateTestEvt._id, { name: 'Updated Mocha Test Event' }),
       done
     );
+  });
+
+  // Tests that records for which the `photoCount` property is incremented are properly
+  //  saved to the database with the adjusted value:
+  it('should allow the `photoCount` to be incremented', (done) => {
+    Event
+      .update({ name: 'Mocha Update Test Event' }, { $inc: { numRevisions: 3 } })
+      .then(() => Event.findOne({ name: 'Mocha Update Test Event' }))
+      .then((evt) => {
+        assert(evt.numRevisions === 3);
+        done();
+      });
   });
 
 });

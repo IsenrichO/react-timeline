@@ -11,7 +11,6 @@ import { History, Store } from './store/configureStore';
 
 
 function loadEvts() {
-  console.log('loadEvts Function Called');
   Store.dispatch(fetchSeedData());
 }
 

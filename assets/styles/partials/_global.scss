@@ -47,8 +47,8 @@ a {
 textarea {
   display: block;
   width: inherit;
-  -moz-resize: vertical;
-       resize: vertical;
+  -moz-resize: vertical !important;
+       resize: vertical !important;
 }
 
 blockquote {

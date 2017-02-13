@@ -7,7 +7,9 @@ import { debounce, toggleAccordionSection, formatDate } from '../../Utilities';
 
 const debounceToggle = (evt) => debounce(toggleAccordionSection(evt), 2000, true);
 
-const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation }) => (
+const photosTagLine = (numPhotos) => `${numPhotos} Photo${numPhotos !== 1 ? 's' : ''}`;
+
+const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => (
   <div className="panel-body">
     <blockquote>{ evtDescription }</blockquote>
     <div className="tl-date">
@@ -27,6 +29,7 @@ const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation })
       className="tl-photos"
       onClick={ debounceToggle }>
       <i className="glyphicon glyphicon-picture" />
+      <em>{ photosTagLine(photoCount) }</em>
       <i className="toggle-glyph glyphicon glyphicon-menu-right" />
     </div>
   </div>

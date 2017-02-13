@@ -9,7 +9,11 @@ import EditEventModal from '../EditEventModal';
 import { fetchSeedData } from '../../actions/index';
 
 
-class App extends Component {
+@connect(
+  (state) => ({ seedData: state.seedDataAggregator }),
+  (dispatch) => bindActionCreators({ fetchSeedData }, dispatch)
+)
+export default class App extends Component {
   constructor(props) {
     super(props);
   }
@@ -24,14 +28,3 @@ class App extends Component {
     );
   }
 };
-
-
-let mapStateToProps = (state) => ({
-  seedData: state.seedDataAggregator
-});
-
-let mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchSeedData
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);

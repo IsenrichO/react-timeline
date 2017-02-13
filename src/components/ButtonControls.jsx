@@ -2,11 +2,12 @@
 import React from 'react';
 
 
-const ButtonControls = () => (
+const ButtonControls = ({ toggleModal }) => (
   <button
     className="btn-controls"
     type="button"
-    name="mainControlBtn">
+    name="mainControlBtn"
+    onClick={ toggleModal }>
   </button>
 );
 
