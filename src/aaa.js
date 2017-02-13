@@ -45,17 +45,45 @@ const listEvents = (req, res) => {
 
 
 // Perform
-const addEvents = (req, res, next) => {
-  const params = req.body;
-  console.log('Add Events Request Body:', params);
-  
-  Object
-    .keys(Event.schema.obj)
-    .forEach(datum => {
-      params[datum] = params[datum] || '';
-    });
-  new Event(params).save(handleResponse);
+const addEvents = (req, res) => {
+  const { name, date, location, description } = req.body;
+  const dd = { name, date, location, description };
+  console.log('Add Events Request Body:', req.body);
+
+  // Object
+  //   .keys(Event.schema.obj)
+  //   .forEach(datum => {
+  //     params[datum] = params[datum] || '';
+  //   });
+  new Event(dd).save((err) => {
+    if (err) {
+      res.status(400).send('SHIT YOOO');
+    } else {
+      res.json(dd);
+    }
+  });
 };
+// router.post('/tasks', function(req, res) {
+//   let newTask = new Task(req.body.taskParams);
+//   newTask.lastCompleted = null;
+//   let homeId = req.body.taskParams._homeId;
+
+//   Home.findById(homeId, function(err, home) {
+//     if(err){
+//       res.status(400).send("Need a house")
+//     } else {
+//       let index = Math.floor(Math.random() * home.users.length);
+//       newTask.currentUser = home.users[index];
+//       newTask.save(function(err) {
+//         if(err) {
+//           res.status(400).send("Error saving")
+//         } else {
+//           res.json(newTask);
+//         }
+//       })
+//     }
+//   })
+// });
 
 
 // Perform
