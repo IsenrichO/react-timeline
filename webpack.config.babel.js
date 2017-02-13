@@ -5,10 +5,12 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import Path from 'path';
 import PostCSS from './postcss.config';
+import DotEnv from 'dotenv-webpack';
 
 
-const isProdEnv = (process.env.NODE_EV === 'production');
-  console.log(`Node environment:\t${isProdEnv}`);
+// const appEnv = (process.env.NODE_ENV || 'dev');
+const isProdEnv = (process.env.NODE_ENV === 'production');
+  console.log(`Node Environment:\t${process.env.NODE_ENV}`);
 
 const VENDOR_LIBS = [
   'body-parser',
@@ -80,14 +82,20 @@ const BASE_CONFIG = {
     ]
   },
   plugins: [
+    // Configure and read in local environment variables:
+    new DotEnv({
+      path: './.env'
+    }),
     new Webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
       minChunks: Infinity
     }),
     new Webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      }
+      // 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+
+      // 'process.env': {
+      //   NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      // }
     }),
     new Webpack.LoaderOptionsPlugin({
       minimize: true,
@@ -110,7 +118,6 @@ const BASE_CONFIG = {
   cache: true,
   watch: true,
   devtool: `${isProdEnv ? 'inline' : 'cheap-eval'}-source-map`,
-  // devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx']
   },
