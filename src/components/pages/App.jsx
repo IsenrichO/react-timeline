@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import '../../../assets/styles/master.scss';
 import Timeline from '../Timeline';
 import EditEventModal from '../EditEventModal';
@@ -22,7 +21,7 @@ export default class App extends Component {
     return (
       <div id="tl-container">
         <Timeline
-          data={ this.props.seedData } />
+          seedData={ this.props.seedData } />
         <EditEventModal />
       </div>
     );
