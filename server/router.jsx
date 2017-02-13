@@ -9,7 +9,7 @@ const Express = require('express'),
       Request = require('request');
 
 const Event = require('../db/models/Event');
-const ApI = require('../src/aaa');
+const ApI = require('./aaa');
 const seedData = require('../src/constants/json/SeedData.json');
 
 
@@ -21,7 +21,7 @@ App.use(BodyParser.json());
 
 // Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
 //  This assignment addresses the Mongoose mpromise library deprecation warning.
-// Mongoose.Promise = global.Promise;
+Mongoose.Promise = global.Promise;
 
 // Connect to the database:
 Mongoose.connect('mongodb://localhost:27017/events');
@@ -55,7 +55,7 @@ const formatDate = (date) => {
   let dateStr = date
     .replace(/T.+Z/, '')
     .split('-');
-  [...dateStr] = [dateStr[2], monthNames[+dateStr[1]], dateStr[0]];
+  [...dateStr] = [dateStr[2], monthNames[+dateStr[1] - 1], dateStr[0]];
   return dateStr.join(' ');
 };
 
