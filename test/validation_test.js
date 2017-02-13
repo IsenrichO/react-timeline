@@ -1,6 +1,6 @@
 'use strict';
-const assert = require('assert');
-const Event = require('../db/models/Event');
+const assert = require('assert'),
+      Event = require('../db/models/Event');
 
 
 describe('Validation of User records', () => {

@@ -1,6 +1,6 @@
 'use strict';
-const assert = require('assert');
-const Event = require('../db/models/Event');
+const assert = require('assert'),
+      Event = require('../db/models/Event');
 
 
 describe('Reading events from the database', () => {
@@ -21,8 +21,8 @@ describe('Reading events from the database', () => {
       .then(() => { done(); });
   });
 
-  // Tests that using Mongoose's `find()` method successfully queries all existing
-  //  records from the database:
+  // Tests that using Mongoose's `find()` method successfully queries all
+  //  existing records from the database:
   it('should find all events with a type of \'Testing\'', (done) => {
     Event
       .find({ type: 'Testing' })
@@ -32,8 +32,8 @@ describe('Reading events from the database', () => {
       });
   });
 
-  // Tests that using Mongoose's `findOne()` method successfully queries a single
-  //  record from the database:
+  // Tests that using Mongoose's `findOne()` method successfully queries a
+  //  single record from the database:
   it('should find a user with a particular id', (done) => {
     Event
       .findOne({ _id: readTestEvt._id })

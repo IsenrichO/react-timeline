@@ -2,8 +2,8 @@
 const Mongoose = require('mongoose');
 
 
-// Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
-//  This assignment addresses the Mongoose mpromise library deprecation warning.
+// Specify native ECMAScript2015 Promise object as default Promise library for Mongoose
+//  to use. This assignment addresses the Mongoose mpromise library deprecation warning.
 Mongoose.Promise = global.Promise;
 
 // Only ever executed once for entire test suite:

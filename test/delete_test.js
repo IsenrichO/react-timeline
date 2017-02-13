@@ -1,6 +1,6 @@
 'use strict';
-const assert = require('assert');
-const Event = require('../db/models/Event');
+const assert = require('assert'),
+      Event = require('../db/models/Event');
 
 
 describe('Deleting events', () => {
@@ -21,8 +21,8 @@ describe('Deleting events', () => {
       .then(() => { done(); });
   });
 
-  // Tests that an instance of the `Event` model is successfully dropped from the database
-  //  using Mongoose's instance-based `remove()` method:
+  // Tests that an instance of the `Event` model is successfully dropped from
+  //  the database using Mongoose's instance-based `remove()` method:
   it('should remove a record using the instance-based `remove()` method', (done) => {
     deleteTestEvt
       .remove()
@@ -33,8 +33,8 @@ describe('Deleting events', () => {
       });
   });
 
-  // Tests that all records (i.e., instances) of the `Event` class queried using Mongoose's
-  //  class-based `remove()` method are successfully dropped from the database:
+  // Tests that instances of the `Event` class queried using Mongoose's class-
+  //  based `remove()` method are successfully dropped from the database:
   it('should remove records using the class-based `remove()` method', (done) => {
     Event
       .remove({ name: 'Mocha Deletion Test Event' })
@@ -45,8 +45,8 @@ describe('Deleting events', () => {
       });
   });
 
-  // Tests that the single record of the `Event` class queried by Mongoose's `findOneAndRemove()`
-  //  method is successfully dropped from the database:
+  // Tests that the single record of the `Event` class queried by Mongoose's
+  //  `findOneAndRemove()` method is successfully dropped from the database:
   it('should remove records using the class-based `findOneAndRemove()` method', (done) => {
     Event
       .findOneAndRemove({ name: 'Mocha Deletion Test Event' })
@@ -57,8 +57,8 @@ describe('Deleting events', () => {
       });
   });
 
-  // Tests that the single record of the `Event` class queried by Mongoose's `findByIdAndRemove()`
-  //  method is successfully dropped from the database:
+  // Tests that the single record of the `Event` class queried by Mongoose's
+  //  `findByIdAndRemove()` method is successfully dropped from the database:
   it('should remove a record using the class-based `findByIdAndRemove()` method', (done) => {
     Event
       .findByIdAndRemove(deleteTestEvt._id)
