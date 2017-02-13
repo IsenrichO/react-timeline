@@ -35,16 +35,11 @@ export const fetchSeedData = () => {
 // };
 
 
-export const addNewEvent = (name, date, location, description) => {
+export const addNewEvent = (evtData) => {
   console.log('Async Action begun');
   return (dispatch) => {
     return Axios
-      .post('/api/events', {
-        name,
-        date,
-        location,
-        description
-      })
+      .post('/api/events', evtData)
       .then(response => {
         console.log('hitting thenable');
         console.log('then response:', response);
