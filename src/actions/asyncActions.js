@@ -5,7 +5,7 @@ import * as Types from './types';
 import { loadSeedData } from './index';
 
 
-// Returns a function and will be called in the Redux-Thunk middleware:
+// Returns a function to be called within the Redux-Thunk middleware:
 export const fetchSeedData = () => {
   return function(dispatch) {
     return Axios
@@ -18,7 +18,6 @@ export const fetchSeedData = () => {
         timeout: 30000
       })
       .then(response => {
-        console.log('thenable duck');
         dispatch(loadSeedData(response.data));
       });
   };
@@ -34,4 +33,61 @@ export const fetchSeedData = () => {
 //       cb(data);
 //     }
 //   });
+// };
+
+
+export const addNewEvent = (name, date, location, description) => {
+  console.log('Async Action begun');
+  const request = Axios.post('/api/events', {
+    name,
+    date,
+    location,
+    description
+  });
+};
+
+// name: {
+//   type: String,
+//   validate: {
+//     validator: (name) => name.length >= 3,
+//     message: 'Your event name must be at least 3 characters long.'
+//   },
+//   required: [true, 'This event requires a name.']
+// },
+// date: {
+//   type: Date,
+//   validate: {
+//     validator: (date) => date.getTime() <= Date.now(),
+//     message: 'A date is required for this event.'
+//   },
+//   required: [true, 'This event requires a date.']
+// },
+// formattedDate: String,
+// noteID: String,
+// type: String,
+// description: String,
+// location: String,
+// photos: [EventPhotoSchema],
+// tags: [EventTagSchema],
+// numRevisions: Number
+
+// export const addNewEvent = () => {
+//   return function(dispatch) {
+//     return Axios
+//       .post('/api/events')
+//   };
+// };
+
+
+// export const fetchJobs = (jobSearch, city) => {
+//   const request = Axios.post('/api/v1/jobs', {
+//     jobTitle: jobSearch,
+//     city: city,
+//     _csrf: getCookie('_csrf')
+//   });
+
+//   return {
+//     type: FETCH_JOBS,
+//     payload: request
+//   };
 // };

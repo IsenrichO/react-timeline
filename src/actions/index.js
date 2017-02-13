@@ -17,3 +17,8 @@ export const logEventModalData = (payload) => ({
 export const toggleEventModal = () => ({
   type: Types.TOGGLE_EVENT_MODAL
 });
+
+export const addNewEventData = () => ({
+    type: Types.ADD_NEW_EVENT,
+    payload: request
+});
