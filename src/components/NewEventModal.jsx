@@ -15,10 +15,10 @@ import { addNewEvent } from '../actions/asyncActions';
 // isNewModal = true
 // const NewEventModal = ({ modalStatus, toggleModal }) => (
 
-@connect(
-  null,
-  (dispatch) => bindActionCreators({ addNewEvent }, dispatch)
-)
+// @connect(
+//   null,
+//   (dispatch) => bindActionCreators({ addNewEvent }, dispatch)
+// )
 export default class NewEventModal extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +34,9 @@ export default class NewEventModal extends Component {
       this.refs.newEvtDescription.value
     ];
 
-    this.props.addNewEvent($newEvtName, $newEvtDate, $newEvtLocation, $newEvtDescription);
+    // this.props.addNewEvent($newEvtName, $newEvtDate, $newEvtLocation, $newEvtDescription);
+    // this.props.dothis($newEvtName, $newEvtDate, $newEvtLocation, $newEvtDescription);
+    this.props.adddder($newEvtName, $newEvtDate, $newEvtLocation, $newEvtDescription);
   }
 
   render() {
@@ -111,12 +113,14 @@ export default class NewEventModal extends Component {
               </div>
             </fieldset>
             <FileUploadAPI />
-            <button
-              type="button"
-              name="saveNewEvtBtn"
-              onClick={ this.saveNewEvt }>
-              Save
-            </button>
+            <fieldset>
+              <button
+                type="button"
+                name="saveNewEvtBtn"
+                onClick={ this.saveNewEvt }>
+                Save
+              </button>
+            </fieldset>
           </form>
         </div>
       </Modal>
