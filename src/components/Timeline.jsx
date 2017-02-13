@@ -15,7 +15,11 @@ import { addNewEvent } from '../actions/asyncActions';
     eventEditingModalData: state.eventEditingModalData,
     eventEditingModalState: state.eventEditingModalState
   }),
-  (dispatch) => bindActionCreators({ logEventModalData, toggleEventModal }, dispatch)
+  (dispatch) => bindActionCreators({
+    logEventModalData,
+    toggleEventModal,
+    addNewEvent
+  }, dispatch)
 )
 export default class Timeline extends Component {
   constructor(props) {
@@ -29,6 +33,7 @@ export default class Timeline extends Component {
     this.renderCU = this.renderCU.bind(this);
 
     this.toggleNewEvtModal = this.toggleNewEvtModal.bind(this);
+    this.adddder = this.adddder.bind(this);
     this.state = {
       newModal: false
     };
@@ -37,11 +42,14 @@ export default class Timeline extends Component {
   toggleModal() { this.props.toggleEventModal(); }
   
   toggleNewEvtModal() {
-    console.log('new modal class method');
     this.setState({ newModal: !this.state.newModal });
   }
 
   logModalData(data) { this.props.logEventModalData(data); }
+
+  adddder(name, date, location = 'SF, CA', description = 'descrip') {
+    this.props.addNewEvent(name, date, location, description);
+  }
 
   orderTimelineEvents(evts) {
     return evts && evts.length
@@ -68,7 +76,9 @@ export default class Timeline extends Component {
   }
 
 
-
+  dothis(name, date, location, description) {
+    loaddd(name, date, location, description);
+  }
 
   renderOrderedEvents(events) {
     return events.map((evt, index) =>
@@ -103,7 +113,8 @@ export default class Timeline extends Component {
           toggleModal={ this.toggleModal } />
         <NewEventModal
           modalStatus={ this.state.newModal }
-          toggleModal={ this.toggleNewEvtModal } />
+          toggleModal={ this.toggleNewEvtModal }
+          adddder={ this.adddder } />
         <ButtonControls
           toggleModal={ this.toggleNewEvtModal } />
       </div>
