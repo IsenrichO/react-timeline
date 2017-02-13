@@ -21,7 +21,7 @@ App.use(BodyParser.json());
 
 // Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
 //  This assignment addresses the Mongoose mpromise library deprecation warning.
-Mongoose.Promise = global.Promise;
+// Mongoose.Promise = global.Promise;
 
 // Connect to the database:
 Mongoose.connect('mongodb://localhost:27017/events');
