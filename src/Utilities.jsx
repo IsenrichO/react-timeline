@@ -26,7 +26,7 @@ export { debounce };
 // Controller for animation/behavior of Google Static Maps image wrapper:
 const toggleAccordionSection = (evt) => {
   const $target = $(evt.currentTarget),
-        [$mapWrapper, $toggleArrow] = [$('.static-map-wrapper', $target), $('.map-toggle', $target)];
+        [$mapWrapper, $toggleArrow] = [$('.static-map-wrapper', $target), $('.toggle-glyph', $target)];
 
   $.each([$toggleArrow, $mapWrapper], (index, el) => {
     el.toggleClass('active');

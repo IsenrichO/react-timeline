@@ -47,6 +47,8 @@ const listEvents = (req, res) => {
 // Perform
 const addEvents = (req, res, next) => {
   const params = req.body;
+  console.log('Add Events Request Body:', params);
+  
   Object
     .keys(Event.schema.obj)
     .forEach(datum => {
