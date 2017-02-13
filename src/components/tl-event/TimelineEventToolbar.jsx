@@ -31,6 +31,12 @@ const TimelineEventToolbar = ({ evt, logModalData, toggleModal }) => (
           // onClick={ () => {} }
           />
     </button>
+    <button
+      type="button"
+      name="deleteEvtBtn"
+      title="Delete this event from your timeline">
+      <i className="glyphicon glyphicon-trash" />
+    </button>
   </div>
 );
 
