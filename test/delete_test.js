@@ -62,7 +62,7 @@ describe('Deleting events', () => {
   it('should remove a record using the class-based `findByIdAndRemove()` method', (done) => {
     Event
       .findByIdAndRemove(deleteTestEvt._id)
-      .then(() => Event.findOne({  }))
+      .then(() => Event.findOne({}))
       .then((evt) => {
         assert(evt === null);
         done();
