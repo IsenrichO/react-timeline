@@ -43,6 +43,66 @@ const listEvents = (req, res) => {
     // .exec(handleResponse);
 };
 
+const getTLRange = (req, res) => {
+  const minQuery = Event
+    .find({})
+    .sort({ date: 1 })
+    .limit(1)
+    .then(evts => evts[0].date);
+
+  const maxQuery = Event
+    .find({})
+    .sort({ date: -1 })
+    .limit(1)
+    .then(evts => evts[0].date);
+
+  return Promise
+    .all([minQuery, maxQuery])
+    .then(result => ({
+      min: result[0],
+      max: result[1]
+    }));
+};
+
+
+/**
+ * Searches through the Event collection according to defined input @params
+ * @param  {Object} critera      An object with event data
+ * @param  {String} sortProperty The property by which to sort the result set
+ * @param  {Number} offset       The number of records to skip in the result set
+ * @param  {Number} limit        The number of records to return in the result set
+ * @return {Promise}             A Promise that resolves
+ */
+const customQuery = (criteria, sortProperty, offset = 0, limit = 20) => {
+  const query = Event
+    .find(buildQuery(criteria))
+    .sort({ [sortProperty]: 1 })
+    .skip(offset)
+    .limit(limit);
+
+  return Promise
+    .all([query, Event.count()])
+    .then(results => ({
+      all: results[0],
+      count: results[1],
+      offset,
+      limit
+    }));
+};
+
+const buildQuery = (criteria) => {
+  const query = {};
+  
+  if (criteria.date) {
+    query.range = {
+      $gte: criteria.date.min,
+      $lte: criteria.date.max
+    };
+  }
+
+  return query;
+};
+
 
 // Perform
 const addEvents = (req, res) => {
