@@ -3,15 +3,14 @@ import React from 'react';
 import { browserHistory, Router, Route, Link } from 'react-router';
 
 
-const TimelineEventToolbar = ({ evt, logModalData, toggleModal }) => (
+const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt }) => (
   <div className="tl-toolbar">
     <button
       type="button"
       name="View full event"
       title="Show full note">
       <Link to={ `/notes/${evt.noteID}` }>
-        <i
-          className="glyphicon glyphicon-eye-open" />
+        <i className="glyphicon glyphicon-eye-open" />
       </Link>
     </button>
     <button
@@ -26,16 +25,18 @@ const TimelineEventToolbar = ({ evt, logModalData, toggleModal }) => (
       type="button"
       name="SocialShareBtn"
       title="Share to your social networks">
-        <i
-          className="glyphicon glyphicon-send"
-          // onClick={ () => {} }
-          />
+      <i
+        className="glyphicon glyphicon-send"
+        // onClick={ () => {} }
+        />
     </button>
     <button
       type="button"
       name="deleteEvtBtn"
       title="Delete this event from your timeline">
-      <i className="glyphicon glyphicon-trash" />
+      <i
+        className="glyphicon glyphicon-trash"
+        onClick={ () => { deleteEvt(evt); } } />
     </button>
   </div>
 );
