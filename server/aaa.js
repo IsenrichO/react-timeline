@@ -87,21 +87,31 @@ const addEvents = (req, res) => {
 
 
 // Perform
-const updateEvents = (req, res, next) => {
-  let  paramsToUpdate = [];
+// const updateEvents = (req, res, next) => {
+//   // let  paramsToUpdate = [];
 
-  for (var key in req.body) {
-    let obj = {};
-    obj[key] = req.body[key];
-    paramsToUpdate.push(obj);
-  }
+//   // for (var key in req.body) {
+//   //   let obj = {};
+//   //   obj[key] = req.body[key];
+//   //   paramsToUpdate.push(obj);
+//   // }
 
-  Event
-    .update(
-      { _id: req.params.id },
-      ...paramsToUpdate
-    )
-    .exec(handleResponse);
+//   Event
+//     .update(
+//       { _id: req.params.id },
+//       ...paramsToUpdate
+//     )
+//     .exec(handleResponse);
+// };
+
+/**
+ * Edits a single instance of the Event model
+ * @param {string} uuid - The UUID of the event record being edited
+ * @param {object} evtProps - An object of property names and the corresponding edits
+ * @return {promise} A Promise that resolves when the record has been edited
+ */
+const updateEvents = (uuid, evtProps) => {
+  return Event.update({ uuid }, evtProps);
 };
 
 
@@ -116,8 +126,25 @@ const deleteEvents = (req, res, next) => {
       sendResponse(err, docs);
     }
   };
-  Event.findByIdAndRemove(req.params.id, handleDelete);
+  // Event.findByIdAndRemove(req.params.id, handleDelete);
+
+  console.log(`\n\nDELETE REQUEST BODY:\t`, req.params.id);
+  Event
+    .findOneAndRemove({ uuid: req.params.id }, (err, data) => {
+      if (err) {
+        console.error(`\nError: Failure to execute DELETE request.`);
+      } else {
+        console.log('\nDELETE request successful!');
+        res.json(data);
+      }
+    });
+  // Event.findByIdAndRemove(req.)
 };
+
+// const deleteEvent = (req, res) => {
+//   console.log('REQUEST BODY:', req.body);
+//   Event.findByIdAndRemove(req.params.id);
+// };
 
 
 // App.get('/test', (req, res, next) => {
