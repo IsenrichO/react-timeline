@@ -16,9 +16,21 @@ describe('Reading events from the database', () => {
       date: new Date()
     });
 
+    // [readTestEvt, readTestEvt2, readTestEvt3, readTestEvt4] = new Array(4)
+    //   .fill(new Event({
+    //     name: 'Mocha Skip & Limit Querying Test Event No. ',
+    //     noteID: 'Test_001',
+    //     type: 'Testing',
+    //     description: 'Mocha test to confirm Mongoose `.skip()` and `.limit()` queries\
+    //                   function as intended.',
+    //     location: 'San Francisco, CA',
+    //     date: new Date()
+    //   }))
+    //   .map((evt, index) => Object.assign({}, evt, { name: `${evt.name}${index + 1}` }));
+
     readTestEvt
       .save()
-      .then(() => { done(); });
+      .then(() => done());
   });
 
   // Tests that using Mongoose's `find()` method successfully queries all
@@ -44,3 +56,49 @@ describe('Reading events from the database', () => {
   });
 
 });
+
+describe('Handling big collections with pagination', () => {
+  let skipLimitTest1, skipLimitTest2, skipLimitTest3, skipLimitTest4;
+
+  beforeEach((done) => {
+    [skipLimitTest1, skipLimitTest2, skipLimitTest3, skipLimitTest4] = new Array(4)
+      .fill({})
+      .map((evt, index) => evt = new Event({
+        name: `Mocha Skip & Limit Querying Test Event No. ${index + 1}`,
+        noteID: `PaginationTestNo_${index + 1}`,
+        type: 'Testing',
+        description: 'Mocha test to confirm Mongoose `.skip()` and `.limit()` queries\
+                      function as intended.',
+        location: 'San Francisco, CA',
+        date: new Date()
+      }));
+
+    Promise
+      .all([skipLimitTest1.save(), skipLimitTest2.save(), skipLimitTest3.save(), skipLimitTest4.save()])
+      .then(() => done());
+  });
+
+  // Tests that
+  it('should allow for skipping and limiting the result set', (done) => {
+    // Because we cannot guarantee that the four `skipLimitTest<#>` Event records will `save` to the DB
+    //  in the order they were declared inside the `Promise.all()` method call, observe that a `sort()`
+    //  call is chained below to ensure our records have a predictable order and ensure our `assert`ions
+    //  test a verifiable state.
+    Event
+      .find({})
+      .sort({ name: 1 })  // Sort by the `name` property in ascending order
+      .skip(1)
+      .limit(2)
+      .then(evts => {
+        // Tests proper functioning of the `limit()` call:
+        assert(evts.length === 2);
+
+        // Tests values of result set based on `skip()` call:
+        assert(evts[0].name === 'Mocha Skip & Limit Querying Test Event No. 2');
+        assert(evts[1].name === 'Mocha Skip & Limit Querying Test Event No. 3');
+        done();
+      });
+  });
+
+});
+
