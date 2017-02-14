@@ -24,6 +24,7 @@
     "stats": "webpack --json > stats.json",
     "test": "mocha test/**/*.js --compilers js:babel-register",
     "test:watch": "nodemon --exec 'mocha test/**/*.js -R min'",
+    "view:dbs": "mongo show dbs",
     "watch": "NODE_ENV=dev webpack -w"
   },
   "keywords": [
