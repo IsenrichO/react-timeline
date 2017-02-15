@@ -23,6 +23,7 @@
     "start": "nodemon",
     "stats": "webpack --json > stats.json",
     "test": "mocha test/**/*.js --compilers js:babel-register",
+    "test:recursive": "nodemon --exec 'mocha --recursive -R min'",
     "test:watch": "nodemon --exec 'mocha test/**/*.js -R min'",
     "view:dbs": "mongo show dbs",
     "watch": "NODE_ENV=dev webpack -w"
@@ -86,6 +87,7 @@
     "rimraf": "^2.5.4",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
+    "supertest": "^3.0.0",
     "url-loader": "^0.5.7",
     "webpack-dev-server": "^2.2.0-rc.0"
   },
