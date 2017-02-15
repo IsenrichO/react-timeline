@@ -67,7 +67,7 @@ const getTLRange = (req, res) => {
 
 /**
  * Searches through the Event collection according to defined input @params
- * @param  {Object} critera      An object with event data
+ * @param  {Object} criteria     An object with event data
  * @param  {String} sortProperty The property by which to sort the result set
  * @param  {Number} offset       The number of records to skip in the result set
  * @param  {Number} limit        The number of records to return in the result set
@@ -81,7 +81,7 @@ const customQuery = (criteria, sortProperty, offset = 0, limit = 20) => {
     .limit(limit);
 
   return Promise
-    .all([query, Event.count()])
+    .all([query, Event.find(buildQuery(criteria)).count()])
     .then(results => ({
       all: results[0],
       count: results[1],
@@ -92,7 +92,11 @@ const customQuery = (criteria, sortProperty, offset = 0, limit = 20) => {
 
 const buildQuery = (criteria) => {
   const query = {};
-  
+
+  if (criteria.name) {
+    criteria.$text = { $search: critera.name };
+  }
+
   if (criteria.date) {
     query.range = {
       $gte: criteria.date.min,
@@ -101,6 +105,20 @@ const buildQuery = (criteria) => {
   }
 
   return query;
+};
+
+
+/**
+ * Modifies a group of Event class records
+ * @param  {Array} _ids  An Array of the _ids denoting those Event records to update
+ * @return {Promise}     A Promise that resolves after the update
+ */
+const batchUpdate = (_ids) => {
+  return Event
+    .update(
+      { _id: { $in: _ids } },
+      { multi: true }
+    );
 };
 
 
@@ -186,9 +204,7 @@ const deleteEvents = (req, res, next) => {
       sendResponse(err, docs);
     }
   };
-  // Event.findByIdAndRemove(req.params.id, handleDelete);
 
-  console.log(`\n\nDELETE REQUEST BODY:\t`, req.params.id);
   Event
     .findOneAndRemove({ uuid: req.params.id }, (err, data) => {
       if (err) {
@@ -198,7 +214,6 @@ const deleteEvents = (req, res, next) => {
         res.json(data);
       }
     });
-  // Event.findByIdAndRemove(req.)
 };
 
 // const deleteEvent = (req, res) => {
