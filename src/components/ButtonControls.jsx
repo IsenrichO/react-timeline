@@ -8,9 +8,6 @@ import MotionComponent from './MotionComponent';
 const MAIN_BTN_DIAM = 70,
       CHILD_BTN_DIAM = 35,
       NUM_CHILDREN = 4,
-      // [MAIN_BTN_X, MAIN_BTN_Y] = [980, 1942],
-      // [MAIN_BTN_X, MAIN_BTN_Y] = [1005, 1977],
-      // [MAIN_BTN_X, MAIN_BTN_Y] = [980, 42],
       [MAIN_BTN_X, MAIN_BTN_Y] = [995, 77],
       SPRING_CONFIG = {
         stiffness: 400,
@@ -24,6 +21,7 @@ const MAIN_BTN_DIAM = 70,
 // Should be between 0 and 0.5 (its maximum value is difference between `scale` in
 //  `finalChildBtnStyles` and `initialChildBtnStyles`)
 const OFFSET = 0.05;
+
 
 // const ButtonControls = ({ toggleModal }) => (
 export default class ButtonControls extends MotionComponent {
@@ -55,6 +53,16 @@ export default class ButtonControls extends MotionComponent {
   closeMenu() {
     this.setState({ isOpen: false });
   }
+
+  // toggleAllLocationAccordions(evt) {
+  //   console.log('collapseAll function hit');
+  //   $('.tl-location').trigger('click');
+  // }
+
+  // toggleAllEventCards(evt) {
+  //   console.log('toggleAllEventCards function hit');
+  //   $('.panel-header .collapse-up').trigger('click');
+  // }
 
   renderChildBtns() {
     const { isOpen } = this.state;
@@ -107,7 +115,8 @@ export default class ButtonControls extends MotionComponent {
                     bottom,
                     transform: `rotate(${rotate}deg) scale(${scale})`,
                     transition: `all 0.25s ${index * 55}ms`
-                  }}>
+                  }}
+                  onClick={ super.getChildObj(index).func }>
                   <i className={ super.getChildBtnGlyph(index) } />
                 </button>
               )}
@@ -131,6 +140,7 @@ export default class ButtonControls extends MotionComponent {
         name="mainControlBtn"
         style={{ ...super.mainBtnStyles(), transform: `rotate(${rotate}deg)` }}
         onClick={ ::this.toggleMenu }>
+        <i className={ `glyphicon glyphicon-${isOpen ? 'th' : 'pencil'}` } />
         { super.BASE_ANGLE2 }
       </button>
     );    
@@ -154,6 +164,7 @@ export default class ButtonControls extends MotionComponent {
     );
   }
 };
+
 
 // export default ButtonControls;
 

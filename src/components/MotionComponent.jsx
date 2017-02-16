@@ -3,11 +3,17 @@ import React, { Component } from 'react';
 import { Motion, StaggeredMotion, spring } from 'react-motion';
 
 
-// True constants:
+// // True constants:
 const MAIN_BTN_DIAM = 70,
       CHILD_BTN_DIAM = 45,
       NUM_CHILDREN = 4,
-      [MAIN_BTN_X, MAIN_BTN_Y] = [995, 77],
+      // [MAIN_BTN_X, MAIN_BTN_Y] = [1588, 77],
+      RIGHT_ADJUST = (
+        42 +  // 3rem = 3 * 1rem = 3 * 14<px> => 42<px>
+        15 +  // Width of right-aligned window scrollbar
+        35    // Half the diameter (i.e., radius) of <button> element
+      ),
+      [MAIN_BTN_X, MAIN_BTN_Y] = [window.innerWidth - RIGHT_ADJUST, 77],
       SPRING_CONFIG = {
         stiffness: 400,
         damping: 28
@@ -158,8 +164,83 @@ export default class MotionComponent extends Component {
   }
 
   getChildBtnGlyph(childIndex) {
-    const childBtnGlyphs = ['pencil', 'minus', 'plus', 'send'];
-    return `glyphicon glyphicon-${childBtnGlyphs[childIndex]}`;
+    const self = this;
+    const childBtnGlyphs = [
+      {
+        glyph: 'plus',
+        func: null
+      }, {
+        glyph: 'minus',
+        func: null
+      }, {
+        glyph: 'send',
+        func: null
+      }, {
+        glyph: 'collapse-up',
+        func: self.toggleAllEventCards
+      }
+    ];
+    return `glyphicon glyphicon-${childBtnGlyphs[childIndex].glyph}`;
+  }
+
+  getChildObj(childIndex) {
+    const self = this;
+    const childBtnGlyphs = [
+      {
+        glyph: 'plus',
+        func: null
+      }, {
+        glyph: 'minus',
+        func: null
+      }, {
+        glyph: 'send',
+        func: ::self.toggleAllLocationAccordions
+      }, {
+        glyph: 'collapse-up',
+        func: ::self.toggleAllEventCards
+      }
+    ];
+    return childBtnGlyphs[childIndex];
+  }
+
+  toggleAllLocationAccordions(evt) {
+    evt.stopPropagation();
+    let $targ = $(evt.currentTarget);
+    let $targ2 = $(evt.currentTarget).children('.glyphicon');
+    console.log('targ', $targ, $targ2);
+    $('.tl-location').trigger('click');
+  }
+
+  toggleAllEventCards(evt) {
+    evt.stopPropagation();
+    
+    let $glyph = $(evt.currentTarget).children('.glyphicon');
+    console.log('hit: ', $glyph, $('[class$="up"]', $glyph));
+
+    $glyph.hasClass('glyphicon-collapse-up')
+      ? $glyph.removeClass('glyphicon-collapse-up').addClass('glyphicon-collapse-down')
+      : $glyph.hasClass('glyphicon-collapse-down')
+      ? $glyph.removeClass('glyphicon-collapse-down').addClass('glyphicon-collapse-up')
+      : null;
+    
+    $('.panel-header .collapse-up').trigger('click');
+
+    // if ($('[class$="up"]', $glyph)) {
+    //   console.log('hitting if');
+    //   $glyph
+    //     .removeClass('glyphicon-collapse-up')
+    //     .addClass('glyphicon-collapse-down');
+    //   return null;
+    // }
+    // if ($('[class="down"]', $glyph)) {
+    //   console.log('hitting else');
+    //   $glyph
+    //     .removeClass('glyphicon-collapse-down')
+    //     .addClass('glyphicon-collapse-up');
+    //   return null;
+    // }
+    
+    return null;
   }
 
 };
