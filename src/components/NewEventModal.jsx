@@ -8,42 +8,42 @@ import FileUploadAPI from './FileUploadAPI';
 import { addNewEvent } from '../actions/asyncActions';
 
 
-// const saveNewEvt = () => {
-//   let [];
-// };
-
-// isNewModal = true
-// const NewEventModal = ({ modalStatus, toggleModal }) => (
-
-@connect(
-  null,
-  (dispatch) => bindActionCreators({ addNewEvent }, dispatch)
-)
+// @connect(
+//   null,
+//   (dispatch) => bindActionCreators({ addNewEvent }, dispatch)
+// )
 export default class NewEventModal extends Component {
   constructor(props) {
     super(props);
-    this.saveNewEvt = this.saveNewEvt.bind(this);
   }
 
   saveNewEvt(name, date, location, description) {
-    console.log('saveNewEvt class method begun');
-    let [$newEvtName, $newEvtDate, $newEvtLocation, $newEvtDescription] = [
-      this.refs.newEvtTitle.value,
-      this.refs.newEvtDate.value,
-      this.refs.newEvtLocation.value,
-      this.refs.newEvtDescription.value
-    ];
+    this.props.adddder({
+      name: this.newEvtTitleInpt.value,
+      date: this.newEvtDateInpt.value,
+      location: this.newEvtLocationInpt.value,
+      description: this.newEvtDescriptionInpt.value
+    });
+    this.props.toggleModal();
+  }
 
-    this.props.addNewEvent($newEvtName, $newEvtDate, $newEvtLocation, $newEvtDescription);
+  componentWillReceiveProps(nextProps) {
+    const self = this;
+
+    if (this.props.modalStatus !== nextProps.modalStatus && nextProps.modalStatus) {
+      setTimeout(function() {
+        self.newEvtDateInpt.valueAsDate = new Date();
+      }, 200);
+    }
   }
 
   render() {
     return (
       <Modal
-        ref="newEventModal"
         contentLabel={ `NewEventModal_` }
         isOpen={ this.props.modalStatus }
-        style={ EventEditingModalStyles }>
+        style={ EventEditingModalStyles }
+        ref={ (newEventModal) => { this.newEventModal = newEventModal; }}>
         <div className="modal-wrapper">
           <i
             className="close-btn"
@@ -58,7 +58,7 @@ export default class NewEventModal extends Component {
                   id="new-evt-title-inpt"
                   className="form-cont"
                   type="text"
-                  ref="newEvtTitle"
+                  ref={ (newEvtTitleInpt) => { this.newEvtTitleInpt = newEvtTitleInpt; }}
                   title="Add a name for this event"
                   // defaultValue={ this.props.modalData ? this.props.modalData.name : 'Working Title' }
                   required />
@@ -74,7 +74,7 @@ export default class NewEventModal extends Component {
                   id="new-evt-date-inpt"
                   className="form-cont"
                   type="date"
-                  ref="newEvtDate"
+                  ref={ (newEvtDateInpt) => { this.newEvtDateInpt = newEvtDateInpt; }}
                   title="When did this event occur?"
                   // defaultValue={ this.props.modalData ? this.props.modalData.date : this.constructCurrentFormattedDate() }
                   />
@@ -88,7 +88,7 @@ export default class NewEventModal extends Component {
                   id="new-evt-location-inpt"
                   className="form-cont"
                   type="text"
-                  ref="newEvtLocation"
+                  ref={ (newEvtLocationInpt) => { this.newEvtLocationInpt = newEvtLocationInpt; }}
                   title="Include a location for this event?"
                   // defaultValue={ this.props.modalData ? this.props.modalData.location : 'Oklahoma City, OK' }
                   />
@@ -103,7 +103,7 @@ export default class NewEventModal extends Component {
                 <textarea
                   id="new-evt-description-inpt"
                   className="form-cont"
-                  ref="newEvtDescription"
+                  ref={ (newEvtDescriptionInpt) => { this.newEvtDescriptionInpt = newEvtDescriptionInpt; }}
                   placeholder="Event description"
                   rows="4"
                   // defaultValue={ this.props.modalData ? this.props.modalData.description : 'Event description' }
@@ -111,12 +111,14 @@ export default class NewEventModal extends Component {
               </div>
             </fieldset>
             <FileUploadAPI />
-            <button
-              type="button"
-              name="saveNewEvtBtn"
-              onClick={ this.saveNewEvt }>
-              Save
-            </button>
+            <fieldset>
+              <button
+                type="button"
+                name="saveNewEvtBtn"
+                onClick={ ::this.saveNewEvt }>
+                Save
+              </button>
+            </fieldset>
           </form>
         </div>
       </Modal>

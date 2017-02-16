@@ -1,16 +1,49 @@
 'use strict';
 const Express = require('express'),
       App = Express(),
+      // require('mongodb').Db,
+      Mongo = require('mongodb'),
+      // Server = require('mongodb').Server,
       Mongoose = require('mongoose'),
       BodyParser = require('body-parser'),
       Path = require('path'),
       PathnameBase = '/api/v1/',
       // $ = require('jquery'),
-      Request = require('request');
+      Request = require('request'),
+      // Generate a v4 UUID (random)
+      UUID_v4 = require('uuid/v4');
 
 const Event = require('../db/models/Event');
-const ApI = require('../src/aaa');
+const ApI = require('./aaa');
 const seedData = require('../src/constants/json/SeedData.json');
+
+
+// Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
+//  This assignment addresses the Mongoose mpromise library deprecation warning.
+Mongoose.Promise = global.Promise || Promise;
+
+const [Db, Server] = [Mongo.Db, Mongo.Server];
+// Connect to the database:
+// const db = new Db('events', new Server('localhost', 27017));
+Mongoose.connect('mongodb://localhost:27017/events');
+const db = Mongoose.connection;
+
+Mongoose.set('debug', true);
+
+db
+  .once('open', () => {
+    Mongoose.connection.collections.EventData.drop();
+    seedData.forEach((evt) => {
+      [evt.formattedDate, evt.uuid, evt.photos] = [formatDate(evt.date), UUID_v4(), new Array()];
+      new Event(evt).save();
+    });
+  })
+  .on('error', (err) => {
+    console.error.call(console, `Connection Error:\t${err}`)
+  })
+  .on('close', () => {
+    console.log('Seeding Finished!');
+  });
 
 
 // Invoke Express's `static` middleware for configuring `assets`
@@ -18,22 +51,6 @@ const seedData = require('../src/constants/json/SeedData.json');
 //  file location therein.
 App.use(Express.static(Path.join(__dirname, '../dist')));
 App.use(BodyParser.json());
-
-// Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
-//  This assignment addresses the Mongoose mpromise library deprecation warning.
-// Mongoose.Promise = global.Promise;
-
-// Connect to the database:
-Mongoose.connect('mongodb://localhost:27017/events');
-const db = Mongoose.connection;
-
-Mongoose.set('debug', true);
-db.on('error', (err) => {
-  console.error.call(console, `Connection Error:\t${err}`)
-});
-
-
-
 
 
 const monthNames = [
@@ -55,40 +72,9 @@ const formatDate = (date) => {
   let dateStr = date
     .replace(/T.+Z/, '')
     .split('-');
-  [...dateStr] = [dateStr[2], monthNames[+dateStr[1]], dateStr[0]];
+  [...dateStr] = [dateStr[2], monthNames[+dateStr[1] - 1], dateStr[0]];
   return dateStr.join(' ');
 };
-
-db.once('open', (callback) => {
-  Mongoose.connection.collections.EventData.drop();
-
-  seedData.forEach((evt) => {
-    [evt.formattedDate, evt.photos] = [formatDate(evt.date), new Array()];
-    new Event(evt).save();
-  });
-});
-// db.once('open', function(callback) {
-//   console.log('Connection to MongoDB established.');
-//   let numSeeds = seedData.length;
-//   let done = 0;
-
-//   const handleSave = (err, evt) => {
-//     if (err) {
-//       console.error(`Error Save: ${evt}!`);
-//     } else {
-//       console.log(`Save Successful: ${evt.name}`);
-//       done++;
-//       if (done === numSeeds) { db.close(); }
-//     }
-//   };
-
-//   seedData.forEach( (event) => {
-//     new Event(event).save(handleSave);
-//   });
-// });
-// .on('close',  () => {
-//   console.log('Seeding Finished');
-// });
 
 
 
@@ -153,7 +139,9 @@ App.patch('/api/events/:id', ApI.updateEvents);
   // Event.update({ _id: req.params.id }, ...paramsToUpdate).exec(handleUpdate);
 
 
+// App.delete('/api/events/:id', ApI.deleteEvents);
 App.delete('/api/events/:id', ApI.deleteEvents);
+
 //   const sendResponse = (err, docs) => { res.send(docs); }
 //   const handleDelete = (err, docs) => {
 //     if (err) {

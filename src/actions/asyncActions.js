@@ -1,13 +1,12 @@
 'use strict';
 import Axios from 'axios';
-
 import * as Types from './types';
-import { loadSeedData } from './index';
+import { loadSeedData, addNewEventData, deleteSingleEvent_Success } from './index';
 
 
 // Returns a function to be called within the Redux-Thunk middleware:
 export const fetchSeedData = () => {
-  return function(dispatch) {
+  return (dispatch) => {
     return Axios
       .get('/api/events', {
         responseType: 'json',
@@ -36,15 +35,52 @@ export const fetchSeedData = () => {
 // };
 
 
-export const addNewEvent = (name, date, location, description) => {
-  console.log('Async Action begun');
-  const request = Axios.post('/api/events', {
-    name,
-    date,
-    location,
-    description
-  });
+export const deleteSingleEvt = (evt) => {
+  console.log('Async delete begun');
+  return (dispatch) => {
+    return Axios
+      .delete(`/api/events/${evt.uuid}`, {
+        headers: {
+          // 'uid': uid,
+          'Content-Type': 'application/json'
+        },
+        // uuid: evt.uuid
+        evt: evt
+      })
+      .then(response => {
+        console.log('delete response:', response);
+        dispatch(deleteSingleEvent_Success(response.data));
+      })
+      .catch(err => {
+        throw new Error(`Error making DELETE request:\t${err}`);
+      });
+  };
 };
+
+export const addNewEvent = (evtData) => {
+  console.log('Async Action begun');
+  return (dispatch) => {
+    return Axios
+      .post('/api/events', evtData)
+      .then(response => {
+        console.log('then response:', response);
+        dispatch(addNewEventData(response.data));
+      })
+      .catch(err => {
+        throw new Error(`Error making POST request:\t${err}`);
+      });
+  };
+};
+
+// export const addNewEvent = (name, date, location, description) => {
+//   console.log('Async Action begun');
+//   const request = Axios.post('/api/events', {
+//     name,
+//     date,
+//     location,
+//     description
+//   });
+// };
 
 // name: {
 //   type: String,

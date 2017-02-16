@@ -24,6 +24,7 @@
     "react-hot-loader/babel",
     "transform-decorators-legacy",
     "transform-class-properties",
+    "transform-function-bind",
     "transform-object-rest-spread"
   ]
 }

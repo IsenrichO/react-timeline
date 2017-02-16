@@ -1,10 +1,17 @@
 'use strict';
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.json';
 import FileUploadAPI from './FileUploadAPI';
 
 
+@connect(
+  (state) => ({
+    eventEditingModalData: state.eventEditingModalData,
+    eventEditingModalState: state.eventEditingModalState
+  })
+)
 export default class EditEventModal extends Component {
   constructor(props) {
     super(props);
@@ -93,17 +100,32 @@ export default class EditEventModal extends Component {
     return form;
   }
 
-  componentDidMount() {
-    // this.renderForm();
+  componentWillReceiveProps(nextProps) {
+    const self = this,
+          editEvtDate = nextProps.eventEditingModalData.date;
+
+    if (this.props.modalStatus !== nextProps.modalStatus && nextProps.modalStatus) {
+      setTimeout(function() {
+        self.editEvtDateInpt.valueAsDate = new Date(editEvtDate);
+      }, 200);
+    }
   }
 
   render() {
+    const {
+      name: evtName,
+      date: evtDate,
+      location: evtLocation,
+      description: evtDescription
+    } = this.props.eventEditingModalData;
+
     return (
       <Modal
-        ref="editEventModal"
-        contentLabel={ `EditEventModal_${this.props.modalData}` }
+        // contentLabel={ `EditEventModal_${this.props.modalData}` }
+        contentLabel={ `EditEventModal_` }
         isOpen={ this.props.modalStatus }
-        style={ EventEditingModalStyles }>
+        style={ EventEditingModalStyles }
+        ref={ (editEventModal) => { this.editEventModal = editEventModal; }}>
         <div className="modal-wrapper">
           <i
             className="close-btn"
@@ -115,12 +137,12 @@ export default class EditEventModal extends Component {
               <div className="input-gr">
                 <span className="input-gr-addon">T</span>
                 <input
-                  id="title-inpt"
+                  id="edit-evt-title-inpt"
                   className="form-cont"
                   type="text"
+                  ref={ (editEvtTitleInpt) => { this.editEvtTitleInpt = editEvtTitleInpt; }}
                   title="Add a name for this event"
-                  defaultValue={ this.props.modalData ? this.props.modalData.name : 'Working Title' }
-                  // defaultValue={ this.props.modalData.name }
+                  defaultValue={ evtName }
                   required />
               </div>
             </fieldset>
@@ -131,11 +153,11 @@ export default class EditEventModal extends Component {
                   <i className="glyphicon glyphicon-calendar" />
                 </span>
                 <input
-                  id="date-inpt"
+                  id="edit-evt-date-inpt"
                   className="form-cont"
                   type="date"
-                  title="When did this event occur?"
-                  defaultValue={ this.props.modalData ? this.props.modalData.date : this.constructCurrentFormattedDate() } />
+                  ref={ (editEvtDateInpt) => { this.editEvtDateInpt = editEvtDateInpt; }}
+                  title="When did this event occur?" />
               </div>
 
               <div className="input-gr">
@@ -143,11 +165,12 @@ export default class EditEventModal extends Component {
                   <i className="glyphicon glyphicon-map-marker" />
                 </span>
                 <input
-                  id="location-inpt"
+                  id="edit-evt-location-inpt"
                   className="form-cont"
                   type="text"
+                  ref={ (editEvtLocationInpt) => { this.editEvtLocationInpt = editEvtLocationInpt; }}
                   title="Include a location for this event?"
-                  defaultValue={ this.props.modalData ? this.props.modalData.location : 'Oklahoma City, OK' } />
+                  defaultValue={ evtLocation } />
               </div>
             </fieldset>
 
@@ -157,11 +180,12 @@ export default class EditEventModal extends Component {
                   <i className="glyphicon glyphicon-list-alt" />
                 </span>
                 <textarea
-                  id="description-inpt"
+                  id="edit-evt-description-inpt"
                   className="form-cont"
+                  ref={ (editEvtDescriptionInpt) => { this.editEvtDescriptionInpt = editEvtDescriptionInpt; }}
                   placeholder="Event description"
                   rows="4"
-                  defaultValue={ this.props.modalData ? this.props.modalData.description : 'Event description' } />
+                  defaultValue={ evtDescription } />
               </div>
             </fieldset>
             <FileUploadAPI />

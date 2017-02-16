@@ -1,5 +1,5 @@
 'use strict';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TimelineEvent from './tl-event/TimelineEvent';
@@ -7,7 +7,7 @@ import EditEventModal from './EditEventModal';
 import ButtonControls from './ButtonControls';
 import NewEventModal from './NewEventModal';
 import { logEventModalData, toggleEventModal } from '../actions/index';
-import { addNewEvent } from '../actions/asyncActions';
+import { addNewEvent, deleteSingleEvt } from '../actions/asyncActions';
 
 
 @connect(
@@ -15,60 +15,51 @@ import { addNewEvent } from '../actions/asyncActions';
     eventEditingModalData: state.eventEditingModalData,
     eventEditingModalState: state.eventEditingModalState
   }),
-  (dispatch) => bindActionCreators({ logEventModalData, toggleEventModal }, dispatch)
+  (dispatch) => bindActionCreators({
+    logEventModalData,
+    toggleEventModal,
+    addNewEvent,
+    deleteSingleEvt
+  }, dispatch)
 )
 export default class Timeline extends Component {
   constructor(props) {
     super(props);
-    console.log('SEED DATA:', this.props.data);
-    this.logModalData = this.logModalData.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
-    this.orderTimelineEvents = this.orderTimelineEvents.bind(this);
-    this.renderOrderedEvents = this.renderOrderedEvents.bind(this);
-
-    this.renderCU = this.renderCU.bind(this);
-
-    this.toggleNewEvtModal = this.toggleNewEvtModal.bind(this);
     this.state = {
       newModal: false
     };
   }
+
+  static propTypes = {
+    seedData: PropTypes.array.isRequired
+  };
   
-  toggleModal() { this.props.toggleEventModal(); }
+  toggleModal() {
+    this.props.toggleEventModal();
+    !this.props.eventEditingModalState
+      ? $('body').addClass('modal-active')
+      : $('body').removeClass('modal-active');
+  }
   
   toggleNewEvtModal() {
-    console.log('new modal class method');
     this.setState({ newModal: !this.state.newModal });
   }
 
   logModalData(data) { this.props.logEventModalData(data); }
 
+  deleteTLEvt(evtId) {
+    this.props.deleteSingleEvt(evtId);
+  }
+
+  adddder(evtData) {
+    this.props.addNewEvent(evtData);
+  }
+
   orderTimelineEvents(evts) {
-    return evts && evts.length
-      ? evts
-          .sort((evt1, evt2) => new Date(evt2.date).getTime() - new Date(evt1.date).getTime())
-      : [];
+    return evts && evts.length ? 
+      evts.sort((evt1, evt2) => new Date(evt2.date).getTime() - new Date(evt1.date).getTime()) :
+      [];
   }
-
-  componentDidMount() {
-    this.renderCU();
-  }
-
-  renderCU() {
-    // console.log('cloudinary');
-    // cloudinary.cloudinary_js_config();
-
-    // $(function() {
-    //   if ($.fn.cloudinary_fileupload !== undefined) {
-    //     $("input.cloudinary-fileupload[type=file]").cloudinary_fileupload();
-    //   }
-    // });
-
-    // cloudinary.uploader.image_upload_tag('image_id', { callback: cloudinary_cors });
-  }
-
-
-
 
   renderOrderedEvents(events) {
     return events.map((evt, index) =>
@@ -83,8 +74,9 @@ export default class Timeline extends Component {
         evtFormattedDate={ evt.formattedDate }
         evtNote={ evt.type }
         photoCount={ evt.photoCount }
-        logModalData={ this.logModalData }
-        toggleModal={ this.toggleModal } />
+        logModalData={ ::this.logModalData }
+        toggleModal={ ::this.toggleModal }
+        deleteEvt={ ::this.deleteTLEvt } />
     );
   }
 
@@ -96,16 +88,17 @@ export default class Timeline extends Component {
           <button name="btn">TEST</button>
         </div>
 
-        <ul className="tl">{ this.renderOrderedEvents(this.orderTimelineEvents(this.props.data)) }</ul>
+        <ul className="tl">{ ::this.renderOrderedEvents(::this.orderTimelineEvents(this.props.seedData)) }</ul>
         <EditEventModal
           modalData={ this.props.eventEditingModalData }
           modalStatus={ this.props.eventEditingModalState }
-          toggleModal={ this.toggleModal } />
+          toggleModal={ ::this.toggleModal } />
         <NewEventModal
           modalStatus={ this.state.newModal }
-          toggleModal={ this.toggleNewEvtModal } />
+          toggleModal={ ::this.toggleNewEvtModal }
+          adddder={ ::this.adddder } />
         <ButtonControls
-          toggleModal={ this.toggleNewEvtModal } />
+          toggleModal={ ::this.toggleNewEvtModal } />
       </div>
     );
   }

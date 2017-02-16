@@ -158,12 +158,21 @@
   }
 } 
 
+.btn-cont {
+  position: fixed;
+  display: block;
+  width: 50vw;
+  height: 50vh;
+  right: 0;
+  bottom: 0;
+}
 .btn-controls {
   @extend %br-circle;
   position: fixed;
   width: 5rem;
   height: 5rem;
   right: 3rem;
+  top: auto !important;
   bottom: 3rem;
   padding: 0;
   margin: 0;
@@ -171,13 +180,35 @@
   font-size: 5rem;
   background: $theme-red url(https://ssl.gstatic.com/s2/oz/images/quark/a7367650055ae3cf32ee3b7023c1ed88ic_create_wht_24dp.png) no-repeat center / 50%;
   color: $theme-content-lt;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+  z-index: 1;
   i {
     display: block;
     height: 5rem;
     font-size: 3.5rem;
     line-height: 5rem;
   }
+  &-child {
+    @include flex(flex, row, center, center);
+    position: fixed;
+    border: none;
+    border-radius: 50%;
+    background-color: $theme-content-lt;
+    box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.2);
+    color: #8898A5;
+    .glyphicon { font-size: 1.5rem; }
+  }
+}
+
+.btn-shadow {
+  position: fixed;
+  width: 5rem;
+  height: 5rem;
+  left: 960px;
+  top: auto!important;
+  bottom: 3rem;
+  border-radius: 50%;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+  z-index: 0;
 }
 
 .glyphicon {

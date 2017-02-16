@@ -2,7 +2,8 @@
 const Mongoose = require('mongoose'),
       Schema = Mongoose.Schema;
 const EventPhotoSchema = require('./EventPhotoSchema'),
-      EventTagSchema = require('./EventTagSchema');
+      EventTagSchema = require('./EventTagSchema'),
+      EventLinkSchema = require('./EventLinkSchema');
 
 
 const EventSchema = new Schema({
@@ -23,13 +24,16 @@ const EventSchema = new Schema({
     required: [true, 'This event requires a date.']
   },
   formattedDate: String,
+  uuid: String,
   noteID: String,
   type: String,
   description: String,
   location: String,
   photos: [EventPhotoSchema],
   tags: [EventTagSchema],
-  numRevisions: Number
+  links: [EventLinkSchema],
+  numRevisions: Number,
+  archived: Boolean
 }, {
   toObject: { virtuals: true },
   toJSON: { virtuals: true },

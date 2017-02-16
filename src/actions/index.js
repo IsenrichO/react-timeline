@@ -1,6 +1,4 @@
 'use strict';
-import Axios from 'axios';
-
 import * as Types from './types';
 
 
@@ -18,7 +16,12 @@ export const toggleEventModal = () => ({
   type: Types.TOGGLE_EVENT_MODAL
 });
 
-export const addNewEventData = () => ({
-    type: Types.ADD_NEW_EVENT,
-    payload: request
+export const addNewEventData = (payload) => ({
+    type: Types.ADD_NEW_EVENT_DATA,
+    payload
+});
+
+export const deleteSingleEvent_Success = (payload) => ({
+  type: Types.DELETE_SINGLE_EVENT,
+  payload
 });
