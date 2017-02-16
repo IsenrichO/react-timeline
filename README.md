@@ -45,11 +45,11 @@ A bevy of other tools/packages/modules/libraries are indispensable to the app as
 + **`start`:** Runs the root-level _server.js_ file inside the Node.js runtime
 + **`stats`:** Writes a JSON-file format analysis file [Ref. _stats.json_] to the project folder's root. This is useful in conjunction with freely available [Webpack](https://webpack.github.io/analyse/) [bundle](https://github.com/robertknight/webpack-bundle-size-analyzer) [analyzers](https://chrisbateman.github.io/webpack-visualizer/) that can provide insight into where optimizations may be had.
 
-<img
-  src="https://github.com/IsenrichO/react-timeline/blob/master/assets/images/Webpack_stats.png?raw=true"
-  alt="Analysis of Webpack contents, particularly needless bloat contained therein"
-  title="Webpack stats analysis visualized"
-  width="40%" />
+  <img
+    src="https://github.com/IsenrichO/react-timeline/blob/master/assets/images/Webpack_stats.png?raw=true"
+    alt="Analysis of Webpack contents, particularly needless bloat contained therein"
+    title="Webpack stats analysis visualized"
+    width="40%" />
 + **`test`:** Runs all written tests (via the [Mocha](https://mochajs.org/) test suite in conjunction with the [Chai](http://chaijs.com/) helper library)
 + **`test:watch`:** Analogues to Webpack's `--watch` flag for continuous monitoring of file changes, this command likewise `watch`es for changes to the project and, in the event such are detected, will automagically rerun our Mocha test suite files. Note that while Mocha comes equipped with a [`--watch` flag](https://mochajs.org/#usage) (or, in the equivalent shorthand, `-w`) out of the box, usage with MongoDB can be quarrelsome and is prone to [issues](https://github.com/Automattic/mongoose/issues/1251). Consequently, this script instead relies on _Nodemon_ to re-run all tests by executing the `mocha` CLI command (via its [`--exec` flag](https://github.com/remy/nodemon/#running-non-node-scripts)), additionally passing the `-R min` options. The latter instructs Mocha to run these tests using the [min](https://mochajs.org/#min) [reporter](https://mochajs.org/#reporters) — an option that restricts terminal test output to only a summary view (save for errors hit) while also clearing the terminal to ensure this test summary remains in view.
 + **`watch`:** Instructs Webpack to [`watch`](http://webpack.github.io/docs/troubleshooting.html#watching) (or `-w`) for all file changes, avoiding the tedium of manually rerunning the compilation command (_i.e._, `webbpack`). Note that changes made to the Webpack configuration itself fall outside the scope of the `watch` command and require a manual restart before changes are made evident.
