@@ -48,3 +48,38 @@
 }
 
 .modal-active { overflow: hidden !important; }
+
+// Custom checkbox inputs:
+input[type='checkbox'] {
+  position: absolute;
+  left: -9999px;
+  visibility: hidden;
+  + label {
+    position: relative;
+    padding-left: 2.5rem;
+    cursor: pointer;
+    &:before {
+      position: absolute;
+      content: '';
+      width: 1rem;
+      height: 1rem;
+      left: 0.35rem;
+      top: -1px;
+      border: 2.5px solid $cb-unchecked;
+      border-radius: 1.5px;
+      transition: all 0.325s ease-out;
+    }
+  }
+  &:checked {
+    + label {
+      &:before {
+        @include cbBorder();
+        width: 12px;
+        height: 22px;
+        left: 0.15rem;
+        top: -9px;
+        transform: rotate(40deg);
+      }
+    }    
+  }
+}

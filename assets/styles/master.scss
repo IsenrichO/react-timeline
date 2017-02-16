@@ -16,6 +16,9 @@ $theme-lt-white: #F1E5E6;
 $bckg-black-op: rgba(94, 94, 94, 0.65);
 $bckg-gray-op: rgba(212, 212, 212, 0.47);
 $note-blue: #C4D8FB;
+$theme-teal: #26A69A;
+$cb-unchecked: #5A5A5A;
+$border-sides: top right bottom left;
 
 
 /* Sass @mixin Declarations
@@ -68,6 +71,16 @@ $note-blue: #C4D8FB;
   -webkit-box-shadow: $shadow;
      -moz-box-shadow: $shadow;
           box-shadow: $shadow;
+};
+@mixin cbBorder() {
+  @each $side in $border-sides {
+    $color: $theme-teal;
+    @if ($side == top) or ($side == left) {
+      $color: transparent;
+    }
+    border-#{$side}: 3px solid $color;
+    border-radius: 3px;
+  }
 };
 
 
