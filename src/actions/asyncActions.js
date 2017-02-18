@@ -36,19 +36,15 @@ export const fetchSeedData = () => {
 
 
 export const deleteSingleEvt = (evt) => {
-  console.log('Async delete begun');
   return (dispatch) => {
     return Axios
-      .delete(`/api/events/${evt.uuid}`, {
+      .delete(`/api/events/edit/${evt.eventId}`, {
+        data: evt,
         headers: {
-          // 'uid': uid,
           'Content-Type': 'application/json'
         },
-        // uuid: evt.uuid
-        evt: evt
       })
       .then(response => {
-        console.log('delete response:', response);
         dispatch(deleteSingleEvent_Success(response.data));
       })
       .catch(err => {
@@ -99,7 +95,7 @@ export const addNewEvent = (evtData) => {
 //   required: [true, 'This event requires a date.']
 // },
 // formattedDate: String,
-// noteID: String,
+// eventId: String,
 // type: String,
 // description: String,
 // location: String,
