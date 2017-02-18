@@ -40,7 +40,8 @@
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
+  border-left: none;
+  border-radius: 0 .25rem 0.25rem 0;
   -webkit-transition: border-color ease-in-out 0.15s,
                       -webkit-box-shadow ease-in-out 0.15s;
   -moz-transition:    border-color ease-in-out 0.15s,

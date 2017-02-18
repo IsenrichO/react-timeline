@@ -19,6 +19,12 @@
     float: left;
     clear: both;
     transition: all 1s ease;
+    * {
+      word-break: break-word;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+    }
     &:first-child { margin-top: 3.571429rem; }    // Add space above for beginning of timeline
     &:last-child { margin-bottom: 3.571429rem; }  // Add space below for end of timeline
     &.tl-event-invert {
