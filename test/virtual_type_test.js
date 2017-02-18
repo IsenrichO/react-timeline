@@ -9,7 +9,7 @@ describe('Virtual types', () => {
   beforeEach((done) => {
     virtualEvt = new Event({
       name: 'Virtual Test Event',
-      noteID: 'Test_001',
+      eventId: 'Test_001',
       type: 'Testing',
       description: 'Mocha test to confirm Event records are updated in MongoDB',
       location: 'San Francisco, CA',

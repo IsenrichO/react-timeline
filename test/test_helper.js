@@ -7,9 +7,10 @@ const Mongoose = require('mongoose');
 Mongoose.Promise = global.Promise || Promise;
 
 // Only ever executed once for entire test suite:
-before((done) => {
-  Mongoose.connect('mongodb://localhost:27017/test');
-  Mongoose.connection
+before(done => {
+  Mongoose.connect('mongodb://localhost:27017/events_test');
+  Mongoose
+    .connection
     .on('open', () => {
       console.log('MongoDB connection for testing established.');
       done();
@@ -21,8 +22,9 @@ before((done) => {
 
 // Drop existing database for each (re-)run of tests:
 beforeEach((done) => {
-  Mongoose.connection.collections.EventData.drop(() => {
-    // Ready to run next test:
-    done();
-  });
+  const { EventData } = Mongoose.connection.collections;
+  EventData
+    .drop()
+    .then(() => done())
+    .catch(() => done());
 });

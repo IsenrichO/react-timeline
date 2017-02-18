@@ -9,7 +9,7 @@ describe('Reading events from the database', () => {
   beforeEach((done) => {
     readTestEvt = new Event({
       name: 'Mocha Read Test Event',
-      noteID: 'Test_001',
+      eventId: 'Test_001',
       type: 'Testing',
       description: 'Mocha test to confirm Event records are queried from MongoDB',
       location: 'San Francisco, CA',

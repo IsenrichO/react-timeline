@@ -9,7 +9,7 @@ describe('Updating records', () => {
   beforeEach((done) => {
     updateTestEvt = new Event({
       name: 'Mocha Update Test Event',
-      noteID: 'Test_001',
+      eventId: 'Test_001',
       type: 'Testing',
       description: 'Mocha test to confirm Event records are updated in MongoDB',
       location: 'San Francisco, CA',

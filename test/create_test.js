@@ -11,7 +11,7 @@ describe('Creating records', () => {
   beforeEach(() => {
     createTestEvt = new Event({
       name: 'Mocha Create Test Event',
-      noteID: 'Test_001',
+      eventId: 'Test_001',
       type: 'Testing',
       description: 'Mocha test to confirm new Event records are saved to MongoDB',
       location: 'San Francisco, CA',
