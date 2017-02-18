@@ -1,5 +1,5 @@
 'use strict';
-const App = require('./server/router.jsx'),
+const App = require('./server/app.js'),
       PORT = (process.env.PORT || 3000);
 
 
