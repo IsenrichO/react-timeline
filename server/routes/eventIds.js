@@ -9,7 +9,7 @@ const Express = require('express'),
 router
   .route('/:id')
   .get(ApI.getIndividualEvent)
-  .put(ApI.update2)
+  .put(ApI.updateSingleEvent)
   .delete(ApI.deleteEvents);
 
 // updateEvents
