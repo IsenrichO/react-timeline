@@ -183,12 +183,12 @@ export default class MotionComponent extends Component {
     return `glyphicon glyphicon-${childBtnGlyphs[childIndex].glyph}`;
   }
 
-  getChildObj(childIndex) {
+  getChildObj(childIndex, passedFunc = null) {
     const self = this;
     const childBtnGlyphs = [
       {
         glyph: 'plus',
-        func: null
+        func: passedFunc
       }, {
         glyph: 'minus',
         func: null

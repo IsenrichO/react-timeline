@@ -116,7 +116,7 @@ export default class ButtonControls extends MotionComponent {
                     transform: `rotate(${rotate}deg) scale(${scale})`,
                     transition: `all 0.25s ${index * 55}ms`
                   }}
-                  onClick={ super.getChildObj(index).func }>
+                  onClick={ super.getChildObj(index, this.props.toggleModal).func }>
                   <i className={ super.getChildBtnGlyph(index) } />
                 </button>
               )}
