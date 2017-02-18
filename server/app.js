@@ -185,7 +185,7 @@ const eventsRoute = require('./routes/events');
 const eventIdsRoute = require('./routes/eventIds');
 
 App.use('/api/events', eventsRoute);
-App.use('/api/events/edit/:id', eventIdsRoute);
+App.use('/api/events/edit', eventIdsRoute);
 
 
 module.exports = App;

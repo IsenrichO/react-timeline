@@ -25,3 +25,8 @@ export const deleteSingleEvent_Success = (payload) => ({
   type: Types.DELETE_SINGLE_EVENT,
   payload
 });
+
+export const updateEventData = (payload) => ({
+  type: Types.UPDATE_EVENT_DATA,
+  payload
+});

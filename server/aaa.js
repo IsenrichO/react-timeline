@@ -187,14 +187,15 @@ const addEvents = (req, res, next) => {
  * @return {promise} A Promise that resolves when the record has been edited
  */
 const updateEvents = (uuid, evtProps) => {
+  console.log('\n\nUPDATEing Event');
   return Event.update({ uuid }, evtProps);
 };
 
 const update2 = (req, res, next) => {
-  const { params: { id: evtId }, body: evtProps } = req;
+  const { params: { eventId: evtId }, body: { data: evtProps } } = req;
   Event
-    .findByIdAndUpdate({ _id: evtId }, evtProps)
-    .then(() => Event.findById({ _id: evtId }))
+    .findOneAndUpdate({ eventId: evtId }, evtProps)
+    // .then(() => Event.findById({ _id: req.body._id }))
     .then(evt => res.send(evt))
     .catch(next);
 };
@@ -202,16 +203,6 @@ const update2 = (req, res, next) => {
 
 // Perform
 const deleteEvents = (req, res, next) => {
-  // const sendResponse = (err, docs) => { res.send(docs); }
-  // const handleDelete = (err, docs) => {
-  //   if (err) {
-  //     console.error(`Error: Object Delete Failed`);
-  //   } else {
-  //     console.log(`Delete Successful: ${docs._id}`);
-  //     sendResponse(err, docs);
-  //   }
-  // };
-
   const uuid = req.body.eventId;
   console.log('AAA.js param:', uuid);
 
@@ -276,6 +267,7 @@ module.exports = {
   getIndividualEvent,
   listEvents,
   updateEvents,
+  update2,
   deleteEvents
 };
 

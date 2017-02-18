@@ -1,16 +1,21 @@
 'use strict';
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.json';
 import FileUploadAPI from './FileUploadAPI';
+import { updateEvent } from '../actions/asyncActions';
 
 
 @connect(
-  (state) => ({
+  state => ({
     eventEditingModalData: state.eventEditingModalData,
     eventEditingModalState: state.eventEditingModalState
   })
+  // dispatch => bindActionCreators({
+  //   updateEvent
+  // }, dispatch)
 )
 export default class EditEventModal extends Component {
   constructor(props) {
@@ -28,6 +33,21 @@ export default class EditEventModal extends Component {
   constructCurrentFormattedDate() {
     const DATE = new Date();
     return `${DATE.getUTCMonth() + 1}/${DATE.getUTCDate()}/${DATE.getUTCFullYear()}`;
+  }
+
+  updateEvent(name, date, location, description) {
+    console.log('\n\nMODAL DATA:', this.props.eventEditingModalData);
+    const updatedData = {
+      name: this.editEvtTitleInpt.value,
+      date: this.editEvtDateInpt.value,
+      location: this.editEvtLocationInpt.value,
+      description: this.editEvtDescriptionInpt.value
+    };
+
+    const newEvtData = Object.assign({}, this.props.eventEditingModalData, updatedData);
+    console.log('\n\nNEW EVENT DATA:', newEvtData);
+
+    this.props.updEvt(newEvtData);
   }
 
   // <label htmlFor="title-inpt">Title</label>
@@ -189,6 +209,14 @@ export default class EditEventModal extends Component {
               </div>
             </fieldset>
             <FileUploadAPI />
+            <fieldset>
+              <button
+                type="button"
+                name="updateEvtBtn"
+                onClick={ ::this.updateEvent }>
+                Update Event
+              </button>
+            </fieldset>
           </form>
         </div>
       </Modal>

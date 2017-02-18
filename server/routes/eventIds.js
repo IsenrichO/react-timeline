@@ -7,9 +7,10 @@ const Express = require('express'),
 
 
 router
-  .route('/')
+  .route('/:id')
   .get(ApI.getIndividualEvent)
-  .put(ApI.updateEvents)
+  .put(ApI.update2)
   .delete(ApI.deleteEvents);
 
+// updateEvents
 module.exports = router;
