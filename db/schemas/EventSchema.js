@@ -25,7 +25,7 @@ const EventSchema = new Schema({
   },
   formattedDate: String,
   uuid: String,
-  noteID: String,
+  eventId: String,
   type: String,
   description: String,
   location: String,
