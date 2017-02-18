@@ -124,6 +124,7 @@
         justify-content: space-between;
         align-items: center;
         background-color: #F4F4F4;
+        .glyphicon-star { color: #F6DB3D; }
       }
     }
     &:hover .tl-toolbar { @extend %visible; }
