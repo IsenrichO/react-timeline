@@ -47,8 +47,8 @@ export default class Timeline extends Component {
 
   logModalData(data) { this.props.logEventModalData(data); }
 
-  deleteTLEvt(evtId) {
-    this.props.deleteSingleEvt(evtId);
+  deleteTLEvt(evt) {
+    this.props.deleteSingleEvt(evt);
   }
 
   adddder(evtData) {
