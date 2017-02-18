@@ -223,7 +223,20 @@ export default class MotionComponent extends Component {
       ? $glyph.removeClass('glyphicon-collapse-down').addClass('glyphicon-collapse-up')
       : null;
     
-    $('.panel-header .collapse-up').trigger('click');
+
+    // let allEvtsOpen = ($('.tl-collapsed').length === 0);
+    // if (allEvtsOpen) {
+    //   $.each($('.panel-header .collapse-up'), function(index, obj) {
+    //     $(this).trigger('click');
+    //   });  
+    // }
+    
+    $.each($('.panel-header .collapse-up'), function(index, obj) {
+      $(this).parent().siblings('.tl-collapsed').length
+        ? null
+        : $(this).trigger('click');
+    });
+    // .trigger('click');
 
     // if ($('[class$="up"]', $glyph)) {
     //   console.log('hitting if');

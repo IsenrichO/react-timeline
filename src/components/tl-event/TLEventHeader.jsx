@@ -3,6 +3,7 @@ import React from 'react';
 
 
 const collapseBody = (evt) => {
+  evt.stopPropagation();
   const $targ = $(evt.target),
       $parentListItem = $targ.closest($('li[class^="tl-event"]')),
       $collapsiblePanels = $targ.parent().siblings($('[class|="panel"]')),
