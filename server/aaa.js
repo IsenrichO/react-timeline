@@ -186,16 +186,12 @@ const addEvents = (req, res, next) => {
  * @param {object} evtProps - An object of property names and the corresponding edits
  * @return {promise} A Promise that resolves when the record has been edited
  */
-const updateEvents = (uuid, evtProps) => {
-  console.log('\n\nUPDATEing Event');
-  return Event.update({ uuid }, evtProps);
-};
-
-const update2 = (req, res, next) => {
-  const { params: { eventId: evtId }, body: { data: evtProps } } = req;
+const updateSingleEvent = (req, res, next) => {
+  const { params: { id: evtId }, body: evtProps } = req;
+  console.log('\n\nREQ:', req);
   Event
     .findOneAndUpdate({ eventId: evtId }, evtProps)
-    // .then(() => Event.findById({ _id: req.body._id }))
+    .then(() => Event.findOne({ eventId: evtId }))
     .then(evt => res.send(evt))
     .catch(next);
 };
@@ -266,8 +262,7 @@ module.exports = {
   addEvents,
   getIndividualEvent,
   listEvents,
-  updateEvents,
-  update2,
+  updateSingleEvent,
   deleteEvents
 };
 

@@ -19,6 +19,13 @@ const seedData = require('../src/constants/json/SeedData.json');
 const App = Express();
 const PathnameBase = '/api/v1/';
 
+// Invoke Express's `static` middleware for configuring `assets`
+//  as our default static locale; defaults to serving the index.html
+//  file location therein.
+App.use(Express.static(Path.join(__dirname, '../dist')));
+App.use(BodyParser.json());
+App.use(BodyParser.urlencoded({ extended: true }));
+
 
 // Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
 //  This assignment addresses the Mongoose mpromise library deprecation warning.
@@ -47,12 +54,6 @@ db
   });
 
 
-// Invoke Express's `static` middleware for configuring `assets`
-//  as our default static locale; defaults to serving the index.html
-//  file location therein.
-App.use(Express.static(Path.join(__dirname, '../dist')));
-App.use(BodyParser.json());
-App.use(BodyParser.urlencoded({ extended: false }));
 
 
 const monthNames = [
