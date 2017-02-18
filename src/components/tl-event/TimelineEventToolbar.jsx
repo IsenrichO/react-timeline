@@ -19,7 +19,10 @@ const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt }) => 
       title="Enter quick edit mode">
       <i
         className="glyphicon glyphicon-pencil"
-        onClick={ () => { logModalData(evt); toggleModal(); } } />
+        onClick={ () => {
+          logModalData(evt);
+          toggleModal();
+        }} />
     </button>
     <button
       type="button"
