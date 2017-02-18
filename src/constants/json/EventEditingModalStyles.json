@@ -7,6 +7,10 @@
     "right": 0,
     "background": "rgba(94, 94, 94, 0.75)",
     "backgroundBlendMode": "soft-light",
+    "WebkitTransition": "all 0.5s ease-in-out",
+    "MozTransition":    "all 0.5s ease-in-out",
+    "OTransition":      "all 0.5s ease-in-out",
+    "transition":       "all 0.5s ease-in-out",
     "zIndex": 150
   }, 
   "content": {
@@ -21,13 +25,13 @@
     "marginRight": "-50%",
     "padding": 0,
     "WebkitBorderRadius": "14px",
-       "MozBorderRadius": "14px",
-          "borderRadius": "14px",
+    "MozBorderRadius":    "14px",
+    "borderRadius":       "14px",
     "WebkitTransform": "translate(-50%, -50%)",
-       "MozTransform": "translate(-50%, -50%)",
-        "MsTransform": "translate(-50%, -50%)",
-         "OTransform": "translate(-50%, -50%)",
-          "transform": "translate(-50%, -50%)",
+    "MozTransform":    "translate(-50%, -50%)",
+    "MsTransform":     "translate(-50%, -50%)",
+    "OTransform":      "translate(-50%, -50%)",
+    "transform":       "translate(-50%, -50%)",
     "overflow": "visible",
     "zIndex": 200
   }  
