@@ -55,15 +55,9 @@ export const deleteSingleEvt = (evt) => {
 
 
 export const updateEvent = (evtData) => {
-  console.log('\n\nEVENT DATA:', evtData);
   return (dispatch) => {
     return Axios
-      .put(`/api/events/edit/${evtData.eventId}`, {
-        data: evtData,
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
+      .put(`/api/events/edit/${evtData.eventId}`, evtData)
       .then(response => {
         console.log('\PUT request data:', response);
         dispatch(updateEventData(response.data));
