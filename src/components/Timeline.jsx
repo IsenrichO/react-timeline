@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TimelineEvent from './tl-event/TimelineEvent';
 import EditEventModal from './EditEventModal';
-import ButtonControls from './ButtonControls';
 import NewEventModal from './NewEventModal';
+import ButtonControls from './ButtonControls';
+import BatchActionButtons from './BatchActionButtons';
 import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
 import { addNewEvent, deleteSingleEvt, updateEvent, deleteBatchEvents } from '../actions/asyncActions';
 import * as Utils from '../Utilities';
@@ -81,7 +82,7 @@ export default class Timeline extends Component {
     this.props.addEventToBatchSelection(evtUuid);
   }
 
-  deleteBatch(evts) {
+  deleteBatch() {
     this.props.deleteBatchEvents(this.props.batchSelectionItems);
     this.props.clearBatchSelection();
   }
@@ -115,7 +116,7 @@ export default class Timeline extends Component {
           <button name="btn">TEST</button>
           <button
             name="del-btn"
-            onClick={ () => ::this.deleteBatch(this.props.batchSelectionItems) }>
+            onClick={ ::this.deleteBatch }>
             DELETE
           </button>
         </div>
@@ -133,6 +134,10 @@ export default class Timeline extends Component {
           modalStatus={ this.state.newModal }
           toggleModal={ ::this.toggleNewEvtModal }
           adddder={ ::this.adddder } />
+        <BatchActionButtons
+          batchSelectionState={ this.props.batchSelectionState }
+          toggleBatchSelection={ ::this.toggleBatchSelection }
+          deleteBatch={ ::this.deleteBatch } />
         <ButtonControls
           toggleModal={ ::this.toggleNewEvtModal }
           toggleBatchSelection={ ::this.toggleBatchSelection } />
