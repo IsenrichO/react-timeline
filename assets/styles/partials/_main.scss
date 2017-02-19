@@ -187,6 +187,8 @@
     left: 2px;
     top: -1px;
     font-size: 2.5rem;
+    height: 100%;
+    line-height: 5rem;
   }
   &-child {
     @include flex(flex, row, center, center);
