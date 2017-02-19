@@ -33,11 +33,11 @@ export default class ButtonControls extends MotionComponent {
   }
 
   componentDidMount() {
-    // window.addEventListener('click', (evt) => { });
-
-    // $(document).on('click', '[class^="btn-controls"]', (evt) => {
-    //   this.closeMenu();
-    // });
+    window.addEventListener('click', (evt) => {
+      !$(evt.target).parents('.btn-cont').length && this.state.isOpen
+        ? this.toggleMenu(evt)
+        : null;
+    });    
   }
 
   componentWillUnmount() {
@@ -52,6 +52,11 @@ export default class ButtonControls extends MotionComponent {
 
   closeMenu() {
     this.setState({ isOpen: false });
+  }
+
+  execChildBtnAction(evt, index) {
+    super.getChildObj(index, evt, this.props.toggleModal).func();
+    ::this.toggleMenu(evt);
   }
 
   // toggleAllLocationAccordions(evt) {
@@ -113,10 +118,10 @@ export default class ButtonControls extends MotionComponent {
                     height,
                     left,
                     bottom,
-                    transform: `rotate(${rotate}deg) scale(${scale})`,
-                    transition: `all 0.25s ${index * 55}ms`
+                    transform: `rotate(${rotate}deg) scale(${scale})`
+                    // transition: `all 0.25s ${index * 55}ms`
                   }}
-                  onClick={ super.getChildObj(index, this.props.toggleModal).func }>
+                  onClick={ (evt) => ::this.execChildBtnAction(evt, index) }>
                   <i className={ super.getChildBtnGlyph(index) } />
                 </button>
               )}

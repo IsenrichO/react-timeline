@@ -183,7 +183,7 @@ export default class MotionComponent extends Component {
     return `glyphicon glyphicon-${childBtnGlyphs[childIndex].glyph}`;
   }
 
-  getChildObj(childIndex, passedFunc = null) {
+  getChildObj(childIndex, evt, passedFunc = null) {
     const self = this;
     const childBtnGlyphs = [
       {
@@ -194,10 +194,10 @@ export default class MotionComponent extends Component {
         func: null
       }, {
         glyph: 'send',
-        func: ::self.toggleAllLocationAccordions
+        func: () => ::self.toggleAllLocationAccordions(evt)
       }, {
         glyph: 'collapse-up',
-        func: ::self.toggleAllEventCards
+        func: () => ::self.toggleAllEventCards(evt)
       }
     ];
     return childBtnGlyphs[childIndex];
@@ -213,7 +213,6 @@ export default class MotionComponent extends Component {
 
   toggleAllEventCards(evt) {
     evt.stopPropagation();
-    
     let $glyph = $(evt.currentTarget).children('.glyphicon');
     console.log('hit: ', $glyph, $('[class$="up"]', $glyph));
 
