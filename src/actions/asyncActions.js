@@ -53,6 +53,7 @@ export const deleteSingleEvt = (evt) => {
   };
 };
 
+
 export const deleteBatchEvents = (evts) => {
   return (dispatch) => {
     return Axios
@@ -77,7 +78,6 @@ export const updateEvent = (evtData) => {
     return Axios
       .put(`/api/events/edit/${evtData.eventId}`, evtData)
       .then(response => {
-        console.log('\PUT request data:', response);
         dispatch(updateEventData(response.data));
       })
       .catch(err => {
@@ -88,12 +88,10 @@ export const updateEvent = (evtData) => {
 
 
 export const addNewEvent = (evtData) => {
-  console.log('Async Action begun');
   return (dispatch) => {
     return Axios
       .post('/api/events', evtData)
       .then(response => {
-        console.log('then response:', response);
         dispatch(addNewEventData(response.data));
       })
       .catch(err => {
