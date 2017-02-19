@@ -1,7 +1,7 @@
 'use strict';
 import Axios from 'axios';
 import * as Types from './types';
-import { loadSeedData, addNewEventData, deleteSingleEvent_Success, updateEventData } from './index';
+import { loadSeedData, addNewEventData, deleteSingleEvent_Success, updateEventData, deleteBatchEvents_Success } from './index';
 
 
 // Returns a function to be called within the Redux-Thunk middleware:
@@ -46,6 +46,24 @@ export const deleteSingleEvt = (evt) => {
       })
       .then(response => {
         dispatch(deleteSingleEvent_Success(response.data));
+      })
+      .catch(err => {
+        throw new Error(`Error making DELETE request:\t${err}`);
+      });
+  };
+};
+
+export const deleteBatchEvents = (evts) => {
+  return (dispatch) => {
+    return Axios
+      .delete('/api/events', {
+        data: evts,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        dispatch(deleteBatchEvents_Success(response.data));
       })
       .catch(err => {
         throw new Error(`Error making DELETE request:\t${err}`);
