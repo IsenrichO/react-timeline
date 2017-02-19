@@ -6,12 +6,10 @@
    * list - Returns a list of threads
    * show - Displays a thread and its posts
 */
-
-
-// var Thread = require('../models/thread.js');
-// var Post = require('../models/post.js');
 var Event = require('../db/models/Event');
 
+
+const warn = (head = 'Error:', ...warningMsg) => console.warn.apply(console, ``);
 
 // General utility function useful as a callback to Mongoose's `.exec()` method
 //  that takes two @params:
@@ -123,7 +121,7 @@ const batchUpdate = (_ids) => {
 
 
 // Perform
-const addEvents = (req, res) => {
+const addEvents = (req, res, next) => {
   const { name, date, location, description } = req.body;
   const dd = { name, date, location, description };
   console.log('Add Events Request Body:', req.body);
@@ -188,25 +186,24 @@ const addEvents = (req, res) => {
  * @param {object} evtProps - An object of property names and the corresponding edits
  * @return {promise} A Promise that resolves when the record has been edited
  */
-const updateEvents = (uuid, evtProps) => {
-  return Event.update({ uuid }, evtProps);
+const updateSingleEvent = (req, res, next) => {
+  const { params: { id: evtId }, body: evtProps } = req;
+  console.log('\n\nREQ:', req);
+  Event
+    .findOneAndUpdate({ eventId: evtId }, evtProps)
+    .then(() => Event.findOne({ eventId: evtId }))
+    .then(evt => res.send(evt))
+    .catch(next);
 };
 
 
 // Perform
 const deleteEvents = (req, res, next) => {
-  const sendResponse = (err, docs) => { res.send(docs); }
-  const handleDelete = (err, docs) => {
-    if (err) {
-      console.error(`Error: Object Delete Failed`);
-    } else {
-      console.log(`Delete Successful: ${docs._id}`);
-      sendResponse(err, docs);
-    }
-  };
+  const uuid = req.body.eventId;
+  console.log('AAA.js param:', uuid);
 
   Event
-    .findOneAndRemove({ uuid: req.params.id }, (err, data) => {
+    .findOneAndRemove({ eventId: uuid }, (err, data) => {
       if (err) {
         console.error(`\nError: Failure to execute DELETE request.`);
       } else {
@@ -214,6 +211,9 @@ const deleteEvents = (req, res, next) => {
         res.json(data);
       }
     });
+    // .then(evt => res.status(204).send(evt))
+    // .then(evt => res.send(evt))
+    // .catch(next);
 };
 
 // const deleteEvent = (req, res) => {
@@ -224,7 +224,7 @@ const deleteEvents = (req, res, next) => {
 
 // App.get('/test', (req, res, next) => {
 //   console.log('TEST');
-//   Event.find({ noteID: '2kk1' }, (err, docs) => {
+//   Event.find({ eventId: '2kk1' }, (err, docs) => {
 //     res.send(docs);
 //   });
 // });
@@ -240,9 +240,32 @@ exports.show = function(req, res) {
 };
 
 
+const getIndividualEvent = (req, res, next) => {
+  const sendResponse = (err, docs) => { res.send(docs); }
+  Event
+    .find({})
+    .limit(+req.params.eventId)
+    .sort({ date: 'desc' })
+    .exec(sendResponse);
+};
+
+// App.get('/api/events/:id', (req, res, next) => {
+//   const sendResponse = (err, docs) => { res.send(docs); }
+//   Event
+//     .find({})
+//     .limit(+req.params.id)
+//     .sort('-date')
+//     .exec(sendResponse);
+// });
+
 module.exports = {
   addEvents,
+  getIndividualEvent,
   listEvents,
-  updateEvents,
+  updateSingleEvent,
   deleteEvents
 };
+
+
+
+

@@ -1,7 +1,7 @@
 'use strict';
 import Axios from 'axios';
 import * as Types from './types';
-import { loadSeedData, addNewEventData, deleteSingleEvent_Success } from './index';
+import { loadSeedData, addNewEventData, deleteSingleEvent_Success, updateEventData } from './index';
 
 
 // Returns a function to be called within the Redux-Thunk middleware:
@@ -36,19 +36,15 @@ export const fetchSeedData = () => {
 
 
 export const deleteSingleEvt = (evt) => {
-  console.log('Async delete begun');
   return (dispatch) => {
     return Axios
-      .delete(`/api/events/${evt.uuid}`, {
+      .delete(`/api/events/edit/${evt.eventId}`, {
+        data: evt,
         headers: {
-          // 'uid': uid,
           'Content-Type': 'application/json'
         },
-        // uuid: evt.uuid
-        evt: evt
       })
       .then(response => {
-        console.log('delete response:', response);
         dispatch(deleteSingleEvent_Success(response.data));
       })
       .catch(err => {
@@ -56,6 +52,22 @@ export const deleteSingleEvt = (evt) => {
       });
   };
 };
+
+
+export const updateEvent = (evtData) => {
+  return (dispatch) => {
+    return Axios
+      .put(`/api/events/edit/${evtData.eventId}`, evtData)
+      .then(response => {
+        console.log('\PUT request data:', response);
+        dispatch(updateEventData(response.data));
+      })
+      .catch(err => {
+        throw new Error(`Error making PUT request:\t${err}`);
+      });
+  };
+};
+
 
 export const addNewEvent = (evtData) => {
   console.log('Async Action begun');
@@ -99,7 +111,7 @@ export const addNewEvent = (evtData) => {
 //   required: [true, 'This event requires a date.']
 // },
 // formattedDate: String,
-// noteID: String,
+// eventId: String,
 // type: String,
 // description: String,
 // location: String,

@@ -1,33 +1,41 @@
 'use strict';
 const Express = require('express'),
-      App = Express(),
-      // require('mongodb').Db,
-      Mongo = require('mongodb'),
-      // Server = require('mongodb').Server,
-      Mongoose = require('mongoose'),
+      Mongo = require('mongodb');
+const Mongoose = require('mongoose'),
       BodyParser = require('body-parser'),
       Path = require('path'),
-      PathnameBase = '/api/v1/',
-      // $ = require('jquery'),
       Request = require('request'),
-      // Generate a v4 UUID (random)
-      UUID_v4 = require('uuid/v4');
+      UUID_v4 = require('uuid/v4');   // Generate a v4 (randomized) UUID
+      // $ = require('jquery'),
 
 const Event = require('../db/models/Event');
+
+// const eventsRoute = require('./routes/events');
+
 const ApI = require('./aaa');
 const seedData = require('../src/constants/json/SeedData.json');
 
 
+const App = Express();
+const PathnameBase = '/api/v1/';
+
+// Invoke Express's `static` middleware for configuring `assets`
+//  as our default static locale; defaults to serving the index.html
+//  file location therein.
+App.use(Express.static(Path.join(__dirname, '../dist')));
+App.use(BodyParser.json());
+App.use(BodyParser.urlencoded({ extended: true }));
+
+
 // Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
 //  This assignment addresses the Mongoose mpromise library deprecation warning.
-Mongoose.Promise = global.Promise || Promise;
+Mongoose.Promise = global.Promise;
 
 const [Db, Server] = [Mongo.Db, Mongo.Server];
 // Connect to the database:
 // const db = new Db('events', new Server('localhost', 27017));
 Mongoose.connect('mongodb://localhost:27017/events');
 const db = Mongoose.connection;
-
 Mongoose.set('debug', true);
 
 db
@@ -46,11 +54,6 @@ db
   });
 
 
-// Invoke Express's `static` middleware for configuring `assets`
-//  as our default static locale; defaults to serving the index.html
-//  file location therein.
-App.use(Express.static(Path.join(__dirname, '../dist')));
-App.use(BodyParser.json());
 
 
 const monthNames = [
@@ -78,29 +81,41 @@ const formatDate = (date) => {
 
 
 
-App.get('/api/events/:number', (req, res, next) => {
-  const sendResponse = (err, docs) => { res.send(docs); }
-  Event
-    .find({})
-    .limit(+req.params.number)
-    .sort('-date')
-    .exec(sendResponse);
-});
+// App.get('/api/events/:id', (req, res, next) => {
+//   const sendResponse = (err, docs) => { res.send(docs); }
+//   Event
+//     .find({})
+//     .limit(+req.params.id)
+//     .sort('-date')
+//     .exec(sendResponse);
+// });
 
 
-// App.get('/api/events', (req, res, next) => {
-//   const sendResponse = (err, docs) => {
-//     console.log('pppp', err, docs);
-//     res.send(docs);
-//   }
+// App
+//   .route('/api/events')
+//   .get(ApI.listEvents)
+//   .post(ApI.addEvents);
 
-//   Event.find({}).sort('-date').exec(sendResponse);
-//   // Event.find({}).exec(sendResponse);
+// App
+//   .route('/api/events/edit/:id')
+//   // .get()
+//   .put(ApI.updateEvents)
+//   .delete(ApI.deleteEvents);
 
-App.get('/api/events', ApI.listEvents);
 
 
-App.post('/api/events', ApI.addEvents);
+  // App.get('/api/events', (req, res, next) => {
+  //   const sendResponse = (err, docs) => {
+  //     console.log('pppp', err, docs);
+  //     res.send(docs);
+  //   }
+
+  //   Event.find({}).sort('-date').exec(sendResponse);
+  //   // Event.find({}).exec(sendResponse);
+// App.get('/api/events', ApI.listEvents);
+
+
+// App.post('/api/events', ApI.addEvents);
   // const sendResponse = (err, docs) => { res.send(docs); }
   // const eventAttributes = Object.keys(Event.schema.obj);
   // const handleSave = (err, docs) => {
@@ -117,7 +132,8 @@ App.post('/api/events', ApI.addEvents);
   // new Event(params).save(handleSave);
 
 
-App.patch('/api/events/:id', ApI.updateEvents);
+// .put or .patch
+// App.put('/api/events/edit/:id', ApI.updateEvents);
   // const sendResponse = (err, docs) => { res.send(docs); }
   // const eventAttributes = Object.keys(Event.schema.obj);
   // let  paramsToUpdate = [];
@@ -139,26 +155,38 @@ App.patch('/api/events/:id', ApI.updateEvents);
   // Event.update({ _id: req.params.id }, ...paramsToUpdate).exec(handleUpdate);
 
 
-// App.delete('/api/events/:id', ApI.deleteEvents);
-App.delete('/api/events/:id', ApI.deleteEvents);
+  // App.delete('/api/events/edit/:id', ApI.deleteEvents);
+// App.delete('/api/events/edit/:id', ApI.deleteEvents);
 
-//   const sendResponse = (err, docs) => { res.send(docs); }
-//   const handleDelete = (err, docs) => {
-//     if (err) {
-//       console.error(`Error: Object Delete Failed`);
-//     } else {
-//       console.log(`Delete Successful: ${docs._id}`);
-//       sendResponse(err, docs);
-//     }
-//   };
-//   Event.findByIdAndRemove(req.params.id, handleDelete);
+  //   const sendResponse = (err, docs) => { res.send(docs); }
+  //   const handleDelete = (err, docs) => {
+  //     if (err) {
+  //       console.error(`Error: Object Delete Failed`);
+  //     } else {
+  //       console.log(`Delete Successful: ${docs._id}`);
+  //       sendResponse(err, docs);
+  //     }
+  //   };
+  //   Event.findByIdAndRemove(req.params.id, handleDelete);
+  // });
+
+  // App.get('/test', (req, res, next) => {
+  //   console.log('TEST');
+  //   Event.find({ eventId: '2kk1' }, (err, docs) => {
+  //     res.send(docs);
+  //   });
+
+
+// App.use((err, req, res, next) => {
+//   res.status(422).send({ error: err.message });
 // });
 
-// App.get('/test', (req, res, next) => {
-//   console.log('TEST');
-//   Event.find({ noteID: '2kk1' }, (err, docs) => {
-//     res.send(docs);
-//   });
+
+const eventsRoute = require('./routes/events');
+const eventIdsRoute = require('./routes/eventIds');
+
+App.use('/api/events', eventsRoute);
+App.use('/api/events/edit', eventIdsRoute);
 
 
 module.exports = App;

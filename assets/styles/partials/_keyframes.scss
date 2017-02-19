@@ -21,3 +21,15 @@
   0% { transform: translateY(0); }
   100% { transform: translateY(-0.357143rem); }
 }
+
+
+@-webkit-keyframes modalEntrance {
+  0% {
+    top: -100vh;
+    transform: translateX(-50%);
+  }
+  100% {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

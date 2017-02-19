@@ -9,7 +9,7 @@ describe('Deleting events', () => {
   beforeEach((done) => {
     deleteTestEvt = new Event({
       name: 'Mocha Deletion Test Event',
-      noteID: 'Test_001',
+      eventId: 'Test_001',
       type: 'Testing',
       description: 'Mocha test to confirm Event records are removed from MongoDB',
       location: 'San Francisco, CA',

@@ -1,16 +1,21 @@
 'use strict';
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.json';
 import FileUploadAPI from './FileUploadAPI';
+import { updateEvent } from '../actions/asyncActions';
 
 
 @connect(
-  (state) => ({
+  state => ({
     eventEditingModalData: state.eventEditingModalData,
     eventEditingModalState: state.eventEditingModalState
   })
+  // dispatch => bindActionCreators({
+  //   updateEvent
+  // }, dispatch)
 )
 export default class EditEventModal extends Component {
   constructor(props) {
@@ -30,16 +35,29 @@ export default class EditEventModal extends Component {
     return `${DATE.getUTCMonth() + 1}/${DATE.getUTCDate()}/${DATE.getUTCFullYear()}`;
   }
 
-  // <label htmlFor="title-inpt">Title</label>
-  // <label htmlFor="date-inpt">Date</label>
-  // <label htmlFor="location-inpt">Location</label>
-  // <label htmlFor="description-inpt">Description</label>
+  updateEvent(name, date, location, description) {
+    console.log('\n\nMODAL DATA:', this.props.eventEditingModalData);
+    const updatedData = {
+      name: this.editEvtTitleInpt.value,
+      date: this.editEvtDateInpt.value,
+      location: this.editEvtLocationInpt.value,
+      description: this.editEvtDescriptionInpt.value
+    };
+
+    const newEvtData = Object.assign({}, this.props.eventEditingModalData, updatedData);
+    console.log('\n\nNEW EVENT DATA:', newEvtData);
+
+    this.props.updEvt(newEvtData);
+    this.props.toggleModal();
+  }
+
   renderForm() {
     let form = (
       <form>
         <fieldset>
           <div className="input-group">
             <span className="input-group-addon">T</span>
+            <label htmlFor="title-inpt"></label>
             <input
               id="title-inpt"
               className="form-control"
@@ -136,6 +154,7 @@ export default class EditEventModal extends Component {
             <fieldset>
               <div className="input-gr">
                 <span className="input-gr-addon">T</span>
+                <label htmlFor="edit-evt-title-inpt" />
                 <input
                   id="edit-evt-title-inpt"
                   className="form-cont"
@@ -152,6 +171,7 @@ export default class EditEventModal extends Component {
                 <span className="input-gr-addon">
                   <i className="glyphicon glyphicon-calendar" />
                 </span>
+                <label htmlFor="edit-evt-date-inpt" />
                 <input
                   id="edit-evt-date-inpt"
                   className="form-cont"
@@ -164,6 +184,7 @@ export default class EditEventModal extends Component {
                 <span className="input-gr-addon">
                   <i className="glyphicon glyphicon-map-marker" />
                 </span>
+                <label htmlFor="edit-evt-location-inpt" />
                 <input
                   id="edit-evt-location-inpt"
                   className="form-cont"
@@ -179,6 +200,7 @@ export default class EditEventModal extends Component {
                 <span className="input-gr-addon">
                   <i className="glyphicon glyphicon-list-alt" />
                 </span>
+                <label htmlFor="edit-evt-description-inpt" />
                 <textarea
                   id="edit-evt-description-inpt"
                   className="form-cont"
@@ -189,6 +211,14 @@ export default class EditEventModal extends Component {
               </div>
             </fieldset>
             <FileUploadAPI />
+            <fieldset>
+              <button
+                type="button"
+                name="updateEvtBtn"
+                onClick={ ::this.updateEvent }>
+                Update Event
+              </button>
+            </fieldset>
           </form>
         </div>
       </Modal>

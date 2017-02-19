@@ -7,7 +7,7 @@ import EditEventModal from './EditEventModal';
 import ButtonControls from './ButtonControls';
 import NewEventModal from './NewEventModal';
 import { logEventModalData, toggleEventModal } from '../actions/index';
-import { addNewEvent, deleteSingleEvt } from '../actions/asyncActions';
+import { addNewEvent, deleteSingleEvt, updateEvent } from '../actions/asyncActions';
 
 
 @connect(
@@ -19,7 +19,8 @@ import { addNewEvent, deleteSingleEvt } from '../actions/asyncActions';
     logEventModalData,
     toggleEventModal,
     addNewEvent,
-    deleteSingleEvt
+    deleteSingleEvt,
+    updateEvent
   }, dispatch)
 )
 export default class Timeline extends Component {
@@ -47,12 +48,16 @@ export default class Timeline extends Component {
 
   logModalData(data) { this.props.logEventModalData(data); }
 
-  deleteTLEvt(evtId) {
-    this.props.deleteSingleEvt(evtId);
+  deleteTLEvt(evt) {
+    this.props.deleteSingleEvt(evt);
   }
 
   adddder(evtData) {
     this.props.addNewEvent(evtData);
+  }
+
+  updEvt(evtData) {
+    this.props.updateEvent(evtData);
   }
 
   orderTimelineEvents(evts) {
@@ -92,7 +97,8 @@ export default class Timeline extends Component {
         <EditEventModal
           modalData={ this.props.eventEditingModalData }
           modalStatus={ this.props.eventEditingModalState }
-          toggleModal={ ::this.toggleModal } />
+          toggleModal={ ::this.toggleModal }
+          updEvt={ ::this.updEvt } />
         <NewEventModal
           modalStatus={ this.state.newModal }
           toggleModal={ ::this.toggleNewEvtModal }

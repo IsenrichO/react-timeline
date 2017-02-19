@@ -22,9 +22,9 @@
     "serve": "NODE_ENV=development npm run dev",
     "start": "nodemon",
     "stats": "webpack --json > stats.json",
-    "test": "mocha test/**/*.js --compilers js:babel-register",
-    "test:recursive": "nodemon --exec 'mocha --recursive -R min'",
-    "test:watch": "nodemon --exec 'mocha test/**/*.js -R min'",
+    "test": "NODE_ENV=test mocha test/**/*.js --compilers js:babel-register",
+    "test:recursive": "NODE_ENV=test nodemon --exec 'mocha --recursive -R min'",
+    "test:watch": "NODE_ENV=test nodemon --exec 'mocha test/**/*.js -R min'",
     "view:dbs": "mongo show dbs",
     "watch": "NODE_ENV=dev webpack -w"
   },

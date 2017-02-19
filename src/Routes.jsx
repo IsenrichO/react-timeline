@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router';
 
 import App from './components/pages/App';
-import NoteItem from './components/pages/NotePage';
+import TimelineEventPage from './components/pages/TimelineEventPage';
 import { fetchSeedData } from './actions/asyncActions';
 import { History, Store } from './store/configureStore';
 
@@ -19,7 +19,7 @@ const RouterConfig = () => (
   <Provider store={ Store }>
     <Router history={ History }>
       <Route path="/" component={ App } onEnter={ loadEvts } />
-      <Route path="notes/:noteID" component={ NoteItem } />
+      <Route path="events/edit/:eventId" component={ TimelineEventPage } />
     </Router>
   </Provider>
 );

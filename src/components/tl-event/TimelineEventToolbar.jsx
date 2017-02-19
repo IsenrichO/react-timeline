@@ -9,7 +9,7 @@ const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt }) => 
       type="button"
       name="View full event"
       title="Show full note">
-      <Link to={ `/notes/${evt.noteID}` }>
+      <Link to={ `/events/edit/${evt.eventId}` }>
         <i className="glyphicon glyphicon-eye-open" />
       </Link>
     </button>
@@ -19,7 +19,10 @@ const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt }) => 
       title="Enter quick edit mode">
       <i
         className="glyphicon glyphicon-pencil"
-        onClick={ () => { logModalData(evt); toggleModal(); } } />
+        onClick={ () => {
+          logModalData(evt);
+          toggleModal();
+        }} />
     </button>
     <button
       type="button"
