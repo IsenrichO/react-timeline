@@ -6,21 +6,28 @@ import TimelineEvent from './tl-event/TimelineEvent';
 import EditEventModal from './EditEventModal';
 import ButtonControls from './ButtonControls';
 import NewEventModal from './NewEventModal';
-import { logEventModalData, toggleEventModal } from '../actions/index';
-import { addNewEvent, deleteSingleEvt, updateEvent } from '../actions/asyncActions';
+import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
+import { addNewEvent, deleteSingleEvt, updateEvent, deleteBatchEvents } from '../actions/asyncActions';
+import * as Utils from '../Utilities';
 
 
 @connect(
   (state) => ({
     eventEditingModalData: state.eventEditingModalData,
-    eventEditingModalState: state.eventEditingModalState
+    eventEditingModalState: state.eventEditingModalState,
+    batchSelectionState: state.batchSelectionState,
+    batchSelectionItems: state.batchSelectionItems
   }),
   (dispatch) => bindActionCreators({
     logEventModalData,
     toggleEventModal,
+    allowBatchSelection,
+    addEventToBatchSelection,
     addNewEvent,
     deleteSingleEvt,
-    updateEvent
+    deleteBatchEvents,
+    updateEvent,
+    clearBatchSelection
   }, dispatch)
 )
 export default class Timeline extends Component {
@@ -61,9 +68,22 @@ export default class Timeline extends Component {
   }
 
   orderTimelineEvents(evts) {
-    return evts && evts.length ? 
-      evts.sort((evt1, evt2) => new Date(evt2.date).getTime() - new Date(evt1.date).getTime()) :
-      [];
+    return evts && evts.length
+      ? evts.sort((evt1, evt2) => Utils.getTimeDifferenceInMs(evt2.date, evt1.date))
+      : [];
+  }
+
+  toggleBatchSelection(bool = undefined) {
+    this.props.allowBatchSelection(bool);
+  }
+
+  addSelectionToBatch(evtUuid) {
+    this.props.addEventToBatchSelection(evtUuid);
+  }
+
+  deleteBatch(evts) {
+    this.props.deleteBatchEvents(this.props.batchSelectionItems);
+    this.props.clearBatchSelection();
   }
 
   renderOrderedEvents(events) {
@@ -81,7 +101,9 @@ export default class Timeline extends Component {
         photoCount={ evt.photoCount }
         logModalData={ ::this.logModalData }
         toggleModal={ ::this.toggleModal }
-        deleteEvt={ ::this.deleteTLEvt } />
+        deleteEvt={ ::this.deleteTLEvt }
+        batchSelectionState={ this.props.batchSelectionState }
+        addSelectionToBatch={ ::this.addSelectionToBatch } />
     );
   }
 
@@ -91,9 +113,17 @@ export default class Timeline extends Component {
         <div id="ccc">
           <input className="cloudinary-fileupload" type="file" name="file" data-cloudinary-field="image_upload" multiple />
           <button name="btn">TEST</button>
+          <button
+            name="del-btn"
+            onClick={ () => ::this.deleteBatch(this.props.batchSelectionItems) }>
+            DELETE
+          </button>
         </div>
 
-        <ul className="tl">{ ::this.renderOrderedEvents(::this.orderTimelineEvents(this.props.seedData)) }</ul>
+        <ul className="tl">
+          { ::this.renderOrderedEvents(::this.orderTimelineEvents(this.props.seedData)) }
+        </ul>
+        
         <EditEventModal
           modalData={ this.props.eventEditingModalData }
           modalStatus={ this.props.eventEditingModalState }
@@ -104,7 +134,8 @@ export default class Timeline extends Component {
           toggleModal={ ::this.toggleNewEvtModal }
           adddder={ ::this.adddder } />
         <ButtonControls
-          toggleModal={ ::this.toggleNewEvtModal } />
+          toggleModal={ ::this.toggleNewEvtModal }
+          toggleBatchSelection={ ::this.toggleBatchSelection } />
       </div>
     );
   }
