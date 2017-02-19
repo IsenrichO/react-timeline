@@ -7,6 +7,7 @@
    * show - Displays a thread and its posts
 */
 var Event = require('../db/models/Event');
+const formatDate = require('./utilities');
 
 
 const warn = (head = 'Error:', ...warningMsg) => console.warn.apply(console, ``);
@@ -38,7 +39,6 @@ const listEvents = (req, res) => {
     .exec((err, records) => {
       res.send(records);
     });
-    // .exec(handleResponse);
 };
 
 const getTLRange = (req, res) => {
@@ -229,14 +229,13 @@ const deleteEvents = (req, res, next) => {
 //   });
 // });
 
-
-// first locates a thread by title, then locates the replies by thread ID.
-exports.show = function(req, res) {
-  Thread.findOne({title: req.params.title}, function(error, thread) {
-    var posts = Post.find({thread: thread._id}, function(error, posts) {
-      res.send([{thread: thread, posts: posts}]);
-    });
-  })
+const deleteBatchEvents = (req, res, next) => {
+  console.log('\n\nBATCH DELETE req:', req);
+  const uuids = req.body;
+  Event
+    .remove({ uuid: { $in: uuids }})
+    .then(() => res.json(uuids))
+    .catch(next);
 };
 
 
@@ -263,7 +262,8 @@ module.exports = {
   getIndividualEvent,
   listEvents,
   updateSingleEvent,
-  deleteEvents
+  deleteEvents,
+  deleteBatchEvents
 };
 
 

@@ -55,7 +55,7 @@ export default class ButtonControls extends MotionComponent {
   }
 
   execChildBtnAction(evt, index) {
-    super.getChildObj(index, evt, this.props.toggleModal).func();
+    super.getChildObj(index, evt, this.props.toggleModal, this.props.toggleBatchSelection).func();
     ::this.toggleMenu(evt);
   }
 

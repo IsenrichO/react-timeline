@@ -74,7 +74,7 @@ $border-sides: top right bottom left;
 };
 @mixin cbBorder() {
   @each $side in $border-sides {
-    $color: $theme-teal;
+    $color: $theme-red;
     @if ($side == top) or ($side == left) {
       $color: transparent;
     }

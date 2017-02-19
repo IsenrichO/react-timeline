@@ -9,6 +9,7 @@ const Express = require('express'),
 router
   .route('/')
   .get(ApI.listEvents)
-  .post(ApI.addEvents);
+  .post(ApI.addEvents)
+  .delete(ApI.deleteBatchEvents);
 
 module.exports = router;

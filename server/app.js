@@ -9,6 +9,7 @@ const Mongoose = require('mongoose'),
       // $ = require('jquery'),
 
 const Event = require('../db/models/Event');
+const formatDate = require('./utilities');
 
 // const eventsRoute = require('./routes/events');
 
@@ -52,32 +53,6 @@ db
   .on('close', () => {
     console.log('Seeding Finished!');
   });
-
-
-
-
-const monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
-
-const formatDate = (date) => {
-  let dateStr = date
-    .replace(/T.+Z/, '')
-    .split('-');
-  [...dateStr] = [dateStr[2], monthNames[+dateStr[1] - 1], dateStr[0]];
-  return dateStr.join(' ');
-};
 
 
 

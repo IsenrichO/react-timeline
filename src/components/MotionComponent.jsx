@@ -183,15 +183,15 @@ export default class MotionComponent extends Component {
     return `glyphicon glyphicon-${childBtnGlyphs[childIndex].glyph}`;
   }
 
-  getChildObj(childIndex, evt, passedFunc = null) {
+  getChildObj(childIndex, evt, passedFuncPlus = null, passedFuncMinus = null, ...passedArgs) {
     const self = this;
     const childBtnGlyphs = [
       {
         glyph: 'plus',
-        func: passedFunc
+        func: passedFuncPlus
       }, {
         glyph: 'minus',
-        func: null
+        func: passedFuncMinus
       }, {
         glyph: 'send',
         func: () => ::self.toggleAllLocationAccordions(evt)

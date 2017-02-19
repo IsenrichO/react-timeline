@@ -66,7 +66,7 @@ input[type='checkbox'] {
       left: 0.35rem;
       top: -1px;
       border: 2.5px solid $cb-unchecked;
-      border-radius: 1.5px;
+      border-radius: 3px;
       transition: all 0.325s ease-out;
     }
   }
@@ -81,5 +81,27 @@ input[type='checkbox'] {
         transform: rotate(40deg);
       }
     }    
+  }
+  &.batch-select {
+    + label:before {
+      width: 1.75rem;
+      height: 1.75rem;
+      left: -0.25rem;
+      top: -1.25rem;
+    }
+    &:checked + label:before {
+      width: 1.09rem;
+      height: 2rem;
+      left: -0.25rem;
+      top: -1.25rem;
+      border-width: 4px;
+    }
+  }
+}
+.tl-event-invert input[type='checkbox'] {
+  &:checked + label:before,
+  + label:before {
+    left: auto;
+    right: -0.25rem;
   }
 }

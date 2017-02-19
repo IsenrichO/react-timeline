@@ -41,7 +41,8 @@
         &:after { @extend %tt-left; }
         .panel {
           &-header {
-            .collapse-up {
+            .collapse-up,
+            > div {
               left: auto;
               right: -0.5rem;
               order: 1;
@@ -237,4 +238,8 @@
 .tl-event-invert .panel-header h3 {
   width: 80% !important;
   text-align: start;
+}
+
+.tl-event-panel.batch-select-active {
+  outline: 21px solid rgba(177, 91, 91, 0.23);
 }

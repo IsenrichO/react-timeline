@@ -69,4 +69,9 @@ const formatDate = (date) => {
   return dateStr.join(' ');
 };
 
-export { dayNames, monthNames, formatDate };
+
+const getDateAsTimeInMs = (date) => new Date(date).getTime();
+const getTimeDifferenceInMs = (date1, date2) =>
+  new Date(date1).getTime() - new Date(date2).getTime();
+
+export { dayNames, monthNames, formatDate, getDateAsTimeInMs, getTimeDifferenceInMs };

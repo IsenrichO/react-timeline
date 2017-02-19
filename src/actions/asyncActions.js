@@ -1,7 +1,7 @@
 'use strict';
 import Axios from 'axios';
 import * as Types from './types';
-import { loadSeedData, addNewEventData, deleteSingleEvent_Success, updateEventData } from './index';
+import { loadSeedData, addNewEventData, deleteSingleEvent_Success, updateEventData, deleteBatchEvents_Success } from './index';
 
 
 // Returns a function to be called within the Redux-Thunk middleware:
@@ -54,12 +54,30 @@ export const deleteSingleEvt = (evt) => {
 };
 
 
+export const deleteBatchEvents = (evts) => {
+  return (dispatch) => {
+    return Axios
+      .delete('/api/events', {
+        data: evts,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        dispatch(deleteBatchEvents_Success(response.data));
+      })
+      .catch(err => {
+        throw new Error(`Error making DELETE request:\t${err}`);
+      });
+  };
+};
+
+
 export const updateEvent = (evtData) => {
   return (dispatch) => {
     return Axios
       .put(`/api/events/edit/${evtData.eventId}`, evtData)
       .then(response => {
-        console.log('\PUT request data:', response);
         dispatch(updateEventData(response.data));
       })
       .catch(err => {
@@ -70,12 +88,10 @@ export const updateEvent = (evtData) => {
 
 
 export const addNewEvent = (evtData) => {
-  console.log('Async Action begun');
   return (dispatch) => {
     return Axios
       .post('/api/events', evtData)
       .then(response => {
-        console.log('then response:', response);
         dispatch(addNewEventData(response.data));
       })
       .catch(err => {
