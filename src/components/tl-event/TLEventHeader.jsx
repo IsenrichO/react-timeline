@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import BatchSelectCheckbox from '../BatchSelectCheckbox';
 
 
 const collapseBody = (evt) => {
@@ -16,11 +17,26 @@ const collapseBody = (evt) => {
   $parentListItem.css({ maxHeight: !isCollapsed ? $(evt.target).parent()[0].getClientRects()[0].height : '1000px' });
 };
 
-const TLEventHeader = ({ evtName }) => (
+const renderI = (bool, evtUuid, func) => {
+  if (bool) {
+    return (
+      <BatchSelectCheckbox
+        evtUuid={ evtUuid }
+        addSelectionToBatch={ func } />
+    );
+  } else {
+    return (
+      <i 
+        className="collapse-up glyphicon glyphicon-chevron-up"
+        onClick={ collapseBody } />
+    );
+  }
+};
+
+
+const TLEventHeader = ({ evtName, evtUuid, batchSelectionState, addSelectionToBatch }) => (
   <div className="panel-header">
-    <i 
-      className="collapse-up glyphicon glyphicon-chevron-up"
-      onClick={ collapseBody } />
+    { renderI(batchSelectionState, evtUuid, addSelectionToBatch) }
     <h3>{ evtName }</h3>
   </div>
 );

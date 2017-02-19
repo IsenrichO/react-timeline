@@ -22,7 +22,8 @@ import TLEventFooter from './TLEventFooter';
 //   $parentListItem.css({ maxHeight: !isCollapsed ? $(evt.target).parent()[0].getClientRects()[0].height : '1000px' });
 // };
 
-const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, evtDate, evtFormattedDate, evtNote, photoCount, logModalData, toggleModal, deleteEvt }) => (
+
+const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, evtDate, evtFormattedDate, evtNote, photoCount, logModalData, toggleModal, deleteEvt, batchSelectionState, addSelectionToBatch }) => (
   <li className={ `tl-event${evtAlign}` }>
     <div className="tl-marker">
       <i className="glyphicon glyphicon-record" />
@@ -34,7 +35,10 @@ const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, ev
         toggleModal={ toggleModal }
         deleteEvt={ deleteEvt } />
       <TLEventHeader
-        evtName={ evtName } />
+        evtName={ evtName }
+        evtUuid={ evt.uuid }
+        batchSelectionState={ batchSelectionState }
+        addSelectionToBatch={ addSelectionToBatch } />
       <TLEventBody
         evtDescription={ evtDescription }
         evtLocation={ evtLocation }
