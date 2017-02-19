@@ -230,10 +230,11 @@ const deleteEvents = (req, res, next) => {
 // });
 
 const deleteBatchEvents = (req, res, next) => {
+  console.log('\n\nBATCH DELETE req:', req);
   const uuids = req.body;
   Event
     .remove({ uuid: { $in: uuids }})
-    .then((data) => res.json(data))
+    .then(() => res.json(uuids))
     .catch(next);
 };
 
