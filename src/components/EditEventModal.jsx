@@ -13,9 +13,6 @@ import { updateEvent } from '../actions/asyncActions';
     eventEditingModalData: state.eventEditingModalData,
     eventEditingModalState: state.eventEditingModalState
   })
-  // dispatch => bindActionCreators({
-  //   updateEvent
-  // }, dispatch)
 )
 export default class EditEventModal extends Component {
   constructor(props) {
@@ -36,17 +33,13 @@ export default class EditEventModal extends Component {
   }
 
   updateEvent(name, date, location, description) {
-    console.log('\n\nMODAL DATA:', this.props.eventEditingModalData);
     const updatedData = {
       name: this.editEvtTitleInpt.value,
       date: this.editEvtDateInpt.value,
       location: this.editEvtLocationInpt.value,
       description: this.editEvtDescriptionInpt.value
     };
-
     const newEvtData = Object.assign({}, this.props.eventEditingModalData, updatedData);
-    console.log('\n\nNEW EVENT DATA:', newEvtData);
-
     this.props.updEvt(newEvtData);
     this.props.toggleModal();
   }
