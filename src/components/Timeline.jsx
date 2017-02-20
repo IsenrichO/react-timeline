@@ -50,36 +50,16 @@ export default class Timeline extends Component {
       : $('body').removeClass('modal-active');
   }
   
-  toggleNewEvtModal() {
-    this.setState({ newModal: !this.state.newModal });
-  }
+  // toggleNewEvtModal() {
+  //   this.setState({ newModal: !this.state.newModal });
+  // }
 
-  logModalData(data) { this.props.logEventModalData(data); }
-
-  deleteTLEvt(evt) {
-    this.props.deleteSingleEvt(evt);
-  }
-
-  adddder(evtData) {
-    this.props.addNewEvent(evtData);
-  }
-
-  updEvt(evtData) {
-    this.props.updateEvent(evtData);
-  }
+  // logModalData(data) { this.props.logEventModalData(data); }
 
   orderTimelineEvents(evts) {
     return evts && evts.length
       ? evts.sort((evt1, evt2) => Utils.getTimeDifferenceInMs(evt2.date, evt1.date))
       : [];
-  }
-
-  toggleBatchSelection(bool = undefined) {
-    this.props.allowBatchSelection(bool);
-  }
-
-  addSelectionToBatch(evtUuid) {
-    this.props.addEventToBatchSelection(evtUuid);
   }
 
   deleteBatch() {
@@ -100,11 +80,11 @@ export default class Timeline extends Component {
         evtFormattedDate={ evt.formattedDate }
         evtNote={ evt.type }
         photoCount={ evt.photoCount }
-        logModalData={ ::this.logModalData }
+        logModalData={ (data) => this.props.logEventModalData(data) }
         toggleModal={ ::this.toggleModal }
-        deleteEvt={ ::this.deleteTLEvt }
+        deleteEvt={ (evt) => this.props.deleteSingleEvt(evt) }
         batchSelectionState={ this.props.batchSelectionState }
-        addSelectionToBatch={ ::this.addSelectionToBatch } />
+        addSelectionToBatch={ (evtUuid) => this.props.addEventToBatchSelection(evtUuid) } />
     );
   }
 
@@ -129,18 +109,18 @@ export default class Timeline extends Component {
           modalData={ this.props.eventEditingModalData }
           modalStatus={ this.props.eventEditingModalState }
           toggleModal={ ::this.toggleModal }
-          updEvt={ ::this.updEvt } />
+          updEvt={ (evtData) => this.props.updateEvent(evtData) } />
         <NewEventModal
           modalStatus={ this.state.newModal }
-          toggleModal={ ::this.toggleNewEvtModal }
-          adddder={ ::this.adddder } />
+          toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
+          addNewEvent={ (evtData) => this.props.addNewEvent(evtData) } />
         <BatchActionButtons
           batchSelectionState={ this.props.batchSelectionState }
-          toggleBatchSelection={ ::this.toggleBatchSelection }
+          toggleBatchSelection={ (bool = undefined) => this.props.allowBatchSelection(bool) }
           deleteBatch={ ::this.deleteBatch } />
         <ButtonControls
-          toggleModal={ ::this.toggleNewEvtModal }
-          toggleBatchSelection={ ::this.toggleBatchSelection } />
+          toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
+          toggleBatchSelection={ (bool = undefined) => this.props.allowBatchSelection(bool) } />
       </div>
     );
   }
