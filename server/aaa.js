@@ -248,15 +248,6 @@ const getIndividualEvent = (req, res, next) => {
     .exec(sendResponse);
 };
 
-// App.get('/api/events/:id', (req, res, next) => {
-//   const sendResponse = (err, docs) => { res.send(docs); }
-//   Event
-//     .find({})
-//     .limit(+req.params.id)
-//     .sort('-date')
-//     .exec(sendResponse);
-// });
-
 module.exports = {
   addEvents,
   getIndividualEvent,
@@ -265,7 +256,3 @@ module.exports = {
   deleteEvents,
   deleteBatchEvents
 };
-
-
-
-
