@@ -12,7 +12,7 @@ export default function seedDataAggregator(state = [], action = null) {
 
     case ADD_NEW_EVENT_DATA:
       // console.log(`Action <${action.type}> executed with payload `, action.payload);
-      return new Array(...state).concat(action.payload);
+      return [...state, action.payload];
 
     case DELETE_SINGLE_EVENT:
       // console.log(`Action <${action.type}> executed with payload `, action.payload);
@@ -33,7 +33,7 @@ export default function seedDataAggregator(state = [], action = null) {
       const updatedEvtIndex = state.findIndex(evt => evt.uuid === action.payload.uuid);
       newState = Array.of(...state);
       newState.splice(updatedEvtIndex, 1);
-      return newState.concat(action.payload);
+      return [...newState, action.payload];
 
     default:
       return state;
