@@ -35,6 +35,45 @@ export const fetchSeedData = () => {
 // };
 
 
+export const addNewEvent = (evtData) => {
+  return (dispatch) => {
+    return Axios
+      .post('/api/events', evtData)
+      .then(response => {
+        dispatch(addNewEventData(response.data));
+      })
+      .catch(err => {
+        throw new Error(`Error making POST request:\t${err}`);
+      });
+  };
+};
+
+// export const addNewEvent = (name, date, location, description) => {
+//   console.log('Async Action begun');
+//   const request = Axios.post('/api/events', {
+//     name,
+//     date,
+//     location,
+//     description
+//   });
+// };
+
+
+
+export const updateSingleEvent = (evtData) => {
+  return (dispatch) => {
+    return Axios
+      .put(`/api/events/edit/${evtData.eventId}`, evtData)
+      .then(response => {
+        dispatch(updateEventData(response.data));
+      })
+      .catch(err => {
+        throw new Error(`Error making PUT request:\t${err}`);
+      });
+  };
+};
+
+
 export const deleteSingleEvt = (evt) => {
   return (dispatch) => {
     return Axios
@@ -72,43 +111,6 @@ export const deleteBatchEvents = (evts) => {
   };
 };
 
-
-export const updateEvent = (evtData) => {
-  return (dispatch) => {
-    return Axios
-      .put(`/api/events/edit/${evtData.eventId}`, evtData)
-      .then(response => {
-        dispatch(updateEventData(response.data));
-      })
-      .catch(err => {
-        throw new Error(`Error making PUT request:\t${err}`);
-      });
-  };
-};
-
-
-export const addNewEvent = (evtData) => {
-  return (dispatch) => {
-    return Axios
-      .post('/api/events', evtData)
-      .then(response => {
-        dispatch(addNewEventData(response.data));
-      })
-      .catch(err => {
-        throw new Error(`Error making POST request:\t${err}`);
-      });
-  };
-};
-
-// export const addNewEvent = (name, date, location, description) => {
-//   console.log('Async Action begun');
-//   const request = Axios.post('/api/events', {
-//     name,
-//     date,
-//     location,
-//     description
-//   });
-// };
 
 // name: {
 //   type: String,
