@@ -14,6 +14,13 @@ export default function seedDataAggregator(state = [], action = null) {
       // console.log(`Action <${action.type}> executed with payload `, action.payload);
       return [...state, action.payload];
 
+    case UPDATE_EVENT_DATA:
+      // console.log(`Action <${action.type}> executed with payload `, action.payload);
+      const updatedEvtIndex = state.findIndex(evt => evt.uuid === action.payload.uuid);
+      newState = Array.of(...state);
+      newState.splice(updatedEvtIndex, 1);
+      return [...newState, action.payload];
+
     case DELETE_SINGLE_EVENT:
       // console.log(`Action <${action.type}> executed with payload `, action.payload);
       const removedEvtUuid = state.findIndex(evt => evt.uuid === action.payload.uuid);
@@ -27,13 +34,6 @@ export default function seedDataAggregator(state = [], action = null) {
         .of(...state)
         .filter(evt => !action.payload.includes(evt.uuid));
       return newState;
-
-    case UPDATE_EVENT_DATA:
-      // console.log(`Action <${action.type}> executed with payload `, action.payload);
-      const updatedEvtIndex = state.findIndex(evt => evt.uuid === action.payload.uuid);
-      newState = Array.of(...state);
-      newState.splice(updatedEvtIndex, 1);
-      return [...newState, action.payload];
 
     default:
       return state;
