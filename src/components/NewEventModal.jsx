@@ -8,17 +8,13 @@ import FileUploadAPI from './FileUploadAPI';
 import { addNewEvent } from '../actions/asyncActions';
 
 
-// @connect(
-//   null,
-//   (dispatch) => bindActionCreators({ addNewEvent }, dispatch)
-// )
 export default class NewEventModal extends Component {
   constructor(props) {
     super(props);
   }
 
   saveNewEvt(name, date, location, description) {
-    this.props.adddder({
+    this.props.addNewEvent({
       name: this.newEvtTitleInpt.value,
       date: this.newEvtDateInpt.value,
       location: this.newEvtLocationInpt.value,
@@ -29,7 +25,6 @@ export default class NewEventModal extends Component {
 
   componentWillReceiveProps(nextProps) {
     const self = this;
-
     if (this.props.modalStatus !== nextProps.modalStatus && nextProps.modalStatus) {
       setTimeout(function() {
         self.newEvtDateInpt.valueAsDate = new Date();
@@ -125,5 +120,3 @@ export default class NewEventModal extends Component {
     );
   }
 };
-
-// export default NewEventModal;

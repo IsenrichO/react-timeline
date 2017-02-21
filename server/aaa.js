@@ -23,24 +23,6 @@ const handleResponse = (err, data) => {
 
 // const sendResponse = (res, data) => { res.send(data); };
 
-
-exports.post = function(req, res) {
-  new Thread({title: req.body.title, author: req.body.author}).save();
-};
-
-// Perform Mongoose query to find all records that are instances of the Event
-//  Model, sort them in reverse chronological order (i.e., newest first),
-//  limit the sort to the 20 most recent records and pass the callback handler:
-const listEvents = (req, res) => {
-  Event
-    .find({})
-    .sort({ date: 'desc'})
-    .limit(20)
-    .exec((err, records) => {
-      res.send(records);
-    });
-};
-
 const getTLRange = (req, res) => {
   const minQuery = Event
     .find({})
@@ -120,25 +102,6 @@ const batchUpdate = (_ids) => {
 };
 
 
-// Perform
-const addEvents = (req, res, next) => {
-  const { name, date, location, description } = req.body;
-  const dd = { name, date, location, description };
-  console.log('Add Events Request Body:', req.body);
-
-  // Object
-  //   .keys(Event.schema.obj)
-  //   .forEach(datum => {
-  //     params[datum] = params[datum] || '';
-  //   });
-  new Event(dd).save((err) => {
-    if (err) {
-      res.status(400).send('SHIT YOOO');
-    } else {
-      res.json(dd);
-    }
-  });
-};
 // router.post('/tasks', function(req, res) {
 //   let newTask = new Task(req.body.taskParams);
 //   newTask.lastCompleted = null;
@@ -180,41 +143,6 @@ const addEvents = (req, res, next) => {
 //     .exec(handleResponse);
 // };
 
-/**
- * Edits a single instance of the Event model
- * @param {string} uuid - The UUID of the event record being edited
- * @param {object} evtProps - An object of property names and the corresponding edits
- * @return {promise} A Promise that resolves when the record has been edited
- */
-const updateSingleEvent = (req, res, next) => {
-  const { params: { id: evtId }, body: evtProps } = req;
-  console.log('\n\nREQ:', req);
-  Event
-    .findOneAndUpdate({ eventId: evtId }, evtProps)
-    .then(() => Event.findOne({ eventId: evtId }))
-    .then(evt => res.send(evt))
-    .catch(next);
-};
-
-
-// Perform
-const deleteEvents = (req, res, next) => {
-  const uuid = req.body.eventId;
-  console.log('AAA.js param:', uuid);
-
-  Event
-    .findOneAndRemove({ eventId: uuid }, (err, data) => {
-      if (err) {
-        console.error(`\nError: Failure to execute DELETE request.`);
-      } else {
-        console.log('\nDELETE request successful!');
-        res.json(data);
-      }
-    });
-    // .then(evt => res.status(204).send(evt))
-    // .then(evt => res.send(evt))
-    // .catch(next);
-};
 
 // const deleteEvent = (req, res) => {
 //   console.log('REQUEST BODY:', req.body);
@@ -229,34 +157,6 @@ const deleteEvents = (req, res, next) => {
 //   });
 // });
 
-const deleteBatchEvents = (req, res, next) => {
-  console.log('\n\nBATCH DELETE req:', req);
-  const uuids = req.body;
-  Event
-    .remove({ uuid: { $in: uuids }})
-    .then(() => res.json(uuids))
-    .catch(next);
-};
-
-
-const getIndividualEvent = (req, res, next) => {
-  const sendResponse = (err, docs) => { res.send(docs); }
-  Event
-    .find({})
-    .limit(+req.params.eventId)
-    .sort({ date: 'desc' })
-    .exec(sendResponse);
-};
-
-// App.get('/api/events/:id', (req, res, next) => {
-//   const sendResponse = (err, docs) => { res.send(docs); }
-//   Event
-//     .find({})
-//     .limit(+req.params.id)
-//     .sort('-date')
-//     .exec(sendResponse);
-// });
-
 module.exports = {
   addEvents,
   getIndividualEvent,
@@ -265,7 +165,3 @@ module.exports = {
   deleteEvents,
   deleteBatchEvents
 };
-
-
-
-

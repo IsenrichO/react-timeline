@@ -13,7 +13,7 @@ const formatDate = require('./utilities');
 
 // const eventsRoute = require('./routes/events');
 
-const ApI = require('./aaa');
+const ApI = require('./controllers/EventsController');
 const seedData = require('../src/constants/json/SeedData.json');
 
 

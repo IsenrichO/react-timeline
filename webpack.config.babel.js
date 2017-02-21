@@ -3,9 +3,9 @@ import Webpack from 'webpack';
 import Merge from 'webpack-merge';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
+import DotEnv from 'dotenv-webpack';
 import Path from 'path';
 import PostCSS from './postcss.config';
-import DotEnv from 'dotenv-webpack';
 
 
 // const appEnv = (process.env.NODE_ENV || 'dev');
@@ -20,17 +20,20 @@ const VENDOR_LIBS = [
   'lodash',
   'react',
   'react-dom',
+  'react-motion',
   'react-redux',
   'react-router',
   'react-router-redux',
   'redux',
-  'redux-thunk'
+  'redux-thunk',
+  'request',
+  'uuid'
 ];
 
 const BASE_CONFIG = {
   entry: {
     // 'webpack/hot/dev-server',
-    bundle: Path.resolve(__dirname, 'src/Routes'),
+    bundle: Path.resolve(__dirname, 'src/RouterConfig'),
     vendor: VENDOR_LIBS
   },
   output: {

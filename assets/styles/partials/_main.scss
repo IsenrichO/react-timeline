@@ -131,6 +131,8 @@
         justify-content: space-between;
         align-items: center;
         background-color: #F4F4F4;
+        .glyphicon-star,
+        .glyphicon-star-empty { cursor: pointer; }
         .glyphicon-star { color: #F6DB3D; }
       }
     }

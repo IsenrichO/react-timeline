@@ -23,7 +23,7 @@ import TLEventFooter from './TLEventFooter';
 // };
 
 
-const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, evtDate, evtFormattedDate, evtNote, photoCount, logModalData, toggleModal, deleteEvt, batchSelectionState, addSelectionToBatch }) => (
+const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, evtDate, evtFormattedDate, evtNote, photoCount, logModalData, toggleModal, deleteEvt, batchSelectionState, addSelectionToBatch, addEventToFavorites, getStarGlyphClass, hasMultipleTags }) => (
   <li className={ `tl-event${evtAlign}` }>
     <div className="tl-marker">
       <i className="glyphicon glyphicon-record" />
@@ -46,7 +46,11 @@ const TimelineEvent = ({ evt, evtName, evtLocation, evtAlign, evtDescription, ev
         photoCount={ photoCount }
         evtFormattedDate={ evtFormattedDate } />
       <TLEventFooter
-        evtNote={ evtNote } />
+        evt={ evt }
+        evtNote={ evtNote }
+        addEventToFavorites={ addEventToFavorites }
+        getStarGlyphClass={ getStarGlyphClass }
+        hasMultipleTags={ hasMultipleTags } />
     </div>
   </li>
 );

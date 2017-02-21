@@ -3,14 +3,13 @@ const Express = require('express'),
       router = Express.Router(),
       BodyParser = require('body-parser'),
       parseUrlEncoded = BodyParser.urlencoded({ extended: false }),
-      ApI = require('../aaa');
+      EventController = require('../controllers/EventsController');
 
 
 router
   .route('/:id')
-  .get(ApI.getIndividualEvent)
-  .put(ApI.updateSingleEvent)
-  .delete(ApI.deleteEvents);
+  .get(EventController.getSingleEvent)
+  .put(EventController.updateSingleEvent)
+  .delete(EventController.deleteSingleEvent);
 
-// updateEvents
 module.exports = router;
