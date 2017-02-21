@@ -32,6 +32,7 @@ const EventSchema = new Schema({
   photos: [EventPhotoSchema],
   tags: [EventTagSchema],
   links: [EventLinkSchema],
+  starred: Boolean,
   numRevisions: Number,
   archived: Boolean
 }, {
