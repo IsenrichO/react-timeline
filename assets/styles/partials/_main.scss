@@ -194,6 +194,7 @@
     line-height: 5rem;
   }
   &-child {
+    @include nthChildIterator(transition-delay, 4, 0.05);
     @include flex(flex, row, center, center);
     position: fixed;
     border: none;
@@ -201,9 +202,7 @@
     background-color: $theme-content-lt;
     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.2);
     color: #8898A5;
-    transition-property: left, bottom;
-    transition-duration: 0.5s;
-    transition-timing-function: ease-in-out;
+    transition: all 0.25s cubic-bezier(0, 0.44, 0.94, 1.29);
     .glyphicon { font-size: 1.5rem; }
     i {
       font-size: 1.5rem;
