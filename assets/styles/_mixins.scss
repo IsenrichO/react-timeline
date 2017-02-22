@@ -1,0 +1,83 @@
+
+/* Sass @mixin Declarations
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+@mixin flex($flex: flex, $dir: row, $justify: space-around, $align: center) {
+  display: $flex;
+  flex-flow: $dir nowrap;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin center($axes: all) {
+  @if $axes == all {
+    left: 50%;
+    top: 50%;
+  }
+  @else if $axes == horizontal { left: 50%; }
+  @else if $axes == vertical { top: 50%; }
+
+  @include cbTransform(translate(-50%, -50%));
+  position: absolute;
+}
+
+@mixin cbTransform($transform) {
+  -webkit-transform: $transform;
+     -moz-transform: $transform;
+      -ms-transform: $transform;
+       -o-transform: $transform;
+          transform: $transform;
+}
+
+@mixin cbTransition($transition, $properties: all) {
+  $shorthand: '';
+  @each $property in $properties {
+    @if index($properties, $property) < length($properties) {
+      $shorthand: '#{$shorthand} #{$property} #{$transition}, ';
+    } @else {
+      $shorthand: '#{$shorthand} #{$property} #{$transition}';
+    }
+  }
+  -webkit-transition: unquote($shorthand);
+     -moz-transition: unquote($shorthand);
+      -ms-transition: unquote($shorthand);
+       -o-transition: unquote($shorthand);
+          transition: unquote($shorthand);
+}
+
+@mixin cbBorderRadii($radius: 0) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin cbBoxShadow($shadow: 0 0 10px 0.1px rgba(0, 0, 0, 0.175)) {
+  -webkit-box-shadow: $shadow;
+     -moz-box-shadow: $shadow;
+          box-shadow: $shadow;
+}
+
+@mixin cbBorder() {
+  @each $side in $border-sides {
+    $color: $theme-red;
+    @if ($side == top) or ($side == left) {
+      $color: transparent;
+    }
+    border-#{$side}: 3px solid $color;
+    border-radius: 3px;
+  }
+}
+
+@mixin nthChildIterator($prop, $limit: 1, $step: 1) {
+  $index: 1;
+  @while $index <= $limit {
+    @if $index == 0 {
+      &:first-child { #{$prop}: ($step * $index) + s; }
+    } @else if $index == $limit {
+      &:last-child { #{$prop}: ($step * $index) + s; }
+    } @else {
+      &:nth-child(#{$index}) { #{$prop}: ($step * $index) + s; }
+    }
+    $index: $index + 1;
+  }
+}
