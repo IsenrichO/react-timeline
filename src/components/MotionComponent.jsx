@@ -7,7 +7,6 @@ import { Motion, StaggeredMotion, spring } from 'react-motion';
 const MAIN_BTN_DIAM = 70,
       CHILD_BTN_DIAM = 45,
       NUM_CHILDREN = 4,
-      // [MAIN_BTN_X, MAIN_BTN_Y] = [1588, 77],
       RIGHT_ADJUST = (
         42 +  // 3rem = 3 * 1rem = 3 * 14<px> => 42<px>
         15 +  // Width of right-aligned window scrollbar
@@ -22,7 +21,6 @@ const MAIN_BTN_DIAM = 70,
       SEPARATION_ANGLE = 30,
       FAN_ANGLE = (NUM_CHILDREN - 1) * SEPARATION_ANGLE,
       BASE_ANGLE = 90;
-      // BASE_ANGLE = (180 - FAN_ANGLE) / 2;
 
 // Should be between 0 and 0.5. Its maximum value is difference between `scale` in
 //  `finalChildBtnStyles` and `initialChildBtnStyles`.
@@ -77,6 +75,24 @@ export default class MotionComponent extends Component {
     };
   }
 
+  childBtns() {
+    return [
+      {
+        key: 'plus-btn',
+        data: { text: 'Plus' }
+      }, {
+        key: 'minus-btn',
+        data: { text: 'Minus' }
+      }, {
+        key: 'send-btn',
+        data: { text: 'Send' }
+      }, {
+        key: 'collapse-up-btn',
+        data: { text: 'Collapse Up' }
+      }
+    ];
+  }
+
   finalChildBtnStylesInit(childIndex) {
     let { deltaX, deltaY } = this.finalChildPos(childIndex);
     return {
@@ -99,64 +115,6 @@ export default class MotionComponent extends Component {
       rotate: spring(0, SPRING_CONFIG),
       scale: spring(1, SPRING_CONFIG)
     };
-  }
-
-  getRange(start = 0, stop, step = 1, inclusive = false) {
-    const outputRange = (rangeLen, mapFunc) => Array.from(rangeLen, mapFunc),
-          regCharSet = new RegExp('[A-Z]', 'i'),
-          ALPH = [
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
-          ];
-    let rangeLen, mapFunc, isDescending = false;
-
-    if (typeof start !== 'number' && typeof start !== 'string') {
-      throw new Error(`Invalid input <${start}> of type <${typeof start}> provided. The` +
-                      `\`getRange()\` function accepts either Number or String type inputs.`);
-    }
-
-    // Return empty Array literal when called without providing any input(s):
-    if (arguments.length === 0) { return new Array(0); }
-
-    if (typeof start === 'string' && regCharSet.test(start) && start.length === 1) {
-      // Test that `start` parameter (if not default value) is a valid, single-unit
-      //  alphabetic character:
-      if (stop !== 0 && typeof stop === 'string') {
-        if (start > stop) { isDescending = true; }
-        let startChar = start.toUpperCase(), endChar;
-
-        if (!regCharSet.test(stop) || stop.length !== 1) {
-          throw new Error(`Invalid input: ${start}\nShould be an alphabetic character.`);
-        } else {
-          endChar = stop.toUpperCase();
-          const startIndex = ALPH.indexOf(startChar);
-          rangeLen = Math.abs(ALPH.indexOf(endChar) - startIndex + (!!inclusive ? 1 : 0));
-          mapFunc = (_, i) => (isDescending ? ALPH[startIndex - (i * step)] : ALPH[startIndex + (i * step)]);
-        }
-      } else {
-        rangeLen = ALPH.indexOf(!!inclusive ? (start + 1) : start);
-        mapFunc = (_, index) => ALPH[index];
-      }
-    }
-
-    if (typeof start === 'number') {
-      if (stop !== undefined && start > stop) { isDescending = true; }
-
-      if (stop !== undefined && typeof stop === 'number' && stop !== 0) {
-        rangeLen = Math.abs(stop - start + (!!inclusive ? 1 : 0));
-        mapFunc = (_, i) => (start + ((!!isDescending ? -1 : 1) * i * step));
-      } else {
-        rangeLen = Math.abs(start);
-        mapFunc = (_, i) => 0 + (start < 0 ? - i : i);
-      }
-    }
-
-    // Return Array literal containing only the `start` parameter value if `step` value is 0;
-    if (step === 0) {
-      return new Array(rangeLen).fill(start);
-    }
-
-    return outputRange(new Array(Math.ceil(rangeLen / Math.abs(step))), mapFunc);
   }
 
   getChildBtnGlyph(childIndex) {
