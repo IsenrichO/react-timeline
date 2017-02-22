@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Motion, StaggeredMotion, spring } from 'react-motion';
 import MotionComponent from './MotionComponent';
+import DelayMotion from './DelayMotionComponent';
 
 
 // True constants:
@@ -10,8 +11,8 @@ const MAIN_BTN_DIAM = 70,
       NUM_CHILDREN = 4,
       [MAIN_BTN_X, MAIN_BTN_Y] = [995, 77],
       SPRING_CONFIG = {
-        stiffness: 400,
-        damping: 28
+        stiffness: 109,
+        damping: 36
       },
       FLY_OUT_R = 125,
       SEPARATION_ANGLE = 30,
@@ -88,15 +89,15 @@ export default class ButtonControls extends MotionComponent {
 
     let calculateStylesForNextFrame = (prevFrameStyles) => {
       prevFrameStyles = (isOpen ? prevFrameStyles : prevFrameStyles.reverse());
-      let nextFrameTargetStyles = prevFrameStyles.map((prevFrameBtnStyle, i) => {
-        if (i === 0) { return targetBtnStylesObj[i]; }
+      let nextFrameTargetStyles = prevFrameStyles.map((prevFrameBtnStyle, index) => {
+        if (index === 0) { return targetBtnStylesObj[index]; }
 
-        const prevBtnScale = prevFrameStyles[i - 1].scale;
+        const prevBtnScale = prevFrameStyles[index - 1].scale;
         const shouldApplyTargetStyle = () => isOpen
           ? (prevBtnScale >= scaleMin + OFFSET)
           : (prevBtnScale <= scaleMax - OFFSET);
 
-        return (shouldApplyTargetStyle() ? targetBtnStylesObj[i] : prevFrameBtnStyle);
+        return (shouldApplyTargetStyle() ? targetBtnStylesObj[index] : prevFrameBtnStyle);
       });
 
       return (isOpen ? nextFrameTargetStyles : nextFrameTargetStyles.reverse());
@@ -119,7 +120,6 @@ export default class ButtonControls extends MotionComponent {
                     left,
                     bottom,
                     transform: `rotate(${rotate}deg) scale(${scale})`
-                    // transition: `all 0.25s ${index * 55}ms`
                   }}
                   onClick={ (evt) => ::this.execChildBtnAction(evt, index) }>
                   <i className={ super.getChildBtnGlyph(index) } />
@@ -131,6 +131,16 @@ export default class ButtonControls extends MotionComponent {
       </StaggeredMotion>
     );
   }
+
+  // {boxes.map((box, index) =>
+  //   <Delay key={box} initial={0} value={1} period={index * 80}>{ delayed =>
+  //     <Motion defaultStyle={{scale: 0}} style={{ scale: spring(delayed) }}>{ val =>
+  //       <div style={{ ...styles.box, transform: `scale(${val.scale})` }}>
+  //         {box}
+  //       </div>
+  //     }</Motion>
+  //   }</Delay>)
+  // }
 
   renderMainBtn() {
     let { isOpen } = this.state;
@@ -154,14 +164,13 @@ export default class ButtonControls extends MotionComponent {
   render() {
     let { isOpen } = this.state;
     let mainBtnRotation = isOpen
-      ? { rotate: spring(-135, { stiffness: 500, damping: 30 }) }
-      : { rotate: spring(0, { stiffness: 500, damping: 30 }) };
+      ? { rotate: spring(-135, SPRING_CONFIG) }
+      : { rotate: spring(0, SPRING_CONFIG) };
 
     return (
       <div className="btn-cont">
         { this.renderChildBtns() }
-        <Motion
-          style={ mainBtnRotation }>
+        <Motion style={ mainBtnRotation }>
           { ::this.renderMainBtn() }
         </Motion>
         <div className="btn-shadow" />

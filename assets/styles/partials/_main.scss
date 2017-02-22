@@ -201,6 +201,9 @@
     background-color: $theme-content-lt;
     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.2);
     color: #8898A5;
+    transition-property: left, bottom;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
     .glyphicon { font-size: 1.5rem; }
     i {
       font-size: 1.5rem;

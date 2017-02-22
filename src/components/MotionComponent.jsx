@@ -15,8 +15,8 @@ const MAIN_BTN_DIAM = 70,
       ),
       [MAIN_BTN_X, MAIN_BTN_Y] = [window.innerWidth - RIGHT_ADJUST, 77],
       SPRING_CONFIG = {
-        stiffness: 400,
-        damping: 28
+        stiffness: 600,
+        damping: 36
       },
       FLY_OUT_R = 175,
       SEPARATION_ANGLE = 30,
@@ -61,7 +61,6 @@ export default class MotionComponent extends Component {
        height: CHILD_BTN_DIAM,
        left: spring(MAIN_BTN_X - (CHILD_BTN_DIAM / 2), SPRING_CONFIG),
        bottom: spring(MAIN_BTN_Y - (CHILD_BTN_DIAM / 2), SPRING_CONFIG),
-       // top: spring(MAIN_BTN_Y - (CHILD_BTN_DIAM / 2), SPRING_CONFIG),
        rotate: spring(-180, SPRING_CONFIG),
        scale: spring(0.5, SPRING_CONFIG)
      };
@@ -72,7 +71,6 @@ export default class MotionComponent extends Component {
       width: CHILD_BTN_DIAM,
       height: CHILD_BTN_DIAM,
       left: MAIN_BTN_X - (CHILD_BTN_DIAM / 2),
-      // top: MAIN_BTN_Y - (CHILD_BTN_DIAM / 2),
       bottom: MAIN_BTN_Y - (CHILD_BTN_DIAM / 2),
       rotate: -180,
       scale: 0.5
@@ -85,7 +83,6 @@ export default class MotionComponent extends Component {
       width: CHILD_BTN_DIAM,
       height: CHILD_BTN_DIAM,
       left: MAIN_BTN_X + deltaX,
-      // top: MAIN_BTN_Y - deltaY,
       bottom: MAIN_BTN_Y + deltaY,
       rotate: 0,
       scale: 1
@@ -99,7 +96,6 @@ export default class MotionComponent extends Component {
       height: CHILD_BTN_DIAM,
       left: spring(MAIN_BTN_X + deltaX, SPRING_CONFIG),
       bottom: spring(MAIN_BTN_Y + deltaY, SPRING_CONFIG),
-      // top: spring(MAIN_BTN_Y - deltaY, SPRING_CONFIG),
       rotate: spring(0, SPRING_CONFIG),
       scale: spring(1, SPRING_CONFIG)
     };
@@ -139,7 +135,7 @@ export default class MotionComponent extends Component {
         }
       } else {
         rangeLen = ALPH.indexOf(!!inclusive ? (start + 1) : start);
-        mapFunc = (_, i) => ALPH[i];
+        mapFunc = (_, index) => ALPH[index];
       }
     }
 
