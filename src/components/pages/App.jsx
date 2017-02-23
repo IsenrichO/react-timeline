@@ -20,9 +20,9 @@ export default class App extends Component {
   render() {
     return (
       <div id="tl-container">
-        <Timeline
-          seedData={ this.props.seedData } />
+        <Timeline seedData={ this.props.seedData } />
         <EditEventModal />
+        { this.props.children }
       </div>
     );
   }

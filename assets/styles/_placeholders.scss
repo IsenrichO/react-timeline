@@ -1,0 +1,85 @@
+
+/* Sass %placeholder Declarations
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+%tt-right {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  content: '';
+  border-bottom: 1.5rem solid transparent;
+  border-left: 1.5rem solid #FFF;
+  border-right: 0 solid #FFF;
+}
+
+%tt-right-shadow {
+  position: absolute;
+  left: 100%;
+  top: -1px;
+  content: '';
+  border-bottom: calc(1.5rem + 2px) solid transparent;
+  border-left: calc(1.5rem + 2px) solid #CCC;
+  border-right: 0 solid #CCC;
+}
+
+%tt-left {
+  @extend %tt-right;
+  left: -1.5rem;
+  top: 0;
+  content: '';
+  border-left: 0 solid #FFF;
+  border-right: 1.5rem solid #FFF;
+}
+
+%tt-left-shadow {
+  position: absolute;
+  left: calc(-1.5rem - 2px);
+  top: -1px;
+  content: '';
+  border-bottom: calc(1.5rem + 2px) solid transparent;
+  border-right: calc(1.5rem + 2px) solid #CCC;
+  border-left: 0 solid #CCC;
+}
+
+%primaryBtn {
+  // @include fade(0.25s, 0s, ease-in-out);
+  @include cbBorderRadii(4px);
+  border: none;
+  font: bolder 4rem/1 Arial, sans-serif;
+  background-color: $theme-red;
+  color: $theme-content-lt;
+  text-align: center;
+  cursor: pointer;
+}
+
+%br-circle {
+  @include cbBorderRadii(50%);
+}
+
+%txt-of {
+  white-space: nowrap;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+%hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+%visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+%no-select {
+  -ms-pointer-events: visiblePainted;
+      pointer-events: visiblePainted;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+         -o-user-select: none;
+            user-select: none;
+}

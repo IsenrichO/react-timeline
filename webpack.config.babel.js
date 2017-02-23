@@ -33,7 +33,7 @@ const VENDOR_LIBS = [
 const BASE_CONFIG = {
   entry: {
     // 'webpack/hot/dev-server',
-    bundle: Path.resolve(__dirname, 'src/RouterConfig'),
+    bundle: Path.resolve(__dirname, 'src/App'),
     vendor: VENDOR_LIBS
   },
   output: {

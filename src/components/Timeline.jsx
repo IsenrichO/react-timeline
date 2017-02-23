@@ -114,11 +114,6 @@ export default class Timeline extends Component {
         <div id="ccc">
           <input className="cloudinary-fileupload" type="file" name="file" data-cloudinary-field="image_upload" multiple />
           <button name="btn">TEST</button>
-          <button
-            name="del-btn"
-            onClick={ ::this.deleteBatch }>
-            DELETE
-          </button>
         </div>
 
         <ul className="tl">
