@@ -8,8 +8,9 @@ Pretty simple. You got times you want to remember. We got an app. On the off cha
 1. Clone down the repo: `$ git clone https://github.com/IsenrichO/react-timeline`
 2. Navigate to the newly created folder on your machine: `$ cd react-timeline`
 3. Install the project's dependencies: `$ npm i`
-4. To run the app using Webpack's virtual server, execute `$ npm run serve`
-5. In your browser, navigate to the running instance of the app: [localhost:3000](http://localhost:3000/)
+4. Start Mongo: `$ npm run db:dev`
+5. To run the app using Webpack's virtual server, execute `$ npm run serve`
+6. In your browser, navigate to the running instance of the app: [localhost:3000](http://localhost:3000/)
 
 ## Tech Stack
 This project makes use of the [MERN stack](http://mern.io/) — [MEAN](http://mean.io/)'s younger brother. Data persistence with [**M**ongoDB](https://docs.mongodb.com/) is, in part, managed using the popular [MongooseJS](http://mongoosejs.com/index.html) ORM. On the front-end, Facebook's astronomically popular [**R**eact](https://facebook.github.io/react/) view manager (as in [M**V**C](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)) is utilized. However great it may be, a full-stack web application's functionality would nonetheless be hampered without the aid of certain complementary technologies. Chief among these is, of course, [Redux](http://redux.js.org/) — the go-to choice of many for front-end state management. From the side of the server, the [**N**odeJS](https://nodejs.org/en/) JavaScript runtime environment is employed in conjunction with [**E**xpress](http://expressjs.com/) — the _de facto_ standard insofar as back-end JavaScript frameworks go.
