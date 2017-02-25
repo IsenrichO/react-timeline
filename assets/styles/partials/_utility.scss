@@ -105,3 +105,26 @@ input[type='checkbox'] {
     right: -0.25rem;
   }
 }
+
+
+.tooltip {
+  position: absolute;
+  right: calc(100% + 0.75rem);
+  top: 50%;
+  padding: 0.25rem 1rem;
+  border-radius: 1rem;
+  transform: translateY(-50%);
+  transition: all 0.45s ease-in-out;
+  color: #FFF;
+  background-color: #888;
+  white-space: pre;
+  font-size: 1.25rem;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 2;
+  .batch-action-btns:hover & {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
