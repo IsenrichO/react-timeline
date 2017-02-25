@@ -33,3 +33,21 @@
     transform: translate(-50%, -50%);
   }
 }
+
+@-webkit-keyframes growBtn {
+  0% {
+    width: 0;
+    height: 0;
+    right: 5.5rem;
+    bottom: 5.5rem;
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    width: 3.2142857142857144rem;
+    height: 3.2142857142857144rem;
+    right: 3.892857142857143rem;
+    opacity: 1;
+    visibility: visible;
+  }
+}
