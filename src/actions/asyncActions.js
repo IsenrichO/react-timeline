@@ -11,6 +11,9 @@ import {
 } from './index';
 
 
+const dispatchActionCreator = (response, actionCreator) => dispatch(actionCreator(response.data));
+const catchAsyncError = (err, msg) => { throw new Error(`${msg}:\t${err}`); };
+
 // Returns a function to be called within the Redux-Thunk middleware:
 export const fetchSeedData = () => {
   return (dispatch) => {
@@ -29,7 +32,7 @@ export const fetchSeedData = () => {
   };
 };
 
-
+// 
 export const fetchStarredEvents = () => {
   console.log('Function `fetchStarredEvents()` Called');
   return (dispatch) => {
@@ -38,8 +41,10 @@ export const fetchStarredEvents = () => {
         responseType: 'json',
       })
       .then(response => {
-        console.log('fetchStarredEvents Response:', response);
         dispatch(fetchStarredEvents_Success(response.data));
+      })
+      .catch(err => {
+        throw new Error(`Error fetching starred events:\t${err}`);
       });
   };
 };
