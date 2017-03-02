@@ -6,7 +6,7 @@ import TLEventFooter from '../tl-event/TLEventFooter';
 
 
 const SingleEvent = (props) => {
-  const { name, uuid, description, location, date, photoCount, formattedDate, type } = props;
+  const { name, uuid, description, location, date, photoCount, formattedDate, type, addEventToFavorites, getStarGlyphClass, hasMultipleTags } = props;
   return (
     <li className="evt-card">
       <TLEventHeader
@@ -21,9 +21,9 @@ const SingleEvent = (props) => {
       <TLEventFooter
         { ...props }
         evtNote={ type }
-        // addEventToFavorites={ addEventToFavorites }
-        // getStarGlyphClass={ getStarGlyphClass }
-        // hasMultipleTags={ hasMultipleTags }
+        addEventToFavorites={ addEventToFavorites }
+        getStarGlyphClass={ getStarGlyphClass }
+        hasMultipleTags={ hasMultipleTags }
         />
     </li>
   );
