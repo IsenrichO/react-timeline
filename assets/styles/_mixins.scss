@@ -28,7 +28,7 @@
           transform: $transform;
 }
 
-@mixin cbTransition($transition, $properties: all) {
+@mixin cbTransition($transition: $transition-timing-func, $properties: all) {
   $shorthand: '';
   @each $property in $properties {
     @if index($properties, $property) < length($properties) {
