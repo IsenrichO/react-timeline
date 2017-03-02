@@ -54,16 +54,6 @@ export default class Timeline extends Component {
       : $('body').removeClass('modal-active');
   }
 
-  getStarGlyphClass(evtId) {
-    const evt = this.props.seedDataAggregator.findIndex(evt => evt.eventId === evtId);
-    return this.props.seedDataAggregator[evt].starred || null;
-  }
-
-  hasMultipleTags(evtId) {
-    const evt = this.props.seedDataAggregator.findIndex(evt => evt.eventId === evtId);
-    return this.props.seedDataAggregator[evt].tags.length > 1;
-  }
-
   deleteBatch() {
     this.props.deleteBatchEvents(this.props.batchSelectionItems);
     this.props.clearBatchSelection();
@@ -72,24 +62,19 @@ export default class Timeline extends Component {
   renderOrderedEvents(events) {
     return events.map((evt, index) =>
       <TimelineEvent
+        evt={{ ...evt }}
         key={ `Evt${evt.name}${index}` }
-        evt={ evt }
-        evtName={ evt.name }
-        evtLocation={ evt.location }
         evtAlign={ new Array('', '-invert')[index % 2] }
-        evtDescription={ evt.description }
-        evtDate={ evt.date }
-        evtFormattedDate={ evt.formattedDate }
-        evtNote={ evt.type }
-        photoCount={ evt.photoCount }
         logModalData={ (data) => this.props.logEventModalData(data) }
         toggleModal={ ::this.toggleModal }
         deleteEvt={ () => this.props.deleteSingleEvt(evt) }
         batchSelectionState={ this.props.batchSelectionState }
         addSelectionToBatch={ (evtUuid) => this.props.addEventToBatchSelection(evtUuid) }
+        isInBatch={ this.props.batchSelectionItems.includes(evt.uuid) }
         addEventToFavorites={ () => Utils.addEventToFavorites(this.props.updateSingleEvent, evt) }
-        getStarGlyphClass={ ::this.getStarGlyphClass(evt.eventId) }
-        hasMultipleTags={ ::this.hasMultipleTags(evt.eventId) } />
+        getStarGlyphClass={ Utils.getStarGlyphClass(this.props.seedDataAggregator, evt.uuid) }
+        hasMultipleTags={ Utils.hasMultipleTags(this.props.seedDataAggregator, evt.uuid) }
+        inverted={ index % 2 ? true : false } />
     );
   }
 
