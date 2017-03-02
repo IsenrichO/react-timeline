@@ -74,10 +74,10 @@ const addSingleEvent = (req, res, next) => {
  * @return {promise} A Promise that resolves when the record has been edited
  */
 const updateSingleEvent = (req, res, next) => {
-  const { params: { id: evtId }, body: evtProps } = req;
+  const { params: { uuid }, body: evtProps } = req;
   Event
-    .findOneAndUpdate({ eventId: evtId }, evtProps)
-    .then(() => Event.findOne({ eventId: evtId }))
+    .findOneAndUpdate({ uuid }, evtProps)
+    .then(() => Event.findOne({ uuid }))
     .then(evt => res.send(evt))
     .catch(() => {
       res.status(400).send('Failed to update specified event!');
@@ -88,9 +88,9 @@ const updateSingleEvent = (req, res, next) => {
 
 // Perform
 const deleteSingleEvent = (req, res, next) => {
-  const uuid = req.body.eventId;
+  const uuid = req.body.uuid;
   Event
-    .findOneAndRemove({ eventId: uuid })
+    .findOneAndRemove({ uuid })
     .then(() => res.json(uuid))
     .catch(() => {
       res.status(400).send('Failed to delete specified event!');
