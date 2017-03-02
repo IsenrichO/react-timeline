@@ -43,11 +43,11 @@ export default function seedDataAggregator(state = [], action = null) {
       return newState;
 
     case FETCH_STARRED_EVENTS_SUCCESS:
-      console.log(`Action <${action.type}> executed with payload `, action.payload);
-      newState = Array
-        .of(...state)
-        .filter(evt => evt.starred === true);
-      return newState;
+      // console.log(`Action <${action.type}> executed with payload `, action.payload);
+      // newState = Array
+      //   .of(...state)
+      //   .filter(evt => evt.starred === true);
+      // return newState;
 
     default:
       // console.log(`Action <${action.type}> unrecognized. Falling back to original state.`);

@@ -30,7 +30,6 @@ export default class SearchWrapper extends Component {
   }
 
   render() {
-    console.log(Utils);
     return (
       <div>
         <SearchSidebar
