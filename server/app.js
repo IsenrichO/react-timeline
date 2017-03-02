@@ -159,9 +159,12 @@ db
 
 const eventsRoute = require('./routes/events');
 const eventUuidsRoute = require('./routes/eventUuids');
+const searchEventsRoute = require('./routes/eventSearch');
+const searchStarredEventsRoute = require('./routes/eventSearchStarred');
 
 App.use('/api/events', eventsRoute);
 App.use('/api/events/edit', eventUuidsRoute);
-
+App.use('/api/search', searchEventsRoute);
+App.use('/api/search/starred', searchStarredEventsRoute);
 
 module.exports = App;
