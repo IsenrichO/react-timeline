@@ -16,9 +16,20 @@ const listEvents = (req, res) => {
       res.status(400).send('Failed to fetch requested events!');
       next();
     });
-    // .exec((err, records) => {
-    //   res.send(records);
-    // });
+};
+
+
+const getStarredEvents = (req, res, next) => {
+  Event
+    .find({ starred: true })
+    .then(evts => {
+      console.log('Starred Response:', evts);
+      res.send(evts);
+    })
+    .catch(err => {
+      res.status(400).send('Failed to fetch starred events!');
+      next();
+    });
 };
 
 
@@ -104,6 +115,7 @@ module.exports = {
   getSingleEvent,
   addSingleEvent,
   listEvents,
+  getStarredEvents,
   updateSingleEvent,
   deleteSingleEvent,
   deleteBatchEvents  
