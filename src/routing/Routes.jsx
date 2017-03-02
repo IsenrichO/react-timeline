@@ -21,7 +21,7 @@ export default (
     onEnter={ () => Store.dispatch(fetchSeedData()) }>
     <IndexRoute component={ App } />
     <Route
-      path="events/edit/:eventId"
+      path="events/edit/:uuid"
       component={ TimelineEventPage } />
     <Route
       path="search"
