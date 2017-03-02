@@ -1,6 +1,5 @@
 'use strict';
 import React, { Component } from 'react';
-
 import TimelineEventToolbar from './TimelineEventToolbar';
 import TLEventHeader from './TLEventHeader';
 import TLEventBody from './TLEventBody';

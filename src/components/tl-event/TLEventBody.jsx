@@ -1,8 +1,7 @@
 'use strict';
 import React from 'react';
-
 import StaticGMap from '../StaticMapEventLocation';
-import { debounce, toggleAccordionSection, formatDate } from '../../Utilities';
+import { debounce, formatDate, toggleAccordionSection } from '../../utilities/index';
 
 
 const debounceToggle = (evt) => debounce(toggleAccordionSection(evt), 2000, true);

@@ -9,7 +9,7 @@ const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt }) => 
       type="button"
       name="View full event"
       title="Show full note">
-      <Link to={ `/events/edit/${evt.eventId}` }>
+      <Link to={ `/events/edit/${evt.uuid}` }>
         <i className="glyphicon glyphicon-eye-open" />
       </Link>
     </button>
