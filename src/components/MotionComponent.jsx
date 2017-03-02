@@ -113,7 +113,8 @@ export default class MotionComponent extends Component {
       left: spring(MAIN_BTN_X + deltaX, SPRING_CONFIG),
       bottom: spring(MAIN_BTN_Y + deltaY, SPRING_CONFIG),
       rotate: spring(0, SPRING_CONFIG),
-      scale: spring(1, SPRING_CONFIG)
+      scale: spring(1, SPRING_CONFIG),
+      zIndex: NUM_CHILDREN + 1 - childIndex
     };
   }
 
@@ -122,19 +123,26 @@ export default class MotionComponent extends Component {
     const childBtnGlyphs = [
       {
         glyph: 'plus',
+        tooltip: 'Add',
         func: null
       }, {
         glyph: 'minus',
+        tooltip: 'Batch Delete',
         func: null
       }, {
         glyph: 'send',
+        tooltip: 'Send',
         func: null
       }, {
         glyph: 'collapse-up',
+        tooltip: 'Collapse',
         func: self.toggleAllEventCards
       }
     ];
-    return `glyphicon glyphicon-${childBtnGlyphs[childIndex].glyph}`;
+    return {
+      glyphName: () => `glyphicon glyphicon-${childBtnGlyphs[childIndex].glyph}`,
+      tooltipText: () => `${childBtnGlyphs[childIndex].tooltip}`
+    };
   }
 
   getChildObj(childIndex, evt, passedFuncPlus = null, passedFuncMinus = null, ...passedArgs) {
