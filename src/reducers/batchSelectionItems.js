@@ -20,6 +20,7 @@ export default function batchSelectionItems(state = [], action = null) {
       state = [];
       
     default:
+      // console.log(`Action <${action.type}> unrecognized. Falling back to original state.`);
       return state;
   }
 };
