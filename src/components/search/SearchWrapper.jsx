@@ -21,11 +21,13 @@ export default class SearchWrapper extends Component {
 
   render() {
     return (
-      <main>
+      <div>
         <Sidebar
           reroute={ () => this.props.push('/') } />
-        { this.props.children }
-      </main>
+        <main id="search-main">
+          { this.props.children }
+        </main>
+      </div>
     );
   }
 };

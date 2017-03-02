@@ -17,14 +17,15 @@ export default class AllEvents extends Component {
 
   render() {
     return (
-      <div>
-        { this.props.seedData.map((evt, index) =>
+      <ul className="evt-search">
+        { 
+          this.props.seedData.map((evt, index) => (
             <SingleEvent
               key={ `EventCard_${index}` }
               { ...evt } />
-          )
+          ))
         }
-      </div>
+      </ul>
     );
   }
 };
