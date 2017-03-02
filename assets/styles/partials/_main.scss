@@ -39,17 +39,17 @@
         float: right;
         &:before { @extend %tt-left-shadow; }
         &:after { @extend %tt-left; }
-        .panel {
-          &-header {
-            .collapse-up,
-            > div {
-              left: auto;
-              right: -0.5rem;
-              order: 1;
-              transition: transform 0.5s ease;
-            }
-          }
-        }
+        // .panel {
+        //   &-header {
+        //     .collapse-up,
+        //     > div {
+        //       left: auto;
+        //       right: -0.5rem;
+        //       order: 1;
+        //       transition: transform 0.5s ease;
+        //     }
+        //   }
+        // }
       }
     }
   }
@@ -76,66 +76,66 @@
     background-color: #FFF;
     &:before { @extend %tt-right-shadow; }
     &:after { @extend %tt-right; }
-    .panel {
-      &-header,
-      &-body,
-      &-footer {
-        position: relative;
-        padding: 1.25rem;
-        border: none;
-      }
-      &-header {
-        display: flex;
-        justify-content: space-around;
-        align-items: baseline;
-        h3 {
-          width: 95%;
-          color: $theme-red;
-        }
-        .collapse-up {
-          transition: transform 0.5s ease;
-          position: relative;
-          top: -0.5rem;
-          left: -0.5rem;
-          font-size: 1.5rem;
-          cursor: pointer;
-        }
-      }
-      &-body {
-        [class^='tl-'] {
-          margin: 1rem 0 0;
-          .toggle-glyph {
-            transition: transform 0.25s ease;
-            float: right;
-            &.active { transform: rotateZ(90deg); }
-          }
-        }
-        .tl-location,
-        .tl-photos { cursor: pointer; }
-        .static-map-wrapper {
-          position: relative;
-          height: 0;
-          margin: 0.5rem 1rem 0 0.5rem;
-          border-left: thin dashed $theme-red;
-          overflow: hidden;
-          &.active { height: auto; }
-          img {
-            width: calc(100% - 0.714286rem);
-            margin-left: 0.714286rem;
-          }
-        }
-      }
-      &-footer {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #F4F4F4;
-        .glyphicon-star,
-        .glyphicon-star-empty { cursor: pointer; }
-        .glyphicon-star { color: #F6DB3D; }
-      }
-    }
+    // .panel {
+    //   &-header,
+    //   &-body,
+    //   &-footer {
+    //     position: relative;
+    //     padding: 1.25rem;
+    //     border: none;
+    //   }
+    //   &-header {
+    //     display: flex;
+    //     justify-content: space-around;
+    //     align-items: baseline;
+    //     h3 {
+    //       width: 95%;
+    //       color: $theme-red;
+    //     }
+    //     .collapse-up {
+    //       transition: transform 0.5s ease;
+    //       position: relative;
+    //       top: -0.5rem;
+    //       left: -0.5rem;
+    //       font-size: 1.5rem;
+    //       cursor: pointer;
+    //     }
+    //   }
+    //   &-body {
+    //     [class^='tl-'] {
+    //       margin: 1rem 0 0;
+    //       .toggle-glyph {
+    //         transition: transform 0.25s ease;
+    //         float: right;
+    //         &.active { transform: rotateZ(90deg); }
+    //       }
+    //     }
+    //     .tl-location,
+    //     .tl-photos { cursor: pointer; }
+    //     // .static-map-wrapper {
+    //     //   position: relative;
+    //     //   height: 0;
+    //     //   margin: 0.5rem 1rem 0 0.5rem;
+    //     //   border-left: thin dashed $theme-red;
+    //     //   overflow: hidden;
+    //     //   &.active { height: auto; }
+    //     //   img {
+    //     //     width: calc(100% - 0.714286rem);
+    //     //     margin-left: 0.714286rem;
+    //     //   }
+    //     // }
+    //   }
+    //   // &-footer {
+    //   //   display: flex;
+    //   //   flex-flow: row nowrap;
+    //   //   justify-content: space-between;
+    //   //   align-items: center;
+    //   //   background-color: #F4F4F4;
+    //   //   .glyphicon-star,
+    //   //   .glyphicon-star-empty { cursor: pointer; }
+    //   //   .glyphicon-star { color: #F6DB3D; }
+    //   // }
+    // }
     &:hover .tl-toolbar { @extend %visible; }
     .tl-toolbar {
       @include cbTransition(0.25s 0.25s cubic-bezier(0, 0.25, 0.7, 0.4));
@@ -184,7 +184,7 @@
   background: $theme-red url(https://ssl.gstatic.com/s2/oz/images/quark/a7367650055ae3cf32ee3b7023c1ed88ic_create_wht_24dp.png) no-repeat center / 50%;
   background-image: none;
   color: $theme-content-lt;
-  z-index: 1;
+  z-index: 10;
   .glyphicon {
     display: block;
     left: 2px;
@@ -211,6 +211,7 @@
   }
 }
 
+
 .btn-shadow {
   position: fixed;
   width: 5rem;
@@ -224,11 +225,85 @@
 }
 
 .glyphicon {
+  &-tag,
   &-tags { padding-right: 0.5rem; }
   .panel-body &:first-child,
   .panel-footer &:first-child {
     margin-right: 1rem;
     color: $theme-red;
+  }
+}
+
+// .panel {
+//   &-header {
+//     .collapse-up,
+//     > div {
+//       left: auto;
+//       right: -0.5rem;
+//       order: 1;
+//       transition: transform 0.5s ease;
+//     }
+//   }
+// }
+
+.panel {
+  &-header,
+  &-body,
+  &-footer {
+    position: relative;
+    padding: 1.25rem;
+    border: none;
+  }
+  &-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    h3 {
+      width: 95%;
+      color: $theme-red;
+    }
+    .collapse-up {
+      transition: transform 0.5s ease;
+      position: relative;
+      top: -0.5rem;
+      left: -0.5rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  }
+  &-body {
+    [class^='tl-'] {
+      margin: 1rem 0 0;
+      .toggle-glyph {
+        transition: transform 0.25s ease;
+        float: right;
+        &.active { transform: rotateZ(90deg); }
+      }
+    }
+    .tl-location,
+    .tl-photos { cursor: pointer; }
+    .static-map-wrapper {
+      position: relative;
+      height: 0;
+      margin: 0.5rem 1rem 0 0.5rem;
+      border-left: thin dashed $theme-red;
+      overflow: hidden;
+      &.active { height: auto; }
+      img {
+        width: calc(100% - 0.714286rem);
+        margin-left: 0.714286rem;
+      }
+    }
+  }
+  &-footer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F4F4F4;
+    .glyphicon-star,
+    .glyphicon-star-empty { cursor: pointer; }
+    .glyphicon-star { color: #F6DB3D; }
   }
 }
 

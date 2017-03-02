@@ -64,4 +64,27 @@
     transition: all 0.5s ease-in-out;
   }
 }
-
+#search-main {
+  position: relative;
+  display: inline-block;
+  width: calc(100vw - 408px);
+  min-height: 100vh;
+  float: right;
+}
+.evt {
+  &-search {
+    @include flex(flex, row wrap, space-around, flex-start);
+    height: 100%;
+    list-style: none;
+    margin: 2vw;
+    padding: 0;
+  }
+  &-card {
+    position: relative;
+    width: 45%;
+    margin: 0 0 1.5rem;
+    border: 1px solid #CCC;
+    background-color: #FFF;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  }
+}

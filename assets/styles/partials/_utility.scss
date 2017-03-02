@@ -122,7 +122,8 @@ input[type='checkbox'] {
   opacity: 0;
   visibility: hidden;
   z-index: 2;
-  .batch-action-btns:hover & {
+  .batch-action-btns:hover &,
+  .btn-controls-child:hover & {
     opacity: 1;
     visibility: visible;
   }
