@@ -75,13 +75,13 @@ export default class Timeline extends Component {
     this.props.clearBatchSelection();
   }
 
-  addEventToFavorites(evt) {
-    this.props.updateSingleEvent({
-      eventId: evt.eventId,
-      uuid: evt.uuid,
-      starred: !evt.starred ? true : false
-    });
-  }
+  // addEventToFavorites(evt) {
+  //   this.props.updateSingleEvent({
+  //     eventId: evt.eventId,
+  //     uuid: evt.uuid,
+  //     starred: !evt.starred ? true : false
+  //   });
+  // }
 
   renderOrderedEvents(events) {
     return events.map((evt, index) =>
@@ -101,7 +101,7 @@ export default class Timeline extends Component {
         deleteEvt={ (evt) => this.props.deleteSingleEvt(evt) }
         batchSelectionState={ this.props.batchSelectionState }
         addSelectionToBatch={ (evtUuid) => this.props.addEventToBatchSelection(evtUuid) }
-        addEventToFavorites={ (evt) => ::this.addEventToFavorites(evt) }
+        addEventToFavorites={ () => Utils.addEventToFavorites(this.props.updateSingleEvent, evt) }
         getStarGlyphClass={ ::this.getStarGlyphClass(evt.eventId) }
         hasMultipleTags={ ::this.hasMultipleTags(evt.eventId) } />
     );

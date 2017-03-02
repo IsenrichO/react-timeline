@@ -136,3 +136,15 @@ const getRange = function(start = 0, stop, step = 1, inclusive = false) {
 };
 
 export { getRange };
+
+
+const addEventToFavorites = (func, evt) =>
+  func({
+    eventId: evt.eventId,
+    uuid: evt.uuid,
+    starred: !evt.starred ? true : false
+  });
+
+export { addEventToFavorites };
+
+
