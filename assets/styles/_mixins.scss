@@ -2,9 +2,9 @@
 /* Sass @mixin Declarations
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-@mixin flex($flex: flex, $dir: row, $justify: space-around, $align: center) {
+@mixin flex($flex: flex, $flow: row nowrap, $justify: space-around, $align: center) {
   display: $flex;
-  flex-flow: $dir nowrap;
+  flex-flow: $flow;
   justify-content: $justify;
   align-items: $align;
 }
@@ -16,7 +16,6 @@
   }
   @else if $axes == horizontal { left: 50%; }
   @else if $axes == vertical { top: 50%; }
-
   @include cbTransform(translate(-50%, -50%));
   position: absolute;
 }
