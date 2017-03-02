@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.json';
 import FileUploadAPI from './FileUploadAPI';
-import { updateEvent } from '../actions/asyncActions';
+import { updateSingleEvent } from '../actions/asyncActions';
 
 
 @connect(
@@ -32,7 +32,7 @@ export default class EditEventModal extends Component {
     return `${DATE.getUTCMonth() + 1}/${DATE.getUTCDate()}/${DATE.getUTCFullYear()}`;
   }
 
-  updateEvent(name, date, location, description) {
+  updateSingleEvent(name, date, location, description) {
     const updatedData = {
       name: this.editEvtTitleInpt.value,
       date: this.editEvtDateInpt.value,
@@ -208,7 +208,7 @@ export default class EditEventModal extends Component {
               <button
                 type="button"
                 name="updateEvtBtn"
-                onClick={ ::this.updateEvent }>
+                onClick={ ::this.updateSingleEvent }>
                 Update Event
               </button>
             </fieldset>

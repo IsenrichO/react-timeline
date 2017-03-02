@@ -1,7 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
 import { Motion, StaggeredMotion, TransitionMotion, spring, presets } from 'react-motion';
-import { getRange } from '../Utilities';
 import MotionComponent from './MotionComponent';
 
 
