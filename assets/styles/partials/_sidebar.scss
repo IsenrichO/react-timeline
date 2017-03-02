@@ -72,7 +72,8 @@
   float: right;
 }
 .evt {
-  &-search {
+  &-search,
+  &-search-starred {
     @include flex(flex, row wrap, flex-start, flex-start);
     height: 100%;
     list-style: none;
