@@ -89,4 +89,5 @@ const FunctionalUtils = {
   getRange
 };
 
+export { ALPH };
 export default FunctionalUtils;
