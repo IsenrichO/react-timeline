@@ -3,7 +3,7 @@ import React from 'react';
 import SearchBox from './SearchBox';
 
 
-const Sidebar = (props) => (
+const SearchSidebar = (props) => (
   <div id="sidebar">
     <i
       id="close-ic"
@@ -13,7 +13,10 @@ const Sidebar = (props) => (
     <SearchBox />
     <div
       className="search-category category-starred"
-      onClick={ () => props.reroute('/search/starred') }>
+      onClick={ () => {
+        props.reroute('/search/starred');
+        props.fetchStarredEvents();
+      }}>
       <h4>
         Starred
         <i className="category-ic">&#x2606;</i>
@@ -22,4 +25,4 @@ const Sidebar = (props) => (
   </div>
 );
 
-export default Sidebar;
+export default SearchSidebar;
