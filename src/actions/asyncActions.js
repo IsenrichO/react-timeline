@@ -1,7 +1,14 @@
 'use strict';
 import Axios from 'axios';
 import * as Types from './types';
-import { loadSeedData, addNewEventData, deleteSingleEvent_Success, updateSingleEvent_Success, deleteBatchEvents_Success, fetchStarredEvents_Success } from './index';
+import {
+  loadSeedData,
+  addNewEventData,
+  deleteSingleEvent_Success,
+  updateSingleEvent_Success,
+  deleteBatchEvents_Success,
+  fetchStarredEvents_Success
+} from './index';
 
 
 // Returns a function to be called within the Redux-Thunk middleware:
@@ -55,7 +62,7 @@ export const addNewEvent = (evtData) => {
 export const updateSingleEvent = (evtData) => {
   return (dispatch) => {
     return Axios
-      .put(`/api/events/edit/${evtData.eventId}`, evtData)
+      .put(`/api/events/edit/${evtData.uuid}`, evtData)
       .then(response => {
         dispatch(updateSingleEvent_Success(response.data));
       })
@@ -69,7 +76,7 @@ export const updateSingleEvent = (evtData) => {
 export const deleteSingleEvt = (evt) => {
   return (dispatch) => {
     return Axios
-      .delete(`/api/events/edit/${evt.eventId}`, {
+      .delete(`/api/events/edit/${evt.uuid}`, {
         data: evt,
         headers: {
           'Content-Type': 'application/json'
