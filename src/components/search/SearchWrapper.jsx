@@ -1,16 +1,20 @@
 'use strict';
-import React, { Component } from 'react';
+import React, { Component, cloneElement } from 'react';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { fetchSeedData } from '../../actions/index';
 import Sidebar from './Sidebar';
+import { addNewEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchStarredEvents } from '../../actions/asyncActions';
+import * as Utils from '../../Utilities';
 
 
 @connect(
   (state) => ({ seedData: state.seedDataAggregator }),
   (dispatch) => bindActionCreators({
     fetchSeedData,
+    updateSingleEvent,
+    fetchStarredEvents,
     push
   }, dispatch)
 )
@@ -19,15 +23,26 @@ export default class SearchWrapper extends Component {
     super(props);
   }
 
+  ff() {
+    this.props.fetchStarredEvents();
+  }
+
   render() {
     return (
       <div>
         <Sidebar
-          reroute={ () => this.props.push('/') } />
-        <main id="search-main">
-          { this.props.children }
+          reroute={ (path) => this.props.push(`${path}`) } />
+        <main id="search-main" onLoad={ () => this.ff() }>
+          {
+            cloneElement(this.props.children, {
+              key: this.props.location.pathname,
+              addEventToFavorites: (evt) => Utils.addEventToFavorites(this.props.updateSingleEvent, evt)
+            })
+          }
         </main>
       </div>
     );
   }
 };
+
+          // { this.props.children }
