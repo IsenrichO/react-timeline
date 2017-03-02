@@ -51,19 +51,15 @@ const getSingleEvent = (req, res, next) => {
 const addSingleEvent = (req, res, next) => {
   const { name, date, location, description } = req.body;
   const dd = { name, date, location, description };
-
-  // Object
-  //   .keys(Event.schema.obj)
-  //   .forEach(datum => {
-  //     params[datum] = params[datum] || '';
-  //   });
-  new Event(dd).save((err) => {
-    if (err) {
-      res.status(400).send('SHIT YOOO');
-    } else {
-      res.json(dd);
-    }
-  });
+  
+  new Event(dd)
+    .save()
+    .then(() => Event.findOne({ name }))
+    .then(evt => res.json(evt))
+    .catch(() => {
+      res.status(400).send('Failed to create new event!');
+      next();
+    });
 };
 
 
@@ -81,7 +77,7 @@ const updateSingleEvent = (req, res, next) => {
     .then(evt => res.send(evt))
     .catch(() => {
       res.status(400).send('Failed to update specified event!');
-      next()
+      next();
     });
 };
 
