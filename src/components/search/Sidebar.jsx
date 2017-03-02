@@ -13,7 +13,7 @@ const Sidebar = (props) => (
     <SearchBox />
     <div
       className="search-category category-starred"
-      onClick={ () => props.reroute('search/starred')}>
+      onClick={ () => props.reroute('/search/starred') }>
       <h4>
         Starred
         <i className="category-ic">&#x2606;</i>

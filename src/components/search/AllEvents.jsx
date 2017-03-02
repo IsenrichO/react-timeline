@@ -44,11 +44,11 @@ export default class AllEvents extends Component {
   renderAllEvents(evts) {
     return evts.map((evt, index) => (
       <SingleEvent
+        { ...evt }
         key={ `EventCard_${index}` }
         addEventToFavorites={ () => Utils.addEventToFavorites(this.props.updateSingleEvent, evt) }
         getStarGlyphClass={ ::this.getStarGlyphClass(evt.eventId) }
-        hasMultipleTags={ ::this.hasMultipleTags(evt.eventId) }
-        { ...evt } />
+        hasMultipleTags={ ::this.hasMultipleTags(evt.eventId) } />
     ));
   }
 

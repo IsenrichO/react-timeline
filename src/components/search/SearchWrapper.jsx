@@ -23,16 +23,12 @@ export default class SearchWrapper extends Component {
     super(props);
   }
 
-  ff() {
-    this.props.fetchStarredEvents();
-  }
-
   render() {
     return (
       <div>
         <Sidebar
           reroute={ (path) => this.props.push(`${path}`) } />
-        <main id="search-main" onLoad={ () => this.ff() }>
+        <main id="search-main">
           {
             cloneElement(this.props.children, {
               key: this.props.location.pathname,
