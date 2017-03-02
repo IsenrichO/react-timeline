@@ -2,11 +2,11 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import TimelineEvent from './tl-event/TimelineEvent';
-import EditEventModal from './EditEventModal';
-import NewEventModal from './NewEventModal';
-import ButtonControls from './ButtonControls';
-import BatchActionButtons from './BatchActionButtons';
+import TimelineEvent from '../components/tl-event/TimelineEvent';
+import EditEventModal from '../components/EditEventModal';
+import NewEventModal from '../components/NewEventModal';
+import ButtonControls from '../components/ButtonControls';
+import BatchActionButtons from '../components/BatchActionButtons';
 import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
 import { addNewEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents } from '../actions/asyncActions';
 import * as Utils from '../Utilities';
@@ -76,7 +76,6 @@ export default class Timeline extends Component {
   }
 
   addEventToFavorites(evt) {
-    console.log('event:', evt);
     this.props.updateSingleEvent({
       eventId: evt.eventId,
       uuid: evt.uuid,
@@ -111,11 +110,6 @@ export default class Timeline extends Component {
   render() {
     return (
       <div>
-        <div id="ccc">
-          <input className="cloudinary-fileupload" type="file" name="file" data-cloudinary-field="image_upload" multiple />
-          <button name="btn">TEST</button>
-        </div>
-
         <ul className="tl">
           { ::this.renderOrderedEvents(::this.orderTimelineEvents(this.props.seedData)) }
         </ul>
@@ -132,7 +126,8 @@ export default class Timeline extends Component {
         <BatchActionButtons
           batchSelectionState={ this.props.batchSelectionState }
           toggleBatchSelection={ (bool = undefined) => this.props.allowBatchSelection(bool) }
-          deleteBatch={ ::this.deleteBatch } />
+          deleteBatch={ ::this.deleteBatch }
+          batchSelectionItems={ this.props.batchSelectionItems } />
         <ButtonControls
           toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
           toggleBatchSelection={ (bool = undefined) => this.props.allowBatchSelection(bool) } />
@@ -140,3 +135,9 @@ export default class Timeline extends Component {
     );
   }
 };
+
+
+// <div id="ccc">
+//   <input className="cloudinary-fileupload" type="file" name="file" data-cloudinary-field="image_upload" multiple />
+//   <button name="btn">TEST</button>
+// </div>

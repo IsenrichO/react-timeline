@@ -2,5 +2,66 @@
 /* Left-Hand Sidebar Sass Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 #sidebar {
+  position: fixed;
+  width: 408px;
+  height: 100vh;
+  background-color: $theme-blue;
   box-shadow: 0 -1px 24px rgba(0, 0, 0, 0.4);
+  .search-category {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    top: 7rem;
+    padding: 0 2rem;
+    border-bottom: 2px solid #DDD;
+    &:nth-child(3) { border-top: 2px solid #DDD; }
+    h4 { font: 22px/1.5 'Helvetica', sans-serif; }
+  }
 }
+#hamburger-ic,
+#close-ic {
+  position: fixed;
+  margin: -1rem 1.5rem;
+  font: normal lighter 4rem/1 'Helvetica Neue', Arial, sans-serif;
+  cursor: pointer;
+}
+#close-ic {
+  position: absolute;
+  right: 0;
+  margin: 1rem;
+  line-height: 0.5;
+}
+#search-box {
+  position: relative;
+  width: 80%;
+  height: 32px;
+  left: 1rem;
+  top: 4rem;
+  #magnifying-glass-ic {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    &:before {
+      position: absolute;
+      content: '';
+      width: inherit;
+      height: inherit;
+      background: transparent url(http://petersenhotels.com/2015/wp-content/themes/petersen-hotels/images/search.svg) no-repeat center / cover;
+      cursor: pointer;
+    }
+  }
+  #magnifying-glass-ic:hover + #search-inpt,
+  #search-inpt:hover {
+    width: calc(100% - 40px);
+    background-color: $theme-content-lt;
+  }
+  #search-inpt {
+    position: relative;
+    width: 0;
+    height: 32px;
+    left: 40px;
+    border-radius: 2rem;
+    transition: all 0.5s ease-in-out;
+  }
+}
+

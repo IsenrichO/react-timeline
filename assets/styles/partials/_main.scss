@@ -233,7 +233,34 @@
 }
 
 
-
+.batch-action-btns {
+  position: fixed;
+  // width: 3.2142857142857144rem;
+  // height: 3.2142857142857144rem;
+  right: 5.5rem;
+  border-radius: 50%;
+  border: none;
+  background-color: $theme-content-lt;
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.07),
+              -1px 4px 6px 0.5px #B7B7B7;
+  opacity: 0;
+  visibility: hidden;
+  animation: growBtn 0.5s 0.125s ease-in-out forwards;
+  color: $theme-red;
+  &:first-child { bottom: 10rem; }
+  &:last-child { bottom: 14rem; }
+  i {
+    font: normal 400 1.75rem/3.2142857142857144rem 'Glyphicons Halflings', sans-serif;
+    top: 0;
+    color: inherit;
+  }
+  &[disabled] {
+    color: $theme-red-disabled;
+    background-color: #E8E8E8;
+    cursor: not-allowed;
+  }
+}
 
 .tl-event .panel-header h3 {
   width: 80% !important;
