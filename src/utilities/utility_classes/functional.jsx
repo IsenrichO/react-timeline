@@ -2,6 +2,13 @@
 import React from 'react';
 
 
+// True Constants:
+const ALPH = [
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+];
+
+
 // Returns a function, that, as long as it continues to be invoked, will not
 //  be triggered. The function will be called after it stops being called for
 //  N milliseconds. If `immediate` is passed, trigger the function on the
@@ -24,11 +31,7 @@ const debounce = (func, wait, immediate) => {
 // 
 const getRange = function(start = 0, stop, step = 1, inclusive = false) {
   const outputRange = (rangeLen, mapFunc) => Array.from(rangeLen, mapFunc),
-        regCharSet = new RegExp('[A-Z]', 'i'),
-        ALPH = [
-          'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-          'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
-        ];
+        regCharSet = new RegExp('[A-Z]', 'i');
   let rangeLen, mapFunc, isDescending = false;
 
   if (typeof start !== 'number' && typeof start !== 'string') {
