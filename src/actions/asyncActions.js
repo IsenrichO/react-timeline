@@ -1,7 +1,7 @@
 'use strict';
 import Axios from 'axios';
 import * as Types from './types';
-import { loadSeedData, addNewEventData, deleteSingleEvent_Success, updateEventData, deleteBatchEvents_Success } from './index';
+import { loadSeedData, addNewEventData, deleteSingleEvent_Success, updateSingleEvent_Success, deleteBatchEvents_Success, fetchStarredEvents_Success } from './index';
 
 
 // Returns a function to be called within the Redux-Thunk middleware:
@@ -22,17 +22,20 @@ export const fetchSeedData = () => {
   };
 };
 
-// const getTlData = function(cb) {
-//   $.ajax({
-//     url: '/api/events',
-//     method: 'GET',
-//     dataType: 'json',
-//     success: function(data, status, jqXHR) {
-//       console.log('TL Data:', data);
-//       cb(data);
-//     }
-//   });
-// };
+
+export const fetchStarredEvents = () => {
+  console.log('Function `fetchStarredEvents()` Called');
+  return (dispatch) => {
+    return Axios
+      .get('/api/search/starred', {
+        responseType: 'json',
+      })
+      .then(response => {
+        console.log('fetchStarredEvents Response:', response);
+        dispatch(fetchStarredEvents_Success(response.data));
+      });
+  };
+};
 
 
 export const addNewEvent = (evtData) => {
@@ -48,24 +51,13 @@ export const addNewEvent = (evtData) => {
   };
 };
 
-// export const addNewEvent = (name, date, location, description) => {
-//   console.log('Async Action begun');
-//   const request = Axios.post('/api/events', {
-//     name,
-//     date,
-//     location,
-//     description
-//   });
-// };
-
-
 
 export const updateSingleEvent = (evtData) => {
   return (dispatch) => {
     return Axios
       .put(`/api/events/edit/${evtData.eventId}`, evtData)
       .then(response => {
-        dispatch(updateEventData(response.data));
+        dispatch(updateSingleEvent_Success(response.data));
       })
       .catch(err => {
         throw new Error(`Error making PUT request:\t${err}`);
@@ -141,19 +133,5 @@ export const deleteBatchEvents = (evts) => {
 //   return function(dispatch) {
 //     return Axios
 //       .post('/api/events')
-//   };
-// };
-
-
-// export const fetchJobs = (jobSearch, city) => {
-//   const request = Axios.post('/api/v1/jobs', {
-//     jobTitle: jobSearch,
-//     city: city,
-//     _csrf: getCookie('_csrf')
-//   });
-
-//   return {
-//     type: FETCH_JOBS,
-//     payload: request
 //   };
 // };
