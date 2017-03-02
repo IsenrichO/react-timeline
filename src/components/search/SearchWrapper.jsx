@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { fetchSeedData } from '../../actions/index';
 import Sidebar from './Sidebar';
 import { addNewEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchStarredEvents } from '../../actions/asyncActions';
-import * as Utils from '../../Utilities';
+import Utils from '../../utilities/index';
 
 
 @connect(
