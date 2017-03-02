@@ -23,7 +23,10 @@ export default (
     <Route
       path="events/edit/:eventId"
       component={ TimelineEventPage } />
-    <Route path="search" component={ SearchWrapper }>
+    <Route
+      path="search"
+      component={ SearchWrapper }
+      onEnter={ () => Store.dispatch(fetchSeedData()) }>
       <IndexRoute component={ AllEvents } />
       <Route
         path="starred"
