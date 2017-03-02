@@ -21,62 +21,7 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
-export { debounce };
-
-// Controller for animation/behavior of Google Static Maps image wrapper:
-const toggleAccordionSection = (evt) => {
-  const $target = $(evt.currentTarget),
-        [$mapWrapper, $toggleArrow] = [$('.static-map-wrapper', $target), $('.toggle-glyph', $target)];
-
-  $.each([$toggleArrow, $mapWrapper], (index, el) => {
-    el.toggleClass('active');
-  });
-};
-
-export { toggleAccordionSection };
-
-
-//
-const dayNames = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-],
-monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
-
-const formatDate = (date) => {
-  let dateStr = date
-    .replace(/T.+Z/, '')
-    .split('-');
-  [...dateStr] = [dateStr[2], monthNames[+dateStr[1]], dateStr[0]];
-  return dateStr.join(' ');
-};
-
-const getDateAsTimeInMs = (date) => new Date(date).getTime();
-const getTimeDifferenceInMs = (date1, date2) =>
-  new Date(date1).getTime() - new Date(date2).getTime();
-
-export { dayNames, monthNames, formatDate, getDateAsTimeInMs, getTimeDifferenceInMs };
-
-
-
+// 
 const getRange = function(start = 0, stop, step = 1, inclusive = false) {
   const outputRange = (rangeLen, mapFunc) => Array.from(rangeLen, mapFunc),
         regCharSet = new RegExp('[A-Z]', 'i'),
@@ -135,16 +80,10 @@ const getRange = function(start = 0, stop, step = 1, inclusive = false) {
   return outputRange(new Array(Math.ceil(rangeLen / Math.abs(step))), mapFunc);
 };
 
-export { getRange };
 
+const FunctionalUtils = {
+  debounce,
+  getRange
+};
 
-const addEventToFavorites = (func, evt) =>
-  func({
-    eventId: evt.eventId,
-    uuid: evt.uuid,
-    starred: !evt.starred ? true : false
-  });
-
-export { addEventToFavorites };
-
-
+export default FunctionalUtils;
