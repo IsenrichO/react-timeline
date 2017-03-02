@@ -11,7 +11,7 @@ import {
 } from './index';
 
 
-const dispatchActionCreator = (response, actionCreator) => dispatch(actionCreator(response.data));
+const dispatchActionCreator = (dispatch, actionCreator) => (resp) => dispatch(actionCreator(resp.data));
 const catchAsyncError = (err, msg) => { throw new Error(`${msg}:\t${err}`); };
 
 // Returns a function to be called within the Redux-Thunk middleware:
@@ -26,9 +26,7 @@ export const fetchSeedData = () => {
         maxRedirects: 3,
         timeout: 30000
       })
-      .then(response => {
-        dispatch(loadSeedData(response.data));
-      });
+      .then(dispatchActionCreator(dispatch, loadSeedData));
   };
 };
 
@@ -40,44 +38,38 @@ export const fetchStarredEvents = () => {
       .get('/api/search/starred', {
         responseType: 'json',
       })
-      .then(response => {
-        dispatch(fetchStarredEvents_Success(response.data));
-      })
+      .then(dispatchActionCreator(dispatch, fetchStarredEvents_Success))
       .catch(err => {
         throw new Error(`Error fetching starred events:\t${err}`);
       });
   };
 };
 
-
+// 
 export const addNewEvent = (evtData) => {
   return (dispatch) => {
     return Axios
       .post('/api/events', evtData)
-      .then(response => {
-        dispatch(addNewEventData(response.data));
-      })
+      .then(dispatchActionCreator(dispatch, addNewEventData))
       .catch(err => {
         throw new Error(`Error making POST request:\t${err}`);
       });
   };
 };
 
-
+// 
 export const updateSingleEvent = (evtData) => {
   return (dispatch) => {
     return Axios
       .put(`/api/events/edit/${evtData.uuid}`, evtData)
-      .then(response => {
-        dispatch(updateSingleEvent_Success(response.data));
-      })
+      .then(dispatchActionCreator(dispatch, updateSingleEvent_Success))
       .catch(err => {
         throw new Error(`Error making PUT request:\t${err}`);
       });
   };
 };
 
-
+// 
 export const deleteSingleEvt = (evt) => {
   return (dispatch) => {
     return Axios
@@ -87,16 +79,14 @@ export const deleteSingleEvt = (evt) => {
           'Content-Type': 'application/json'
         },
       })
-      .then(response => {
-        dispatch(deleteSingleEvent_Success(response.data));
-      })
+      .then(dispatchActionCreator(dispatch, deleteSingleEvent_Success))
       .catch(err => {
         throw new Error(`Error making DELETE request:\t${err}`);
       });
   };
 };
 
-
+// 
 export const deleteBatchEvents = (evts) => {
   return (dispatch) => {
     return Axios
@@ -106,9 +96,7 @@ export const deleteBatchEvents = (evts) => {
           'Content-Type': 'application/json'
         }
       })
-      .then(response => {
-        dispatch(deleteBatchEvents_Success(response.data));
-      })
+      .then(dispatchActionCreator(dispatch, deleteBatchEvents_Success))
       .catch(err => {
         throw new Error(`Error making DELETE request:\t${err}`);
       });
