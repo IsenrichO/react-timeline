@@ -7,6 +7,6 @@ const Express = require('express'),
 
 
 router
-  .route('/search');
+  .route('/');
 
 module.exports = router;

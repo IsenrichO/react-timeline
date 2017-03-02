@@ -7,7 +7,7 @@ const Express = require('express'),
 
 
 router
-  .route('/search/starred')
-  .get(EventsController.getStarredEvents);
+  .route('/')
+  .get(EventController.getStarredEvents);
 
 module.exports = router;
