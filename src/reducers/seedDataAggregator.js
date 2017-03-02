@@ -1,5 +1,5 @@
 'use strict';
-import { LOAD_SEED_DATA, ADD_NEW_EVENT_DATA, DELETE_SINGLE_EVENT, DELETE_BATCH_EVENTS_SUCCESS, UPDATE_EVENT_DATA } from '../actions/types';
+import { LOAD_SEED_DATA, ADD_NEW_EVENT_DATA, DELETE_SINGLE_EVENT_SUCCESS, DELETE_BATCH_EVENTS_SUCCESS, UPDATE_EVENT_DATA } from '../actions/types';
 
 
 export default function seedDataAggregator(state = [], action = null) {
@@ -21,9 +21,9 @@ export default function seedDataAggregator(state = [], action = null) {
       newState.splice(updatedEvtIndex, 1);
       return [...newState, action.payload];
 
-    case DELETE_SINGLE_EVENT:
+    case DELETE_SINGLE_EVENT_SUCCESS:
       // console.log(`Action <${action.type}> executed with payload `, action.payload);
-      const removedEvtUuid = state.findIndex(evt => evt.uuid === action.payload.uuid);
+      const removedEvtUuid = state.findIndex(evt => evt.uuid === action.payload);
       newState = Array.of(...state);
       newState.splice(removedEvtUuid, 1);
       return newState;
