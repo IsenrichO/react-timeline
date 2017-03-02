@@ -2,10 +2,12 @@
 import React from 'react';
 
 
-const StarredEvents = (props) => (
-  <div className="starred-evts">
+const StarredEvents = (props) => {
+  return (
+    <div className="starred-evts">
 
-  </div>
-);
+    </div>
+  );
+};
 
 export default StarredEvents;
