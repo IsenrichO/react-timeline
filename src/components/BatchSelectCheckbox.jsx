@@ -3,7 +3,7 @@ import React from 'react';
 
 
 const BatchSelectCheckbox = ({ evtUuid, addSelectionToBatch }) => (
-  <div>
+  <div className="checkbox">
     <input
       id={ `select-cb-${evtUuid}` }
       className="batch-select"
