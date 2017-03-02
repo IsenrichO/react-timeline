@@ -1,13 +1,12 @@
 'use strict';
 import React from 'react';
+import Utils from '../../utilities/index';
 
 
-const StarredEvents = (props) => {
-  return (
-    <div className="starred-evts">
-
-    </div>
-  );
-};
+const StarredEvents = ({ starredEvents }) => (
+  <ul className="evt-search-starred">
+    { Utils.renderStarredEvents(starredEvents) }
+  </ul>
+);
 
 export default StarredEvents;

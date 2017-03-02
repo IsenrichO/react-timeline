@@ -22,6 +22,7 @@ import Utils from '../../utilities/index';
   }),
   (dispatch) => bindActionCreators({
     fetchSeedData,
+    fetchStarredEvents,
     updateSingleEvent,
     push
   }, dispatch)
@@ -31,24 +32,14 @@ export default class AllEvents extends Component {
     super(props);
   }
 
-  getStarGlyphClass(evtId) {
-    const evt = this.props.seedDataAggregator.findIndex(evt => evt.eventId === evtId);
-    return this.props.seedDataAggregator[evt].starred || null;
-  }
-
-  hasMultipleTags(evtId) {
-    const evt = this.props.seedDataAggregator.findIndex(evt => evt.eventId === evtId);
-    return this.props.seedDataAggregator[evt].tags.length > 1;
-  }
-
   renderAllEvents(evts) {
     return evts.map((evt, index) => (
       <SingleEvent
         { ...evt }
         key={ `EventCard_${index}` }
         addEventToFavorites={ () => Utils.addEventToFavorites(this.props.updateSingleEvent, evt) }
-        getStarGlyphClass={ ::this.getStarGlyphClass(evt.eventId) }
-        hasMultipleTags={ ::this.hasMultipleTags(evt.eventId) } />
+        getStarGlyphClass={ Utils.getStarGlyphClass(this.props.seedDataAggregator, evt.uuid) }
+        hasMultipleTags={ Utils.hasMultipleTags(this.props.seedDataAggregator, evt.uuid) } />
     ));
   }
 
