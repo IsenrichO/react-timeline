@@ -1,5 +1,5 @@
 'use strict';
-var Event = require('../../db/models/Event');
+const Event = require('../../db/models/Event');
 const formatDate = require('../utilities');
 
 
@@ -94,7 +94,7 @@ const deleteSingleEvent = (req, res, next) => {
     });
 };
 
-
+// 
 const deleteBatchEvents = (req, res, next) => {
   const uuids = req.body;
   Event
