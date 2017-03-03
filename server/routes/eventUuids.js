@@ -7,7 +7,7 @@ const Express = require('express'),
 
 
 router
-  .route('/:id')
+  .route('/:uuid')
   .get(EventController.getSingleEvent)
   .put(EventController.updateSingleEvent)
   .delete(EventController.deleteSingleEvent);

@@ -3,6 +3,9 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 $theme-primary: #000;
+$theme-border: #CCC;
+$theme-content-lt: #FFF;
+$theme-trans: transparent;
 $theme-red: #B15B5B;
 $theme-red-op: rgba(177, 91, 91, 0.3);
 $theme-red-no-op: #CDABAC;
@@ -10,10 +13,7 @@ $theme-red-disabled: rgba(177, 91, 91, 0.5);
 $theme-blue: #4285F4;
 $theme-black: #625F5F;
 $theme-bckg: #F5F8FA;
-$theme-content-lt: #FFF;
 $theme-content-lt-gray: #BBB;
-$theme-trans: transparent;
-$theme-border: #CCC;
 $theme-primary-focus: #AB5252;
 $theme-lt-white: #F1E5E6;
 $bckg-black-op: rgba(94, 94, 94, 0.65);
@@ -21,4 +21,6 @@ $bckg-gray-op: rgba(212, 212, 212, 0.47);
 $note-blue: #C4D8FB;
 $theme-teal: #26A69A;
 $cb-unchecked: #5A5A5A;
+
 $border-sides: top right bottom left;
+$transition-timing-func: .25s 0.125s cubic-bezier(0, 0.25, 0.7, 0.4);

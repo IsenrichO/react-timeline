@@ -22,11 +22,11 @@ export const addNewEventData = (payload) => ({
 });
 
 export const deleteSingleEvent_Success = (payload) => ({
-  type: Types.DELETE_SINGLE_EVENT,
+  type: Types.DELETE_SINGLE_EVENT_SUCCESS,
   payload
 });
 
-export const updateEventData = (payload) => ({
+export const updateSingleEvent_Success = (payload) => ({
   type: Types.UPDATE_EVENT_DATA,
   payload
 });
@@ -47,5 +47,10 @@ export const clearBatchSelection = () => ({
 
 export const deleteBatchEvents_Success = (data) => ({
   type: Types.DELETE_BATCH_EVENTS_SUCCESS,
+  payload: data
+});
+
+export const fetchStarredEvents_Success = (data) => ({
+  type: Types.FETCH_STARRED_EVENTS_SUCCESS,
   payload: data
 });

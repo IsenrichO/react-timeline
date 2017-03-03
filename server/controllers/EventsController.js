@@ -16,9 +16,20 @@ const listEvents = (req, res) => {
       res.status(400).send('Failed to fetch requested events!');
       next();
     });
-    // .exec((err, records) => {
-    //   res.send(records);
-    // });
+};
+
+
+const getStarredEvents = (req, res, next) => {
+  Event
+    .find({ starred: true })
+    .then(evts => {
+      console.log('Starred Response:', evts);
+      res.send(evts);
+    })
+    .catch(err => {
+      res.status(400).send('Failed to fetch starred events!');
+      next();
+    });
 };
 
 
@@ -40,19 +51,15 @@ const getSingleEvent = (req, res, next) => {
 const addSingleEvent = (req, res, next) => {
   const { name, date, location, description } = req.body;
   const dd = { name, date, location, description };
-
-  // Object
-  //   .keys(Event.schema.obj)
-  //   .forEach(datum => {
-  //     params[datum] = params[datum] || '';
-  //   });
-  new Event(dd).save((err) => {
-    if (err) {
-      res.status(400).send('SHIT YOOO');
-    } else {
-      res.json(dd);
-    }
-  });
+  
+  new Event(dd)
+    .save()
+    .then(() => Event.findOne({ name }))
+    .then(evt => res.json(evt))
+    .catch(() => {
+      res.status(400).send('Failed to create new event!');
+      next();
+    });
 };
 
 
@@ -63,23 +70,23 @@ const addSingleEvent = (req, res, next) => {
  * @return {promise} A Promise that resolves when the record has been edited
  */
 const updateSingleEvent = (req, res, next) => {
-  const { params: { id: evtId }, body: evtProps } = req;
+  const { params: { uuid }, body: evtProps } = req;
   Event
-    .findOneAndUpdate({ eventId: evtId }, evtProps)
-    .then(() => Event.findOne({ eventId: evtId }))
+    .findOneAndUpdate({ uuid }, evtProps)
+    .then(() => Event.findOne({ uuid }))
     .then(evt => res.send(evt))
     .catch(() => {
       res.status(400).send('Failed to update specified event!');
-      next()
+      next();
     });
 };
 
 
 // Perform
 const deleteSingleEvent = (req, res, next) => {
-  const uuid = req.body.eventId;
+  const uuid = req.body.uuid;
   Event
-    .findOneAndRemove({ eventId: uuid })
+    .findOneAndRemove({ uuid })
     .then(() => res.json(uuid))
     .catch(() => {
       res.status(400).send('Failed to delete specified event!');
@@ -104,6 +111,7 @@ module.exports = {
   getSingleEvent,
   addSingleEvent,
   listEvents,
+  getStarredEvents,
   updateSingleEvent,
   deleteSingleEvent,
   deleteBatchEvents  

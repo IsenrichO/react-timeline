@@ -64,4 +64,28 @@
     transition: all 0.5s ease-in-out;
   }
 }
-
+#search-main {
+  position: relative;
+  display: inline-block;
+  width: calc(100vw - 408px);
+  min-height: 100vh;
+  float: right;
+}
+.evt {
+  &-search,
+  &-search-starred {
+    @include flex(flex, row wrap, flex-start, flex-start);
+    height: 100%;
+    list-style: none;
+    margin: 2vw 0;
+    padding: 0;
+  }
+  &-card {
+    position: relative;
+    width: 45%;
+    margin: 0 0 1.5rem calc(10% / 3);
+    border: 1px solid $theme-border;
+    background-color: $theme-content-lt;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  }
+}

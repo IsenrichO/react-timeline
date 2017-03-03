@@ -50,6 +50,7 @@
 .modal-active { overflow: hidden !important; }
 
 // Custom checkbox inputs:
+.checkbox { margin: 0; }
 input[type='checkbox'] {
   position: absolute;
   left: -9999px;
@@ -59,15 +60,14 @@ input[type='checkbox'] {
     padding-left: 2.5rem;
     cursor: pointer;
     &:before {
+      @include cbTransition();
       position: absolute;
       content: '';
       width: 1rem;
       height: 1rem;
       left: 0.35rem;
-      top: -1px;
       border: 2.5px solid $cb-unchecked;
       border-radius: 3px;
-      transition: all 0.325s ease-out;
     }
   }
   &:checked {
@@ -87,14 +87,12 @@ input[type='checkbox'] {
       width: 1.75rem;
       height: 1.75rem;
       left: -0.25rem;
-      top: -1.25rem;
     }
     &:checked + label:before {
-      width: 1.09rem;
+      width: 1rem;
       height: 2rem;
-      left: -0.25rem;
-      top: -1.25rem;
-      border-width: 4px;
+      top: 0.05rem;
+      left: 0.5rem !important;
     }
   }
 }
@@ -102,29 +100,26 @@ input[type='checkbox'] {
   &:checked + label:before,
   + label:before {
     left: auto;
-    right: -0.25rem;
+    right: 0.25rem;
   }
 }
 
 
 .tooltip {
+  @include cbTransition(0.45s 0.35s ease-in-out);
+  @extend %hidden;
   position: absolute;
   right: calc(100% + 0.75rem);
   top: 50%;
   padding: 0.25rem 1rem;
   border-radius: 1rem;
   transform: translateY(-50%);
-  transition: all 0.45s ease-in-out;
-  color: #FFF;
+  color: $theme-content-lt;
   background-color: #888;
   white-space: pre;
   font-size: 1.25rem;
-  opacity: 0;
-  visibility: hidden;
   z-index: 2;
-  .batch-action-btns:hover & {
-    opacity: 1;
-    visibility: visible;
-  }
+  .batch-action-btns:hover &,
+  .btn-controls-child:hover & { @extend %visible; }
 }
 

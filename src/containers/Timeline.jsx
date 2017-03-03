@@ -9,7 +9,7 @@ import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
 import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
 import { addNewEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents } from '../actions/asyncActions';
-import * as Utils from '../Utilities';
+import Utils from '../utilities/index';
 
 
 @connect(
@@ -54,56 +54,27 @@ export default class Timeline extends Component {
       : $('body').removeClass('modal-active');
   }
 
-  getStarGlyphClass(evtId) {
-    const evt = this.props.seedDataAggregator.findIndex(evt => evt.eventId === evtId);
-    return this.props.seedDataAggregator[evt].starred || null;
-  }
-
-  hasMultipleTags(evtId) {
-    const evt = this.props.seedDataAggregator.findIndex(evt => evt.eventId === evtId);
-    return this.props.seedDataAggregator[evt].tags.length > 1;
-  }
-
-  orderTimelineEvents(evts) {
-    return evts && evts.length
-      ? evts.sort((evt1, evt2) => Utils.getTimeDifferenceInMs(evt2.date, evt1.date))
-      : [];
-  }
-
   deleteBatch() {
     this.props.deleteBatchEvents(this.props.batchSelectionItems);
     this.props.clearBatchSelection();
   }
 
-  addEventToFavorites(evt) {
-    this.props.updateSingleEvent({
-      eventId: evt.eventId,
-      uuid: evt.uuid,
-      starred: !evt.starred ? true : false
-    });
-  }
-
   renderOrderedEvents(events) {
     return events.map((evt, index) =>
       <TimelineEvent
+        evt={{ ...evt }}
         key={ `Evt${evt.name}${index}` }
-        evt={ evt }
-        evtName={ evt.name }
-        evtLocation={ evt.location }
         evtAlign={ new Array('', '-invert')[index % 2] }
-        evtDescription={ evt.description }
-        evtDate={ evt.date }
-        evtFormattedDate={ evt.formattedDate }
-        evtNote={ evt.type }
-        photoCount={ evt.photoCount }
         logModalData={ (data) => this.props.logEventModalData(data) }
         toggleModal={ ::this.toggleModal }
-        deleteEvt={ (evt) => this.props.deleteSingleEvt(evt) }
+        deleteEvt={ () => this.props.deleteSingleEvt(evt) }
         batchSelectionState={ this.props.batchSelectionState }
         addSelectionToBatch={ (evtUuid) => this.props.addEventToBatchSelection(evtUuid) }
-        addEventToFavorites={ (evt) => ::this.addEventToFavorites(evt) }
-        getStarGlyphClass={ ::this.getStarGlyphClass(evt.eventId) }
-        hasMultipleTags={ ::this.hasMultipleTags(evt.eventId) } />
+        isInBatch={ this.props.batchSelectionItems.includes(evt.uuid) }
+        addEventToFavorites={ () => Utils.addEventToFavorites(this.props.updateSingleEvent, evt) }
+        getStarGlyphClass={ Utils.getStarGlyphClass(this.props.seedDataAggregator, evt.uuid) }
+        hasMultipleTags={ Utils.hasMultipleTags(this.props.seedDataAggregator, evt.uuid) }
+        inverted={ index % 2 ? true : false } />
     );
   }
 
@@ -111,7 +82,7 @@ export default class Timeline extends Component {
     return (
       <div>
         <ul className="tl">
-          { ::this.renderOrderedEvents(::this.orderTimelineEvents(this.props.seedData)) }
+          { ::this.renderOrderedEvents(Utils.orderTimelineEvents(this.props.seedData)) }
         </ul>
         
         <EditEventModal

@@ -1,7 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
 import { Motion, StaggeredMotion, TransitionMotion, spring, presets } from 'react-motion';
-import { getRange } from '../Utilities';
 import MotionComponent from './MotionComponent';
 
 
@@ -68,17 +67,20 @@ export default class ButtonControls extends MotionComponent {
         defaultStyles={ ::this.getDefaultStyles() }
         styles={ ::this.getTransStyles() }>
         { (interpolatedStyles) => (
-          <div>
-            {interpolatedStyles.map(({ key, style }, index) =>
+          <div>{
+            interpolatedStyles.map(({ key, style }, index) => (
               <button
                 key={ `ChildBtn_${key}` }
                 className="btn-controls-child"
                 style={ style }
                 onClick={ (evt) => ::this.execChildBtnAction(evt, index) }>
-                <i className={ super.getChildBtnGlyph(index) } />
+                <i className={ super.getChildBtnGlyph(index).glyphName() } />
+                <div className="tooltip">
+                  <span>{ super.getChildBtnGlyph(index).tooltipText() }</span>
+                </div>
               </button>
-            )}
-          </div>
+            ))
+          }</div>
         )}
       </TransitionMotion>
     );

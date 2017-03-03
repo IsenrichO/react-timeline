@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 
 
-const TimelineEventPage = ({ params: { eventId } }) => (
-  <h1>Event ID: { eventId }</h1>
+const TimelineEventPage = ({ params: { uuid } }) => (
+  <h1>Event UUID: { uuid }</h1>
 );
 
 export default TimelineEventPage;

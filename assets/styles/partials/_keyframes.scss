@@ -33,8 +33,116 @@
     transform: translate(-50%, -50%);
   }
 }
+@-moz-keyframes modalEntrance {
+  0% {
+    top: -100vh;
+    transform: translateX(-50%);
+  }
+  100% {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+@-ms-keyframes modalEntrance {
+  0% {
+    top: -100vh;
+    transform: translateX(-50%);
+  }
+  100% {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+@-o-keyframes modalEntrance {
+  0% {
+    top: -100vh;
+    transform: translateX(-50%);
+  }
+  100% {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+@keyframes modalEntrance {
+  0% {
+    top: -100vh;
+    transform: translateX(-50%);
+  }
+  100% {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
 
 @-webkit-keyframes growBtn {
+  0% {
+    width: 0;
+    height: 0;
+    right: 5.5rem;
+    bottom: 5.5rem;
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    width: 3.2142857142857144rem;
+    height: 3.2142857142857144rem;
+    right: 3.892857142857143rem;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+@-moz-keyframes growBtn {
+  0% {
+    width: 0;
+    height: 0;
+    right: 5.5rem;
+    bottom: 5.5rem;
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    width: 3.2142857142857144rem;
+    height: 3.2142857142857144rem;
+    right: 3.892857142857143rem;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+@-ms-keyframes growBtn {
+  0% {
+    width: 0;
+    height: 0;
+    right: 5.5rem;
+    bottom: 5.5rem;
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    width: 3.2142857142857144rem;
+    height: 3.2142857142857144rem;
+    right: 3.892857142857143rem;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+@-o-keyframes growBtn {
+  0% {
+    width: 0;
+    height: 0;
+    right: 5.5rem;
+    bottom: 5.5rem;
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    width: 3.2142857142857144rem;
+    height: 3.2142857142857144rem;
+    right: 3.892857142857143rem;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+@keyframes growBtn {
   0% {
     width: 0;
     height: 0;

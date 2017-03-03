@@ -1,13 +1,11 @@
 'use strict';
 import React from 'react';
-
 import StaticGMap from '../StaticMapEventLocation';
-import { debounce, toggleAccordionSection, formatDate } from '../../Utilities';
+import { debounce, formatDate, toggleAccordionSection } from '../../utilities/index';
 
 
-const debounceToggle = (evt) => debounce(toggleAccordionSection(evt), 2000, true);
-
-const photosTagLine = (numPhotos) => `${numPhotos} Photo${numPhotos !== 1 ? 's' : ''}`;
+const debounceToggle = (evt) => debounce(toggleAccordionSection(evt), 2000, true),
+      photosTagLine = (numPhotos) => `${numPhotos} Photo${numPhotos !== 1 ? 's' : ''}`;
 
 const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => (
   <div className="panel-body">
@@ -22,8 +20,7 @@ const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, p
       <i className="glyphicon glyphicon-map-marker" />
       <em key={ `Location_${evtLocation}` }>{ evtLocation }</em>
       <i className="toggle-glyph glyphicon glyphicon-menu-right" />
-      <StaticGMap
-        evtLocation={ evtLocation } />
+      <StaticGMap evtLocation={ evtLocation } />
     </div>
     <div
       className="tl-photos"

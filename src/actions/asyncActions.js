@@ -1,8 +1,18 @@
 'use strict';
 import Axios from 'axios';
 import * as Types from './types';
-import { loadSeedData, addNewEventData, deleteSingleEvent_Success, updateEventData, deleteBatchEvents_Success } from './index';
+import {
+  loadSeedData,
+  addNewEventData,
+  deleteSingleEvent_Success,
+  updateSingleEvent_Success,
+  deleteBatchEvents_Success,
+  fetchStarredEvents_Success
+} from './index';
 
+
+const dispatchActionCreator = (dispatch, actionCreator) => (resp) => dispatch(actionCreator(resp.data));
+const catchAsyncError = (err, msg) => { throw new Error(`${msg}:\t${err}`); };
 
 // Returns a function to be called within the Redux-Thunk middleware:
 export const fetchSeedData = () => {
@@ -16,83 +26,67 @@ export const fetchSeedData = () => {
         maxRedirects: 3,
         timeout: 30000
       })
-      .then(response => {
-        dispatch(loadSeedData(response.data));
+      .then(dispatchActionCreator(dispatch, loadSeedData));
+  };
+};
+
+// 
+export const fetchStarredEvents = () => {
+  console.log('Function `fetchStarredEvents()` Called');
+  return (dispatch) => {
+    return Axios
+      .get('/api/search/starred', {
+        responseType: 'json',
+      })
+      .then(dispatchActionCreator(dispatch, fetchStarredEvents_Success))
+      .catch(err => {
+        throw new Error(`Error fetching starred events:\t${err}`);
       });
   };
 };
 
-// const getTlData = function(cb) {
-//   $.ajax({
-//     url: '/api/events',
-//     method: 'GET',
-//     dataType: 'json',
-//     success: function(data, status, jqXHR) {
-//       console.log('TL Data:', data);
-//       cb(data);
-//     }
-//   });
-// };
-
-
+// 
 export const addNewEvent = (evtData) => {
   return (dispatch) => {
     return Axios
       .post('/api/events', evtData)
-      .then(response => {
-        dispatch(addNewEventData(response.data));
-      })
+      .then(dispatchActionCreator(dispatch, addNewEventData))
       .catch(err => {
         throw new Error(`Error making POST request:\t${err}`);
       });
   };
 };
 
-// export const addNewEvent = (name, date, location, description) => {
-//   console.log('Async Action begun');
-//   const request = Axios.post('/api/events', {
-//     name,
-//     date,
-//     location,
-//     description
-//   });
-// };
-
-
-
+// 
 export const updateSingleEvent = (evtData) => {
   return (dispatch) => {
     return Axios
-      .put(`/api/events/edit/${evtData.eventId}`, evtData)
-      .then(response => {
-        dispatch(updateEventData(response.data));
-      })
+      .put(`/api/events/edit/${evtData.uuid}`, evtData)
+      .then(dispatchActionCreator(dispatch, updateSingleEvent_Success))
       .catch(err => {
         throw new Error(`Error making PUT request:\t${err}`);
       });
   };
 };
 
-
+// 
 export const deleteSingleEvt = (evt) => {
   return (dispatch) => {
     return Axios
-      .delete(`/api/events/edit/${evt.eventId}`, {
+      .delete(`/api/events/edit/${evt.uuid}`, {
         data: evt,
         headers: {
           'Content-Type': 'application/json'
         },
       })
-      .then(response => {
-        dispatch(deleteSingleEvent_Success(response.data));
-      })
+      .then(dispatchActionCreator(dispatch, deleteSingleEvent_Success))
       .catch(err => {
         throw new Error(`Error making DELETE request:\t${err}`);
       });
   };
 };
 
-
+// 
 export const deleteBatchEvents = (evts) => {
   return (dispatch) => {
     return Axios
@@ -102,9 +96,7 @@ export const deleteBatchEvents = (evts) => {
           'Content-Type': 'application/json'
         }
       })
-      .then(response => {
-        dispatch(deleteBatchEvents_Success(response.data));
-      })
+      .then(dispatchActionCreator(dispatch, deleteBatchEvents_Success))
       .catch(err => {
         throw new Error(`Error making DELETE request:\t${err}`);
       });
@@ -141,19 +133,5 @@ export const deleteBatchEvents = (evts) => {
 //   return function(dispatch) {
 //     return Axios
 //       .post('/api/events')
-//   };
-// };
-
-
-// export const fetchJobs = (jobSearch, city) => {
-//   const request = Axios.post('/api/v1/jobs', {
-//     jobTitle: jobSearch,
-//     city: city,
-//     _csrf: getCookie('_csrf')
-//   });
-
-//   return {
-//     type: FETCH_JOBS,
-//     payload: request
 //   };
 // };

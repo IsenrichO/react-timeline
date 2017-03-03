@@ -15,7 +15,9 @@ export default function eventEditingModalData(state = DefaultState, action) {
     case LOG_EVENT_MODAL_DATA:
       // console.log(`Action ${action.type} executed with payload `, action.payload);
       return Object.assign({}, action.payload);
+      
     default:
+      // console.log(`Action <${action.type}> unrecognized. Falling back to original state.`);
       return state;
   }
 };

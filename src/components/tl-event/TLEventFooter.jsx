@@ -2,14 +2,14 @@
 import React from 'react';
 
 
-const TLEventFooter = ({ evt, evtNote, addEventToFavorites, getStarGlyphClass, hasMultipleTags }) => (
+const TLEventFooter = ({ evt, evtType, addEventToFavorites, getStarGlyphClass, hasMultipleTags }) => (
   <div className="panel-footer">
     <div className="evt-tags">
       {[
         <i
           key={ `TagsGlyph` }
           className={ `glyphicon glyphicon-tag${hasMultipleTags ? 's' : ''}` } />,
-        evtNote
+        evtType
       ]}
     </div>
     <i
