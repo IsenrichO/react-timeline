@@ -48,7 +48,7 @@ const crudAsync2 = (operation, endpoint = RoutePaths.Events, dispatch, actionCre
       dispatch(actionCreator(resp.data));
     })
     .catch(err => {
-      throw new Error(`Error encountered while making request:\t${err}`);
+      console.error.call(console, `Error encountered while making request:\t${err}`);
     });
 };
 
