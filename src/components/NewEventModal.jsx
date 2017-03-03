@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.json';
 import FileUploadAPI from './FileUploadAPI';
-import { addNewEvent } from '../actions/asyncActions';
+import { addSingleEvent } from '../actions/asyncActions';
 
 
 export default class NewEventModal extends Component {
@@ -14,7 +14,7 @@ export default class NewEventModal extends Component {
   }
 
   saveNewEvt(name, date, location, description) {
-    this.props.addNewEvent({
+    this.props.addSingleEvent({
       name: this.newEvtTitleInpt.value,
       date: this.newEvtDateInpt.value,
       location: this.newEvtLocationInpt.value,

@@ -8,7 +8,7 @@ import NewEventModal from '../components/NewEventModal';
 import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
 import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
-import { addNewEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents } from '../actions/asyncActions';
+import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents } from '../actions/asyncActions';
 import Utils from '../utilities/index';
 
 
@@ -28,7 +28,7 @@ import Utils from '../utilities/index';
     toggleEventModal,
     allowBatchSelection,
     addEventToBatchSelection,
-    addNewEvent,
+    addSingleEvent,
     deleteSingleEvt,
     deleteBatchEvents,
     updateSingleEvent,
@@ -93,7 +93,7 @@ export default class Timeline extends Component {
         <NewEventModal
           modalStatus={ this.state.newModal }
           toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
-          addNewEvent={ (evtData) => this.props.addNewEvent(evtData) } />
+          addSingleEvent={ (evtData) => this.props.addSingleEvent(evtData) } />
         <BatchActionButtons
           batchSelectionState={ this.props.batchSelectionState }
           toggleBatchSelection={ (bool = undefined) => this.props.allowBatchSelection(bool) }
