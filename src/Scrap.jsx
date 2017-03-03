@@ -13,7 +13,7 @@
 //   });
 // };
 
-// export const addNewEvent = (name, date, location, description) => {
+// export const addSingleEvent = (name, date, location, description) => {
 //   console.log('Async Action begun');
 //   const request = Axios.post('/api/events', {
 //     name,

@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import SingleEvent from './SingleEvent';
 import { fetchSeedData } from '../../actions/index';
-import { addNewEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchStarredEvents } from '../../actions/asyncActions';
+import { deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchStarredEvents } from '../../actions/asyncActions';
 import Utils from '../../utilities/index';
 
 

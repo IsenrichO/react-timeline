@@ -16,8 +16,8 @@ export const toggleEventModal = () => ({
   type: Types.TOGGLE_EVENT_MODAL
 });
 
-export const addNewEventData = (payload) => ({
-  type: Types.ADD_NEW_EVENT_DATA,
+export const addSingleEvent_Success = (payload) => ({
+  type: Types.ADD_SINGLE_EVENT_SUCCESS,
   payload
 });
 

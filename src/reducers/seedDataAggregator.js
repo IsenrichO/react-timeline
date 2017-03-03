@@ -1,7 +1,7 @@
 'use strict';
 import {
   LOAD_SEED_DATA,
-  ADD_NEW_EVENT_DATA,
+  ADD_SINGLE_EVENT_SUCCESS,
   DELETE_SINGLE_EVENT_SUCCESS,
   DELETE_BATCH_EVENTS_SUCCESS,
   UPDATE_EVENT_DATA,
@@ -17,7 +17,7 @@ export default function seedDataAggregator(state = [], action = null) {
       // console.log(`Action <${action.type}> executed with payload `, action.payload);
       return action.payload;
 
-    case ADD_NEW_EVENT_DATA:
+    case ADD_SINGLE_EVENT_SUCCESS:
       // console.log(`Action <${action.type}> executed with payload `, action.payload);
       return [...state, action.payload];
 
