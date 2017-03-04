@@ -18,7 +18,6 @@ export default class EditEventModal extends Component {
   constructor(props) {
     super(props);
     this.constructCurrentFormattedDate = this.constructCurrentFormattedDate.bind(this);
-    this.renderForm = this.renderForm.bind(this);
   }
 
   static propTypes = {
@@ -44,73 +43,6 @@ export default class EditEventModal extends Component {
     this.props.toggleModal();
   }
 
-  renderForm() {
-    let form = (
-      <form>
-        <fieldset>
-          <div className="input-group">
-            <span className="input-group-addon">T</span>
-            <label htmlFor="title-inpt"></label>
-            <input
-              id="title-inpt"
-              className="form-control"
-              type="text"
-              defaultValue={ this.props.modalData.name }
-              // defaultValue={ this.props.modalData ? this.props.modalData.name : 'Working Title' }
-              required />
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <label htmlFor="date-inpt">Date</label>
-          <input
-            id="date-inpt"
-            type="date"
-            // defaultValue={ this.props.modalData ? this.props.modalData.date : this.constructCurrentFormattedDate() }
-            defaultValue={ this.props.modalData.date } />
-
-          <label htmlFor="location-inpt">Location</label>
-          <input
-            id="location-inpt"
-            type="text"
-            // defaultValue={ this.props.modalData ? this.props.modalData.location : 'Oklahoma City, OK' }
-            defaultValue={ this.props.modalData.location } />
-        </fieldset>
-
-        <fieldset>
-          <label htmlFor="description-inpt">Description</label>
-          <textarea
-            id="description-inpt"
-            placeholder="Event description"
-            // defaultValue={ this.props.modalData ? this.props.modalData.description : 'Event description' }
-            defaultValue={ this.props.modalData.description } />
-        </fieldset>
-
-        <fieldset id="editing-modal-pics">
-          <div
-            className="dropzone"
-            onDrop={ this.handleFileSelect }
-            onDragEnter={ this.handleDragEnter }
-            onDragOver={ this.handleDragOver }>
-            <p>Drop Your Images Here!</p>
-          </div>
-          <input
-            id="file-upload-btn"
-            type="file"
-            name="files[]"
-            accept="image/*"
-            onChange={ this.loadSelectedImages }
-            multiple />
-          <output
-            htmlFor="file-upload-btn"
-            ref="fileContainer">
-          </output>
-        </fieldset>
-      </form>
-    );
-    return form;
-  }
-
   componentWillReceiveProps(nextProps) {
     const self = this,
           editEvtDate = nextProps.eventEditingModalData.date;
@@ -132,7 +64,6 @@ export default class EditEventModal extends Component {
 
     return (
       <Modal
-        // contentLabel={ `EditEventModal_${this.props.modalData}` }
         contentLabel={ `EditEventModal_` }
         isOpen={ this.props.modalStatus }
         style={ EventEditingModalStyles }
