@@ -51,9 +51,11 @@ export default class FileUploadAPI extends Component {
     (function(file) {
       let Reader = new FileReader();
       Reader.onload = (evt) => {
-        let $newThumb = $('<div></div>').addClass('thumb');
+        let $newThumb = $('<div />').addClass('thumb'),
+            $thumbWrapper = $('<div />').addClass('thumb-wrapper');
         $newThumb.css({ backgroundImage: `url(${evt.target.result})` });
-        output.insertBefore($newThumb[0], null);
+        $newThumb.appendTo($thumbWrapper);
+        output.insertBefore($thumbWrapper[0], null);
       };
       // Read in the image file as a data URL:
       Reader.readAsDataURL(file);
