@@ -1,4 +1,5 @@
 'use strict';
+const UUID = require('uuid/v4');
 const Event = require('../../db/models/Event');
 const formatDate = require('../utilities');
 
@@ -6,7 +7,7 @@ const formatDate = require('../utilities');
 // Perform Mongoose query to find all records that are instances of the Event
 //  Model, sort them in reverse chronological order (i.e., newest first),
 //  limit the sort to the 20 most recent records and pass the callback handler:
-const listEvents = (req, res) => {
+const listEvents = (req, res, next) => {
   Event
     .find({})
     .sort({ date: 'desc'})
@@ -18,21 +19,8 @@ const listEvents = (req, res) => {
     });
 };
 
-
-const getStarredEvents = (req, res, next) => {
-  Event
-    .find({ starred: true })
-    .then(evts => {
-      console.log('Starred Response:', evts);
-      res.send(evts);
-    })
-    .catch(err => {
-      res.status(400).send('Failed to fetch starred events!');
-      next();
-    });
-};
-
-
+// Queries the DB for a single document (record) whose UUID corresponds
+//  to the routing param:
 const getSingleEvent = (req, res, next) => {
   const sendResponse = (err, docs) => { res.send(docs); }
   Event
@@ -50,7 +38,7 @@ const getSingleEvent = (req, res, next) => {
 // Perform
 const addSingleEvent = (req, res, next) => {
   const { name, date, location, description } = req.body;
-  const dd = { name, date, location, description };
+  const dd = { name, date, location, description, uuid: UUID() };
   
   new Event(dd)
     .save()
@@ -111,7 +99,6 @@ module.exports = {
   getSingleEvent,
   addSingleEvent,
   listEvents,
-  getStarredEvents,
   updateSingleEvent,
   deleteSingleEvent,
   deleteBatchEvents  
