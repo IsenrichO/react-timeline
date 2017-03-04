@@ -16,7 +16,7 @@ export default class FileUploadAPI extends Component {
 
   // Loops through selection of files and asynchronously executes callback on each:
   loadSelectedImages(evt, cb) {
-    const [Images, OutputBin] = [evt.target.files, this.refs.fileContainer];
+    const [Images, OutputBin] = [evt.target.files, this.fileContainer];
 
     // Loop through selected images and render as thumbnails:
     for (var i = 0, currImg; currImg = Images[i]; i++) {
@@ -64,11 +64,10 @@ export default class FileUploadAPI extends Component {
 
   // Event handler for the HTML5 drag-n-drop API implementation:
   handleFileSelect(evt) {
-    console.log('EVENT:', evt);
     evt.stopPropagation();
     evt.preventDefault();
 
-    const [Images, OutputBin] = [evt.dataTransfer.files, this.refs.fileContainer];
+    const [Images, OutputBin] = [evt.dataTransfer.files, this.fileContainer];
     console.log('FILES:', Images);
 
     // Loop over `Images`, a FileList of constituent File objects:
@@ -127,7 +126,7 @@ export default class FileUploadAPI extends Component {
         </div>
         <output
           htmlFor="file-upload-btn"
-          ref="fileContainer">
+          ref={ (fileContainer) => { this.fileContainer = fileContainer; }}>
         </output>
       </fieldset>
     );
