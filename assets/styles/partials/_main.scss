@@ -137,6 +137,10 @@
     color: #8898A5;
     transition: all 0.25s cubic-bezier(0, 0.44, 0.94, 1.29);
     .glyphicon { font-size: 1.5rem; }
+    &:hover {
+      background: #F5F5F5;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.26);
+    }
     i {
       font-size: 1.5rem;
       line-height: 1;

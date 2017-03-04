@@ -2,6 +2,12 @@
 /* Reusable CSS Utility Classes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+// 
+.flex {
+  &-row { @include flex(flex, row nowrap); }
+  &-col { @include flex(flex, column nowrap); }
+}
+
 // Apply where `text-overlay` should be constrain and delimited by an ending ellipsis:
 .text-of {
   word-break: break-word;
