@@ -1,0 +1,27 @@
+
+/* Sass Styles for Custom Input Range Range Slider
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.slider {
+  position: relative;
+  width: 200px;
+  height: 20px;
+  &-runnable-track {
+    position: absolute;
+    width: inherit;
+    height: 10px;
+    left: 0;
+    top: 5px;
+    border-radius: 5px;
+    background-color: $theme-content-lt;
+  }
+  &-handle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    margin-left: -10px;
+    border-radius: 50%;
+    background-color: $theme-red;
+    cursor: -webkit-grab;
+  }
+}
