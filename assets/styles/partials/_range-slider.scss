@@ -3,25 +3,43 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .slider {
   position: relative;
-  width: 200px;
-  height: 20px;
+  width: 100%;
+  height: 35px;
+  margin: 15px 0;
   &-runnable-track {
     position: absolute;
     width: inherit;
     height: 10px;
     left: 0;
-    top: 5px;
+    top: 12.25px;
     border-radius: 5px;
     background-color: $theme-content-lt;
+    > div {
+      position: absolute;
+      height: inherit;
+      top: 0;
+      bottom: 0;
+      &.slider-track-selection { @extend %slider-shading; }
+    }
   }
   &-handle {
+    @extend %slider-shading;
     position: absolute;
-    width: 20px;
-    height: 20px;
-    top: 0;
-    margin-left: -10px;
+    width: 22.5px;
+    height: 22.5px;
+    top: 5px;
+    margin-left: -11.25px;
     border-radius: 50%;
-    background-color: $theme-red;
-    cursor: -webkit-grab;
+    &:before {
+      position: absolute;
+      content: '';
+      width: 3px;
+      height: 35px;
+      left: 11.25px;
+      margin: -6.25px 0 0 -1.5px;
+      border-radius: 15px;
+      background: #9E5151;
+      z-index: -1;
+    }
   }
 }
