@@ -69,10 +69,30 @@ export default class RangeSlider extends Component {
     }
   }
 
+  arrowKeySliderNavigation(evt) {
+    // if (this.state.hasFocus) {
+      let $handle = $(':focus');
+      $(document).on('keydown', (evt) => {
+        const [key, trackWidth] = [evt.key, +$(this.sliderTrack).css('width').match(/^[\d.]+/)[0]];
+        console.log(key, trackWidth);
+        if (key === 'ArrowLeft' || key === 'ArrowRight') {
+          const stepSize = (trackWidth / 20);
+          this.setState({ lowerBound: this.state.lowerBound -= 4 });
+        }
+      });
+    // }
+  }
+
+  componentDidMount() {
+    ::this.arrowKeySliderNavigation();
+  }
+
   render() {
     return (
       <div className="slider slider-horizontal">
-        <div className="slider-runnable-track">
+        <div
+          className="slider-runnable-track"
+          ref={ (sliderTrack) => { this.sliderTrack = sliderTrack; }}>
           <div
             className="slider-track-lower"
             style={{
