@@ -6,6 +6,7 @@ export default class RangeSlider extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isSlidingEnabled: false,
       sliderVals: (props.sliderVals || [33.3333333333, 66.6666666667]),
       lowerBound: (props.lowerBound || 33.3333333333),
       upperBound: (props.upperBound || 66.6666666667)
@@ -31,6 +32,11 @@ export default class RangeSlider extends Component {
     evt.stopPropagation();
     evt.preventDefault();
 
+    if (!this.state.isSlidingEnabled) {
+      // console.warn('Sliding is disabled right now. Try clicking and holding down the toggle first!');
+      return null;
+    }
+
     const $dragEl = $(evt.target),
           $container = $dragEl.parent('.slider.slider-horizontal'),
           containerOffset = $container.offset().left,
@@ -46,17 +52,13 @@ export default class RangeSlider extends Component {
   }
 
   handleDragStart(evt) {
-    let $dragEl = $(evt.target);
-    console.log('dragged el:', $dragEl.get(0));
-    console.log('offset:', $dragEl.offset());
-
-    $dragEl.css({ left: $(evt).clientX });
+    $(evt.target).css({ left: $(evt).clientX });
   }
 
   handleDragEnd(evt) {
-    let $dragEl = $(evt.target);
-    let containerOffset = $dragEl.parent('.slider.slider-horizontal').offset().left;
-    let newPos = evt.clientX - containerOffset;
+    let $dragEl = $(evt.target),
+        $containerOffset = $dragEl.parent('.slider.slider-horizontal').offset().left,
+        newPos = (evt.clientX - $containerOffset);
 
     if ($dragEl.is($('[className$="max"]')) || $dragEl.is($('[class$="max"]'))) {
       this.setState({ upperBound: (newPos / 2) });
@@ -95,26 +97,29 @@ export default class RangeSlider extends Component {
           className="slider-handle handle-min"
           style={{ left: `${this.state.lowerBound}%` }}
           role="slider"
-          // tabIndex={ 0 }
+          tabIndex={ 1 }
           // aria-valuemin={ 10 }
           // aria-valuemax={ 200 }
           
           // onDrag={ (evt) => ::this.handleDrag(evt) }
           // onDragStart={ this.handleDragStart }
           // onDragEnd={ (evt) => ::this.handleDragEnd(evt) }
-          onClick={ () => console.log('HIIIIII') }
+          onMouseDown={ () => { this.setState({ isSlidingEnabled: true }); }}
+          onMouseUp={ () => { this.setState({ isSlidingEnabled: false }); }}
           onMouseMove={ (evt) => ::this.handleDrag('lower', evt) } />
         <div
           className="slider-handle handle-max"
           style={{ left: `${this.state.upperBound}%` }}
           role="slider"
-          // tabIndex={ 0 }
+          tabIndex={ 2 }
           // aria-valuemin={ 10 }
           // aria-valuemax={ 200 }
 
           // onDrag={ (evt) => ::this.handleDrag(evt) }
           // onDragStart={ this.handleDragStart }
           // onDragEnd={ (evt) => ::this.handleDragEnd(evt) }
+          onMouseDown={ () => { this.setState({ isSlidingEnabled: true }); }}
+          onMouseUp={ () => { this.setState({ isSlidingEnabled: false }); }}
           onMouseMove={ (evt) => ::this.handleDrag('upper', evt) } />
       </div>
     );
