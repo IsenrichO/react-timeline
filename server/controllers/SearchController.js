@@ -16,6 +16,26 @@ const getStarredEvents = (req, res, next) => {
     });
 };
 
+// Queries the DB for a result set representing the events most
+//  most recently modified. Optionally, it may take a `limit`
+//  parameter (to be retrieved from the User settings) that defines
+//  the number of records which to display:
+const getRecentlyModified = (req, res, next) => {
+  const { resultSetSize: limitSize = 2 } = req.body;
+  Event
+    .find({})
+    .sort({ dateModified: -1 })
+    .limit(limitSize)
+    .then(evts => {
+      console.log('Sending recent events');
+      res.json(evts);
+    })
+    .catch(err => {
+      res.status(400).send('Failed to fetch recently modified events!');
+      next();
+    });
+};
+
 /**
  * Finds the earliest and latest chronological events for a given set of event data:
  * @return {promise} A Promise that resolves with an object literal containing the min
@@ -83,5 +103,6 @@ const buildQuery = (criteria) => {
 module.exports = {
   buildQuery,
   customQuery,
+  getRecentlyModified,
   getStarredEvents
 };
