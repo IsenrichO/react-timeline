@@ -87,6 +87,10 @@ export default class RangeSlider extends Component {
     ::this.arrowKeySliderNavigation();
   }
 
+  componentWillUnmount() {
+    $(document).off('keydown');
+  }
+
   render() {
     return (
       <div className="slider slider-horizontal">
