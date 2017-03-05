@@ -73,7 +73,8 @@
 }
 .evt {
   &-search,
-  &-search-starred {
+  &-search-starred,
+  &-search-recent {
     @include flex(flex, row wrap, flex-start, flex-start);
     height: 100%;
     list-style: none;
