@@ -38,7 +38,7 @@ const getSingleEvent = (req, res, next) => {
 // Perform
 const addSingleEvent = (req, res, next) => {
   const { name, date, location, description } = req.body;
-  const dd = { name, date, location, description, uuid: UUID() };
+  const dd = { name, date, location, description, uuid: UUID(), dateModified: Date.now() };
   
   new Event(dd)
     .save()
@@ -60,7 +60,7 @@ const addSingleEvent = (req, res, next) => {
 const updateSingleEvent = (req, res, next) => {
   const { params: { uuid }, body: evtProps } = req;
   Event
-    .findOneAndUpdate({ uuid }, evtProps)
+    .findOneAndUpdate({ uuid }, Object.assign({}, evtProps, { dateModified: Date.now() }))
     .then(() => Event.findOne({ uuid }))
     .then(evt => res.send(evt))
     .catch(() => {
