@@ -14,6 +14,18 @@
     top: 12.25px;
     border-radius: 5px;
     background-color: $theme-content-lt;
+    &:before,
+    &:after {
+      position: absolute;
+    }
+    &:before {
+      content: '0';
+      left: -1rem;
+    }
+    &:after {
+      content: '100';
+      right: -1rem;
+    }
     > div {
       position: absolute;
       height: inherit;
@@ -38,8 +50,9 @@
       left: 11.25px;
       margin: -6.25px 0 0 -1.5px;
       border-radius: 15px;
-      background: #9E5151;
+      background: inherit;
       z-index: -1;
     }
+    &:active { @extend %slider-shading-active; }
   }
 }
