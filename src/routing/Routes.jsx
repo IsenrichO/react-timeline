@@ -8,6 +8,7 @@ import TimelineEventPage from '../components/pages/TimelineEventPage';
 
 import SearchWrapper from '../components/search/SearchWrapper';
 import AllEvents from '../components/search/AllEvents';
+import RecentlyModifiedEvents from '../components/search/RecentlyModifiedEvents';
 import StarredEvents from '../components/search/StarredEvents';
 
 // Action creator & middleware imports:
@@ -30,7 +31,7 @@ export default (
       <IndexRoute component={ AllEvents } />
       <Route
         path="recent"
-        component={ RecentEvents } />
+        component={ RecentlyModifiedEvents } />
       <Route
         path="starred"
         component={ StarredEvents } />
