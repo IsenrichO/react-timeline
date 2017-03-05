@@ -29,6 +29,9 @@ export default (
       onEnter={ () => Store.dispatch(fetchSeedData()) }>
       <IndexRoute component={ AllEvents } />
       <Route
+        path="recent"
+        component={ RecentEvents } />
+      <Route
         path="starred"
         component={ StarredEvents } />
     </Route>
