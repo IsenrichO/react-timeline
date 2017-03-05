@@ -17,7 +17,7 @@ export default function batchSelectionItems(state = [], action = null) {
       
     case CLEAR_BATCH:
       // console.log(`Action <${action.type}> executed with empty payload.`);
-      state = [];
+      return new Array();
       
     default:
       // console.log(`Action <${action.type}> unrecognized. Falling back to original state.`);
