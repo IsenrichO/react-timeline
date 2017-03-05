@@ -3,9 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.json';
 import FileUploadAPI from './FileUploadAPI';
 import { addSingleEvent } from '../actions/asyncActions';
+import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.json';
 
 
 export default class NewEventModal extends Component {
@@ -24,11 +24,8 @@ export default class NewEventModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const self = this;
     if (this.props.modalStatus !== nextProps.modalStatus && nextProps.modalStatus) {
-      setTimeout(function() {
-        self.newEvtDateInpt.valueAsDate = new Date();
-      }, 200);
+      setTimeout(() => { this.newEvtDateInpt.valueAsDate = new Date(); }, 200);
     }
   }
 
@@ -55,7 +52,7 @@ export default class NewEventModal extends Component {
                   type="text"
                   ref={ (newEvtTitleInpt) => { this.newEvtTitleInpt = newEvtTitleInpt; }}
                   title="Add a name for this event"
-                  // defaultValue={ this.props.modalData ? this.props.modalData.name : 'Working Title' }
+                  autoFocus
                   required />
               </div>
             </fieldset>
@@ -70,9 +67,7 @@ export default class NewEventModal extends Component {
                   className="form-cont"
                   type="date"
                   ref={ (newEvtDateInpt) => { this.newEvtDateInpt = newEvtDateInpt; }}
-                  title="When did this event occur?"
-                  // defaultValue={ this.props.modalData ? this.props.modalData.date : this.constructCurrentFormattedDate() }
-                  />
+                  title="When did this event occur?" />
               </div>
 
               <div className="input-gr">
@@ -84,9 +79,7 @@ export default class NewEventModal extends Component {
                   className="form-cont"
                   type="text"
                   ref={ (newEvtLocationInpt) => { this.newEvtLocationInpt = newEvtLocationInpt; }}
-                  title="Include a location for this event?"
-                  // defaultValue={ this.props.modalData ? this.props.modalData.location : 'Oklahoma City, OK' }
-                  />
+                  title="Include a location for this event?" />
               </div>
             </fieldset>
 
@@ -100,9 +93,7 @@ export default class NewEventModal extends Component {
                   className="form-cont"
                   ref={ (newEvtDescriptionInpt) => { this.newEvtDescriptionInpt = newEvtDescriptionInpt; }}
                   placeholder="Event description"
-                  rows="4"
-                  // defaultValue={ this.props.modalData ? this.props.modalData.description : 'Event description' }
-                  />
+                  rows="4" />
               </div>
             </fieldset>
             <FileUploadAPI />
@@ -112,6 +103,12 @@ export default class NewEventModal extends Component {
                 name="saveNewEvtBtn"
                 onClick={ ::this.saveNewEvt }>
                 Save
+              </button>
+              <button
+                type="button"
+                name="cancelNewEvtBtn"
+                onClick={ this.props.toggleModal }>
+                Cancel
               </button>
             </fieldset>
           </form>

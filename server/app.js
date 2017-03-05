@@ -5,7 +5,7 @@ const Mongoose = require('mongoose'),
       BodyParser = require('body-parser'),
       Path = require('path'),
       Request = require('request'),
-      UUID_v4 = require('uuid/v4');   // Generate a v4 (randomized) UUID
+      UUID = require('uuid/v4');   // Generate a v4 (randomized) UUID
       // $ = require('jquery'),
 
 const Event = require('../db/models/Event');
@@ -43,7 +43,7 @@ db
   .once('open', () => {
     Mongoose.connection.collections.EventData.drop();
     seedData.forEach((evt) => {
-      [evt.formattedDate, evt.uuid, evt.photos] = [formatDate(evt.date), UUID_v4(), new Array()];
+      [evt.formattedDate, evt.uuid, evt.photos] = [formatDate(evt.date), UUID(), new Array()];
       new Event(evt).save();
     });
   })

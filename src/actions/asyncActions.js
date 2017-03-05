@@ -1,5 +1,6 @@
 'use strict';
 import Axios from 'axios';
+import UUID from 'uuid/v4';
 import * as RoutePaths from '../routing/RoutePaths';
 import {
   loadSeedData,
@@ -11,6 +12,7 @@ import {
 } from './index';
 
 
+// application/json;charset=UTF-8
 const dispatchActionCreator = (dispatch, actionCreator) => (resp) => dispatch(actionCreator(resp.data));
 const catchAsyncError = (msg) => (err) => { throw new Error(`${msg}:\t${err}`); };
 const config = {
@@ -18,6 +20,7 @@ const config = {
   timeout: 25000,
   maxRedirects: 5,
   headers: {
+    Accept: 'application/json',
     'Content-Type': 'application/json'
   },
   maxContentLength: Number.MAX_SAFE_INTEGER,
@@ -32,6 +35,12 @@ const config = {
     console.log(`Downloaded Completion Progress:\t${downloadProgress}`);
   }
 };
+const generateUuid = {
+  transformRequest: [(data) => {
+    data.uuid = UUID();
+    return data;
+  }]
+}
 
 const crudAsync = (operation, dispatch, actionCreator, opts = config) => operation
   .then(resp => {
@@ -43,8 +52,10 @@ const crudAsync = (operation, dispatch, actionCreator, opts = config) => operati
 
 const crudAsync2 = (operation, endpoint = RoutePaths.Events, dispatch, actionCreator, opts = config, ...curriedArgs) => {
   const request = operation.bind(null, endpoint, ...curriedArgs, config);
+  console.log('EVT DATA:', curriedArgs);
   return request()
     .then(resp => {
+      console.log('RESPONSE:', resp);
       dispatch(actionCreator(resp.data));
     })
     .catch(err => {
@@ -88,7 +99,7 @@ export const fetchStarredEvents = () => {
 //   return (dispatch) => crudAsync(req, dispatch, addSingleEvent_Success);
 // };
 export const addSingleEvent = (evtData) => {
-  return (dispatch) => crudAsync2(Axios.post, RoutePaths.Events, dispatch, addSingleEvent_Success, config, evtData);
+  return (dispatch) => crudAsync2(Axios.post, RoutePaths.Events, dispatch, addSingleEvent_Success, Object.assign({}, config, generateUuid), evtData);
 };
 
 // 

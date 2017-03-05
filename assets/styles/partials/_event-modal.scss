@@ -10,15 +10,15 @@
   }
   .dz {
     @include cbBorderRadii(8px);
-    border: 0.357143rem dashed $theme-content-lt-gray;
+    border: 0.357143rem dashed $theme-red;
     text-align: center;
     font: bold 20pt 'Vollkorn';
     color: $theme-content-lt-gray;
-    .dz-box {
+    &-box {
       @include cbBorderRadii(8px);
       margin: 0.65rem;
       padding: 2.5rem 1.785714rem 1.785714rem;
-      background-color: $bckg-gray-op;
+      background-color: $theme-red-op;
       border-radius: 8px;
       > div { margin-top: 1.5rem; }
       label { cursor: pointer; }
@@ -26,35 +26,55 @@
   }
   .dz-wrapper {
     output {
-      @include flex(flex, row, flex-start);
+      @include flex();
       position: relative;
-      overflow-x: scroll;
+      padding: .75rem 0 1.5rem 1rem;
+      overflow-x: overlay;
+      overflow-y: hidden;
       .thumb {
-        @include cbBorderRadii(6px);
         position: relative;
         width: 10vw;
         height: 10vw;
-        margin-right: 1vw;
-        border: 1px solid $theme-content-lt-gray;
         flex-shrink: 0;
-        background:  transparent no-repeat center / contain;
+        background: transparent no-repeat center / contain;
         overflow: hidden;
-        &:before {
-          @include cbTransition(0.25s ease-in);
-          @extend %hidden;
-          position: absolute;
-          content: '';
-          top: 0;
-          width: 100%;
-          height: 30%;
-          background: $bckg-black-op;
-          background: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.35) 60%, transparent 99%);
-          background:    -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.35) 60%, transparent 99%);
-          background:      -o-linear-gradient(to bottom, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.35) 60%, transparent 99%);
-          background:         linear-gradient(to bottom, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.35) 60%, transparent 99%);
-          z-index: 1;
+        &-wrapper {
+          @include cbBorderRadii(8px);
+          position: relative;
+          padding: 2px 4px;
+          border: 1px solid $theme-content-lt-gray;
+          background-color: #F7F7F7;
+          &:before {
+            @include cbTransition(0.25s ease-in);
+            @extend %hidden;
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 35%;
+            left: 0;
+            top: 0;
+            border-radius: 6px 6px 0 0;
+            background: $bckg-black-op;
+            background: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.69) 20%, rgba(0, 0, 0, 0.35) 65%, transparent 95%);
+            background:    -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0.69) 20%, rgba(0, 0, 0, 0.35) 65%, transparent 95%);
+            background:      -o-linear-gradient(to bottom, rgba(0, 0, 0, 0.69) 20%, rgba(0, 0, 0, 0.35) 65%, transparent 95%);
+            background:         linear-gradient(to bottom, rgba(0, 0, 0, 0.69) 20%, rgba(0, 0, 0, 0.35) 65%, transparent 95%);
+            z-index: 1;
+          }
+          &:hover:before,
+          &:hover .glyphicon { @extend %visible; }
+          + .thumb-wrapper { margin-left: 1vw; }
+          .glyphicon {
+            @extend %hidden;
+            position: absolute;
+            right: 0.35rem;
+            top: 0.35rem;
+            font: normal lighter 1.35rem/1 'Glyphicons Halflings', sans-serif;
+            color: $theme-content-lt;
+            cursor: pointer;
+            z-index: 1;
+          }
         }
-        &:hover:before { @extend %visible; }
         img { @include center(); }
       }
     }
@@ -99,3 +119,55 @@
     bottom: 0;
   }
 }
+
+form {
+  button {
+    min-width: 20%;
+    height: 40px;
+    margin-left: 5%;
+    padding: 0.75rem 1.75rem;
+    float: right;
+    border: none;
+    border-bottom: 4px solid;
+    border-radius: 8px;
+    transition: all 0.05s linear;
+    &:hover {
+      border-bottom-width: 3px;
+      transform: translateY(1px);
+    }
+    &:active {
+      border-bottom-width: 2px;
+      transform: translateY(2px);
+    }
+  }
+}
+
+
+
+.btn-animm {
+  background-color: #4285F4;
+  color: $theme-content-lt;
+  -webkit-transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #DFDFDF;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                      0 3px 1px -2px rgba(0, 0, 0, 0.12),
+                      0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow:         0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                      0 3px 1px -2px rgba(0, 0, 0, 0.12),
+                      0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+.btn-anim {
+  -webkit-transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transition: background 0.8s;
+  transition: background 0.8s;
+  -webkit-box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                      0 3px 14px 2px rgba(0, 0, 0, 0.12),
+                      0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  box-shadow:         0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                      0 3px 14px 2px rgba(0, 0, 0, 0.12),
+                      0 5px 5px -3px rgba(0, 0, 0, 0.2);
+}
+
+

@@ -33,6 +33,7 @@ const EventSchema = new Schema({
   tags: [EventTagSchema],
   links: [EventLinkSchema],
   starred: Boolean,
+  dateModified: Date,
   numRevisions: Number,
   archived: Boolean
 }, {
