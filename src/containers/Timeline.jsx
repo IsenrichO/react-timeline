@@ -98,6 +98,7 @@ export default class Timeline extends Component {
           batchSelectionState={ this.props.batchSelectionState }
           toggleBatchSelection={ (bool = undefined) => this.props.allowBatchSelection(bool) }
           deleteBatch={ ::this.deleteBatch }
+          clearBatchSelection={ this.props.clearBatchSelection }
           batchSelectionItems={ this.props.batchSelectionItems } />
         <ButtonControls
           toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
