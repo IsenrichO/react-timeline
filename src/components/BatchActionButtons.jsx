@@ -6,7 +6,10 @@ const buttonsMap = (actions) => [{
     name: 'cancel-action',
     glyph: 'remove-circle',
     tooltip: 'Cancel Action',
-    action: () => actions[0]()
+    action: () => {
+      actions[0]();
+      actions[2]();
+    }
   }, {
     name: 'batch-delete',
     glyph: 'trash',
@@ -31,10 +34,10 @@ const renderBatchActionButtons = (obj, batch) => obj.map((action, index) =>
 );
 
 
-const BatchActionButtons = ({ batchSelectionState, batchSelectionItems, toggleBatchSelection, deleteBatch }) => {
+const BatchActionButtons = ({ batchSelectionState, batchSelectionItems, toggleBatchSelection, deleteBatch, clearBatchSelection }) => {
   if (batchSelectionState) {
     return (
-      <div>{ renderBatchActionButtons(buttonsMap([toggleBatchSelection, deleteBatch]), batchSelectionItems) }</div>
+      <div>{ renderBatchActionButtons(buttonsMap([toggleBatchSelection, deleteBatch, clearBatchSelection]), batchSelectionItems) }</div>
     );
   } else {
     return null;
