@@ -41,7 +41,7 @@ const subRoutes = [
 ];
 
 const renderSearchSubRoutes = (routesArr, props) => routesArr.map((route, index) => (
-  <div
+  <li
     key={ `SubRouteCategory_${index}` }
     className={ `search-category category-${route.routeCategory}` }
     onClick={ () => route.clickHandler(props) }>
@@ -53,7 +53,7 @@ const renderSearchSubRoutes = (routesArr, props) => routesArr.map((route, index)
           className={ `glyphicon glyphicon-${route.glyphClass}` } />
       ]}
     </h4>
-  </div>
+  </li>
 ))
 
 const SearchSidebar = (props) => (
@@ -65,17 +65,21 @@ const SearchSidebar = (props) => (
     </i>
     <SearchBox />
 
-    { renderSearchSubRoutes(subRoutes, props) }
+    <nav>
+      <ul>
+        { renderSearchSubRoutes(subRoutes, props) }
 
-    <div
-      className="search-category filter-range"
-      // onClick={ () => {
-      //   console.log('filtering by range...');
-      // }}
-      >
-      <h6>Filter By Range</h6>
-      <RangeSlider />
-    </div>
+        <li
+          className="search-category filter-range"
+          // onClick={ () => {
+          //   console.log('filtering by range...');
+          // }}
+          >
+          <h4>Filter By Range</h4>
+          <RangeSlider />
+        </li>
+      </ul>
+    </nav>
   </div>
 );
 
