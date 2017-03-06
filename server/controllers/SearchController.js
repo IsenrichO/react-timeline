@@ -21,13 +21,14 @@ const getStarredEvents = (req, res, next) => {
 //  parameter (to be retrieved from the User settings) that defines
 //  the number of records which to display:
 const getRecentlyModified = (req, res, next) => {
-  const { resultSetSize: limitSize = 2 } = req.body;
+  const { resultSetSize: limitSize = 3 } = req.body;
+  console.log('getting recently modified', req.body);
   Event
     .find({})
     .sort({ dateModified: -1 })
     .limit(limitSize)
     .then(evts => {
-      console.log('Sending recent events');
+      console.log('\n\nSending recent events', evts);
       res.json(evts);
     })
     .catch(err => {

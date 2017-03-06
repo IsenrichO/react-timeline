@@ -6,11 +6,11 @@ const Express = require('express'),
       SearchController = require('../controllers/SearchController');
 
 
-router
-  .route('/');
+// router
+//   .route('/');
 
 router
-  .route('/recent')
+  .route('/')
   .get(SearchController.getRecentlyModified);
 
 module.exports = router;

@@ -164,7 +164,7 @@ const searchStarredEventsRoute = require('./routes/eventSearchStarred');
 
 App.use('/api/events', eventsRoute);
 App.use('/api/events/edit', eventUuidsRoute);
-App.use('/api/search', searchEventsRoute);
+App.use('/api/search/recent', searchEventsRoute);
 App.use('/api/search/starred', searchStarredEventsRoute);
 
 module.exports = App;
