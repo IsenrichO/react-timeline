@@ -2,46 +2,43 @@
 import React from 'react';
 
 
-const buttonsMap = (actions) => [{
+const buttonsMap = [
+  {
     name: 'cancel-action',
     glyph: 'remove-circle',
     tooltip: 'Cancel Action',
-    action: () => {
-      actions[0]();
-      actions[2]();
+    action: (props) => {
+      props.toggleBatchSelection();
+      props.clearBatchSelection();
     }
   }, {
     name: 'batch-delete',
     glyph: 'trash',
     tooltip: 'Delete Items',
-    action: actions[1]
+    action: (props) => {
+      props.deleteBatchEvents(props.batchSelectionItems);
+    }
   }
 ];
 
-const renderBatchActionButtons = (obj, batch) => obj.map((action, index) =>
+const renderBatchActionButtons = (btnsArr, props) => btnsArr.map((btn, index) =>
   <button
-    key={ `batchActionBtn_${action.name}` }
+    key={ `batchActionBtn_${btn.name}` }
     className="batch-action-btns"
     type="button"
-    name={ `${action.name}-btn` }
-    onClick={ action.action }
-    disabled={ action.name === 'batch-delete' && !batch.length ? true : false } >
-    <i className={ `glyphicon glyphicon-${action.glyph}` } />
+    name={ `${btn.name}-btn` }
+    onClick={ () => btn.action(props) }
+    disabled={ btn.name === 'batch-delete' && !props.batchSelectionItems.length ? true : false } >
+    <i className={ `glyphicon glyphicon-${btn.glyph}` } />
     <div className="tooltip">
-      <span>{ action.tooltip }</span>
+      <span>{ btn.tooltip }</span>
     </div>
   </button>
 );
 
 
-const BatchActionButtons = ({ batchSelectionState, batchSelectionItems, toggleBatchSelection, deleteBatch, clearBatchSelection }) => {
-  if (batchSelectionState) {
-    return (
-      <div>{ renderBatchActionButtons(buttonsMap([toggleBatchSelection, deleteBatch, clearBatchSelection]), batchSelectionItems) }</div>
-    );
-  } else {
-    return null;
-  }
-};
+const BatchActionButtons = (props) => props.batchSelectionState
+  ? (<div>{ renderBatchActionButtons(buttonsMap, props) }</div>)
+  : null;
 
 export default BatchActionButtons;
