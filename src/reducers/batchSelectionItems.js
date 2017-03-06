@@ -1,5 +1,5 @@
 'use strict';
-import { ADD_EVENT_TO_BATCH, CLEAR_BATCH } from '../actions/types';
+import { ADD_EVENT_TO_BATCH, CLEAR_BATCH, DELETE_BATCH_EVENTS_SUCCESS } from '../actions/types';
 
 
 export default function batchSelectionItems(state = [], action = null) {
@@ -16,6 +16,7 @@ export default function batchSelectionItems(state = [], action = null) {
       return [...state, action.payload];
       
     case CLEAR_BATCH:
+    case DELETE_BATCH_EVENTS_SUCCESS:
       // console.log(`Action <${action.type}> executed with empty payload.`);
       return new Array();
       
