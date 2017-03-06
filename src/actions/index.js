@@ -54,3 +54,10 @@ export const fetchStarredEvents_Success = (data) => ({
   type: Types.FETCH_STARRED_EVENTS_SUCCESS,
   payload: data
 });
+
+export const fetchRecentlyModifiedEvents_Sucess = (data) => {
+  console.log('hiiiiiiiiiiiiiii');
+  return {
+  type: Types.FETCH_RECENTLY_MODIFIED_EVENTS_SUCCESS,
+  payload: data
+}};
