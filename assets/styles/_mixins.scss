@@ -72,11 +72,8 @@
   @while $index <= $limit {
     @if $index == 0 {
       &:first-child { #{$prop}: ($step * $index) + s; }
-    } @else if $index == $limit {
-      &:last-child { #{$prop}: ($step * $index) + s; }
-    } @else {
-      &:nth-child(#{$index}) { #{$prop}: ($step * $index) + s; }
-    }
+    } @else if $index == $limit { &:last-child { #{$prop}: ($step * $index) + s; }
+    } @else { &:nth-child(#{$index}) { #{$prop}: ($step * $index) + s; } }
     $index: $index + 1;
   }
 }
