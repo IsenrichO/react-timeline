@@ -10,14 +10,20 @@
   .search-category {
     position: relative;
     width: 100%;
-    min-height: 50px;
     top: 7rem;
     padding: 0 2rem;
     border-bottom: 2px solid #DDD;
+    cursor: pointer;
     &:first-child { border-top: 2px solid #DDD; }
+    &:hover {
+      background-color: #4689F8;
+      z-index: 0;
+    }
     h4 {
       @include flex(flex, row nowrap, space-between);
-      font: 22px/1.5 'Raleway', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0.5rem 0;
+      font: 22px/50px 'Raleway', 'Helvetica Neue', sans-serif;
       color: $theme-content-lt;
     }
   }
