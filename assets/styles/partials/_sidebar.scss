@@ -15,7 +15,11 @@
     padding: 0 2rem;
     border-bottom: 2px solid #DDD;
     &:nth-child(3) { border-top: 2px solid #DDD; }
-    h4 { font: 22px/1.5 'Helvetica', sans-serif; }
+    h4 {
+      @include flex(flex, row nowrap, space-between);
+      font: 22px/1.5 'Raleway', 'Helvetica Neue', sans-serif;
+      color: $theme-content-lt;
+    }
   }
 }
 #hamburger-ic,
