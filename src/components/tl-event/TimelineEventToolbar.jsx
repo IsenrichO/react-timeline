@@ -3,7 +3,7 @@ import React from 'react';
 import { browserHistory, Router, Route, Link } from 'react-router';
 
 
-const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt }) => (
+const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt, confirmDeleteModal, confirmDeletionEvt }) => (
   <div className="tl-toolbar">
     <button
       type="button"
@@ -39,7 +39,11 @@ const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt }) => 
       title="Delete this event from your timeline">
       <i
         className="glyphicon glyphicon-trash"
-        onClick={ () => { deleteEvt(evt); } } />
+        onClick={ () => {
+          confirmDeletionEvt(evt);
+          confirmDeleteModal();
+          // deleteEvt(evt); }
+        }} />
     </button>
   </div>
 );

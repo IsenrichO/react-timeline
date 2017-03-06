@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
+import ConfirmDeletionModal from '../ConfirmDeletionModal';
 import TimelineEventToolbar from './TimelineEventToolbar';
 import TLEventHeader from './TLEventHeader';
 import TLEventBody from './TLEventBody';
@@ -34,7 +35,7 @@ const TimelineEvent = (props) => {
       uuid
     },
     evtAlign, logModalData, toggleModal, deleteEvt, batchSelectionState, addSelectionToBatch, isInBatch, addEventToFavorites, getStarGlyphClass,
-    hasMultipleTags, inverted
+    hasMultipleTags, inverted, confirmDeleteModal, confirmDeletionEvt
   } = props;
 
   return (
@@ -47,7 +48,9 @@ const TimelineEvent = (props) => {
           evt={ evt }
           logModalData={ logModalData }
           toggleModal={ toggleModal }
-          deleteEvt={ deleteEvt } />
+          deleteEvt={ deleteEvt }
+          confirmDeleteModal={ confirmDeleteModal }
+          confirmDeletionEvt={ confirmDeletionEvt } />
         <TLEventHeader
           evtName={ evtName }
           evtUuid={ uuid }
