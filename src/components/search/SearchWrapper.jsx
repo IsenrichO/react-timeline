@@ -33,7 +33,9 @@ export default class SearchWrapper extends Component {
           {
             cloneElement(this.props.children, {
               key: this.props.location.pathname,
+              eventsStore: this.props.seedDataAggregator,
               searchEvents: this.delegateAsyncCallback(this.props.location.pathname),
+              updateSingleEvent: ::this.props.updateSingleEvent,
               addEventToFavorites: (evt) => Utils.addEventToFavorites(this.props.updateSingleEvent, evt)
             })
           }
