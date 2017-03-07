@@ -8,7 +8,16 @@
   &-col { @include flex(flex, column nowrap); }
 }
 
-// Apply where `text-overlay` should be constrain and delimited by an ending ellipsis:
+// Apply to text body:
+.text-wrap {
+  word-break: break-word;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  text-overflow: ellipsis;
+}
+
+// Apply where `text-overlay` should be width-constrained and delimited by an ending ellipsis:
 .text-of {
   word-break: break-word;
   word-wrap: break-word;
