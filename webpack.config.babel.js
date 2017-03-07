@@ -32,7 +32,8 @@ const VENDOR_LIBS = [
 
 const BASE_CONFIG = {
   entry: {
-    // 'webpack/hot/dev-server',
+    patch: 'react-hot-loader/patch',
+    hmr: 'webpack/hot/only-dev-server',
     bundle: Path.resolve(__dirname, 'src/App'),
     vendor: VENDOR_LIBS
   },
@@ -120,7 +121,7 @@ const BASE_CONFIG = {
   },
   cache: true,
   watch: true,
-  devtool: `${isProdEnv ? 'inline' : 'cheap-eval'}-source-map`,
+  devtool: `${isProdEnv ? 'cheap-eval' : 'inline'}-source-map`,
   resolve: {
     extensions: ['.js', '.jsx']
   },
@@ -131,7 +132,8 @@ const BASE_CONFIG = {
 
 const DEV_SERVER = {
   plugins: [
-    new Webpack.HotModuleReplacementPlugin()
+    new Webpack.HotModuleReplacementPlugin(),
+    new Webpack.NamedModulesPlugin()
   ],
   devServer: {
     // contentBase: __dirname,
