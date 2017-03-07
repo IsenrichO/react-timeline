@@ -1,6 +1,8 @@
 
 /* Left-Hand Sidebar Sass Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+$search-category-hover: #4689F8;
+
 #sidebar {
   position: fixed;
   width: 408px;
@@ -16,8 +18,21 @@
     cursor: pointer;
     &:first-child { border-top: 2px solid #DDD; }
     &:hover {
-      background-color: #4689F8;
+      background-color: $search-category-hover;
       z-index: 0;
+    }
+    &.active {
+      background-color: $search-category-hover;
+      &:before {
+        position: absolute;
+        content: '';
+        height: 100%;
+        top: 0;
+        left: 0;
+        border-left: 18px solid $theme-content-lt;
+        border-top: 34px solid $theme-transparent;
+        border-bottom: 34px solid $theme-transparent;
+      }
     }
     h4 {
       @include flex(flex, row nowrap, space-between);
