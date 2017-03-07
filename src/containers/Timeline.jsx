@@ -69,10 +69,6 @@ export default class Timeline extends Component {
     }, 1200);
   }
 
-  deleteBatch() {
-    this.props.deleteBatchEvents(this.props.batchSelectionItems);
-  }
-
   confirmDeletionEvt(confirmationEvt) {
     this.setState({ confirmationEvt });
   }
