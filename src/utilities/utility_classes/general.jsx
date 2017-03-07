@@ -3,11 +3,10 @@ import React from 'react';
 
 
 // 
-const addEventToFavorites = (func, evt) =>
+const addEventToFavorites = (func, { uuid, starred }) =>
   func({
-    eventId: evt.eventId,
-    uuid: evt.uuid,
-    starred: !evt.starred ? true : false
+    uuid,
+    starred: !starred ? true : false
   });
 
 // 
@@ -28,7 +27,7 @@ const collapseBody = (evt) => {
 // 
 const getStarGlyphClass = (srcData, uuid) => {
   const evtIndex = srcData.findIndex(evt => evt.uuid === uuid);
-  return srcData[evtIndex].starred || null;
+  return !!~evtIndex ? srcData[evtIndex].starred : false;
 };
 
 // 
