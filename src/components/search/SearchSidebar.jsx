@@ -9,6 +9,7 @@ const subRoutes = [
     routeName: 'All Events',
     routePath: '/search',
     routeCategory: 'all',
+    childRoute: '',
     glyphClass: 'calendar',
     glyph: null,
     clickHandler: (props) => {
@@ -19,6 +20,7 @@ const subRoutes = [
     routeName: 'Starred Events',
     routePath: '/search/starred',
     routeCategory: 'starred',
+    childRoute: '/starred',
     glyphClass: 'star-empty',
     glyphClassAlt: 'category-ic',
     glyph: '&#x2606;',
@@ -31,6 +33,7 @@ const subRoutes = [
     routeName: 'Recently Modified',
     routePath: '/search/recent',
     routeCategory: 'recently-modified',
+    childRoute: '/recent',
     glyphClass: 'time',
     glyph: null,
     clickHandler: (props) => {
@@ -43,7 +46,7 @@ const subRoutes = [
 const renderSearchSubRoutes = (routesArr, props) => routesArr.map((route, index) => (
   <li
     key={ `SubRouteCategory_${index}` }
-    className={ `search-category category-${route.routeCategory}` }
+    className={ `search-category category-${route.routeCategory}${window.location.pathname === route.routePath ? 'active' : ''}` }
     onClick={ () => route.clickHandler(props) }>
     <h4>
       {[
@@ -54,7 +57,7 @@ const renderSearchSubRoutes = (routesArr, props) => routesArr.map((route, index)
       ]}
     </h4>
   </li>
-))
+));
 
 const SearchSidebar = (props) => (
   <div id="sidebar">
@@ -64,17 +67,10 @@ const SearchSidebar = (props) => (
       &larr;
     </i>
     <SearchBox />
-
     <nav>
       <ul>
         { renderSearchSubRoutes(subRoutes, props) }
-
-        <li
-          className="search-category filter-range"
-          // onClick={ () => {
-          //   console.log('filtering by range...');
-          // }}
-          >
+        <li className="search-category filter-range">
           <h4>Filter By Range</h4>
           <RangeSlider />
         </li>
@@ -84,26 +80,3 @@ const SearchSidebar = (props) => (
 );
 
 export default SearchSidebar;
-
-
-// <div
-//   className="search-category category-starred"
-//   onClick={ () => {
-//     props.reroute('/search/starred');
-//     props.fetchStarredEvents();
-//   }}>
-//   <h4>
-//     Starred
-//     <i className="category-ic">&#x2606;</i>
-//   </h4>
-// </div>
-// <div
-//   className="search-category category-recently-modified"
-//   onClick={ () => {
-//     props.reroute('/search/recent');
-//   }}>
-//   <h4>
-//     Recent
-//     <i className="glyphicon glyphicon-time" />
-//   </h4>
-// </div>
