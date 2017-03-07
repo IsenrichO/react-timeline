@@ -26,7 +26,6 @@ const subRoutes = [
     glyph: '&#x2606;',
     clickHandler: (props) => {
       props.reroute('/search/starred');
-      props.fetchStarredEvents();
     },
     callbackFunc: (props) => props.fetchStarredEvents()
   }, {
@@ -46,7 +45,7 @@ const subRoutes = [
 const renderSearchSubRoutes = (routesArr, props) => routesArr.map((route, index) => (
   <li
     key={ `SubRouteCategory_${index}` }
-    className={ `search-category category-${route.routeCategory}${window.location.pathname === route.routePath ? 'active' : ''}` }
+    className={ `search-category category-${route.routeCategory}${window.location.pathname === route.routePath ? ' active' : ''}` }
     onClick={ () => route.clickHandler(props) }>
     <h4>
       {[

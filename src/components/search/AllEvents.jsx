@@ -4,25 +4,19 @@ import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import SingleEvent from './SingleEvent';
-import { fetchSeedData } from '../../actions/index';
-import { deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchStarredEvents } from '../../actions/asyncActions';
+import { updateSingleEvent } from '../../actions/asyncActions';
 import Utils from '../../utilities/index';
 
 
 @connect(
   ({ seedDataAggregator,
      eventEditingModalData, eventEditingModalState,
-     batchSelectionState, batchSelectionItems
    }) => ({
     seedDataAggregator,
     eventEditingModalData,
     eventEditingModalState,
-    batchSelectionState,
-    batchSelectionItems
   }),
   (dispatch) => bindActionCreators({
-    fetchSeedData,
-    fetchStarredEvents,
     updateSingleEvent,
     push
   }, dispatch)
