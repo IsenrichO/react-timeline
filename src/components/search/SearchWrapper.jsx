@@ -21,9 +21,9 @@ export default class SearchWrapper extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      starredEvts: [],
-      recentEvts: []
+      starredEvts: []
     };
+    this.props.fetchRecentlyModifiedEvents();
   }
 
   fetchStarredEvents() {
@@ -31,27 +31,28 @@ export default class SearchWrapper extends Component {
     this.setState({ starredEvts });
   }
 
-  fetchRecentlyModifiedEvents() {
-    console.log('fetched recent');
-    this.props.fetchRecentlyModifiedEvents();
+  delegateAsyncCallback(path) {
+    const pathRoute = path.replace(/^\/search\//, '');
+    // const pathsObj = {
+    //   '': null,
+    //   'starred': () => this.props.fetchStarredEvents(),
+    //   'recent': this.props.fetchRecentlyModifiedEvents
+    // };
+    // pathRoute in pathsObj ? pathsObj[pathRoute]() : null;
+    return this.props.searchEvents;
   }
 
   render() {
-    console.log('SEARCH EVENTS:', this.props.searchEvents);
     return (
       <div>
         <SearchSidebar
           reroute={ (path) => this.props.push(`${path}`) }
-          fetchStarredEvents={ () => ::this.fetchStarredEvents() }
-          // fetchRecentlyModifiedEvents={ () => ::this.fetchRecentlyModifiedEvents() }
-           />
+          fetchStarredEvents={ () => ::this.fetchStarredEvents() } />
         <main id="search-main">
           {
             cloneElement(this.props.children, {
               key: this.props.location.pathname,
-              starredEvents: this.state.starredEvts,
-              fetchRecentlyModifiedEvents: ::this.fetchRecentlyModifiedEvents,
-              recentEvents: this.props.searchEvents,
+              searchEvents: this.delegateAsyncCallback(this.props.location.pathname),
               addEventToFavorites: (evt) => Utils.addEventToFavorites(this.props.updateSingleEvent, evt)
             })
           }

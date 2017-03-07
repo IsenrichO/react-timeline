@@ -3,9 +3,9 @@ import React from 'react';
 import Utils from '../../utilities/index';
 
 
-const StarredEvents = ({ starredEvents }) => (
+const StarredEvents = ({ searchEvents }) => (
   <ul className="evt-search-starred">
-    { Utils.renderStarredEvents(starredEvents) }
+    { Utils.renderStarredEvents(searchEvents) }
   </ul>
 );
 
