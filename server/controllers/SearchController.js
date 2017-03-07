@@ -2,6 +2,20 @@
 const Event = require('../../db/models/Event');
 
 
+//
+const getAllEvents = (req, res, next) => {
+  Event
+    .find({})
+    .then(evts => {
+      console.log('All Events:', evts);
+      res.send(evts);
+    })
+    .catch(err => {
+      res.status(400).send('Failed to fetch all events!');
+      next();
+    });
+};
+
 // Queries the DB for a result set containing all starred events:
 const getStarredEvents = (req, res, next) => {
   Event
@@ -100,6 +114,7 @@ const buildQuery = (criteria) => {
 module.exports = {
   buildQuery,
   customQuery,
+  getAllEvents,
   getRecentlyModified,
   getStarredEvents
 };
