@@ -137,6 +137,7 @@ export default class EditEventModal extends Component {
             <FileUploadAPI />
             <fieldset>
               <button
+                className="form-btn"
                 type="button"
                 name="updateEvtBtn"
                 onClick={ ::this.updateSingleEvent }>

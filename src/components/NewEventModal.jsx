@@ -99,12 +99,14 @@ export default class NewEventModal extends Component {
             <FileUploadAPI />
             <fieldset>
               <button
+                className="form-btn"
                 type="button"
                 name="saveNewEvtBtn"
                 onClick={ ::this.saveNewEvt }>
                 Save
               </button>
               <button
+                className="form-btn"
                 type="button"
                 name="cancelNewEvtBtn"
                 onClick={ this.props.toggleModal }>
