@@ -2,8 +2,8 @@
 import * as Types from './types';
 
 
-export const loadSeedData = (JSON) => ({
-  type: Types.LOAD_SEED_DATA,
+export const fetchSeedData_Success = (JSON) => ({
+  type: Types.FETCH_SEED_DATA_SUCCESS,
   payload: JSON 
 });
 
@@ -47,6 +47,11 @@ export const clearBatchSelection = () => ({
 
 export const deleteBatchEvents_Success = (data) => ({
   type: Types.DELETE_BATCH_EVENTS_SUCCESS,
+  payload: data
+});
+
+export const fetchAllEvents_Success = (data) => ({
+  type: Types.FETCH_ALL_EVENTS_SUCCESS,
   payload: data
 });
 

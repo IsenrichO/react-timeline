@@ -3,11 +3,12 @@ import Axios from 'axios';
 import * as RoutePaths from '../routing/RoutePaths';
 import { dispatchActionCreator, catchAsyncError, config, generateUuid } from './asyncConfig';
 import {
-  loadSeedData,
+  fetchSeedData_Success,
   addSingleEvent_Success,
   deleteSingleEvent_Success,
   updateSingleEvent_Success,
   deleteBatchEvents_Success,
+  fetchAllEvents_Success,
   fetchStarredEvents_Success,
   fetchRecentlyModifiedEvents_Sucess
 } from './index';
@@ -46,13 +47,17 @@ export const fetchSeedData = () => {
         maxRedirects: 3,
         timeout: 30000
       })
-      .then(dispatchActionCreator(dispatch, loadSeedData))
+      .then(dispatchActionCreator(dispatch, fetchSeedData_Success))
       .catch(catchAsyncError('Error encountered while attempting to fetch seed data'));
   };
 };
 
 
-const { Events, getEditEvent, StarredEvents, RecentlyModifiedEvents } = RoutePaths;
+const { Events, getEditEvent, AllEvents, StarredEvents, RecentlyModifiedEvents } = RoutePaths;
+
+// 
+export const fetchAllEvents = () => (dispatch) =>
+  crudAsync2(Axios.get, AllEvents, dispatch, fetchAllEvents_Success);
 
 // 
 export const fetchStarredEvents = () => (dispatch) =>
