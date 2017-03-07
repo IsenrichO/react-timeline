@@ -3,7 +3,6 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 // Page-level layout component imports:
-import AllEvents from '../components/search/AllEvents';
 import SearchWrapper from '../components/search/SearchWrapper';
 import RecentlyModifiedEvents from '../components/search/RecentlyModifiedEvents';
 import SearchResults from '../components/search/SearchResults';
