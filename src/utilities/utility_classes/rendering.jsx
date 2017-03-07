@@ -25,7 +25,6 @@ const renderStarredEvents = (evts) => evts.map((evt, index) => (
 ));
 
 
-
 const RenderingUtils = {
   renderItemActionControl,
   renderStarredEvents

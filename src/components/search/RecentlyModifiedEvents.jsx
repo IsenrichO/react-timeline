@@ -3,9 +3,9 @@ import React from 'react';
 import Utils from '../../utilities/index';
 
 
-const RecentlyModifiedEvents = ({ starredEvents }) => (
+const RecentlyModifiedEvents = ({ searchEvents }) => (
   <ul className="evt-search-recent">
-    { Utils.renderStarredEvents(starredEvents) }
+    { Utils.renderStarredEvents(searchEvents) }
   </ul>
 );
 

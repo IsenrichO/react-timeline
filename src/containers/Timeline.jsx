@@ -7,6 +7,7 @@ import EditEventModal from '../components/EditEventModal';
 import NewEventModal from '../components/NewEventModal';
 import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
+import ConfirmDeletionModal from '../components/ConfirmDeletionModal';
 import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
 import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents } from '../actions/asyncActions';
 import Utils from '../utilities/index';
@@ -39,7 +40,9 @@ export default class Timeline extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newModal: false
+      newModal: false,
+      confirmModal: false,
+      confirmationEvt: null
     };
   }
 
@@ -56,7 +59,10 @@ export default class Timeline extends Component {
 
   deleteBatch() {
     this.props.deleteBatchEvents(this.props.batchSelectionItems);
-    this.props.clearBatchSelection();
+  }
+
+  confirmDeletionEvt(confirmationEvt) {
+    this.setState({ confirmationEvt });
   }
 
   renderOrderedEvents(events) {
@@ -68,6 +74,8 @@ export default class Timeline extends Component {
         logModalData={ (data) => this.props.logEventModalData(data) }
         toggleModal={ ::this.toggleModal }
         deleteEvt={ () => this.props.deleteSingleEvt(evt) }
+        confirmDeleteModal={ () => this.setState({ confirmModal: true }) }
+        confirmDeletionEvt={ ::this.confirmDeletionEvt }
         batchSelectionState={ this.props.batchSelectionState }
         addSelectionToBatch={ (evtUuid) => this.props.addEventToBatchSelection(evtUuid) }
         isInBatch={ this.props.batchSelectionItems.includes(evt.uuid) }
@@ -96,12 +104,18 @@ export default class Timeline extends Component {
           addSingleEvent={ (evtData) => this.props.addSingleEvent(evtData) } />
         <BatchActionButtons
           batchSelectionState={ this.props.batchSelectionState }
+          batchSelectionItems={ this.props.batchSelectionItems }
           toggleBatchSelection={ (bool = undefined) => this.props.allowBatchSelection(bool) }
-          deleteBatch={ ::this.deleteBatch }
-          batchSelectionItems={ this.props.batchSelectionItems } />
+          deleteBatchEvents={ this.props.deleteBatchEvents }
+          clearBatchSelection={ this.props.clearBatchSelection } />
         <ButtonControls
           toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
           toggleBatchSelection={ (bool = undefined) => this.props.allowBatchSelection(bool) } />
+        <ConfirmDeletionModal
+          modalStatus={ this.state.confirmModal }
+          disableModal={ () => this.setState({ confirmModal: !this.state.confirmModal }) }
+          // confirmDeletionEvt={ this.state.confirmDeletionEvt }
+          deleteEvt={ () => this.props.deleteSingleEvt(this.state.confirmationEvt) } />
       </div>
     );
   }

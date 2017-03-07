@@ -8,7 +8,8 @@ import {
   deleteSingleEvent_Success,
   updateSingleEvent_Success,
   deleteBatchEvents_Success,
-  fetchStarredEvents_Success
+  fetchStarredEvents_Success,
+  fetchRecentlyModifiedEvents_Sucess
 } from './index';
 
 
@@ -90,6 +91,22 @@ export const fetchStarredEvents = () => {
       })
       .then(dispatchActionCreator(dispatch, fetchStarredEvents_Success))
       .catch(catchAsyncError('Error encountered while attempting to fetch starred events'));
+  };
+};
+
+// 
+export const fetchRecentlyModifiedEvents = () => {
+  // headers: { 'X-Limit-Size': 3 }
+  return (dispatch) => {
+    return Axios
+      .get(RoutePaths.RecentlyModifiedEvents, {
+        responseType: 'json'
+      })
+      .then(response => {
+        // dispatchActionCreator(dispatch, fetchRecentlyModifiedEvents_Sucess))
+        dispatch(fetchRecentlyModifiedEvents_Sucess(response.data));
+      })
+      .catch(catchAsyncError('Error encountered while attempting to fetch recently modified events'));
   };
 };
 

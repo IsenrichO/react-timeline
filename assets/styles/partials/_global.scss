@@ -29,6 +29,11 @@ body {
   background-color: $theme-bckg;
 }
 
+ul {
+  list-style: none outside none;
+  padding-left: 0;
+}
+
 h1,
 h2,
 h3 {

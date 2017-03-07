@@ -1,6 +1,8 @@
 
 /* Left-Hand Sidebar Sass Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+$search-category-hover: #4689F8;
+
 #sidebar {
   position: fixed;
   width: 408px;
@@ -10,12 +12,35 @@
   .search-category {
     position: relative;
     width: 100%;
-    min-height: 50px;
     top: 7rem;
     padding: 0 2rem;
     border-bottom: 2px solid #DDD;
-    &:nth-child(3) { border-top: 2px solid #DDD; }
-    h4 { font: 22px/1.5 'Helvetica', sans-serif; }
+    cursor: pointer;
+    &:first-child { border-top: 2px solid #DDD; }
+    &:hover {
+      background-color: $search-category-hover;
+      z-index: 0;
+    }
+    &.active {
+      background-color: $search-category-hover;
+      &:before {
+        position: absolute;
+        content: '';
+        height: 100%;
+        top: 0;
+        left: 0;
+        border-left: 18px solid $theme-content-lt;
+        border-top: 34px solid $theme-transparent;
+        border-bottom: 34px solid $theme-transparent;
+      }
+    }
+    h4 {
+      @include flex(flex, row nowrap, space-between);
+      margin: 0;
+      padding: 0.5rem 0;
+      font: 22px/50px 'Raleway', 'Helvetica Neue', sans-serif;
+      color: $theme-content-lt;
+    }
   }
 }
 #hamburger-ic,
@@ -70,6 +95,17 @@
   width: calc(100vw - 408px);
   min-height: 100vh;
   float: right;
+  &:after {
+    @include cbTransition();
+    position: absolute;
+    display: none;
+    content: 'No Events To Show';
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font: normal 4rem/1 'Raleway', sans-serif;
+    white-space: nowrap;
+  }
 }
 .evt {
   &-search,

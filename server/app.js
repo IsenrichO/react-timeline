@@ -43,7 +43,7 @@ db
   .once('open', () => {
     Mongoose.connection.collections.EventData.drop();
     seedData.forEach((evt) => {
-      [evt.formattedDate, evt.uuid, evt.photos] = [formatDate(evt.date), UUID(), new Array()];
+      [evt.formattedDate, evt.uuid, evt.photos, evt.dateModified] = [formatDate(evt.date), UUID(), new Array(), Date.now()];
       new Event(evt).save();
     });
   })
@@ -164,7 +164,7 @@ const searchStarredEventsRoute = require('./routes/eventSearchStarred');
 
 App.use('/api/events', eventsRoute);
 App.use('/api/events/edit', eventUuidsRoute);
-App.use('/api/search', searchEventsRoute);
+App.use('/api/search/recent', searchEventsRoute);
 App.use('/api/search/starred', searchStarredEventsRoute);
 
 module.exports = App;
