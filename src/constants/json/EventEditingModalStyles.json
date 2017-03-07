@@ -27,11 +27,11 @@
     "WebkitBorderRadius": "14px",
     "MozBorderRadius":    "14px",
     "borderRadius":       "14px",
-    "WebkitAnimation": "modalEntrance 1s 0.45s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
-    "MozAnimation":    "modalEntrance 1s 0.45s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
-    "MsAnimation":     "modalEntrance 1s 0.45s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
-    "OAnimation":      "modalEntrance 1s 0.45s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
-    "animation":       "modalEntrance 1s 0.45s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
+    "WebkitAnimation": "modalEntrance 0.85s 0.35s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
+    "MozAnimation":    "modalEntrance 0.85s 0.35s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
+    "MsAnimation":     "modalEntrance 0.85s 0.35s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
+    "OAnimation":      "modalEntrance 0.85s 0.35s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
+    "animation":       "modalEntrance 0.85s 0.35s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
     "overflow": "visible",
     "zIndex": 200
   }  
