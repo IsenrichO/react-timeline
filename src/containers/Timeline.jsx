@@ -57,6 +57,18 @@ export default class Timeline extends Component {
       : $('body').removeClass('modal-active');
   }
 
+  // An alternative class method for toggling the modal display, here wrapped in
+  //  a Window timer. This could be useful as a callback for deactivating the modal
+  //  while allowing said modal to undergo a CSS animation out of frame.
+  toggleModalWithDelay() {
+    setTimeout(() => {
+      this.props.toggleEventModal();
+      !this.props.eventEditingModalState
+        ? $('body').addClass('modal-active')
+        : $('body').removeClass('modal-active');
+    }, 1200);
+  }
+
   deleteBatch() {
     this.props.deleteBatchEvents(this.props.batchSelectionItems);
   }
