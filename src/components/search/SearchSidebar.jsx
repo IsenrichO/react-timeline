@@ -70,7 +70,14 @@ const SearchSidebar = (props) => (
       <ul>
         { renderSearchSubRoutes(subRoutes, props) }
         <li className="search-category filter-range">
-          <h4>Filter By Range</h4>
+          <h4>
+            {[
+              'Filter By Range',
+              <i
+                key="SearchSubRouteGlyphicon_filter"
+                className="glyphicon glyphicon-filter" />
+            ]}
+          </h4>
           <RangeSlider />
         </li>
       </ul>
