@@ -12,7 +12,7 @@ import RecentlyModifiedEvents from '../components/search/RecentlyModifiedEvents'
 import StarredEvents from '../components/search/StarredEvents';
 
 // Action creator & middleware imports:
-import { fetchSeedData } from '../actions/asyncActions';
+import { fetchSeedData, fetchRecentlyModifiedEvents } from '../actions/asyncActions';
 import { StoreWithMiddleware as Store } from '../store/configureStore';
 
 
@@ -31,7 +31,9 @@ export default (
       <IndexRoute component={ AllEvents } />
       <Route
         path="recent"
-        component={ RecentlyModifiedEvents } />
+        component={ RecentlyModifiedEvents }
+        // onEnter={ () => Store.dispatch(fetchRecentlyModifiedEvents()) }
+        />
       <Route
         path="starred"
         component={ StarredEvents } />
