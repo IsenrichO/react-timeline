@@ -1,6 +1,6 @@
 'use strict';
 import {
-  LOAD_SEED_DATA,
+  FETCH_SEED_DATA_SUCCESS,
   ADD_SINGLE_EVENT_SUCCESS,
   DELETE_SINGLE_EVENT_SUCCESS,
   DELETE_BATCH_EVENTS_SUCCESS,
@@ -13,7 +13,7 @@ export default function seedDataAggregator(state = [], action = null) {
   let newState;
   switch (action.type) {
 
-    case LOAD_SEED_DATA:
+    case FETCH_SEED_DATA_SUCCESS:
       // console.log(`Action <${action.type}> executed with payload `, action.payload);
       return action.payload;
 
