@@ -6,10 +6,10 @@ import { Route, IndexRoute } from 'react-router';
 import AllEvents from '../components/search/AllEvents';
 import SearchWrapper from '../components/search/SearchWrapper';
 import RecentlyModifiedEvents from '../components/search/RecentlyModifiedEvents';
-import StarredEvents from '../components/search/StarredEvents';
+import SearchResults from '../components/search/SearchResults';
 
 // Action creator & middleware imports:
-import { fetchSeedData, fetchRecentlyModifiedEvents, fetchStarredEvents } from '../actions/asyncActions';
+import { fetchSeedData, fetchAllEvents, fetchRecentlyModifiedEvents, fetchStarredEvents } from '../actions/asyncActions';
 import { StoreWithMiddleware as Store } from '../store/configureStore';
 
 
@@ -18,14 +18,16 @@ export default (
     path="search"
     component={ SearchWrapper }
     onEnter={ () => Store.dispatch(fetchSeedData()) }>
-    <IndexRoute component={ AllEvents } />
+    <IndexRoute
+      component={ SearchResults }
+      onEnter={ () => Store.dispatch(fetchAllEvents()) } />
     <Route
       path="recent"
-      component={ RecentlyModifiedEvents }
+      component={ SearchResults }
       onEnter={ () => Store.dispatch(fetchRecentlyModifiedEvents()) } />
     <Route
       path="starred"
-      component={ StarredEvents }
+      component={ SearchResults }
       onEnter={ () => Store.dispatch(fetchStarredEvents()) } />
   </Route>
 );
