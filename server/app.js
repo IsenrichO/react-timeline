@@ -43,7 +43,7 @@ db
   .once('open', () => {
     Mongoose.connection.collections.EventData.drop();
     seedData.forEach((evt) => {
-      [evt.formattedDate, evt.uuid, evt.photos] = [formatDate(evt.date), UUID(), new Array()];
+      [evt.formattedDate, evt.uuid, evt.photos, evt.dateModified] = [formatDate(evt.date), UUID(), new Array(), Date.now()];
       new Event(evt).save();
     });
   })
