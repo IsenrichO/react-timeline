@@ -96,13 +96,16 @@ export const fetchStarredEvents = () => {
 
 // 
 export const fetchRecentlyModifiedEvents = () => {
-  console.log('Function `fetchRecentlyModifiedEvents()` Called');
+  // headers: { 'X-Limit-Size': 3 }
   return (dispatch) => {
     return Axios
       .get(RoutePaths.RecentlyModifiedEvents, {
         responseType: 'json'
       })
-      .then(dispatchActionCreator(dispatch, fetchRecentlyModifiedEvents_Sucess))
+      .then(response => {
+        // dispatchActionCreator(dispatch, fetchRecentlyModifiedEvents_Sucess))
+        dispatch(fetchRecentlyModifiedEvents_Sucess(response.data));
+      })
       .catch(catchAsyncError('Error encountered while attempting to fetch recently modified events'));
   };
 };
