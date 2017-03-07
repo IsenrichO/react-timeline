@@ -43,7 +43,7 @@ db
   .once('open', () => {
     Mongoose.connection.collections.EventData.drop();
     seedData.forEach((evt) => {
-      [evt.formattedDate, evt.uuid, evt.photos, evt.dateModified] = [formatDate(evt.date), UUID(), new Array(), Date.now()];
+      [evt.formattedDate, evt.uuid, evt.photos, evt.dateModified, evt.starred] = [formatDate(evt.date), UUID(), new Array(), Date.now(), false];
       new Event(evt).save();
     });
   })
@@ -53,59 +53,6 @@ db
   .on('close', () => {
     console.log('Seeding Finished!');
   });
-
-
-
-// App.get('/api/events/:id', (req, res, next) => {
-//   const sendResponse = (err, docs) => { res.send(docs); }
-//   Event
-//     .find({})
-//     .limit(+req.params.id)
-//     .sort('-date')
-//     .exec(sendResponse);
-// });
-
-
-// App
-//   .route('/api/events')
-//   .get(ApI.listEvents)
-//   .post(ApI.addEvents);
-
-// App
-//   .route('/api/events/edit/:id')
-//   // .get()
-//   .put(ApI.updateEvents)
-//   .delete(ApI.deleteEvents);
-
-
-
-  // App.get('/api/events', (req, res, next) => {
-  //   const sendResponse = (err, docs) => {
-  //     console.log('pppp', err, docs);
-  //     res.send(docs);
-  //   }
-
-  //   Event.find({}).sort('-date').exec(sendResponse);
-  //   // Event.find({}).exec(sendResponse);
-// App.get('/api/events', ApI.listEvents);
-
-
-// App.post('/api/events', ApI.addEvents);
-  // const sendResponse = (err, docs) => { res.send(docs); }
-  // const eventAttributes = Object.keys(Event.schema.obj);
-  // const handleSave = (err, docs) => {
-  //   if (err) {
-  //     console.error(`Error Save: ${docs}!`);
-  //   } else {
-  //     console.log(`Save Successful: ${docs}`);
-  //     sendResponse(err, docs);
-  //   }
-  // };
-  // let params = req.body;
-  // console.log('PARAMS:', params);
-  // eventAttributes.forEach( (attr) => { params[attr] = params[attr] || '' } );
-  // new Event(params).save(handleSave);
-
 
 // .put or .patch
 // App.put('/api/events/edit/:id', ApI.updateEvents);
@@ -118,40 +65,6 @@ db
   //   paramsToUpdate.push(obj);
   // }
 
-  // const handleUpdate = (err, docs) => {
-  //   if (err) {
-  //     console.error(`Error Not Found`);
-  //   } else {
-  //     console.log(`Update Successful: ${docs}`);
-  //     sendResponse(err, docs);
-  //   }
-  // };
-
-  // Event.update({ _id: req.params.id }, ...paramsToUpdate).exec(handleUpdate);
-
-
-  // App.delete('/api/events/edit/:id', ApI.deleteEvents);
-// App.delete('/api/events/edit/:id', ApI.deleteEvents);
-
-  //   const sendResponse = (err, docs) => { res.send(docs); }
-  //   const handleDelete = (err, docs) => {
-  //     if (err) {
-  //       console.error(`Error: Object Delete Failed`);
-  //     } else {
-  //       console.log(`Delete Successful: ${docs._id}`);
-  //       sendResponse(err, docs);
-  //     }
-  //   };
-  //   Event.findByIdAndRemove(req.params.id, handleDelete);
-  // });
-
-  // App.get('/test', (req, res, next) => {
-  //   console.log('TEST');
-  //   Event.find({ eventId: '2kk1' }, (err, docs) => {
-  //     res.send(docs);
-  //   });
-
-
 // App.use((err, req, res, next) => {
 //   res.status(422).send({ error: err.message });
 // });
@@ -160,10 +73,12 @@ db
 const eventsRoute = require('./routes/events');
 const eventUuidsRoute = require('./routes/eventUuids');
 const searchEventsRoute = require('./routes/eventSearch');
+const searchEventsAllRoute = require('./routes/eventSearchAll');
 const searchStarredEventsRoute = require('./routes/eventSearchStarred');
 
 App.use('/api/events', eventsRoute);
 App.use('/api/events/edit', eventUuidsRoute);
+App.use('/api/search', searchEventsAllRoute);
 App.use('/api/search/recent', searchEventsRoute);
 App.use('/api/search/starred', searchStarredEventsRoute);
 
