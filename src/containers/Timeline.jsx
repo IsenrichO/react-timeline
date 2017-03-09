@@ -1,4 +1,5 @@
 'use strict';
+import Axios from 'axios';
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -9,20 +10,24 @@ import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
 import ConfirmDeletionModal from '../components/ConfirmDeletionModal';
 import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
-import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents } from '../actions/asyncActions';
+import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchCloudinaryImageData } from '../actions/asyncActions';
 import Utils from '../utilities/index';
+
+import CloudinaryUploader from '../CloudinaryUploadAPI';
 
 
 @connect(
   ({ seedDataAggregator,
      eventEditingModalData, eventEditingModalState,
-     batchSelectionState, batchSelectionItems
+     batchSelectionState, batchSelectionItems,
+     cloudinaryImageStore
    }) => ({
     seedDataAggregator,
     eventEditingModalData,
     eventEditingModalState,
     batchSelectionState,
-    batchSelectionItems
+    batchSelectionItems,
+    cloudinaryImageStore
   }),
   (dispatch) => bindActionCreators({
     logEventModalData,
@@ -33,7 +38,8 @@ import Utils from '../utilities/index';
     deleteSingleEvt,
     deleteBatchEvents,
     updateSingleEvent,
-    clearBatchSelection
+    clearBatchSelection,
+    fetchCloudinaryImageData
   }, dispatch)
 )
 export default class Timeline extends Component {
@@ -50,6 +56,10 @@ export default class Timeline extends Component {
     seedData: PropTypes.array.isRequired
   };
   
+  componentDidMount() {
+    this.props.fetchCloudinaryImageData('Unsigned');
+  }
+
   toggleModal() {
     this.props.toggleEventModal();
     !this.props.eventEditingModalState
@@ -90,13 +100,16 @@ export default class Timeline extends Component {
         addEventToFavorites={ () => Utils.addEventToFavorites(this.props.updateSingleEvent, evt) }
         getStarGlyphClass={ Utils.getStarGlyphClass(this.props.seedDataAggregator, evt.uuid) }
         hasMultipleTags={ Utils.hasMultipleTags(this.props.seedDataAggregator, evt.uuid) }
-        inverted={ index % 2 ? true : false } />
+        inverted={ index % 2 ? true : false }
+        images={ this.props.cloudinaryImageStore[index] } />
     );
   }
 
   render() {
     return (
       <div>
+        <CloudinaryUploader />
+
         <ul className="tl">
           { ::this.renderOrderedEvents(Utils.orderTimelineEvents(this.props.seedData)) }
         </ul>
