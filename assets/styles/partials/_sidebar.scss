@@ -13,7 +13,6 @@ $search-category-hover: #4689F8;
     position: relative;
     width: 100%;
     top: 7rem;
-    padding: 0 2rem;
     border-bottom: 2px solid #DDD;
     cursor: pointer;
     &:first-child { border-top: 2px solid #DDD; }
@@ -35,11 +34,18 @@ $search-category-hover: #4689F8;
       }
     }
     h4 {
-      @include flex(flex, row nowrap, space-between);
+      @include flex(flex, row nowrap, flex-start);
       margin: 0;
-      padding: 0.5rem 0;
+      padding: .5rem 2rem 0.5rem 3rem;
       font: 22px/50px 'Raleway', 'Helvetica Neue', sans-serif;
       color: $theme-content-lt;
+      &.accordion:after {
+        position: absolute;
+        content: '\002B';
+        right: 2rem;
+        font: normal lighter 3.5rem/1 'Raleway', serif;
+      }
+      i { margin-right: 3rem; }
     }
   }
 }
