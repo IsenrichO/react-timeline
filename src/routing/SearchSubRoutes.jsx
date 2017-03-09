@@ -4,7 +4,6 @@ import { Route, IndexRoute } from 'react-router';
 
 // Page-level layout component imports:
 import SearchWrapper from '../components/search/SearchWrapper';
-import RecentlyModifiedEvents from '../components/search/RecentlyModifiedEvents';
 import SearchResults from '../components/search/SearchResults';
 
 // Action creator & middleware imports:
