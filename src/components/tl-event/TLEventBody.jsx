@@ -9,7 +9,7 @@ const debounceToggle = (evt) => debounce(toggleAccordionSection(evt), 2000, true
 
 const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => (
   <div className="panel-body">
-    <blockquote>{ evtDescription }</blockquote>
+    <blockquote className={ evtDescription.length === 0 ? 'empty-summary' : '' }>{ evtDescription }</blockquote>
     <div className="tl-date">
       <i className="glyphicon glyphicon-calendar" />
       <em>{ evtFormattedDate }</em>

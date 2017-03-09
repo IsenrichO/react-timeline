@@ -3,8 +3,11 @@ import React from 'react';
 import Utils from '../../utilities/index';
 
 
-const TLEventHeader = ({ evtName, evtUuid, batchSelectionState, addSelectionToBatch, inverted }) => (
-  <div className={ `panel-header${inverted ? ' inverted' : ''}` }>
+const urlBase = 'http://res.cloudinary.com/http-isenrich-io/image/upload/';
+const TLEventHeader = ({ evtName, evtUuid, batchSelectionState, addSelectionToBatch, inverted, images }) => (
+  <div
+    className={ `panel-header${inverted ? ' inverted' : ''}` }
+    style={{ backgroundImage: `url(${urlBase}${images.public_id})` }}>
     { Utils.renderItemActionControl(batchSelectionState, evtUuid, addSelectionToBatch) }
     <h3>{ evtName }</h3>
   </div>
