@@ -16,6 +16,9 @@ const VENDOR_LIBS = [
   'body-parser',
   'bson',
   'cloudinary',
+  'cloudinary_react',
+  'cloudinary_js',
+  'dotenv-webpack',
   'jquery',
   'lodash',
   'react',
@@ -27,7 +30,8 @@ const VENDOR_LIBS = [
   'redux',
   'redux-thunk',
   'request',
-  'uuid'
+  'uuid',
+  'webpack-merge'
 ];
 
 // 'react-hot-loader/patch', 'webpack-dev-server/client?http://localhost:3000', 'webpack/hot/only-dev-server'
