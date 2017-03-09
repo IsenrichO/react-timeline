@@ -18,6 +18,7 @@
       "loose": true,
       "modules": false
     }],
+    "stage-2",
     "react"
   ],
   "plugins": [
