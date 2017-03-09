@@ -17,7 +17,6 @@ import { updateSingleEvent } from '../actions/asyncActions';
 export default class EditEventModal extends Component {
   constructor(props) {
     super(props);
-    this.constructCurrentFormattedDate = this.constructCurrentFormattedDate.bind(this);
   }
 
   static propTypes = {
@@ -134,7 +133,22 @@ export default class EditEventModal extends Component {
                   defaultValue={ evtDescription } />
               </div>
             </fieldset>
+
+            <fieldset>
+              <div className="input-gr">
+                <span className="input-gr-addon">
+                  <i className="glyphicon glyphicon-tags" />
+                </span>
+                <label htmlFor="edit-evt-tags-inpt" />
+                <div
+                  id="tags-input-box"
+                  className="form-cont"
+                  ref={ (editEvtTagsInpt) => { this.editEvtTagsInpt = editEvtTagsInpt; }} />
+              </div>
+            </fieldset>
+
             <FileUploadAPI />
+
             <fieldset>
               <button
                 className="form-btn"
