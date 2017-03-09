@@ -10,6 +10,7 @@ const subRoutes = [
     routePath: '/search',
     routeCategory: 'all',
     childRoute: '',
+    accordion: false,
     glyphClass: 'calendar',
     glyph: null,
     clickHandler: (props) => {
@@ -21,6 +22,7 @@ const subRoutes = [
     routePath: '/search/starred',
     routeCategory: 'starred',
     childRoute: '/starred',
+    accordion: false,
     glyphClass: 'star-empty',
     glyphClassAlt: 'category-ic',
     glyph: '&#x2606;',
@@ -29,10 +31,11 @@ const subRoutes = [
     },
     callbackFunc: (props) => props.fetchStarredEvents()
   }, {
-    routeName: 'Recently Modified',
+    routeName: 'Recent',
     routePath: '/search/recent',
     routeCategory: 'recently-modified',
     childRoute: '/recent',
+    accordion: true,
     glyphClass: 'time',
     glyph: null,
     clickHandler: (props) => {
@@ -47,12 +50,12 @@ const renderSearchSubRoutes = (routesArr, props) => routesArr.map((route, index)
     key={ `SubRouteCategory_${index}` }
     className={ `search-category category-${route.routeCategory}${window.location.pathname === route.routePath ? ' active' : ''}` }
     onClick={ () => route.clickHandler(props) }>
-    <h4>
+    <h4 className={route.accordion ? 'accordion' : null}>
       {[
-        route.routeName,
         <i
           key={ `SearchSubRouteGlyphicon_${route.glyphClass}` }
-          className={ `glyphicon glyphicon-${route.glyphClass}` } />
+          className={ `glyphicon glyphicon-${route.glyphClass}` } />,
+        route.routeName
       ]}
     </h4>
   </li>
@@ -72,10 +75,10 @@ const SearchSidebar = (props) => (
         <li className="search-category filter-range">
           <h4>
             {[
-              'Filter By Range',
               <i
                 key="SearchSubRouteGlyphicon_filter"
-                className="glyphicon glyphicon-filter" />
+                className="glyphicon glyphicon-filter" />,
+              'Filter By Range'
             ]}
           </h4>
           <RangeSlider />
