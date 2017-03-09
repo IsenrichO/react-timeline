@@ -10,7 +10,8 @@ import {
   deleteBatchEvents_Success,
   fetchAllEvents_Success,
   fetchStarredEvents_Success,
-  fetchRecentlyModifiedEvents_Sucess
+  fetchRecentlyModifiedEvents_Sucess,
+  fetchCloudinaryImages
 } from './index';
 
 
@@ -67,6 +68,18 @@ export const fetchStarredEvents = () => (dispatch) =>
 export const fetchRecentlyModifiedEvents = () => (dispatch) =>
   crudAsync2(Axios.get, RecentlyModifiedEvents, dispatch, fetchRecentlyModifiedEvents_Sucess);
   // headers: { 'X-Limit-Size': 3 }
+
+// 
+export const fetchCloudinaryImageData = (list = 'Unsigned') => {
+  return (dispatch) => {
+    return Axios
+      .get(`http://res.cloudinary.com/http-isenrich-io/image/list/${list}.json`)
+      .then(resp => {
+        dispatch(fetchCloudinaryImages(resp.data));
+      })
+      .catch(err => { console.log('ERROR ERROR:', err); });
+  }
+}
 
 // 
 export const addSingleEvent = (evtData) => (dispatch) =>
