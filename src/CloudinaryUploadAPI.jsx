@@ -1,14 +1,38 @@
 'use strict';
-const Cloudinary = require('cloudinary');
+import React from 'react';
 
 
-Cloudinary.config({ 
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET
-});
+// const Cloudinary = require('cloudinary');
 
+// Cloudinary.config({ 
+//   cloud_name: process.env.CLOUD_NAME,
+//   api_key: process.env.API_KEY,
+//   api_secret: process.env.API_SECRET
+// });
 
+const activateUploadModal = () => {
+  console.log(process.env);
+  cloudinary.openUploadWidget({
+    cloud_name: process.env.CLOUD_NAME,
+    upload_preset: process.env.UPLOAD_PRESET
+  }, 
+    function(error, result) {
+      console.log(error, result);
+    }
+  );
+};
+
+const CloudinaryUploader = () => (
+  <button
+    type="button"
+    name="cloudinary-upload-btn"
+    style={{ position: 'absolute', right: '3rem', top: '2rem' }}
+    onClick={ activateUploadModal }>
+    Add Image
+  </button>
+);
+
+export default CloudinaryUploader;
 
 
 // function ajaxSuccess() {
