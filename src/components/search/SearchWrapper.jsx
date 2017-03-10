@@ -4,14 +4,15 @@ import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import SearchSidebar from './SearchSidebar';
-import { updateSingleEvent } from '../../actions/asyncActions';
+import { updateSingleEvent, fetchCloudinaryImageData } from '../../actions/asyncActions';
 import Utils from '../../utilities/index';
 
 
 @connect(
-  ({ seedDataAggregator, searchEvents }) => ({ seedDataAggregator, searchEvents }),
+  ({ seedDataAggregator, searchEvents, cloudinaryImageStore }) => ({ seedDataAggregator, searchEvents, cloudinaryImageStore }),
   (dispatch) => bindActionCreators({
     updateSingleEvent,
+    fetchCloudinaryImageData,
     push
   }, dispatch)
 )
@@ -25,6 +26,10 @@ export default class SearchWrapper extends Component {
     return this.props.searchEvents;
   }
 
+  componentDidMount() {
+    this.props.fetchCloudinaryImageData('Unsigned');
+  }
+
   render() {
     return (
       <div>
@@ -36,7 +41,8 @@ export default class SearchWrapper extends Component {
               eventsStore: this.props.seedDataAggregator,
               searchEvents: this.delegateAsyncCallback(this.props.location.pathname),
               updateSingleEvent: ::this.props.updateSingleEvent,
-              addEventToFavorites: (evt) => Utils.addEventToFavorites(this.props.updateSingleEvent, evt)
+              addEventToFavorites: (evt) => Utils.addEventToFavorites(this.props.updateSingleEvent, evt),
+              imageData: this.props.cloudinaryImageStore
             })
           }
         </main>
