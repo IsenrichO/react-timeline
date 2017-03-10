@@ -60,6 +60,12 @@ export default class Timeline extends Component {
     this.props.fetchCloudinaryImageData('Unsigned');
   }
 
+  cacheInLocalStorage(data) {
+    for (let key in data) {
+      window.localStorage.set('uuid', JSON.stringify(data[key]));
+    }
+  }
+
   toggleModal() {
     this.props.toggleEventModal();
     !this.props.eventEditingModalState
@@ -101,7 +107,7 @@ export default class Timeline extends Component {
         getStarGlyphClass={ Utils.getStarGlyphClass(this.props.seedDataAggregator, evt.uuid) }
         hasMultipleTags={ Utils.hasMultipleTags(this.props.seedDataAggregator, evt.uuid) }
         inverted={ index % 2 ? true : false }
-        images={ this.props.cloudinaryImageStore[index] } />
+        imageData={ this.props.cloudinaryImageStore[index] } />
     );
   }
 
