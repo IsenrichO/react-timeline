@@ -19,13 +19,14 @@ const renderItemActionControl = (bool, evtUuid, func) => bool
   );
 
 // 
-const renderStarredEvents = (evts, eventsStore, updateSingleEvent) => evts.map((evt, index) => (
+const renderStarredEvents = (evts, eventsStore, updateSingleEvent, imageData) => evts.map((evt, index) => (
   <SingleEvent
     evt={ evt }
     key={ `SearchEventCard_${index}` }
     addEventToFavorites={ () => addEventToFavorites(updateSingleEvent, evt) }
     getStarGlyphClass={ getStarGlyphClass(eventsStore, evt.uuid) }
-    hasMultipleTags={ hasMultipleTags(eventsStore, evt.uuid) } />
+    hasMultipleTags={ hasMultipleTags(eventsStore, evt.uuid) }
+    imageData={ imageData[index] } />
 ));
 
 
