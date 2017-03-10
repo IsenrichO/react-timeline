@@ -35,7 +35,7 @@ const TimelineEvent = (props) => {
       uuid
     },
     evtAlign, logModalData, toggleModal, deleteEvt, batchSelectionState, addSelectionToBatch, isInBatch, addEventToFavorites, getStarGlyphClass,
-    hasMultipleTags, inverted, confirmDeleteModal, confirmDeletionEvt, images
+    hasMultipleTags, inverted, confirmDeleteModal, confirmDeletionEvt, imageData
   } = props;
 
   return (
@@ -57,7 +57,7 @@ const TimelineEvent = (props) => {
           batchSelectionState={ batchSelectionState }
           addSelectionToBatch={ addSelectionToBatch }
           inverted={ inverted }
-          images={ images } />
+          imageData={ imageData } />
         <TLEventBody
           evtDescription={ evtDescription }
           evtLocation={ evtLocation }

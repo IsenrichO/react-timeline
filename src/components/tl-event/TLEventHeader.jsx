@@ -4,10 +4,10 @@ import Utils from '../../utilities/index';
 
 
 const urlBase = 'http://res.cloudinary.com/http-isenrich-io/image/upload/';
-const TLEventHeader = ({ evtName, evtUuid, batchSelectionState, addSelectionToBatch, inverted, images }) => (
+const TLEventHeader = ({ evtName, evtUuid, batchSelectionState, addSelectionToBatch, inverted, imageData }) => (
   <div
     className={ `panel-header${inverted ? ' inverted' : ''}` }
-    style={{ backgroundImage: `url(${urlBase}${images.public_id})` }}>
+    style={{ backgroundImage: `url(${urlBase}${imageData.public_id})` }}>
     { Utils.renderItemActionControl(batchSelectionState, evtUuid, addSelectionToBatch) }
     <h3>{ evtName }</h3>
   </div>
