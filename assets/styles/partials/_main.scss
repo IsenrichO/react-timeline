@@ -174,9 +174,11 @@
   }
   &-header {
     @include flex(flex, row nowrap, space-around, center);
+    @include cbTransition(0.75s ease-out, background-size);
     min-height: 7.142857142857143rem;   // => (100 / 14)px
-    background: rgba(108, 108, 108, 0.63) no-repeat top center / cover;
+    background: rgba(108, 108, 108, 0.63) no-repeat center 30% / 100%;
     background-blend-mode: color;
+    .evt-card:hover & { background-size: 150%; }
     h3,
     .collapse-up {
       color: $theme-content-lt;
