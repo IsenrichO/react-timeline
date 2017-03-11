@@ -178,7 +178,7 @@
     min-height: 7.142857142857143rem;   // => (100 / 14)px
     background: rgba(108, 108, 108, 0.63) no-repeat center 30% / 100%;
     background-blend-mode: color;
-    .evt-card:hover & { background-size: 150%; }
+    &:hover { background-size: 150%; }
     h3,
     .collapse-up {
       color: $theme-content-lt;
