@@ -38,6 +38,7 @@ const hasMultipleTags = (srcData, uuid) => {
 
 // Controller for animation/behavior of Google Static Maps image wrapper:
 const toggleAccordionSection = (evt) => {
+  evt.persist();
   const $target = $(evt.currentTarget),
         [$mapWrapper, $toggleArrow] = [$('.static-map-wrapper', $target), $('.toggle-glyph', $target)];
 
