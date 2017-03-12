@@ -29,7 +29,10 @@ const EventSchema = new Schema({
   type: String,
   description: String,
   location: String,
-  photos: [EventPhotoSchema],
+  photos: [{
+    type: Schema.Types.ObjectId,
+    ref: 'EventPhoto'
+  }],
   tags: [EventTagSchema],
   links: [EventLinkSchema],
   starred: Boolean,
