@@ -90,25 +90,32 @@ export default class Timeline extends Component {
   }
 
   renderOrderedEvents(events) {
-    return events.map((evt, index) =>
-      <TimelineEvent
-        evt={{ ...evt }}
-        key={ `Evt${evt.name}${index}` }
-        evtAlign={ new Array('', '-invert')[index % 2] }
-        logModalData={ (data) => this.props.logEventModalData(data) }
-        toggleModal={ ::this.toggleModal }
-        deleteEvt={ () => this.props.deleteSingleEvt(evt) }
-        confirmDeleteModal={ () => this.setState({ confirmModal: true }) }
-        confirmDeletionEvt={ ::this.confirmDeletionEvt }
-        batchSelectionState={ this.props.batchSelectionState }
-        addSelectionToBatch={ (evtUuid) => this.props.addEventToBatchSelection(evtUuid) }
-        isInBatch={ this.props.batchSelectionItems.includes(evt.uuid) }
-        addEventToFavorites={ () => Utils.addEventToFavorites(this.props.updateSingleEvent, evt) }
-        getStarGlyphClass={ Utils.getStarGlyphClass(this.props.seedDataAggregator, evt.uuid) }
-        hasMultipleTags={ Utils.hasMultipleTags(this.props.seedDataAggregator, evt.uuid) }
-        inverted={ index % 2 ? true : false }
-        imageData={ this.props.cloudinaryImageStore[index] } />
-    );
+    let imageStore = this.props.cloudinaryImageStore;
+    return events.map((evt, index) => {
+      let attrs;
+      if (index < imageStore.length) {
+        attrs = { imageData: imageStore[index] };
+      }
+      return (
+        <TimelineEvent
+          evt={{ ...evt }}
+          key={ `Evt${evt.name}${index}` }
+          evtAlign={ new Array('', '-invert')[index % 2] }
+          logModalData={ (data) => this.props.logEventModalData(data) }
+          toggleModal={ ::this.toggleModal }
+          deleteEvt={ () => this.props.deleteSingleEvt(evt) }
+          confirmDeleteModal={ () => this.setState({ confirmModal: true }) }
+          confirmDeletionEvt={ ::this.confirmDeletionEvt }
+          batchSelectionState={ this.props.batchSelectionState }
+          addSelectionToBatch={ (evtUuid) => this.props.addEventToBatchSelection(evtUuid) }
+          isInBatch={ this.props.batchSelectionItems.includes(evt.uuid) }
+          addEventToFavorites={ () => Utils.addEventToFavorites(this.props.updateSingleEvent, evt) }
+          getStarGlyphClass={ Utils.getStarGlyphClass(this.props.seedDataAggregator, evt.uuid) }
+          hasMultipleTags={ Utils.hasMultipleTags(this.props.seedDataAggregator, evt.uuid) }
+          inverted={ index % 2 ? true : false }
+          { ...attrs } />
+      );
+    });
   }
 
   render() {
