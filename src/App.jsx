@@ -8,7 +8,7 @@ import RouterConfig from './routing/RouterConfig';
 // }
 
 // Inject router configuration into HTML insertion <div>:
-// ReactDOM.render(
-//   RouterConfig,
-//   document.getElementById('root')
-// );
+ReactDOM.render(
+  RouterConfig,
+  document.getElementById('root')
+);

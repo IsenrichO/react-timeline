@@ -6,7 +6,7 @@ import { History, StoreWithMiddleware as Store } from '../store/configureStore';
 import Routes from './Routes';
 
 
-const RouterConfig = () => (
+const RouterConfig = (
   <Provider store={ Store }>
     <Router history={ History }>{ Routes }</Router>
   </Provider>
