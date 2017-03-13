@@ -82,6 +82,22 @@ export const fetchCloudinaryImageData = (list = 'Unsigned') => {
 }
 
 // 
+export const uploadToCloudinary = (evt, file, filePath) => {
+  let photoData = { evt, title: file.name, url: filePath };
+  return (dispatch) => {
+    return Axios
+      .post('/api/photos', photoData)
+      .then(resp => {
+        console.log('\n\nRESPONSE ASYNC ACTION:', resp);
+      });
+  };
+};
+
+
+
+
+
+// 
 export const addSingleEvent = (evtData) => (dispatch) =>
   crudAsync2(Axios.post, Events, dispatch, addSingleEvent_Success, evtData);
 
