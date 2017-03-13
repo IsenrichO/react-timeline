@@ -19,6 +19,13 @@ describe('Creating records', () => {
     });
   });
 
+  // Confirms that the default mpromise library which comes out of the box with
+  //  Mongoose has been overridden by ES6-style native Promises:
+  it('should use the native ES6 Promise API', (done) => {
+    const query = Event.findOne({ name: 'Mocha Create Test Event' });
+    assert.equal(query.exec().constructor, global.Promise);
+  });
+
   // Tests that a new instance of the `Event` class is successfully saved to
   //  the database:
   it('should save a new event to the database', (done) => {
