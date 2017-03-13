@@ -75,11 +75,13 @@ const eventUuidsRoute = require('./routes/eventUuids');
 const searchEventsRoute = require('./routes/eventSearch');
 const searchEventsAllRoute = require('./routes/eventSearchAll');
 const searchStarredEventsRoute = require('./routes/eventSearchStarred');
+const photosRoute = require('./routes/photos');
 
 App.use('/api/events', eventsRoute);
 App.use('/api/events/edit', eventUuidsRoute);
 App.use('/api/search', searchEventsAllRoute);
 App.use('/api/search/recent', searchEventsRoute);
 App.use('/api/search/starred', searchStarredEventsRoute);
+App.use('/api/photos', photosRoute);
 
 module.exports = App;
