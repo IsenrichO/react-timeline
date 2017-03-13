@@ -11,14 +11,13 @@ const EventPhotoSchema = new Schema({
       message: 'Please provide a title for this image.'
     }
   },
-  url: String,
+  url: {
+    type: String,
+    required: [true, 'This photo requires a URL.']
+  },
   dateTaken: Date,
   locationTaken: String,
-  isCoverPhoto: Boolean,
-  photo: {
-    type: Schema.Types.ObjectId,
-    ref: 'Event'
-  }
+  isCoverPhoto: Boolean
 }, {
   toObject: { virtuals: true },
   toJSON: { virtuals: true },
