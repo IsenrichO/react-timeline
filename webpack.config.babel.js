@@ -12,13 +12,15 @@ import PostCSS from './postcss.config';
 const isProdEnv = (process.env.NODE_ENV === 'production');
   console.log(`Node Environment:\t${process.env.NODE_ENV}`);
 
+console.log('\n\n\nAPI_KEY:', process.env.API_KEY);
+
 const VENDOR_LIBS = [
   'body-parser',
   'bson',
   'cloudinary',
-  'cloudinary_react',
+  'cloudinary-react',
   'cloudinary_js',
-  'dotenv-webpack',
+  // 'dotenv-webpack',
   'jquery',
   'lodash',
   'react',
@@ -29,9 +31,9 @@ const VENDOR_LIBS = [
   'react-router-redux',
   'redux',
   'redux-thunk',
-  'request',
-  'uuid',
-  'webpack-merge'
+  // 'request',
+  'uuid'
+  // 'webpack-merge'
 ];
 
 // 'react-hot-loader/patch', 'webpack-dev-server/client?http://localhost:3000', 'webpack/hot/only-dev-server'
@@ -48,7 +50,7 @@ const BASE_CONFIG = {
   entry: {
     patch: 'react-hot-loader/patch',
     hmr: 'webpack/hot/only-dev-server',
-    bundle: Path.resolve(__dirname, 'src/HMR'),
+    bundle: Path.resolve(__dirname, 'src/App'),
     vendor: VENDOR_LIBS
   },
   output: {
