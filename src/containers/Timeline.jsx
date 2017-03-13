@@ -10,10 +10,11 @@ import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
 import ConfirmDeletionModal from '../components/ConfirmDeletionModal';
 import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
-import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchCloudinaryImageData } from '../actions/asyncActions';
+import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchCloudinaryImageData, uploadToCloudinary } from '../actions/asyncActions';
 import Utils from '../utilities/index';
 
 import CloudinaryUploader from '../CloudinaryUploadAPI';
+import FileUploadAPI from '../components/FileUploadAPI';
 
 
 @connect(
@@ -39,7 +40,8 @@ import CloudinaryUploader from '../CloudinaryUploadAPI';
     deleteBatchEvents,
     updateSingleEvent,
     clearBatchSelection,
-    fetchCloudinaryImageData
+    fetchCloudinaryImageData,
+    uploadToCloudinary
   }, dispatch)
 )
 export default class Timeline extends Component {
@@ -118,10 +120,20 @@ export default class Timeline extends Component {
     });
   }
 
+  cliccc(evt) {
+    evt.preventDefault();
+    console.log('\n\nFILE FOR UPLOAD:', this.upldBtn.value, this.upldBtn.files);
+    this.props.uploadToCloudinary(this.upldBtn.files[0], this.upldBtn.value);
+  }
+
   render() {
     return (
       <div>
         <CloudinaryUploader />
+
+        <div
+          id="cloudinary-uploader"
+          style={{ position: 'absolute', right: '2rem', top: '5rem', zIndex: 10 }} />
 
         <ul className="tl">
           { ::this.renderOrderedEvents(Utils.orderTimelineEvents(this.props.seedData)) }
@@ -131,11 +143,13 @@ export default class Timeline extends Component {
           modalData={ this.props.eventEditingModalData }
           modalStatus={ this.props.eventEditingModalState }
           toggleModal={ ::this.toggleModal }
-          updEvt={ (evtData) => this.props.updateSingleEvent(evtData) } />
+          updEvt={ (evtData) => this.props.updateSingleEvent(evtData) }
+          uploadToCloudinary={ this.props.uploadToCloudinary } />
         <NewEventModal
           modalStatus={ this.state.newModal }
           toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
-          addSingleEvent={ (evtData) => this.props.addSingleEvent(evtData) } />
+          addSingleEvent={ (evtData) => this.props.addSingleEvent(evtData) }
+          uploadToCloudinary={ this.props.uploadToCloudinary } />
         <BatchActionButtons
           batchSelectionState={ this.props.batchSelectionState }
           batchSelectionItems={ this.props.batchSelectionItems }
@@ -160,3 +174,15 @@ export default class Timeline extends Component {
 //   <input className="cloudinary-fileupload" type="file" name="file" data-cloudinary-field="image_upload" multiple />
 //   <button name="btn">TEST</button>
 // </div>
+
+
+// <input
+//   id="upld-btn"
+//   type="file"
+//   name="upld-btn"
+//   ref={ (upldBtn) => { this.upldBtn = upldBtn; }} />
+// <input
+//   id="subm-btn"
+//   type="submit"
+//   name="subm-btn"
+//   onClick={ ::this.cliccc } />

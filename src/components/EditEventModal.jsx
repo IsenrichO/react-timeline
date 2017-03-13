@@ -60,7 +60,6 @@ export default class EditEventModal extends Component {
       location: evtLocation,
       description: evtDescription
     } = this.props.eventEditingModalData;
-
     return (
       <Modal
         contentLabel={ `EditEventModal_` }
@@ -147,7 +146,10 @@ export default class EditEventModal extends Component {
               </div>
             </fieldset>
 
-            <FileUploadAPI />
+            <FileUploadAPI
+              evt={ this.props.modalData }
+              submittable={ true }
+              uploadToCloudinary={ this.props.uploadToCloudinary } />
 
             <fieldset>
               <button

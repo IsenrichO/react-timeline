@@ -12,6 +12,9 @@ export default class FileUploadAPI extends Component {
     this.readInThumbnailWithBckgImage = this.readInThumbnailWithBckgImage.bind(this);
     this.handleFileSelect = this.handleFileSelect.bind(this);
     this.handleDragOver = this.handleDragOver.bind(this);
+    this.state = {
+      uploadPhotos: {}
+    };
   }
 
   // Loops through selection of files and asynchronously executes callback on each:
@@ -48,9 +51,14 @@ export default class FileUploadAPI extends Component {
 
   // Appends a `.thumb` <div> with `background-image` property-value pair to output target:
   readInThumbnailWithBckgImage(file, index, output) {
+    const self = this;
     (function(file) {
       let Reader = new FileReader();
       Reader.onload = (evt) => {
+        console.log('FILE READER:', evt.target.result);
+        const uploadPhotos = Object.assign({}, self.state.uploadPhotos, { [file.name]: evt.target.result });
+        self.setState({ uploadPhotos });
+
         let $newThumb = $('<div />').addClass('thumb'),
             $thumbWrapper = $('<div />').addClass('thumb-wrapper'),
             $removeThumbGlyph = $('<i class="glyphicon glyphicon-remove-circle" />');
@@ -95,8 +103,28 @@ export default class FileUploadAPI extends Component {
     evt.dataTransfer.dropEffect = 'copy';
   }
 
+  // 
+  cliccc(evt) {
+    evt.preventDefault();
+    console.log('\n\nFILE FOR UPLOAD:', this.upldBtn.value, this.upldBtn.files);
+    console.log('\n\n\nSTATE:', this.state, evt.target.value);
+    this.props.uploadToCloudinary(this.props.evt, this.upldBtn.files[0], this.state.uploadPhotos[this.upldBtn.files[0].name]);
+  }
+
+  // 
+  submitButton() {
+    return (
+      <input
+        type="submit"
+        name="submit-btn"
+        // ref={ (upldBtn) => { this.upldBtn = upldBtn; }}
+        onClick={ ::this.cliccc } />
+    );
+  }
+
   render() {
-    const ImgLoader = this.readInThumbnailWithBckgImage;
+    const ImgLoader = this.readInThumbnailWithBckgImage,
+          IncludeSubmit = (this.props.submittable ? this.submitButton() : null);
     return (
       <fieldset className="dz-wrapper">
         <div
@@ -113,6 +141,7 @@ export default class FileUploadAPI extends Component {
               className="file-upload-btn"
               type="file"
               name="files[]"
+              ref={ (upldBtn) => { this.upldBtn = upldBtn; }}
               accept="image/*"
               onChange={ this.loadSelectedImages }
               multiple />
@@ -121,17 +150,18 @@ export default class FileUploadAPI extends Component {
                 <label
                   key={ `FileUploadSVG_Glyph` }
                   htmlFor="file-upload-btn">
-                  <strong>Choose files</strong>
+                  <strong>Pick your files</strong>
                 </label>,
                 ' or drop them here'
               ]}
             </div>
           </div>
+          <output
+            htmlFor="file-upload-btn"
+            ref={ (fileContainer) => { this.fileContainer = fileContainer; }}>
+          </output>
+          { IncludeSubmit }
         </div>
-        <output
-          htmlFor="file-upload-btn"
-          ref={ (fileContainer) => { this.fileContainer = fileContainer; }}>
-        </output>
       </fieldset>
     );
   }
