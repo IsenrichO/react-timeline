@@ -7,7 +7,6 @@ export default function cloudinaryImageStore(state = [], action = null) {
 
     case FETCH_CLOUDINARY_IMAGES:
       console.log(`Action <${action.type}> executed with payload`, action.payload);
-      console.log('PAYLOAD:\n', action.payload);
       return action.payload.resources;
 
     default:
