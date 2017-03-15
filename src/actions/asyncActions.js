@@ -29,7 +29,9 @@ const crudAsync2 = (operation, endpoint = RoutePaths.Events, dispatch, actionCre
   const request = operation.bind(null, endpoint, reqData, Object.assign({}, config, reqData, ...configOpts));
   return request()
     .then(resp => {
-      dispatch(actionCreator(resp.data));
+      actionCreator && !!actionCreator
+        ? dispatch(actionCreator(resp.data))
+        : null;
     })
     .catch(err => {
       console.error.call(console, `\nError encountered while making request to the '${endpoint}' endpoint:\n>\t${err}`);
@@ -54,7 +56,7 @@ export const fetchSeedData = () => {
 };
 
 
-const { Events, getEditEvent, AllEvents, StarredEvents, RecentlyModifiedEvents } = RoutePaths;
+const { Events, getEditEvent, AllEvents, StarredEvents, RecentlyModifiedEvents, Photos } = RoutePaths;
 
 // 
 export const fetchAllEvents = () => (dispatch) =>
@@ -82,20 +84,12 @@ export const fetchCloudinaryImageData = (list = 'Unsigned') => {
 }
 
 // 
-export const uploadToCloudinary = (evt, file, filePath) => {
-  let photoData = { evt, title: file.name, url: filePath };
-  return (dispatch) => {
-    return Axios
-      .post('/api/photos', photoData)
-      .then(resp => {
-        console.log('\n\nRESPONSE ASYNC ACTION:', resp);
-      });
-  };
-};
+export const uploadToCloudinary = (evt, file, filePath) => (dispatch) =>
+  crudAsync2(Axios.post, Photos, dispatch, null, { evt, title: file.name, url: filePath });
 
-
-
-
+// 
+export const fetchFromCloudinary = () => (dispatch) =>
+  crudAsync2(Axios.get, Photos, dispatch, null);
 
 // 
 export const addSingleEvent = (evtData) => (dispatch) =>
