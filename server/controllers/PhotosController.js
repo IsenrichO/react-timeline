@@ -11,6 +11,7 @@ const Photo = require('../../db/models/EventPhoto');
 
 
 const uploadOptions = (evt) => ({
+  public_id: (evtName => encodeURIComponent(evtName))(evt.name),
   folder: ((uuid) => `React-Timeline/${uuid}/`)(evt.uuid),
   use_filename: true,
   unique_filename: true,
@@ -19,7 +20,9 @@ const uploadOptions = (evt) => ({
   access_mode: 'public',
   discard_original_filename: false,
   overwrite: true,
+  async: true,
   return_delete_token: true,
+  allowed_formats: ['mp4', 'ogv', 'jpg', 'png', 'pdf'],
   tags: ((tags) => ['React-Timeline', 'Cloudinary Upload', 'Event Photo', 'Unsigned'].concat(tags))(evt.type)
 });
 
