@@ -14,12 +14,12 @@ App.get('*', (req, res) => {
   res.redirect('/');
 });
 
-App.listen(process.env.PORT || 3000, () => {
-  console.log('PROCESS: \n\n\n', process.env);
+const Server = App.listen(process.env.PORT || 3000, () => {
+  const serverPort = Server.address().port;
   console.log(`
 ============================================================
-  Server is up and running on LocalHost at Port ${PORT}:
-            < http://localhost:${PORT}/ >
+Server is up and running on LocalHost at Port ${serverPort}:
+            < http://localhost:${serverPort}/ >
 ============================================================`
   );
 });
