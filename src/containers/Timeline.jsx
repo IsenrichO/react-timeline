@@ -59,7 +59,7 @@ export default class Timeline extends Component {
   };
   
   componentDidMount() {
-    this.props.fetchCloudinaryImageData('Unsigned');
+    // this.props.fetchCloudinaryImageData('Unsigned');
   }
 
   cacheInLocalStorage(data) {
@@ -130,11 +130,6 @@ export default class Timeline extends Component {
     return (
       <div>
         <CloudinaryUploader />
-
-        <div
-          id="cloudinary-uploader"
-          style={{ position: 'absolute', right: '2rem', top: '5rem', zIndex: 10 }} />
-
         <ul className="tl">
           { ::this.renderOrderedEvents(Utils.orderTimelineEvents(this.props.seedData)) }
         </ul>
@@ -168,21 +163,3 @@ export default class Timeline extends Component {
     );
   }
 };
-
-
-// <div id="ccc">
-//   <input className="cloudinary-fileupload" type="file" name="file" data-cloudinary-field="image_upload" multiple />
-//   <button name="btn">TEST</button>
-// </div>
-
-
-// <input
-//   id="upld-btn"
-//   type="file"
-//   name="upld-btn"
-//   ref={ (upldBtn) => { this.upldBtn = upldBtn; }} />
-// <input
-//   id="subm-btn"
-//   type="submit"
-//   name="subm-btn"
-//   onClick={ ::this.cliccc } />
