@@ -11,6 +11,10 @@ const EventPhotoSchema = new Schema({
       message: 'Please provide a title for this image.'
     }
   },
+  event: {
+    type: Schema.Types.ObjectId,
+    ref: 'Event'
+  },
   url: {
     type: String,
     required: [true, 'This photo requires a URL.']
