@@ -9,6 +9,7 @@ const Mongoose = require('mongoose'),
       // $ = require('jquery'),
 
 const Event = require('../db/models/Event');
+const Photo = require('../db/models/EventPhoto');
 const formatDate = require('./utilities');
 
 // const eventsRoute = require('./routes/events');
@@ -42,9 +43,31 @@ Mongoose.set('debug', true);
 db
   .once('open', () => {
     Mongoose.connection.collections.EventData.drop();
-    seedData.forEach((evt) => {
-      [evt.formattedDate, evt.uuid, evt.photos, evt.dateModified, evt.starred] = [formatDate(evt.date), UUID(), new Array(), Date.now(), false];
-      new Event(evt).save();
+    Mongoose.connection.collections.EventPhotos.drop();
+    
+    
+    seedData.forEach(evt => {
+      [evt.formattedDate, evt.uuid, evt.photos, evt.dateModified, evt.starred] = [formatDate(evt.date), evt.uuid || UUID(), new Array(), Date.now(), false];
+      
+      let newEvt = new Event(evt);
+      let newPhoto = new Photo({
+        title: 'Medium site hero image',
+        url: 'https://cdn-images-1.medium.com/max/2000/1*J-jjDviwGUfzka1HX5LG9A.jpeg'
+      });
+
+      if (/^TEST/.test(evt.uuid)) {
+        newEvt.photos.push(newPhoto);
+        newPhoto.event = newEvt;
+      }
+      
+      // Event
+      //   .findOne({ name: evt.name })
+      //   .populate({
+      //     path: 'photos',
+      //     model: 'EventPhoto'
+      //   });
+      
+      Promise.all([newEvt.save(), newPhoto.save()]);
     });
   })
   .on('error', (err) => {
