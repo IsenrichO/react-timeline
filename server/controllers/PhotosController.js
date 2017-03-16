@@ -1,17 +1,16 @@
 'use strict';
-
-const cloudinary = require('cloudinary').v2;
+const Cloudinary = require('cloudinary').v2;
 // const schema = require('../config/schema');
 // const crypto = require('crypto');
 // const Photo = schema.models.Photo;
 // const multipart = require('connect-multiparty');
 // const multipartMiddleware = multipart();
 const Photo = require('../../db/models/EventPhoto');
-
+const Axios = require('axios');
 
 
 const uploadOptions = (evt) => ({
-  public_id: (evtName => encodeURIComponent(evtName))(evt.name),
+  public_id: (evt => evt.name)(evt),
   folder: ((uuid) => `React-Timeline/${uuid}/`)(evt.uuid),
   use_filename: true,
   unique_filename: true,
@@ -22,7 +21,7 @@ const uploadOptions = (evt) => ({
   overwrite: true,
   async: true,
   return_delete_token: true,
-  allowed_formats: ['mp4', 'ogv', 'jpg', 'png', 'pdf'],
+  allowed_formats: ['bmp', 'gif', 'jpg', 'mp4', 'ogv', 'pdf', 'png', 'svg', 'tiff', 'raw'],
   tags: ((tags) => ['React-Timeline', 'Cloudinary Upload', 'Event Photo', 'Unsigned'].concat(tags))(evt.type)
 });
 
@@ -42,41 +41,83 @@ const addNewPhoto = (req, res, next) => {
     });
 };
 
-// 
-function create_through_server(req, res, next) {
-  // In through-the-server mode, the image is first uploaded to the server
-  // and from there to Cloudinary servers.
-  // The upload metadata (e.g. image size) is then added to the photo  model (photo.image)
-  // and then saved to the database.
-
-  cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
-  });
-
-  // file was not uploaded redirecting to upload 
-    // if (req.files.image.ws.bytesWritten == 0) {
-    //   res.redirect('/photos/add');
-    //   return;
-    // }
-
+// In through-the-server mode, the image is first uploaded to the server
+//  and from there to Cloudinary servers. The upload metadata (e.g., image
+//  size) is then added to the photo  model (photo.image) and then saved
+//  to the database.
+const serverSideCloudinaryUpload = (req, res, next) => {
   console.log('\n\nREQ BODY:', req.body);
   const { evt, url, title } = req.body;
   var photo = new Photo({ title, url });
 
-  // Upload file to Cloudinary
-  cloudinary.uploader
+  Cloudinary.uploader
     .upload(url, uploadOptions(evt))
     .then(photo => res.send(photo))
     .catch(err => {
-      console.log('Error uploading photo to Cloudinary:\t', err);
+      console.log(`Error uploading photo to Cloudinary:\t${err}`);
       next();
     });
-}
+};
+
+// 
+const fetchSubfolderNames = () => {
+  const extractSubfolderName = (path) => path.replace(/^.+\/(.+)\/.+$/, '$1');
+
+  return Axios
+    .get(`${process.env.ADMIN_URL}/folders/React-Timeline`);
+    // .then(resp => {
+    //   console.log(resp.data);
+    //   res.json(resp.data.folders);
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    //   next();
+    // });
+};
+
+const fetchAll = () => {
+  /**
+   * Other Endpoints:
+   *   > /folders/React-Timeline
+   *   > /resources/image/upload
+   */
+  console.log('\n\n\nSTARTING CALL\n\n');
+  return Axios
+    .get(`${process.env.ADMIN_URL}/resources/image`)
+    // .then(resp => {
+    //   const tlImages = resp.data.resources.filter(img => /^React-Timeline\//.test(img.public_id))
+    //   // console.log(tlImages);
+    //   // res.json(tlImages);
+    //   return tlImages;
+    // });
+    // .catch(err => {
+    //   console.log('ERROR:', err);
+    //   next();
+    // });
+};
+
+// 
+const fetchCloudinaryImageData = (req, res, next) => {
+  return Axios
+    .all([fetchSubfolderNames(), fetchAll()])
+    .then(Axios.spread(function(subfolders, images) {
+      const [subfolderNames, tlImages] = [
+        subfolders.data.folders,
+        images.data.resources.filter(img => /^React-Timeline\//.test(img.public_id))
+      ];
+      res.json({ subfolderNames, tlImages });
+    }))
+    .catch(err => {
+      console.log('Error:', err);
+      next();
+    });
+};
 
 
 module.exports = {
   addNewPhoto,
-  create_through_server
+  serverSideCloudinaryUpload,
+  fetchSubfolderNames,
+  fetchAll,
+  fetchCloudinaryImageData
 };
