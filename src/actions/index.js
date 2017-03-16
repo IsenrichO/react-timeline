@@ -65,7 +65,7 @@ export const fetchRecentlyModifiedEvents_Sucess = (data) => ({
   payload: data
 });
 
-export const fetchCloudinaryImages = (payload) => ({
-  type: Types.FETCH_CLOUDINARY_IMAGES,
+export const fetchCloudinaryImages_Success = (payload) => ({
+  type: Types.FETCH_CLOUDINARY_IMAGES_SUCCESS,
   payload
 });

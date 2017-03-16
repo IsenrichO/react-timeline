@@ -11,8 +11,10 @@ import {
   fetchAllEvents_Success,
   fetchStarredEvents_Success,
   fetchRecentlyModifiedEvents_Sucess,
-  fetchCloudinaryImages
+  fetchCloudinaryImages_Success
 } from './index';
+
+import cloudinary from 'cloudinary';
 
 
 const crudOperation = new Map([
@@ -77,19 +79,22 @@ export const fetchCloudinaryImageData = (list = 'Unsigned') => {
     return Axios
       .get(`http://res.cloudinary.com/http-isenrich-io/image/list/${list}.json`)
       .then(resp => {
-        dispatch(fetchCloudinaryImages(resp.data));
+        dispatch(fetchCloudinaryImages_Success(resp.data));
       })
       .catch(err => { console.log('ERROR ERROR:', err); });
   }
-}
+};
 
 // 
 export const uploadToCloudinary = (evt, file, filePath) => (dispatch) =>
   crudAsync2(Axios.post, Photos, dispatch, null, { evt, title: file.name, url: filePath });
 
 // 
-export const fetchFromCloudinary = () => (dispatch) =>
-  crudAsync2(Axios.get, Photos, dispatch, null);
+export const fetchAllCloudinary = () => (dispatch) =>
+  crudAsync2(Axios.get, Photos, dispatch, fetchCloudinaryImages_Success);
+// 
+// export const fetchFromCloudinary = () => (dispatch) =>
+//   crudAsync2(Axios.get, Photos, dispatch, null);
 
 // 
 export const addSingleEvent = (evtData) => (dispatch) =>
