@@ -8,6 +8,7 @@ const Express = require('express'),
 
 router
   .route('/')
-  .post(PhotosController.create_through_server);
+  .get(PhotosController.fetchCloudinaryImageData)
+  .post(PhotosController.serverSideCloudinaryUpload);
 
 module.exports = router;
