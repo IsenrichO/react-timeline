@@ -1,6 +1,7 @@
 [
   {
     "name": "Moved To San Francisco",
+    "uuid": "TEST001-cd94-4187-ab6f-e201289724af",
     "eventId": "1mv2",
     "type": "Life",
     "description": "Moved to SF from Raleigh, NC to begin the Hack Reactor software engineering immersive.",
@@ -9,6 +10,7 @@
     "photos": []
   }, {
     "name": "Began Work At Robert Half",
+    "uuid": "TEST0002-c08e-4be6-9459-51cf632a2e79",
     "eventId": "2kk1",
     "type": "Professional",
     "description": "Accepted offer to work at Robert Half Technology, beginning January 2017.",
@@ -33,6 +35,7 @@
     "photos": []
   }, {
     "name": "Graduated From Hack Reactor",
+    "uuid": "TEST0003-c1b8-4835-8caa-1568f1e5531c",
     "eventId": "5kso",
     "type": "Education",
     "description": "Date of matriculation from the world's premier software engineering immersive — Hack Reactor!",
