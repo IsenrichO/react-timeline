@@ -10,11 +10,12 @@ import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
 import ConfirmDeletionModal from '../components/ConfirmDeletionModal';
 import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
-import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchCloudinaryImageData, uploadToCloudinary } from '../actions/asyncActions';
+import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchCloudinaryImageData, uploadToCloudinary, fetchAllCloudinary } from '../actions/asyncActions';
 import Utils from '../utilities/index';
 
 import CloudinaryUploader from '../CloudinaryUploadAPI';
 import FileUploadAPI from '../components/FileUploadAPI';
+import cloudinary from 'cloudinary';
 
 
 @connect(
@@ -41,7 +42,8 @@ import FileUploadAPI from '../components/FileUploadAPI';
     updateSingleEvent,
     clearBatchSelection,
     fetchCloudinaryImageData,
-    uploadToCloudinary
+    uploadToCloudinary,
+    fetchAllCloudinary
   }, dispatch)
 )
 export default class Timeline extends Component {
@@ -59,7 +61,7 @@ export default class Timeline extends Component {
   };
   
   componentDidMount() {
-    // this.props.fetchCloudinaryImageData('Unsigned');
+    this.props.fetchAllCloudinary();
   }
 
   cacheInLocalStorage(data) {
@@ -95,9 +97,10 @@ export default class Timeline extends Component {
     let imageStore = this.props.cloudinaryImageStore;
     return events.map((evt, index) => {
       let attrs;
-      if (index < imageStore.length) {
-        attrs = { imageData: imageStore[index] };
+      if (imageStore.hasOwnProperty(evt.uuid)) {
+        attrs = { imageData: imageStore[evt.uuid] };
       }
+      console.log('IMAGE STORE:', imageStore);
       return (
         <TimelineEvent
           evt={{ ...evt }}

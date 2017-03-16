@@ -27,7 +27,7 @@ export default class SearchWrapper extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchCloudinaryImageData('Unsigned');
+    // this.props.fetchCloudinaryImageData('Unsigned');
   }
 
   render() {
