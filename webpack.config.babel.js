@@ -12,8 +12,6 @@ import PostCSS from './postcss.config';
 const isProdEnv = (process.env.NODE_ENV === 'production');
   console.log(`Node Environment:\t${process.env.NODE_ENV}`);
 
-console.log('\n\n\nAPI_KEY:', process.env.API_KEY);
-
 const VENDOR_LIBS = [
   'body-parser',
   'bson',
