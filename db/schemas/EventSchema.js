@@ -3,7 +3,8 @@ const Mongoose = require('mongoose'),
       Schema = Mongoose.Schema;
 const EventPhotoSchema = require('./EventPhotoSchema'),
       EventTagSchema = require('./EventTagSchema'),
-      EventLinkSchema = require('./EventLinkSchema');
+      EventLinkSchema = require('./EventLinkSchema'),
+      PointSchema = require('./PointSchema');
 
 
 const EventSchema = new Schema({
@@ -29,6 +30,7 @@ const EventSchema = new Schema({
   type: String,
   description: String,
   location: String,
+  geometry: PointSchema,
   photos: [{
     type: Schema.Types.ObjectId,
     ref: 'EventPhoto'
