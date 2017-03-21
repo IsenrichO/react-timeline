@@ -21,12 +21,15 @@ const seedData = require('../src/constants/json/SeedData.json');
 const App = Express();
 const PathnameBase = '/api/v1/';
 
+const Multer = require('multer');
+const Upload = Multer({ dest: 'uploads/' });
+
 // Invoke Express's `static` middleware for configuring `assets`
 //  as our default static locale; defaults to serving the index.html
 //  file location therein.
 App.use(Express.static(Path.join(__dirname, '../dist')));
-App.use(BodyParser.json());
-App.use(BodyParser.urlencoded({ extended: true }));
+App.use(BodyParser.json());                           // Parses application/json
+App.use(BodyParser.urlencoded({ extended: true }));   // Parses application/x-www-form-urlencoded
 
 
 // Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
