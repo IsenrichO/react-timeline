@@ -7,6 +7,8 @@ import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.j
 import FileUploadAPI from './FileUploadAPI';
 import { updateSingleEvent } from '../actions/asyncActions';
 
+import GMap from './GMap';
+
 
 @connect(
   state => ({
@@ -72,7 +74,7 @@ export default class EditEventModal extends Component {
             onClick={ this.props.toggleModal }>
             &times;
           </i>
-          <form id="edit-event-form">
+          <form id="edit-event-form" action="/api/photos" method="post" encType="multipart/form-data">
             <fieldset>
               <div className="input-gr">
                 <span className="input-gr-addon">T</span>
@@ -115,6 +117,10 @@ export default class EditEventModal extends Component {
                   title="Include a location for this event?"
                   defaultValue={ evtLocation } />
               </div>
+
+              <GMap
+                lat={ -34.397 }
+                lng={ 150.644 } />
             </fieldset>
 
             <fieldset>
