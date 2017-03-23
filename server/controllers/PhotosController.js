@@ -7,6 +7,7 @@ const Cloudinary = require('cloudinary').v2;
 // const multipartMiddleware = multipart();
 const Photo = require('../../db/models/EventPhoto');
 const Axios = require('axios');
+const Multer = require('multer');
 
 
 const uploadOptions = (evt) => ({
@@ -47,12 +48,14 @@ const addNewPhoto = (req, res, next) => {
 //  to the database.
 const serverSideCloudinaryUpload = (req, res, next) => {
   console.log('\n\nREQ BODY:', req.body);
+  console.log(req);
+  console.log('\n\n\n\nREQ.FILES:', req.file, req.files);
   const { evt, url, title } = req.body;
   var photo = new Photo({ title, url });
 
   Cloudinary.uploader
     .upload(url, uploadOptions(evt))
-    .then(photo => res.send(photo))
+    .then(photo => res.json(photo))
     .catch(err => {
       console.log(`Error uploading photo to Cloudinary:\t${err}`);
       next();
