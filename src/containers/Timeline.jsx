@@ -133,6 +133,7 @@ export default class Timeline extends Component {
     return (
       <div>
         <CloudinaryUploader />
+
         <ul className="tl">
           { ::this.renderOrderedEvents(Utils.orderTimelineEvents(this.props.seedData)) }
         </ul>

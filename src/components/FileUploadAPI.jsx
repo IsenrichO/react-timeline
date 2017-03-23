@@ -49,6 +49,7 @@ export default class FileUploadAPI extends Component {
       Reader.onload = (evt) => {
         const uploads = Object.assign({}, self.state.uploads, { [file.name]: evt.target.result });
         self.setState({ uploads });
+        console.log('UPLOADS STATE:', self.state.uploads);
 
         let $newThumb = $('<div />').addClass('thumb').css({ backgroundImage: `url(${evt.target.result})` }),
             $thumbWrapper = $('<div />').addClass('thumb-wrapper'),
@@ -96,8 +97,13 @@ export default class FileUploadAPI extends Component {
   // 
   triggerCloudinaryUpload(evt) {
     evt.preventDefault();
-    const [sourceEvt, file] = [this.props.evt, this.fileUploadsInpt.files[0]];
-    this.props.uploadToCloudinary(sourceEvt, file, this.state.uploads[file.name]);
+    console.log('\n\n\nFILES:', this.fileUploadsInpt.files);
+    const [sourceEvt, files] = [this.props.evt, Array.from(this.fileUploadsInpt.files)];
+    // files.forEach((file, index, fileList) => 
+    // );
+    for (var i = 0; i < files.length; i++) {
+      this.props.uploadToCloudinary(sourceEvt, files[i], this.state.uploads[files[i].name]);
+    }
   }
 
   // 
@@ -146,6 +152,7 @@ export default class FileUploadAPI extends Component {
           </div>
           <output
             htmlFor="file-upload-btn"
+            name="photos"
             ref={ (fileContainer) => { this.fileContainer = fileContainer; }}>
           </output>
           { submissionInput }
