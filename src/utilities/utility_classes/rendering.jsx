@@ -3,6 +3,7 @@ import React from 'react';
 import SingleEvent from '../../components/search/SingleEvent';
 import BatchSelectCheckbox from '../../components/BatchSelectCheckbox';
 import { collapseBody } from './general';
+import { addEventToFavorites, getStarGlyphClass, hasMultipleTags } from './general';
 
 
 // 
@@ -18,10 +19,14 @@ const renderItemActionControl = (bool, evtUuid, func) => bool
   );
 
 // 
-const renderStarredEvents = (evts) => evts.map((evt, index) => (
+const renderStarredEvents = (evts, eventsStore, updateSingleEvent, imageData) => evts.map((evt, index) => (
   <SingleEvent
-    { ...evt }
-    key={ `StarredEventCard_${index}` } />
+    evt={ evt }
+    key={ `SearchEventCard_${index}` }
+    addEventToFavorites={ () => addEventToFavorites(updateSingleEvent, evt) }
+    getStarGlyphClass={ getStarGlyphClass(eventsStore, evt.uuid) }
+    hasMultipleTags={ hasMultipleTags(eventsStore, evt.uuid) }
+    imageData={ imageData[index] } />
 ));
 
 

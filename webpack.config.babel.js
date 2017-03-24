@@ -16,6 +16,9 @@ const VENDOR_LIBS = [
   'body-parser',
   'bson',
   'cloudinary',
+  'cloudinary-react',
+  'cloudinary_js',
+  // 'dotenv-webpack',
   'jquery',
   'lodash',
   'react',
@@ -26,25 +29,39 @@ const VENDOR_LIBS = [
   'react-router-redux',
   'redux',
   'redux-thunk',
-  'request',
+  // 'request',
   'uuid'
+  // 'webpack-merge'
 ];
+
+// 'react-hot-loader/patch', 'webpack-dev-server/client?http://localhost:3000', 'webpack/hot/only-dev-server'
+
+// patch: 'react-hot-loader/patch',
+// client: 'webpack-dev-server/client?http://localhost:3000',
+// hmr: 'webpack/hot/only-dev-server',
+
+// bundle: Path.resolve(__dirname, 'src/App'),
+// context: Path.resolve(__dirname, 'src'),
+
 
 const BASE_CONFIG = {
   entry: {
-    // 'webpack/hot/dev-server',
+    patch: 'react-hot-loader/patch',
+    hmr: 'webpack/hot/only-dev-server',
     bundle: Path.resolve(__dirname, 'src/App'),
     vendor: VENDOR_LIBS
   },
   output: {
     path: Path.join(__dirname, 'dist'),
-    filename: '[name].[hash].js'
-    // publicPath: '/'
+    filename: '[name].[hash].js',
+    // publicPath: '/' // Server-Relative
+    publicPath: '/'
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/i,
+        include: Path.resolve(__dirname, 'src'),
         exclude: /(node_modules|bower_components)/,
         use: 'babel'
       }, {
@@ -57,14 +74,8 @@ const BASE_CONFIG = {
         test: /\.(scss|sass)$/i,
         loaders: ExtractTextPlugin.extract({
           fallback: 'style',
-          use: ['css', 'postcss', 'sass']
+          use: ['css', 'postcss', 'sass?outputStyle=expanded']
         })
-        // [
-        //   'style',
-        //   'css',
-        //   'autoprefixer?browsers=last 3 versions',
-        //   'sass?outputStyle=expanded'
-        // ]
       }, {
         test: /\.json$/i,
         use: 'json'
@@ -120,7 +131,7 @@ const BASE_CONFIG = {
   },
   cache: true,
   watch: true,
-  devtool: `${isProdEnv ? 'inline' : 'cheap-eval'}-source-map`,
+  devtool: `${isProdEnv ? 'cheap-eval' : 'inline'}-source-map`,
   resolve: {
     extensions: ['.js', '.jsx']
   },
@@ -131,16 +142,18 @@ const BASE_CONFIG = {
 
 const DEV_SERVER = {
   plugins: [
-    new Webpack.HotModuleReplacementPlugin()
+    new Webpack.HotModuleReplacementPlugin(),
+    new Webpack.NamedModulesPlugin()
   ],
   devServer: {
-    // contentBase: __dirname,
+    contentBase: Path.resolve(__dirname, 'dist'),
     historyApiFallback: true,
     host: 'localhost',
     hot: true,
     inline: true,
     noInfo: false,
-    port: 3000
+    port: 3000,
+    publicPath: '/'
   },
   stats: {
     assets: true,

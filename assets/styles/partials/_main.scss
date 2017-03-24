@@ -173,17 +173,29 @@
     border: none;
   }
   &-header {
-    @include flex(flex, row nowrap, space-around, baseline);
-    h3 {
-      width: 95%;
-      color: $theme-red;
+    @include flex(flex, row nowrap, space-around, center);
+    @include cbTransition($transition-timing-func, background-size);
+    transition-duration: 0.45s;
+    min-height: 7.142857142857143rem;   // => (100 / 14)px
+    background: rgba(108, 108, 108, 0.63) no-repeat center 30% / 100%;
+    background-blend-mode: screen;  // color;
+    &:hover {
+      @include cbTransition(2.25s linear, background-size);
+      background-size: 150%;
     }
+    h3,
+    .collapse-up {
+      color: $theme-content-lt;
+      text-shadow: -2px -1px 5px Dimgrey;
+    }
+    h3 { width: 95%; }
     .collapse-up {
       @include cbTransition(0.25s 0.25s cubic-bezier(0, 0.25, 0.7, 0.4));
       @extend %hidden;
       position: relative;
       top: -0.5rem;
       left: -0.5rem;
+      align-self: baseline;
       font-size: 1.5rem;
       cursor: pointer;
     }

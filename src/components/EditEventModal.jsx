@@ -7,6 +7,8 @@ import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.j
 import FileUploadAPI from './FileUploadAPI';
 import { updateSingleEvent } from '../actions/asyncActions';
 
+import GMap from './GMap';
+
 
 @connect(
   state => ({
@@ -17,7 +19,6 @@ import { updateSingleEvent } from '../actions/asyncActions';
 export default class EditEventModal extends Component {
   constructor(props) {
     super(props);
-    this.constructCurrentFormattedDate = this.constructCurrentFormattedDate.bind(this);
   }
 
   static propTypes = {
@@ -61,7 +62,6 @@ export default class EditEventModal extends Component {
       location: evtLocation,
       description: evtDescription
     } = this.props.eventEditingModalData;
-
     return (
       <Modal
         contentLabel={ `EditEventModal_` }
@@ -74,7 +74,7 @@ export default class EditEventModal extends Component {
             onClick={ this.props.toggleModal }>
             &times;
           </i>
-          <form id="edit-event-form">
+          <form id="edit-event-form" action="/api/photos" method="post" encType="multipart/form-data">
             <fieldset>
               <div className="input-gr">
                 <span className="input-gr-addon">T</span>
@@ -117,6 +117,10 @@ export default class EditEventModal extends Component {
                   title="Include a location for this event?"
                   defaultValue={ evtLocation } />
               </div>
+
+              <GMap
+                lat={ -34.397 }
+                lng={ 150.644 } />
             </fieldset>
 
             <fieldset>
@@ -134,9 +138,28 @@ export default class EditEventModal extends Component {
                   defaultValue={ evtDescription } />
               </div>
             </fieldset>
-            <FileUploadAPI />
+
+            <fieldset>
+              <div className="input-gr">
+                <span className="input-gr-addon">
+                  <i className="glyphicon glyphicon-tags" />
+                </span>
+                <label htmlFor="edit-evt-tags-inpt" />
+                <div
+                  id="tags-input-box"
+                  className="form-cont"
+                  ref={ (editEvtTagsInpt) => { this.editEvtTagsInpt = editEvtTagsInpt; }} />
+              </div>
+            </fieldset>
+
+            <FileUploadAPI
+              evt={ this.props.modalData }
+              submittable={ true }
+              uploadToCloudinary={ this.props.uploadToCloudinary } />
+
             <fieldset>
               <button
+                className="form-btn"
                 type="button"
                 name="updateEvtBtn"
                 onClick={ ::this.updateSingleEvent }>

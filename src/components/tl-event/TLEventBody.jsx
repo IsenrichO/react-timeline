@@ -1,15 +1,38 @@
 'use strict';
 import React from 'react';
+// import { debounce } from 'lodash';
 import StaticGMap from '../StaticMapEventLocation';
-import { debounce, formatDate, toggleAccordionSection } from '../../utilities/index';
+import { formatDate } from '../../utilities/index';
+import { toggleAccordionSection } from '../../utilities/utility_classes/general';
 
 
-const debounceToggle = (evt) => debounce(toggleAccordionSection(evt), 2000, true),
+// Returns a function, that, as long as it continues to be invoked, will not
+//  be triggered. The function will be called after it stops being called for
+//  N milliseconds. If `immediate` is passed, trigger the function on the
+//  leading edge, instead of the trailing.
+const debounce = (func, wait, immediate) => {
+  let timeout;
+  return function() {
+    const [context, args] = [this, arguments],
+          later = () => {
+            timeout = null;
+            if (!immediate) { func.apply(context, args); }
+          },
+          callNow = (immediate && !timeout);
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) { func.apply(context, args); }
+  };
+};
+
+const debounceToggle = (evt) => debounce(toggleAccordionSection, 200, true)(evt),
       photosTagLine = (numPhotos) => `${numPhotos} Photo${numPhotos !== 1 ? 's' : ''}`;
 
-const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => (
+const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => {
+
+  return (
   <div className="panel-body">
-    <blockquote>{ evtDescription }</blockquote>
+    <blockquote className={ evtDescription.length === 0 ? 'empty-summary' : '' }>{ evtDescription }</blockquote>
     <div className="tl-date">
       <i className="glyphicon glyphicon-calendar" />
       <em>{ evtFormattedDate }</em>
@@ -30,6 +53,6 @@ const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, p
       <i className="toggle-glyph glyphicon glyphicon-menu-right" />
     </div>
   </div>
-);
+);}
 
 export default TLEventBody;

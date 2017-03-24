@@ -1,66 +1,42 @@
 'use strict';
 import Axios from 'axios';
-import UUID from 'uuid/v4';
 import * as RoutePaths from '../routing/RoutePaths';
+import { dispatchActionCreator, catchAsyncError, config, generateUuid } from './asyncConfig';
 import {
-  loadSeedData,
+  fetchSeedData_Success,
   addSingleEvent_Success,
   deleteSingleEvent_Success,
   updateSingleEvent_Success,
   deleteBatchEvents_Success,
+  fetchAllEvents_Success,
   fetchStarredEvents_Success,
-  fetchRecentlyModifiedEvents_Sucess
+  fetchRecentlyModifiedEvents_Sucess,
+  fetchCloudinaryImages_Success
 } from './index';
 
+import cloudinary from 'cloudinary';
 
-// application/json;charset=UTF-8
-const dispatchActionCreator = (dispatch, actionCreator) => (resp) => dispatch(actionCreator(resp.data));
-const catchAsyncError = (msg) => (err) => { throw new Error(`${msg}:\t${err}`); };
-const config = {
-  responseType: 'json',
-  timeout: 25000,
-  maxRedirects: 5,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  },
-  maxContentLength: Number.MAX_SAFE_INTEGER,
-  validateStatus: (statusCode) => statusCode >= 200 && statusCode < 300,
-  onUploadProgress: (progressEvt) => {
-    let uploadProgress = Math.round((progressEvt.loaded * 100) / progressEvt.total);
-    console.log(`Upload Completion Progress:\t${uploadProgress}`);
-    // document.getElementById('output').innerHTML = percentCompleted;
-  },
-  onDownloadProgress: (progressEvt) => {
-    let downloadProgress = Math.round((progressEvt.loaded * 100) / progressEvt.total);
-    console.log(`Downloaded Completion Progress:\t${downloadProgress}`);
-  }
-};
-const generateUuid = {
-  transformRequest: [(data) => {
-    data.uuid = UUID();
-    return data;
-  }]
-}
 
-const crudAsync = (operation, dispatch, actionCreator, opts = config) => operation
-  .then(resp => {
-    dispatch(actionCreator(resp.data));
-  })
-  .catch(err => {
-    throw new Error(`Error encountered while making request:\t${err}`);
-  });
+const crudOperation = new Map([
+  ['GET', Axios.get],
+  ['POST', Axios.post],
+  ['PUT', Axios.put],
+  ['DELETE', Axios.delete],
+  ['ALL', Axios.all],
+  ['SPREAD', Axios.spread]
+]);
 
-const crudAsync2 = (operation, endpoint = RoutePaths.Events, dispatch, actionCreator, opts = config, ...curriedArgs) => {
-  const request = operation.bind(null, endpoint, ...curriedArgs, config);
-  console.log('EVT DATA:', curriedArgs);
+const crudAsync2 = (operation, endpoint = RoutePaths.Events, dispatch, actionCreator, curriedArgs, ...configOpts) => {
+  const reqData = { data: curriedArgs };
+  const request = operation.bind(null, endpoint, reqData, Object.assign({}, config, reqData, ...configOpts));
   return request()
     .then(resp => {
-      console.log('RESPONSE:', resp);
-      dispatch(actionCreator(resp.data));
+      actionCreator && !!actionCreator
+        ? dispatch(actionCreator(resp.data))
+        : null;
     })
     .catch(err => {
-      console.error.call(console, `Error encountered while making request:\t${err}`);
+      console.error.call(console, `\nError encountered while making request to the '${endpoint}' endpoint:\n>\t${err}`);
     });
 };
 
@@ -76,84 +52,62 @@ export const fetchSeedData = () => {
         maxRedirects: 3,
         timeout: 30000
       })
-      .then(dispatchActionCreator(dispatch, loadSeedData))
+      .then(dispatchActionCreator(dispatch, fetchSeedData_Success))
       .catch(catchAsyncError('Error encountered while attempting to fetch seed data'));
   };
 };
 
-// 
-export const fetchStarredEvents = () => {
-  console.log('Function `fetchStarredEvents()` Called');
-  return (dispatch) => {
-    return Axios
-      .get(RoutePaths.StarredEvents, {
-        responseType: 'json',
-      })
-      .then(dispatchActionCreator(dispatch, fetchStarredEvents_Success))
-      .catch(catchAsyncError('Error encountered while attempting to fetch starred events'));
-  };
-};
+
+const { Events, getEditEvent, AllEvents, StarredEvents, RecentlyModifiedEvents, Photos } = RoutePaths;
 
 // 
-export const fetchRecentlyModifiedEvents = () => {
+export const fetchAllEvents = () => (dispatch) =>
+  crudAsync2(Axios.get, AllEvents, dispatch, fetchAllEvents_Success);
+
+// 
+export const fetchStarredEvents = () => (dispatch) =>
+  crudAsync2(Axios.get, StarredEvents, dispatch, fetchStarredEvents_Success);
+
+// 
+export const fetchRecentlyModifiedEvents = () => (dispatch) =>
+  crudAsync2(Axios.get, RecentlyModifiedEvents, dispatch, fetchRecentlyModifiedEvents_Sucess);
   // headers: { 'X-Limit-Size': 3 }
+
+// 
+export const fetchCloudinaryImageData = (list = 'Unsigned') => {
   return (dispatch) => {
     return Axios
-      .get(RoutePaths.RecentlyModifiedEvents, {
-        responseType: 'json'
+      .get(`http://res.cloudinary.com/http-isenrich-io/image/list/${list}.json`)
+      .then(resp => {
+        dispatch(fetchCloudinaryImages_Success(resp.data));
       })
-      .then(response => {
-        // dispatchActionCreator(dispatch, fetchRecentlyModifiedEvents_Sucess))
-        dispatch(fetchRecentlyModifiedEvents_Sucess(response.data));
-      })
-      .catch(catchAsyncError('Error encountered while attempting to fetch recently modified events'));
-  };
+      .catch(err => { console.log('ERROR ERROR:', err); });
+  }
 };
 
 // 
-// export const addSingleEvent = (evtData) => {
-//   let req = Axios.post('/api/events', evtData);
-//   return (dispatch) => crudAsync(req, dispatch, addSingleEvent_Success);
-// };
-export const addSingleEvent = (evtData) => {
-  return (dispatch) => crudAsync2(Axios.post, RoutePaths.Events, dispatch, addSingleEvent_Success, Object.assign({}, config, generateUuid), evtData);
-};
+export const uploadToCloudinary = (evt, file, filePath) => (dispatch) =>
+  crudAsync2(Axios.post, Photos, dispatch, null, { evt, title: file.name, url: filePath });
 
 // 
-// export const updateSingleEvent = (evtData) => {
-//   let req = Axios.put(RoutePaths.getEditEvent(evtData.uuid), evtData);
-//   return (dispatch) => crudAsync(req, dispatch, updateSingleEvent_Success);
-// };
-export const updateSingleEvent = (evtData) => {
-  return (dispatch) => crudAsync2(Axios.put, RoutePaths.getEditEvent(evtData.uuid), dispatch, updateSingleEvent_Success, config, evtData);
-};
+export const fetchAllCloudinary = () => (dispatch) =>
+  crudAsync2(Axios.get, Photos, dispatch, fetchCloudinaryImages_Success);
+// 
+// export const fetchFromCloudinary = () => (dispatch) =>
+//   crudAsync2(Axios.get, Photos, dispatch, null);
 
 // 
-export const deleteSingleEvt = (evt) => {
-  return (dispatch) => {
-    return Axios
-      .delete(RoutePaths.getEditEvent(evt.uuid), {
-        data: evt,
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(dispatchActionCreator(dispatch, deleteSingleEvent_Success))
-      .catch(catchAsyncError('Error encountered while attempting to execute DELETE request'));
-  };
-};
+export const addSingleEvent = (evtData) => (dispatch) =>
+  crudAsync2(Axios.post, Events, dispatch, addSingleEvent_Success, evtData);
 
 // 
-export const deleteBatchEvents = (evts) => {
-  return (dispatch) => {
-    return Axios
-      .delete(RoutePaths.Events, {
-        data: evts,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(dispatchActionCreator(dispatch, deleteBatchEvents_Success))
-      .catch(catchAsyncError('Error encountered while attempting to execute multiple DELETE requests'));
-  };
-};
+export const updateSingleEvent = (evtData) => (dispatch) => 
+  crudAsync2(Axios.put, getEditEvent(evtData.uuid), dispatch, updateSingleEvent_Success, evtData);
+
+// 
+export const deleteSingleEvt = (evt) => (dispatch) =>
+  crudAsync2(Axios.delete, getEditEvent(evt.uuid), dispatch, deleteSingleEvent_Success, evt);
+
+// 
+export const deleteBatchEvents = (evts) => (dispatch) =>
+  crudAsync2(Axios.delete, Events, dispatch, deleteBatchEvents_Success, evts);

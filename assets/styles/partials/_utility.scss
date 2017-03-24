@@ -26,6 +26,12 @@
   overflow: hidden;
 }
 
+.empty-summary {
+  height: 50px;
+  background: transparent url("data:image/svg+xml;utf8,<svg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'><g fill='%23E8BAA5' fill-opacity='0.4' fill-rule='evenodd'><path d='M5 0h1L0 6V5zM6 5v1H5z'/></g></svg>") repeat center;
+  background-clip: content-box;
+}
+
 /* Clearfix
  * For modern browsers...
  * 1. The space content is one way to avoid an Opera bug when the
@@ -62,7 +68,10 @@
   transition: all 0.5s ease;
 }
 
-.modal-active { overflow: hidden !important; }
+.modal-active {
+  height: 100vh !important;
+  overflow: hidden !important;
+}
 
 // Custom checkbox inputs:
 .checkbox { margin: 0; }
@@ -119,6 +128,25 @@ input[type='checkbox'] {
   }
 }
 
+.form-btn {
+  min-width: 20%;
+  height: 40px;
+  margin-left: 5%;
+  padding: 0.75rem 1.75rem;
+  float: right;
+  border: none;
+  border-bottom: 4px solid;
+  border-radius: 8px;
+  transition: all 0.05s linear;
+  &:hover {
+    border-bottom-width: 3px;
+    transform: translateY(1px);
+  }
+  &:active {
+    border-bottom-width: 2px;
+    transform: translateY(2px);
+  }
+}
 
 .tooltip {
   @include cbTransition(0.45s 0.35s ease-in-out);

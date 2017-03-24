@@ -2,36 +2,32 @@
 const Event = require('../../db/models/Event');
 
 
-// Queries the DB for a result set containing all starred events:
-const getStarredEvents = (req, res, next) => {
-  Event
-    .find({ starred: true })
-    .then(evts => {
-      console.log('Starred Response:', evts);
-      res.send(evts);
-    })
+// 
+const fetchSearchCategoryEvents = (params = {}, category = 'all', sort = { date: -1 }, limit = Number.MAX_SAFE_INTEGER) =>
+  (req, res, next) => Event
+    .find(params)
+    .sort(sort)
+    .limit(limit)
+    .then(evts => res.json(evts))
     .catch(err => {
-      res.status(400).send('Failed to fetch starred events!');
+      res
+        .status(400)
+        .send(`Failed to fetch <${category}> events!\n>\t${err}`);
       next();
     });
-};
+
+//
+const getAllEvents = fetchSearchCategoryEvents();
+
+// Queries the DB for a result set containing all starred events:
+const getStarredEvents = fetchSearchCategoryEvents({ starred: true }, 'starred');
 
 // Queries the DB for a result set representing the events most
 //  most recently modified. Optionally, it may take a `limit`
 //  parameter (to be retrieved from the User settings) that defines
 //  the number of records which to display:
-const getRecentlyModified = (req, res, next) => {
-  // const { 'x-limit-size': limitSize } = req.headers;
-  Event
-    .find({})
-    .sort({ dateModified: -1 })
-    .limit(3)
-    .then(evts => res.send(evts))
-    .catch(err => {
-      res.status(400).send('Failed to fetch recently modified events!');
-      next();
-    });
-};
+const getRecentlyModified = fetchSearchCategoryEvents({}, 'modified', { dateModified: -1 }, 20);
+// const { 'x-limit-size': limitSize } = req.headers;
 
 /**
  * Finds the earliest and latest chronological events for a given set of event data:
@@ -100,6 +96,7 @@ const buildQuery = (criteria) => {
 module.exports = {
   buildQuery,
   customQuery,
+  getAllEvents,
   getRecentlyModified,
   getStarredEvents
 };

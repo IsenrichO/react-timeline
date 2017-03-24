@@ -6,12 +6,17 @@ import TLEventFooter from '../tl-event/TLEventFooter';
 
 
 const SingleEvent = (props) => {
-  const { name, uuid, description, location, date, photoCount, formattedDate, type, addEventToFavorites, getStarGlyphClass, hasMultipleTags } = props;
+  const {
+    evt, addEventToFavorites, getStarGlyphClass, hasMultipleTags, imageData,
+    evt: { name, uuid, description, location, date, photoCount, formattedDate, type }
+  } = props;
+
   return (
     <li className="evt-card">
       <TLEventHeader
         evtName={ name }
-        evtUuid={ uuid } />
+        evtUuid={ uuid }
+        imageData={ imageData } />
       <TLEventBody
         evtDescription={ description }
         evtLocation={ location }
@@ -20,11 +25,10 @@ const SingleEvent = (props) => {
         evtFormattedDate={ formattedDate } />
       <TLEventFooter
         { ...props }
-        evtNote={ type }
+        evtType={ type }
         addEventToFavorites={ addEventToFavorites }
         getStarGlyphClass={ getStarGlyphClass }
-        hasMultipleTags={ hasMultipleTags }
-        />
+        hasMultipleTags={ hasMultipleTags } />
     </li>
   );
 };

@@ -5,6 +5,7 @@ import seedDataAggregator from './seedDataAggregator';
 import batchSelectionState from './batchSelectionState';
 import batchSelectionItems from './batchSelectionItems';
 import searchEvents from './searchEvents';
+import cloudinaryImageStore from './cloudinaryImageStore';
 
 
 export default {
@@ -13,5 +14,6 @@ export default {
   seedDataAggregator,
   batchSelectionState,
   batchSelectionItems,
-  searchEvents
+  searchEvents,
+  cloudinaryImageStore
 };

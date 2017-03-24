@@ -3,11 +3,10 @@ import React from 'react';
 
 
 // 
-const addEventToFavorites = (func, evt) =>
+const addEventToFavorites = (func, { uuid, starred }) =>
   func({
-    eventId: evt.eventId,
-    uuid: evt.uuid,
-    starred: !evt.starred ? true : false
+    uuid,
+    starred: !starred ? true : false
   });
 
 // 
@@ -28,7 +27,7 @@ const collapseBody = (evt) => {
 // 
 const getStarGlyphClass = (srcData, uuid) => {
   const evtIndex = srcData.findIndex(evt => evt.uuid === uuid);
-  return srcData[evtIndex].starred || null;
+  return !!~evtIndex ? srcData[evtIndex].starred : false;
 };
 
 // 
@@ -39,6 +38,7 @@ const hasMultipleTags = (srcData, uuid) => {
 
 // Controller for animation/behavior of Google Static Maps image wrapper:
 const toggleAccordionSection = (evt) => {
+  evt.persist();
   const $target = $(evt.currentTarget),
         [$mapWrapper, $toggleArrow] = [$('.static-map-wrapper', $target), $('.toggle-glyph', $target)];
 
