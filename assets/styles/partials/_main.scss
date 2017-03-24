@@ -175,11 +175,12 @@
   &-header {
     @include flex(flex, row nowrap, space-around, center);
     @include cbTransition($transition-timing-func, background-size);
+    transition-duration: 0.45s;
     min-height: 7.142857142857143rem;   // => (100 / 14)px
     background: rgba(108, 108, 108, 0.63) no-repeat center 30% / 100%;
-    background-blend-mode: color;
+    background-blend-mode: screen;  // color;
     &:hover {
-      @include cbTransition(3s linear, background-size);
+      @include cbTransition(2.25s linear, background-size);
       background-size: 150%;
     }
     h3,
