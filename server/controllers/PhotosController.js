@@ -10,8 +10,17 @@ const Axios = require('axios');
 const Multer = require('multer');
 
 
-const uploadOptions = (evt) => ({
-  public_id: (evt => evt.name)(evt),
+// Utility function that returns a `len`-character-long (pseudo-)random
+//  string of integers:
+const randCacheBustSuffix = (len = 9) => Array.from(
+  { length: len },
+  (_, i) => Math.round(Math.random() * (i + 1))
+).join('');
+
+// A utility function for quickly extracting an object to serve as the
+//  default Cloudinary uploading options configuration object:
+const uploadOptions = (evt, uploadTitle) => ({
+  public_id: uploadTitle,
   folder: ((uuid) => `React-Timeline/${uuid}/`)(evt.uuid),
   use_filename: true,
   unique_filename: true,
@@ -53,8 +62,10 @@ const serverSideCloudinaryUpload = (req, res, next) => {
   const { evt, url, title } = req.body;
   var photo = new Photo({ title, url });
 
+  console.log('\nUpload Options:', uploadOptions(evt, title));
+
   Cloudinary.uploader
-    .upload(url, uploadOptions(evt))
+    .upload(url, uploadOptions(evt, title))
     .then(photo => res.json(photo))
     .catch(err => {
       console.log(`Error uploading photo to Cloudinary:\t${err}`);
