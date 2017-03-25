@@ -60,10 +60,12 @@ textarea {
 }
 
 blockquote {
+  @include cbTransition($transition-ease, height);
   position: relative;
   padding: 0 1rem;
   border: none;
   font: oblique 1.2rem/1 'Raleway', 'Helvetica Neue', sans-serif;
+  overflow-y: hidden;
   &:before,
   &:after {
     position: absolute;
