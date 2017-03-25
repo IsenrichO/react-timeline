@@ -28,11 +28,29 @@ const debounce = (func, wait, immediate) => {
 const debounceToggle = (evt) => debounce(toggleAccordionSection, 200, true)(evt),
       photosTagLine = (numPhotos) => `${numPhotos} Photo${numPhotos !== 1 ? 's' : ''}`;
 
-const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => {
+const slider = (evt) => {
+  const $evt = $(evt.currentTarget),
+        $block = $evt.prev('blockquote');
 
+  $block.hasClass('hide-more')
+    ? $block
+        .toggleClass('hide-more show-more')
+        .css({ height: $block.get(0).scrollHeight })
+    : $block
+        .toggleClass('hide-more show-more')
+        .css({ height: '4em' });
+};
+
+
+const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => {
   return (
   <div className="panel-body">
-    <blockquote className={ evtDescription.length === 0 ? 'empty-summary' : '' }>{ evtDescription }</blockquote>
+    <blockquote
+      className={ 'hide-more' + (evtDescription.length === 0 ? ' empty-summary' : '') }
+      style={{ height: '4em' }}>
+      { evtDescription }
+    </blockquote>
+    <span onClick={ slider }>Show More</span>
     <div className="tl-date">
       <i className="glyphicon glyphicon-calendar" />
       <em>{ evtFormattedDate }</em>
