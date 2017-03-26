@@ -30,27 +30,49 @@ const debounceToggle = (evt) => debounce(toggleAccordionSection, 200, true)(evt)
 
 const slider = (evt) => {
   const $evt = $(evt.currentTarget),
-        $block = $evt.prev('blockquote');
+        $linkText = $evt.text().toUpperCase(),
+        $block = $evt.closest('.show-more-wrapper').prev('blockquote');
 
-  $block.hasClass('hide-more')
-    ? $block
-        .toggleClass('hide-more show-more')
-        .css({ height: $block.get(0).scrollHeight })
-    : $block
-        .toggleClass('hide-more show-more')
-        .css({ height: '4em' });
+  $block
+    .toggleClass('hidden shown')
+    .css({ height: $block.hasClass('shown') ? $block.get(0).scrollHeight : '4em' });
+  setTimeout(() => {
+    $evt.text(`Show ${$linkText === 'SHOW MORE' ? 'Less' : 'More'}`);
+  }, 575);
 };
 
+const ShowMoreControl = () => (
+  <div className="show-more-wrapper">
+    <hr className="separator-fade" />
+    <div className="show-more">
+      <span className="bg-line" />
+      <a
+        href="javascript://"
+        target="_self"
+        rel="nofollow"
+        onClick={ slider }>
+        Show More
+      </a>
+      <span className="bg-line" />
+    </div>
+  </div>
+);
 
-const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => {
-  return (
+const renderShowMoreControl = (txtLen = 100) => txtLen >= 300
+  ? ShowMoreControl()
+  : null;
+
+
+const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => (
   <div className="panel-body">
-    <blockquote
-      className={ 'hide-more' + (evtDescription.length === 0 ? ' empty-summary' : '') }
-      style={{ height: '4em' }}>
-      { evtDescription }
-    </blockquote>
-    <span onClick={ slider }>Show More</span>
+    <div className="tl-description">
+      <blockquote
+        className={ 'hidden' + (evtDescription.length === 0 ? ' empty-summary' : '') }
+        style={{ height: '4em' }}>
+        { evtDescription }
+      </blockquote>
+      { renderShowMoreControl(evtDescription.length) }
+    </div>
     <div className="tl-date">
       <i className="glyphicon glyphicon-calendar" />
       <em>{ evtFormattedDate }</em>
@@ -71,6 +93,6 @@ const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, p
       <i className="toggle-glyph glyphicon glyphicon-menu-right" />
     </div>
   </div>
-);}
+);
 
 export default TLEventBody;
