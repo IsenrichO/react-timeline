@@ -217,6 +217,11 @@
         &.active { transform: rotateZ(90deg); }
       }
     }
+    .tl- {
+      &description {
+        @include quotes();
+      }
+    }
     .tl-location,
     .tl-photos { cursor: pointer; }
     .static-map-wrapper {

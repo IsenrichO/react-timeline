@@ -77,3 +77,25 @@
     $index: $index + 1;
   }
 }
+
+// Render :before & :after pseudoclass counterparts for quotation-style
+//  text blocks:
+@mixin quotes($top: -0.75rem, $right: 0, $bottom: -1rem, $left: -0.75rem) {
+  position: relative;
+  &:before,
+  &:after {
+    position: absolute;
+    color: $theme-border;
+    font: italic bold 2.5rem/1 -webkit-pictograph, sans-serif;
+  }
+  &:before {
+    content: open-quote;
+    top: $top;
+    left: $left;
+  }
+  &:after {
+    content: close-quote;
+    bottom: $bottom;
+    right: $right;
+  }
+}

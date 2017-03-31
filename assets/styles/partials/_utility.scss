@@ -35,24 +35,25 @@
 // Overrides Bootstrap `.hidden` class' display property:
 .hidden,
 .shown { display: block !important; }
-
 .hidden {
   height: 4em;
   line-height: 1em;
 }
+// .shown + .show-more-wrapper .separator-fade:before { opacity: 0; }
 
 .show-more-wrapper {
   position: relative;
   width: 100%;
   padding: 0 1rem;
   text-align: center;
+  .shown + & .separator-fade:before { opacity: 0; }
   .show-more {
     @include flex();
     @include cbTransform(translate(-50%, -50%));
     position: absolute;
     width: inherit;
     left: 50%;
-    top: 0.75em;
+    top: 1.25em;
     padding: inherit;
     overflow: hidden;
     .bg-line {
@@ -60,7 +61,7 @@
       &:before {
         display: block;
         content: '';
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid #C3C3C3;
       }
     }
     > a {
@@ -80,6 +81,7 @@
   margin: 0;
   border: 0;
   &:before {
+    @include cbTransition(0.575s cubic-bezier(0, 0.25, 0.7, 0.4), opacity);
     position: absolute;
     content: '';
     width: 100%;

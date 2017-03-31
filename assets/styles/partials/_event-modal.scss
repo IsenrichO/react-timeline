@@ -26,9 +26,9 @@
   }
   .dz-wrapper {
     output {
-      @include flex();
+      @include flex(flex, row nowrap, flex-start);
       position: relative;
-      padding: .75rem 0 1.5rem 1rem;
+      // padding: .75rem 0 1.5rem 1rem;
       overflow-x: overlay;
       overflow-y: hidden;
       .thumb {
