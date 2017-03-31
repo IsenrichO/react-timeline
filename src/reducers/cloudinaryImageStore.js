@@ -7,7 +7,7 @@ export default function cloudinaryImageStore(state = [], action = null) {
 
     case FETCH_CLOUDINARY_IMAGES_SUCCESS:
       console.log(`Action <${action.type}> executed with payload`, action.payload);
-      const { subfolderNames, tlImages } = action.payload;
+      const { subfolderNames = [], tlImages } = action.payload;
       console.log('SUB-FOLDERNAMES:', subfolderNames, tlImages);
       let foldersObj = subfolderNames.reduce((memo, curr) => {
         const regTest = new RegExp(`^${curr.path}`),
