@@ -35,7 +35,10 @@ const EventSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'EventPhoto'
   }],
-  tags: [EventTagSchema],
+  tags: [{
+    type: Schema.Types.ObjectId,
+    ref: 'EventTag'
+  }],
   links: [EventLinkSchema],
   starred: Boolean,
   dateModified: Date,
