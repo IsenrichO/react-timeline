@@ -10,7 +10,7 @@ import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
 import ConfirmDeletionModal from '../components/ConfirmDeletionModal';
 import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
-import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchCloudinaryImageData, uploadToCloudinary, fetchAllCloudinary } from '../actions/asyncActions';
+import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchCloudinaryImageData, uploadToCloudinary, fetchAllCloudinary, fetchAllEventTags } from '../actions/asyncActions';
 import Utils from '../utilities/index';
 
 import CloudinaryUploader from '../CloudinaryUploadAPI';
@@ -43,7 +43,8 @@ import cloudinary from 'cloudinary';
     clearBatchSelection,
     fetchCloudinaryImageData,
     uploadToCloudinary,
-    fetchAllCloudinary
+    fetchAllCloudinary,
+    fetchAllEventTags
   }, dispatch)
 )
 export default class Timeline extends Component {
@@ -62,6 +63,26 @@ export default class Timeline extends Component {
   
   componentDidMount() {
     this.props.fetchAllCloudinary();
+
+    $(window).on('scroll resize', this.checkViewAndAnimate);
+    setTimeout(() => {
+      window.scroll(0, 1);
+    }, 500);
+  }
+
+  checkViewAndAnimate() {
+    const [$winHeight, $winScrollTop] = [$(window).height(), $(window).scrollTop()],
+          $winBottom = ($winHeight + $winScrollTop);
+
+    $.each($('.tl-event-panel'), function(index, el) {
+      const $el = $(this),
+            [$elHeight, $elOffsetTop] = [$el.outerHeight(), $el.offset().top],
+            $elBottom = ($elHeight + $elOffsetTop);
+
+      if (($elOffsetTop <= $winBottom) && ($elBottom >= $winScrollTop)) {
+        $el.addClass('in-view');
+      }
+    });
   }
 
   cacheInLocalStorage(data) {
@@ -132,8 +153,6 @@ export default class Timeline extends Component {
   render() {
     return (
       <div>
-        <CloudinaryUploader />
-
         <ul className="tl">
           { ::this.renderOrderedEvents(Utils.orderTimelineEvents(this.props.seedData)) }
         </ul>
@@ -144,7 +163,8 @@ export default class Timeline extends Component {
           toggleModal={ ::this.toggleModal }
           updEvt={ (evtData) => this.props.updateSingleEvent(evtData) }
           uploadToCloudinary={ this.props.uploadToCloudinary }
-          cloudinaryImageStore={ this.props.cloudinaryImageStore } />
+          cloudinaryImageStore={ this.props.cloudinaryImageStore }
+          fetchAllEventTags={ ::this.props.fetchAllEventTags } />
         <NewEventModal
           modalStatus={ this.state.newModal }
           toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
