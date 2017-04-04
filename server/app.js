@@ -10,6 +10,7 @@ const Mongoose = require('mongoose'),
 
 const Event = require('../db/models/Event');
 const Photo = require('../db/models/EventPhoto');
+const Tag = require ('../db/models/EventTag');
 const formatDate = require('./utilities');
 
 // const eventsRoute = require('./routes/events');
@@ -49,18 +50,25 @@ db
     Mongoose.connection.collections.EventPhotos.drop();
     
     
-    seedData.forEach(evt => {
-      [evt.formattedDate, evt.uuid, evt.photos, evt.dateModified, evt.starred] = [formatDate(evt.date), evt.uuid || UUID(), new Array(), Date.now(), false];
+    seedData.forEach((evt, index) => {
+      [evt.formattedDate, evt.uuid, evt.photos, evt.dateModified, evt.starred] =
+        [formatDate(evt.date), evt.uuid || UUID(), new Array(), Date.now(), index % 2];
       
       let newEvt = new Event(evt);
       let newPhoto = new Photo({
         title: 'Medium site hero image',
         url: 'https://cdn-images-1.medium.com/max/2000/1*J-jjDviwGUfzka1HX5LG9A.jpeg'
       });
+      let newTag = new Tag({
+        name: evt.type || 'No Tag'
+      });
 
       // if (/^TEST/.test(evt.uuid)) { }
       newEvt.photos.push(newPhoto);
       newPhoto.event = newEvt;
+
+      newEvt.tags.push(newTag);
+      newTag.event = newEvt;
       
       // Event
       //   .findOne({ name: evt.name })
@@ -69,7 +77,7 @@ db
       //     model: 'EventPhoto'
       //   });
       
-      Promise.all([newEvt.save(), newPhoto.save()]);
+      Promise.all([newEvt.save(), newPhoto.save(), newTag.save()]);
     });
   })
   .on('error', (err) => {
@@ -101,6 +109,7 @@ const searchEventsRoute = require('./routes/eventSearch');
 const searchEventsAllRoute = require('./routes/eventSearchAll');
 const searchStarredEventsRoute = require('./routes/eventSearchStarred');
 const photosRoute = require('./routes/photos');
+const tagsRoute = require('./routes/tags');
 
 App.use('/api/events', eventsRoute);
 App.use('/api/events/edit', eventUuidsRoute);
@@ -108,5 +117,6 @@ App.use('/api/search', searchEventsAllRoute);
 App.use('/api/search/recent', searchEventsRoute);
 App.use('/api/search/starred', searchStarredEventsRoute);
 App.use('/api/photos', photosRoute);
+App.use('/api/tags', tagsRoute);
 
 module.exports = App;
