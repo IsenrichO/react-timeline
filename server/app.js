@@ -58,10 +58,9 @@ db
         url: 'https://cdn-images-1.medium.com/max/2000/1*J-jjDviwGUfzka1HX5LG9A.jpeg'
       });
 
-      if (/^TEST/.test(evt.uuid)) {
-        newEvt.photos.push(newPhoto);
-        newPhoto.event = newEvt;
-      }
+      // if (/^TEST/.test(evt.uuid)) { }
+      newEvt.photos.push(newPhoto);
+      newPhoto.event = newEvt;
       
       // Event
       //   .findOne({ name: evt.name })
