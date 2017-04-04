@@ -6,6 +6,7 @@ import batchSelectionState from './batchSelectionState';
 import batchSelectionItems from './batchSelectionItems';
 import searchEvents from './searchEvents';
 import cloudinaryImageStore from './cloudinaryImageStore';
+import eventTags from './eventTags';
 
 
 export default {
@@ -15,5 +16,6 @@ export default {
   batchSelectionState,
   batchSelectionItems,
   searchEvents,
-  cloudinaryImageStore
+  cloudinaryImageStore,
+  eventTags
 };
