@@ -41,27 +41,23 @@ const slider = (evt) => {
   }, 575);
 };
 
-const ShowMoreControl = () => (
-  <div className="show-more-wrapper">
-    <hr className="separator-fade" />
-    <div className="show-more">
-      <span className="bg-line" />
-      <a
-        href="javascript://"
-        target="_self"
-        rel="nofollow"
-        onClick={ slider }>
-        Show More
-      </a>
-      <span className="bg-line" />
+const ShowMoreControl = (txtLen = 100) => txtLen >= 300
+  ? (
+    <div className="show-more-wrapper">
+      <hr className="separator-fade" />
+      <div className="show-more">
+        <span className="bg-line" />
+        <a
+          href="javascript://"
+          target="_self"
+          rel="nofollow"
+          onClick={ slider }>
+          Show More
+        </a>
+        <span className="bg-line" />
+      </div>
     </div>
-  </div>
-);
-
-const renderShowMoreControl = (txtLen = 100) => txtLen >= 300
-  ? ShowMoreControl()
-  : null;
-
+  ) : null;
 
 const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => (
   <div className="panel-body">
@@ -71,7 +67,7 @@ const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, p
         style={{ height: '4em' }}>
         { evtDescription }
       </blockquote>
-      { renderShowMoreControl(evtDescription.length) }
+      { ShowMoreControl(evtDescription.length) }
     </div>
     <div className="tl-date">
       <i className="glyphicon glyphicon-calendar" />
