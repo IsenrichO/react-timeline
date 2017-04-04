@@ -28,6 +28,7 @@
       .tl-marker { left: -2.5%; }
       .tl-toolbar { left: calc(100% + 1.6rem); }
       .tl-event-panel {
+        @include cbTransform(translateX(100px));
         left: 0;
         margin-right: 22.5%;
         float: right;
@@ -51,12 +52,15 @@
     filter:         drop-shadow(0 0 7.5px #999);
   }
   .tl-event-panel {
+    @include cbTransform(translateX(-100px));
     @include cbBoxShadow(0 1px 6px rgba(0, 0, 0, 0.175));
+    @extend %hidden;
     position: relative;
     width: 70%;
     left: 22.5%;
     border: 1px solid $theme-border;
-    transition: outline 0.5s ease-in-out;
+    transition: outline 0.5s ease-in-out,
+                transform 0.75s linear;
     outline: 0 solid $theme-transparent;
     background-color: $theme-content-lt;
     &:before { @extend %tt-right-shadow; }
@@ -64,6 +68,10 @@
     &:hover {
       .tl-toolbar,
       .collapse-up { @extend %visible; }
+    }
+    &.in-view {
+      @include cbTransform(translateX(0) !important);
+      @extend %visible;
     }
     .tl-toolbar {
       @include cbTransition(0.25s 0.25s cubic-bezier(0, 0.25, 0.7, 0.4));
