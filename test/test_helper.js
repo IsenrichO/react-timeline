@@ -22,7 +22,7 @@ before(done => {
 
 // Drop existing database for each (re-)run of tests:
 beforeEach((done) => {
-  const { EventData, EventPhotos } = Mongoose.connection.collections;
+  const { EventData, EventPhotos, EventTags } = Mongoose.connection.collections;
   Event
     .drop(() => {
       EventPhoto.drop(() => done());
