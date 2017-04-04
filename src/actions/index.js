@@ -69,3 +69,8 @@ export const fetchCloudinaryImages_Success = (payload) => ({
   type: Types.FETCH_CLOUDINARY_IMAGES_SUCCESS,
   payload
 });
+
+export const fetchAllEventTags_Success = (payload) => ({
+  type: Types.FETCH_ALL_EVENT_TAGS_SUCCESS,
+  payload
+});

@@ -11,7 +11,8 @@ import {
   fetchAllEvents_Success,
   fetchStarredEvents_Success,
   fetchRecentlyModifiedEvents_Sucess,
-  fetchCloudinaryImages_Success
+  fetchCloudinaryImages_Success,
+  fetchAllEventTags_Success
 } from './index';
 
 import cloudinary from 'cloudinary';
@@ -58,7 +59,7 @@ export const fetchSeedData = () => {
 };
 
 
-const { Events, getEditEvent, AllEvents, StarredEvents, RecentlyModifiedEvents, Photos } = RoutePaths;
+const { Events, getEditEvent, AllEvents, StarredEvents, RecentlyModifiedEvents, Photos, Tags } = RoutePaths;
 
 // 
 export const fetchAllEvents = () => (dispatch) =>
@@ -111,3 +112,7 @@ export const deleteSingleEvt = (evt) => (dispatch) =>
 // 
 export const deleteBatchEvents = (evts) => (dispatch) =>
   crudAsync2(Axios.delete, Events, dispatch, deleteBatchEvents_Success, evts);
+
+// 
+export const fetchAllEventTags = () => (dispatch) =>
+  crudAsync2(Axios.get, Tags, dispatch, fetchAllEventTags_Success);
