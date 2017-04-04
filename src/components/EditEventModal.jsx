@@ -29,6 +29,10 @@ export default class EditEventModal extends Component {
     toggleModal: PropTypes.func
   };
 
+  componentDidMount() {
+    this.props.fetchAllEventTags();
+  }
+
   constructCurrentFormattedDate() {
     const DATE = new Date();
     return `${DATE.getUTCMonth() + 1}/${DATE.getUTCDate()}/${DATE.getUTCFullYear()}`;
@@ -64,6 +68,7 @@ export default class EditEventModal extends Component {
   prepopulateTags(evtTags) {
     return evtTags.map((tag, index) =>
       <EventTag
+        key={ `EventTag_${tag}_${index}` }
         tagTitle={ tag }
         index={ index } />
     );
@@ -166,14 +171,16 @@ export default class EditEventModal extends Component {
                   <i className="glyphicon glyphicon-tags" />
                 </span>
                 <label htmlFor="edit-evt-tags-inpt" />
-                <div
+                <select
                   id="tags-input-box"
                   className="form-cont"
                   contentEditable={ true }
                   ref={ (editEvtTagsInpt) => { this.editEvtTagsInpt = editEvtTagsInpt; }}>
-                  { ::this.prepopulateTags([evtTags]) }
-                </div>
+                </select>
               </div>
+              <output>
+                { ::this.prepopulateTags([evtTags]) }
+              </output>
             </fieldset>
 
             <FileUploadAPI
