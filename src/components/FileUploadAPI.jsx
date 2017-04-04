@@ -1,6 +1,5 @@
 'use strict';
 import React, { Component } from 'react';
-
 import FileUploadGlyph from '../constants/svg/FileUploadGlyph_SVG';
 
 
@@ -10,14 +9,14 @@ export default class FileUploadAPI extends Component {
     this.state = { uploads: {} };
   }
 
-  // Loops through selection of files and asynchronously executes callback on each:
-  loadSelectedImages(evt, cb) {
-    const [Images, OutputBin] = [evt.target.files, this.fileContainer];
-    // Loop through selected images and render as thumbnails:
-    for (var i = 0, currImg; currImg = Images[i]; i++) {
-      // Secondary check to ensure only allowable MIME types pass through for image processing:
-      if (!/image(\/.*)?/.test(currImg.type)) { continue; }
-      ::this.readInThumbnailWithBckgImage(currImg, i, OutputBin);
+  componentDidMount() {
+    const { cloudinaryImageStore: imgStore, evt: { uuid } } = this.props,
+          uploadedImages = (imgStore.hasOwnProperty(uuid) && !!imgStore[uuid].images.length
+            ? imgStore[uuid].images.map(img => img.secure_url)
+            : null);
+
+    if (!!uploadedImages) {
+      this.renderUploadedCloudinaryImages(uploadedImages);
     }
   }
 
@@ -49,18 +48,7 @@ export default class FileUploadAPI extends Component {
       Reader.onload = (evt) => {
         const uploads = Object.assign({}, self.state.uploads, { [file.name]: evt.target.result });
         self.setState({ uploads });
-        console.log('UPLOADS STATE:', self.state.uploads);
-
-        let $newThumb = $('<div />').addClass('thumb').css({ backgroundImage: `url(${evt.target.result})` }),
-            $thumbWrapper = $('<div />').addClass('thumb-wrapper'),
-            $removeThumbGlyph = $('<i class="glyphicon glyphicon-remove-circle" />');
-
-        $thumbWrapper.append($removeThumbGlyph, $newThumb);
-        output.insertBefore($thumbWrapper[0], null);
-
-        $('.glyphicon').click(function(evt) {
-          $(this).closest('.thumb-wrapper').remove();
-        });
+        self.createNewThumbnail(evt.target.result, output);
       };
       // Read in the image file as a data URL:
       Reader.readAsDataURL(file);
@@ -71,6 +59,7 @@ export default class FileUploadAPI extends Component {
   handleFileSelect(evt) {
     evt.stopPropagation();
     evt.preventDefault();
+
     const [Images, OutputBin] = [evt.dataTransfer.files, this.fileContainer];
 
     // Loop over `Images`, a FileList of constituent File objects:
@@ -103,6 +92,40 @@ export default class FileUploadAPI extends Component {
     // );
     for (var i = 0; i < files.length; i++) {
       this.props.uploadToCloudinary(sourceEvt, files[i], this.state.uploads[files[i].name]);
+    }
+  }
+
+  // 
+  createNewThumbnail(img, output) {
+    let $newThumb = $('<div />').addClass('thumb').css({ backgroundImage: `url(${img})` }),
+        $thumbWrapper = $('<div />').addClass('thumb-wrapper'),
+        $removeThumbGlyph = $('<i class="glyphicon glyphicon-remove-circle" />');
+
+    $thumbWrapper.append($removeThumbGlyph, $newThumb);
+    output.insertBefore($thumbWrapper[0], null);
+
+    $('.glyphicon').click(function(evt) {
+      $(this).closest('.thumb-wrapper').remove();
+    });
+  }
+  
+  // Loops through selection of files and asynchronously executes callback on each:
+  loadSelectedImages(evt, cb) {
+    const [Images, OutputBin] = [evt.target.files, this.fileContainer];
+    // Loop through selected images and render as thumbnails:
+    for (var i = 0, currImg; currImg = Images[i]; i++) {
+      // Secondary check to ensure only allowable MIME types pass through for image processing:
+      if (!/image(\/.*)?/.test(currImg.type)) { continue; }
+      ::this.readInThumbnailWithBckgImage(currImg, i, OutputBin);
+    }
+  }
+
+  // 
+  renderUploadedCloudinaryImages(imgUrls = null) {
+    if (!imgUrls || !imgUrls.length) { return null; }
+    const [Images, OutputBin] = [imgUrls, this.fileContainer];
+    for (let i = 0, currImg; currImg = Images[i]; i++) {
+      ::this.createNewThumbnail(currImg, OutputBin);
     }
   }
 
@@ -149,13 +172,12 @@ export default class FileUploadAPI extends Component {
                 ' or drop them here'
               ]}
             </div>
+            <output
+              htmlFor="file-upload-btn"
+              name="photos"
+              ref={ (fileContainer) => { this.fileContainer = fileContainer; }} />
+            { submissionInput }
           </div>
-          <output
-            htmlFor="file-upload-btn"
-            name="photos"
-            ref={ (fileContainer) => { this.fileContainer = fileContainer; }}>
-          </output>
-          { submissionInput }
         </div>
       </fieldset>
     );

@@ -143,7 +143,8 @@ export default class Timeline extends Component {
           modalStatus={ this.props.eventEditingModalState }
           toggleModal={ ::this.toggleModal }
           updEvt={ (evtData) => this.props.updateSingleEvent(evtData) }
-          uploadToCloudinary={ this.props.uploadToCloudinary } />
+          uploadToCloudinary={ this.props.uploadToCloudinary }
+          cloudinaryImageStore={ this.props.cloudinaryImageStore } />
         <NewEventModal
           modalStatus={ this.state.newModal }
           toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }

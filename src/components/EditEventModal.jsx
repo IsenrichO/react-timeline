@@ -8,6 +8,7 @@ import FileUploadAPI from './FileUploadAPI';
 import { updateSingleEvent } from '../actions/asyncActions';
 
 import GMap from './GMap';
+import EventTag from './EventTag';
 
 
 @connect(
@@ -19,6 +20,7 @@ import GMap from './GMap';
 export default class EditEventModal extends Component {
   constructor(props) {
     super(props);
+    this.state = { uploads: {} };
   }
 
   static propTypes = {
@@ -30,6 +32,10 @@ export default class EditEventModal extends Component {
   constructCurrentFormattedDate() {
     const DATE = new Date();
     return `${DATE.getUTCMonth() + 1}/${DATE.getUTCDate()}/${DATE.getUTCFullYear()}`;
+  }
+
+  stageImagesForUpload(imgs) {
+    // this.set
   }
 
   updateSingleEvent(name, date, location, description) {
@@ -55,13 +61,28 @@ export default class EditEventModal extends Component {
     }
   }
 
+  prepopulateTags(evtTags) {
+    return evtTags.map((tag, index) =>
+      <EventTag
+        tagTitle={ tag }
+        index={ index } />
+    );
+  }
+
+  onKeyPress(key) {
+    const tagDelimiters = [' ', ',', 'Enter'];
+    // return tagDelimiters.includes(key);
+  }
+
   render() {
     const {
       name: evtName,
       date: evtDate,
       location: evtLocation,
-      description: evtDescription
+      description: evtDescription,
+      type: evtTags
     } = this.props.eventEditingModalData;
+    console.log('DATA:', this.props.eventEditingModalData);
     return (
       <Modal
         contentLabel={ `EditEventModal_` }
@@ -148,14 +169,18 @@ export default class EditEventModal extends Component {
                 <div
                   id="tags-input-box"
                   className="form-cont"
-                  ref={ (editEvtTagsInpt) => { this.editEvtTagsInpt = editEvtTagsInpt; }} />
+                  contentEditable={ true }
+                  ref={ (editEvtTagsInpt) => { this.editEvtTagsInpt = editEvtTagsInpt; }}>
+                  { ::this.prepopulateTags([evtTags]) }
+                </div>
               </div>
             </fieldset>
 
             <FileUploadAPI
               evt={ this.props.modalData }
               submittable={ true }
-              uploadToCloudinary={ this.props.uploadToCloudinary } />
+              uploadToCloudinary={ this.props.uploadToCloudinary }
+              cloudinaryImageStore={ this.props.cloudinaryImageStore } />
 
             <fieldset>
               <button
