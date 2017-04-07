@@ -48,6 +48,7 @@ db
   .once('open', () => {
     Mongoose.connection.collections.EventData.drop();
     Mongoose.connection.collections.EventPhotos.drop();
+    Mongoose.connection.collections.EventTags.drop();
     
     
     seedData.forEach((evt, index) => {
