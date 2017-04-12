@@ -160,7 +160,7 @@ export default class EditEventModal extends Component {
                   className="form-cont"
                   ref={ (editEvtDescriptionInpt) => { this.editEvtDescriptionInpt = editEvtDescriptionInpt; }}
                   placeholder="Event description"
-                  rows="4"
+                  rows="6"
                   defaultValue={ evtDescription } />
               </div>
             </fieldset>

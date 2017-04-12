@@ -9,6 +9,7 @@ const TLEventFooter = ({ evt, evtType, addEventToFavorites, getStarGlyphClass, h
         <i
           key={ `TagsGlyph` }
           className={ `glyphicon glyphicon-tag${hasMultipleTags ? 's' : ''}` } />,
+        // <i className="material-icons">local_offer</i>,
         evtType
       ]}
     </div>
@@ -19,3 +20,8 @@ const TLEventFooter = ({ evt, evtType, addEventToFavorites, getStarGlyphClass, h
 );
 
 export default TLEventFooter;
+
+
+// <i className="material-icons">star</i>
+// <i className="material-icons">star_half</i>
+// <i className="material-icons">star_border</i>
