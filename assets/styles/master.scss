@@ -3,6 +3,8 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 // @import 'compass';
 
+@import './partials/fonts';       // Pre-load fonts to ensure subsequent works
+
 @import './variables';            // Import globally-scoped Sass $variables
 @import './mixins';               // Import global Sass @mixins
 @import './placeholders';         // Import global Sass %placeholders
