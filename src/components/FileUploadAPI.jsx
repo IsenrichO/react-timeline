@@ -99,10 +99,23 @@ export default class FileUploadAPI extends Component {
   createNewThumbnail(img, output) {
     let $newThumb = $('<div />').addClass('thumb').css({ backgroundImage: `url(${img})` }),
         $thumbWrapper = $('<div />').addClass('thumb-wrapper'),
+        $chooseBckgGlyph = $('<i class="material-icons bckg-select-opt">panorama_fish_eye</i>'),
         $removeThumbGlyph = $('<i class="glyphicon glyphicon-remove-circle" />');
 
-    $thumbWrapper.append($removeThumbGlyph, $newThumb);
+    $thumbWrapper.append($chooseBckgGlyph, $removeThumbGlyph, $newThumb);
     output.insertBefore($thumbWrapper[0], null);
+
+    $('.bckg-select-opt').click(function() {
+      $(this)
+        .closest('output')
+        .find('.selected-bckg')
+        .removeClass('selected-bckg')
+        .text('panorama_fish_eye');
+        
+      $(this)
+        .text($(this).hasClass('selected-bckg') ? 'panorama_fish_eye' : 'check_circle')
+        .toggleClass('selected-bckg');
+    });
 
     $('.glyphicon').click(function(evt) {
       $(this).closest('.thumb-wrapper').remove();
