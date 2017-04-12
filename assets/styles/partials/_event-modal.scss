@@ -86,7 +86,10 @@
           .material-icons {
             left: 0.35rem;
             right: auto;
-            &.selected-bckg { @extend %mdi-invert; }
+            &.selected-bckg {
+              @extend %visible;
+              opacity: 1 !important;
+            }
           }
         }
         img { @include center(); }
