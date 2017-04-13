@@ -88,15 +88,19 @@ export default class FileUploadAPI extends Component {
     evt.preventDefault();
     console.log('\n\n\nFILES:', this.fileUploadsInpt.files);
     const [sourceEvt, files] = [this.props.evt, Array.from(this.fileUploadsInpt.files)];
-    // files.forEach((file, index, fileList) => 
-    // );
+    // files.forEach((file, index, fileList) => );
     for (var i = 0; i < files.length; i++) {
       this.props.uploadToCloudinary(sourceEvt, files[i], this.state.uploads[files[i].name]);
     }
   }
 
   // 
+  chooseNewBckgPhoto(evt) {
+  }
+
+  // 
   createNewThumbnail(img, output) {
+    const self = this;
     let $newThumb = $('<div />').addClass('thumb').css({ backgroundImage: `url(${img})` }),
         $thumbWrapper = $('<div />').addClass('thumb-wrapper'),
         $chooseBckgGlyph = $('<i class="material-icons bckg-select-opt">panorama_fish_eye</i>'),
@@ -115,6 +119,13 @@ export default class FileUploadAPI extends Component {
       $(this)
         .text($(this).hasClass('selected-bckg') ? 'panorama_fish_eye' : 'check_circle')
         .toggleClass('selected-bckg');
+
+      let $bckgImgUrl = $(this)
+        .siblings('.thumb')
+        .css('backgroundImage')
+        .replace(/^url\(["|'](.+)["|']\)$/i, '$1');
+      console.log('$bckgImgUrl:', $bckgImgUrl);
+      self.props.setNeww($bckgImgUrl);
     });
 
     $('.glyphicon').click(function(evt) {

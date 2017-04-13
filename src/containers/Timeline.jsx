@@ -9,7 +9,7 @@ import NewEventModal from '../components/NewEventModal';
 import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
 import ConfirmDeletionModal from '../components/ConfirmDeletionModal';
-import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
+import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection, setNewBckgImage } from '../actions/index';
 import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchCloudinaryImageData, uploadToCloudinary, fetchAllCloudinary, fetchAllEventTags } from '../actions/asyncActions';
 import Utils from '../utilities/index';
 
@@ -44,7 +44,8 @@ import cloudinary from 'cloudinary';
     fetchCloudinaryImageData,
     uploadToCloudinary,
     fetchAllCloudinary,
-    fetchAllEventTags
+    fetchAllEventTags,
+    setNewBckgImage
   }, dispatch)
 )
 export default class Timeline extends Component {
@@ -150,6 +151,10 @@ export default class Timeline extends Component {
     this.props.uploadToCloudinary(this.upldBtn.files[0], this.upldBtn.value);
   }
 
+  setNeww(imgUrl) {
+    this.props.setNewBckgImage(imgUrl);
+  }
+
   render() {
     return (
       <div>
@@ -164,7 +169,8 @@ export default class Timeline extends Component {
           updEvt={ (evtData) => this.props.updateSingleEvent(evtData) }
           uploadToCloudinary={ this.props.uploadToCloudinary }
           cloudinaryImageStore={ this.props.cloudinaryImageStore }
-          fetchAllEventTags={ ::this.props.fetchAllEventTags } />
+          fetchAllEventTags={ ::this.props.fetchAllEventTags }
+          setNeww={ ::this.setNeww } />
         <NewEventModal
           modalStatus={ this.state.newModal }
           toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }

@@ -16,8 +16,8 @@ const destructureEvent = (evtObj) => {
   console.log('oo', oo);
 
   return function() {
-    return {}
-  }
+    return {};
+  };
 };
 
 

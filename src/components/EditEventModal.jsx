@@ -187,7 +187,8 @@ export default class EditEventModal extends Component {
               evt={ this.props.modalData }
               submittable={ true }
               uploadToCloudinary={ this.props.uploadToCloudinary }
-              cloudinaryImageStore={ this.props.cloudinaryImageStore } />
+              cloudinaryImageStore={ this.props.cloudinaryImageStore }
+              setNeww={ this.props.setNeww } />
 
             <fieldset>
               <button
