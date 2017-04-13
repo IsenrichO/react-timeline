@@ -74,3 +74,8 @@ export const fetchAllEventTags_Success = (payload) => ({
   type: Types.FETCH_ALL_EVENT_TAGS_SUCCESS,
   payload
 });
+
+export const setNewBckgImage = (payload) => ({
+  type: Types.SET_BCKG_IMAGE,
+  payload
+});
