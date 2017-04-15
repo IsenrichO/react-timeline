@@ -81,7 +81,7 @@ const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, p
       onClick={ debounceToggle }>
       <i className="material-icons">place</i>
       <em key={ `Location_${evtLocation}` }>{ evtLocation }</em>
-      <i className="toggle-glyph glyphicon glyphicon-menu-right" />
+      <i className="material-icons toggle-glyph">keyboard_arrow_right</i>
       <StaticGMap evtLocation={ evtLocation } />
     </div>
     
@@ -90,7 +90,7 @@ const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, p
       onClick={ debounceToggle }>
       <i className="material-icons">collections</i>
       <em>{ photosTagLine(photoCount) }</em>
-      <i className="toggle-glyph glyphicon glyphicon-menu-right" />
+      <i className="material-icons toggle-glyph">keyboard_arrow_right</i>
     </div>
   </div>
 );

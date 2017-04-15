@@ -95,7 +95,7 @@ export default class ButtonControls extends MotionComponent {
         name="mainControlBtn"
         style={{ ...super.mainBtnStyles(), transform: `rotate(${rotate}deg)` }}
         onClick={ ::this.toggleMenu }>
-        <i className={ `glyphicon glyphicon-${isOpen ? 'th' : 'pencil'}` } />
+        <i className="material-icons">{ isOpen ? 'apps' : 'edit' }</i>
       </button>
     );    
   }
