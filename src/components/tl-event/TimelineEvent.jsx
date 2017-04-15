@@ -41,7 +41,7 @@ const TimelineEvent = (props) => {
   return (
     <li className={ `tl-event${evtAlign}` }>
       <div className="tl-marker">
-        <i className="glyphicon glyphicon-record" />
+        <i className="material-icons">adjust</i>
       </div>
       <div className={ `tl-event-panel${isInBatch ? ' batch-select-active' : ''}` }>
         <TimelineEventToolbar
