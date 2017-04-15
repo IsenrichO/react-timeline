@@ -26,10 +26,12 @@
   }
   .dz-wrapper {
     output {
+      width: calc(100% + 20px);
+      left: -10px;
       .img-reel {
         @include flex(flex, row nowrap, flex-start);
         position: relative;
-        width: calc(100% - 10vw);
+        width: calc(100% - 9vw);
         margin: auto;
         overflow: hidden;
       }
@@ -39,7 +41,7 @@
         // transition: background-position 0.25s linear !important;
         @extend %hidden;
         position: absolute;
-        width: 5vw;
+        width: 4vw;
         height: calc(100% - 8px);
         top: 8px;
         background:
@@ -53,12 +55,14 @@
           line-height: calc(10vw + 6px);
         }
       }
-      .pan-left:hover {
-        animation: bckgGradientSlideLeft 0.35s 0s linear forwards;
-      }
+      .pan-left:before { @include preFader(right); }
       .pan-right {
         right: 0;
         background: linear-gradient(to left, rgba(42, 39, 39, 0.67) 13%, rgba(0, 0, 0, 0.2) 156%);
+        &:before { @include preFader(left); }
+      }
+      .pan-left:hover {
+        animation: bckgGradientSlideLeft 0.35s 0s linear forwards;
       }
       &:hover .pan-left,
       &:hover .pan-right { @extend %visible; }
