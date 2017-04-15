@@ -81,7 +81,9 @@ export default class Timeline extends Component {
             $elBottom = ($elHeight + $elOffsetTop);
 
       if (($elOffsetTop <= $winBottom) && ($elBottom >= $winScrollTop)) {
-        $el.addClass('in-view');
+        $el.offset().top < window.innerHeight
+          ? setTimeout(() => $el.addClass('in-view'), (index * 1000) + 650)
+          : $el.addClass('in-view');
       }
     });
   }
