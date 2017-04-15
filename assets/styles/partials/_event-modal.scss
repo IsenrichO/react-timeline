@@ -26,11 +26,42 @@
   }
   .dz-wrapper {
     output {
-      @include flex(flex, row nowrap, flex-start);
-      position: relative;
-      // padding: .75rem 0 1.5rem 1rem;
-      overflow-x: overlay;
-      overflow-y: hidden;
+      .img-reel {
+        @include flex(flex, row nowrap, flex-start);
+        position: relative;
+        width: calc(100% - 10vw);
+        margin: auto;
+        overflow: hidden;
+      }
+      .pan-left,
+      .pan-right {
+        @include cbTransition(0.25s ease-in, transform opacity visibility background);
+        // transition: background-position 0.25s linear !important;
+        @extend %hidden;
+        position: absolute;
+        width: 5vw;
+        height: calc(100% - 8px);
+        top: 8px;
+        background:
+          linear-gradient(to right, rgba(42, 39, 39, 0.67) 13%, rgba(0, 0, 0, 0.2) 156%)
+          repeat-x center center / 7vw 12vw;
+        cursor: pointer;
+        z-index: 10;
+        > i {
+          color: #FFF;
+          font-size: 3rem;
+          line-height: calc(10vw + 6px);
+        }
+      }
+      .pan-left:hover {
+        animation: bckgGradientSlideLeft 0.35s 0s linear forwards;
+      }
+      .pan-right {
+        right: 0;
+        background: linear-gradient(to left, rgba(42, 39, 39, 0.67) 13%, rgba(0, 0, 0, 0.2) 156%);
+      }
+      &:hover .pan-left,
+      &:hover .pan-right { @extend %visible; }
       .thumb {
         position: relative;
         width: 10vw;
@@ -39,6 +70,7 @@
         background: transparent no-repeat center / contain;
         overflow: hidden;
         &-wrapper {
+          @include cbTransition(0.5s ease, transform);
           @include cbBorderRadii(8px);
           position: relative;
           padding: 2px 4px;
