@@ -108,7 +108,27 @@
   content: '';
   width: 12px;
   height: 100%;
-  #{$pos}: -12px;
-  background: linear-gradient(unquote('#{$angle}deg, transparent 0, rgba(232, 206, 206, 0.38) 25%, #E8CECE 100%'));
+  #{$pos}: -15px;
+  background: linear-gradient(unquote('#{$angle}deg, transparent 0, rgba(232, 206, 206, 0.38) 35%, #E8CECE 100%'));
   z-index: 9;
+}
+
+// 
+@mixin shadowedArrows() {
+  $dirs: left, right;
+  $multipliers: -1, 1;
+
+  @each $dir in $dirs {
+    $offsetX: nth($multipliers, index($dirs, $dir)) * 4;
+
+    .pan-#{$dir} {
+      @if ($dir == right) {
+        left: auto;
+      }
+      #{$dir}: -5px;
+      border-radius: if($dir == left, 6px 0 0 6px, 0 6px 6px 0);
+      &:before { @include preFader(if($dir == left, right, left)); }
+      > i { text-shadow: unquote('#{$offsetX}px -1px 1px rgba(128, 128, 128, 0.48)'); }
+    }
+  }
 }
