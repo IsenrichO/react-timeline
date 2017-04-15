@@ -26,46 +26,67 @@
   }
   .dz-wrapper {
     output {
-      width: calc(100% + 20px);
-      left: -10px;
-      .img-reel {
-        @include flex(flex, row nowrap, flex-start);
-        position: relative;
-        width: calc(100% - 9vw);
-        margin: auto;
-        overflow: hidden;
-      }
+      width: calc(96% + 1.5rem);
+      left: calc(2% - 0.75rem);
+      @include shadowedArrows();
       .pan-left,
       .pan-right {
         @include cbTransition(0.25s ease-in, transform opacity visibility background);
-        // transition: background-position 0.25s linear !important;
-        @extend %hidden;
         position: absolute;
         width: 4vw;
         height: calc(100% - 8px);
         top: 8px;
+        border: 3px double $theme-gray;
         background:
-          linear-gradient(to right, rgba(42, 39, 39, 0.67) 13%, rgba(0, 0, 0, 0.2) 156%)
-          repeat-x center center / 7vw 12vw;
+          transparent
+          no-repeat
+          radial-gradient(
+            ellipse farthest-corner at 20px 55px,
+            #E8CECE 0,
+            rgba($theme-content-lt, 0.01) 40%,
+            rgba($theme-content-lt, 0.28) 75%,
+            rgba($theme-content-lt, 0.55) 99%
+          )
+          center center / 160% 166%;
+          // Light Gray: rgba(91, 90, 90, 0.01);
+
+          // .pan-left `background` Linear-Gradient:
+          //    background:
+          //      linear-gradient(to right, rgba(42, 39, 39, 0.67) 13%, rgba(0, 0, 0, 0.2) 156%)
+          //      repeat-x center center / 7vw 12vw;
+          // .pan-right `background` Linear-Gradient:
+          //    background: linear-gradient(to left, rgba(42, 39, 39, 0.67) 13%, rgba(0, 0, 0, 0.2) 156%);
+
         cursor: pointer;
         z-index: 10;
+        &:hover {
+          background:
+            transparent
+            no-repeat
+            radial-gradient(
+              ellipse farthest-corner at 20px 55px,
+              #E8CECE 0,
+              rgba($theme-content-lt, 0.01) 40%,
+              rgba($theme-content-lt, 0.28) 75%,
+              rgba($theme-content-lt, 0.55) 99%
+            )
+            center center / 101% 104%;
+        }
         > i {
-          color: #FFF;
+          color: $theme-content-lt;
           font-size: 3rem;
           line-height: calc(10vw + 6px);
         }
       }
-      .pan-left:before { @include preFader(right); }
-      .pan-right {
-        right: 0;
-        background: linear-gradient(to left, rgba(42, 39, 39, 0.67) 13%, rgba(0, 0, 0, 0.2) 156%);
-        &:before { @include preFader(left); }
+      // .pan-left:hover { animation: bckgGradientSlideLeft 0.35s 0s linear forwards; }
+
+      .img-reel {
+        @include flex(flex, row nowrap, flex-start);
+        position: relative;
+        width: calc(100% - 8vw);
+        margin: auto;
+        overflow: hidden;
       }
-      .pan-left:hover {
-        animation: bckgGradientSlideLeft 0.35s 0s linear forwards;
-      }
-      &:hover .pan-left,
-      &:hover .pan-right { @extend %visible; }
       .thumb {
         position: relative;
         width: 10vw;

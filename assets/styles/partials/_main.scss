@@ -25,11 +25,11 @@
       width: 50%;
       left: 0;
       float: right;
-      .tl-marker { left: -2.5%; }
+      .tl-marker { left: -1rem; }
       .tl-toolbar { left: calc(100% + 1.6rem); }
       .tl-event-panel {
         @include cbTransform(translateX(100px));
-        left: 0;
+        left: 10px;
         margin-right: 22.5%;
         float: right;
         &:before { @extend %tt-left-shadow; }
@@ -57,7 +57,7 @@
     @extend %hidden;
     position: relative;
     width: 70%;
-    left: 22.5%;
+    left: calc(22.5% - 10px);
     border: 1px solid $theme-border;
     transition: outline 0.5s ease-in-out,
                 transform 0.75s linear;
@@ -93,13 +93,15 @@
   }
   .tl-marker {
     position: absolute;
-    width: 5%;
+    width: 2rem;
     height: 2rem;
-    right: -2.5%;
+    right: -1rem;
     text-align: center;
     > i {
-      top: -0.75rem;
-      font-size: 1.5rem;
+      position: relative;
+      top: -1rem;
+      font-size: 2rem;
+      font-weight: bolder;
     }
   }
 } 
@@ -168,6 +170,8 @@
   &-tags { padding-right: 0.5rem; }
   .panel-body &:first-child,
   .panel-footer &:first-child {
+    position: relative;
+    top: 2px;
     margin-right: 1rem;
     color: $theme-red;
   }
@@ -187,7 +191,7 @@
     transition-duration: 0.45s;
     min-height: 7.142857142857143rem;   // => (100 / 14)px
     background: rgba(108, 108, 108, 0.63) no-repeat center 30% / 100%;
-    background-blend-mode: screen;  // color;
+    background-blend-mode: soft-light;
     &:hover {
       @include cbTransition(2.25s linear, background-size);
       background-size: 150%;
