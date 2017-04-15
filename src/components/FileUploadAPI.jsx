@@ -6,7 +6,10 @@ import FileUploadGlyph from '../constants/svg/FileUploadGlyph_SVG';
 export default class FileUploadAPI extends Component {
   constructor(props) {
     super(props);
-    this.state = { uploads: {} };
+    this.state = {
+      uploads: {},
+      imgReelShift: 0
+    };
   }
 
   componentDidMount() {
@@ -144,6 +147,32 @@ export default class FileUploadAPI extends Component {
     }
   }
 
+  // Allows for smooth lateral panning of the image reel when enough images are present
+  //  as to overflow outside the containing element's side boundaries:
+  panReel() {
+    const self = this;
+    $('[class^="pan-"]').on('click', function(evt) {
+      evt.stopPropagation();
+      const $wrapper = $(this).siblings('.img-reel'),
+            $wrapperWidth = $wrapper.get(0).scrollWidth,
+            $thumbs = $wrapper.find('.thumb-wrapper'),
+            $sign = ($(evt.currentTarget).attr('class') === 'pan-left' ? -1 : 1);
+
+      console.log('REEL STATE PRE:', self.state);
+      if (!self.state.lateralShift) {
+        self.setState({ lateralShift: ($wrapperWidth / $thumbs.length) });
+      }
+      let lateralShift = (self.state.hasOwnProperty('lateralShift') && self.state.lateralShift);
+      console.log('LATERAL SHIFT:', lateralShift);
+      self.setState({ imgReelShift: self.state.imgReelShift + ($sign * lateralShift) });
+      console.log('REEL STATE POST:', self.state);
+
+      $thumbs.css({
+        transform: `translateX(${self.state.imgReelShift}px)`
+      });
+    });
+  }
+
   // 
   renderUploadedCloudinaryImages(imgUrls = null) {
     if (!imgUrls || !imgUrls.length) { return null; }
@@ -196,10 +225,26 @@ export default class FileUploadAPI extends Component {
                 ' or drop them here'
               ]}
             </div>
+
             <output
               htmlFor="file-upload-btn"
               name="photos"
-              ref={ (fileContainer) => { this.fileContainer = fileContainer; }} />
+              // ref={ (fileContainer) => { this.fileContainer = fileContainer; }}
+              >
+              <div
+                className="pan-left"
+                onClick={ () => ::this.panReel() }>
+                <i className="material-icons">chevron_left</i>
+              </div>
+              <div
+                className="img-reel"
+                ref={ (fileContainer) => { this.fileContainer = fileContainer; }} />
+              <div
+                className="pan-right"
+                onClick={ () => ::this.panReel() }>
+                <i className="material-icons">chevron_right</i>
+              </div>
+            </output>
             { submissionInput }
           </div>
         </div>
@@ -207,3 +252,6 @@ export default class FileUploadAPI extends Component {
     );
   }
 };
+
+// <div>
+// </div>
