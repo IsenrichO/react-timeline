@@ -69,10 +69,13 @@ const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, p
       </blockquote>
       { ShowMoreControl(evtDescription.length) }
     </div>
+    { evtDescription.length >= 300 ? <br /> : null }
+
     <div className="tl-date">
       <i className="material-icons">event</i>
       <em>{ evtFormattedDate }</em>
     </div>
+    
     <div
       className="tl-location"
       onClick={ debounceToggle }>
@@ -81,6 +84,7 @@ const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, p
       <i className="toggle-glyph glyphicon glyphicon-menu-right" />
       <StaticGMap evtLocation={ evtLocation } />
     </div>
+    
     <div
       className="tl-photos"
       onClick={ debounceToggle }>
