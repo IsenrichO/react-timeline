@@ -99,3 +99,16 @@
     right: $right;
   }
 }
+
+// 
+@mixin preFader($pos: right) {
+  $angle: 90 + if($pos == right, 180, 0);
+
+  position: absolute;
+  content: '';
+  width: 12px;
+  height: 100%;
+  #{$pos}: -12px;
+  background: linear-gradient(unquote('#{$angle}deg, transparent 0, rgba(232, 206, 206, 0.38) 25%, #E8CECE 100%'));
+  z-index: 9;
+}
