@@ -1,27 +1,29 @@
 'use strict';
 import React, { Component } from 'react';
 import FileUploadGlyph from '../constants/svg/FileUploadGlyph_SVG';
+import ImageReel from './ImageReel';
 
 
 export default class FileUploadAPI extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      bckgs: [],
       uploads: {},
       imgReelShift: 0
     };
   }
 
-  componentDidMount() {
-    const { cloudinaryImageStore: imgStore, evt: { uuid } } = this.props,
-          uploadedImages = (imgStore.hasOwnProperty(uuid) && !!imgStore[uuid].images.length
-            ? imgStore[uuid].images.map(img => img.secure_url)
-            : null);
+  // componentDidMount() {
+  //   const { cloudinaryImageStore: imgStore, evt: { uuid } } = this.props,
+  //         uploadedImages = (imgStore.hasOwnProperty(uuid) && !!imgStore[uuid].images.length
+  //           ? imgStore[uuid].images.map(img => img.secure_url)
+  //           : null);
 
-    if (!!uploadedImages) {
-      this.renderUploadedCloudinaryImages(uploadedImages);
-    }
-  }
+  //   if (!!uploadedImages) {
+  //     this.renderUploadedCloudinaryImages(uploadedImages);
+  //   }
+  // }
 
   // Appends a `.thumb` <div> with nested a <img> element to specified output target:
   readInThumbnailWithImageElement(file, index, output) {
@@ -131,7 +133,7 @@ export default class FileUploadAPI extends Component {
       self.props.setNeww($bckgImgUrl);
     });
 
-    $('.glyphicon').click(function(evt) {
+    $('.glyphicon').click(function() {
       $(this).closest('.thumb-wrapper').remove();
     });
   }
@@ -140,42 +142,51 @@ export default class FileUploadAPI extends Component {
   loadSelectedImages(evt, cb) {
     const [Images, OutputBin] = [evt.target.files, this.fileContainer];
     // Loop through selected images and render as thumbnails:
-    for (var i = 0, currImg; currImg = Images[i]; i++) {
+    for (let i = 0, currImg; currImg = Images[i]; i++) {
       // Secondary check to ensure only allowable MIME types pass through for image processing:
       if (!/image(\/.*)?/.test(currImg.type)) { continue; }
       ::this.readInThumbnailWithBckgImage(currImg, i, OutputBin);
     }
   }
 
-  // Allows for smooth lateral panning of the image reel when enough images are present
-  //  as to overflow outside the containing element's side boundaries:
-  panReel() {
-    const self = this;
-    $('[class^="pan-"]').on('click', function(evt) {
-      evt.stopPropagation();
-      const $wrapper = $(this).siblings('.img-reel'),
-            $wrapperWidth = $wrapper.get(0).scrollWidth,
-            $thumbs = $wrapper.find('.thumb-wrapper'),
-            $sign = ($(evt.currentTarget).attr('class') === 'pan-left' ? -1 : 1);
+  // // Allows for smooth lateral panning of the image reel when enough images are present
+  // //  as to overflow outside the containing element's side boundaries:
+  // panReel() {
+  //   const self = this;
+  //   $('[class^="pan-"]').on('click', function(evt) {
+  //     evt.stopPropagation();
+  //     const $evtClass = $(evt.currentTarget).attr('class'),
+  //           $wrapper = $(this).siblings('.img-reel'),
+  //           $wrapperWidth = $wrapper.get(0).scrollWidth,
+  //           $thumbs = $wrapper.find('.thumb-wrapper'),
+  //           $sign = ($evtClass === 'pan-left' ? -1 : 1);
 
-      console.log('REEL STATE PRE:', self.state);
-      if (!self.state.lateralShift) {
-        self.setState({ lateralShift: ($wrapperWidth / $thumbs.length) });
-      }
-      let lateralShift = (self.state.hasOwnProperty('lateralShift') && self.state.lateralShift);
-      console.log('LATERAL SHIFT:', lateralShift);
-      self.setState({ imgReelShift: self.state.imgReelShift + ($sign * lateralShift) });
-      console.log('REEL STATE POST:', self.state);
 
-      $thumbs.css({
-        transform: `translateX(${self.state.imgReelShift}px)`
-      });
-    });
-  }
+  //     console.log('REEL STATE PRE:', self.state);
+  //     if (!self.state.lateralShift) {
+  //       self.setState({ lateralShift: ($wrapperWidth / $thumbs.length) });
+  //     }
+  //     let lateralShift = (self.state.hasOwnProperty('lateralShift') && self.state.lateralShift);
+  //     console.log('LATERAL SHIFT:', lateralShift);
+      
+  //     if (
+  //       (self.state.imgReelShift == 0) && ($evtClass === 'pan-right')
+  //       || ($(evt.currentTarget).siblings('.img-reel').width() + self.state.imgReelShift <= self.state.lateralShift) && ($evtClass === 'pan-left')
+  //     ) return;
+      
+  //     self.setState({ imgReelShift: self.state.imgReelShift + ($sign * lateralShift) });
+  //     console.log('REEL STATE POST:', self.state);
+
+  //     $thumbs.css({
+  //       transform: `translateX(${self.state.imgReelShift}px)`
+  //     });
+  //   });
+  // }
 
   // 
   renderUploadedCloudinaryImages(imgUrls = null) {
-    if (!imgUrls || !imgUrls.length) { return null; }
+    if (!imgUrls || !imgUrls.length) return null;
+
     const [Images, OutputBin] = [imgUrls, this.fileContainer];
     for (let i = 0, currImg; currImg = Images[i]; i++) {
       ::this.createNewThumbnail(currImg, OutputBin);
@@ -226,25 +237,10 @@ export default class FileUploadAPI extends Component {
               ]}
             </div>
 
-            <output
-              htmlFor="file-upload-btn"
-              name="photos"
-              // ref={ (fileContainer) => { this.fileContainer = fileContainer; }}
-              >
-              <div
-                className="pan-left"
-                onClick={ () => ::this.panReel() }>
-                <i className="material-icons">chevron_left</i>
-              </div>
-              <div
-                className="img-reel"
-                ref={ (fileContainer) => { this.fileContainer = fileContainer; }} />
-              <div
-                className="pan-right"
-                onClick={ () => ::this.panReel() }>
-                <i className="material-icons">chevron_right</i>
-              </div>
-            </output>
+            <ImageReel
+              { ...this.props }
+              bckgs={ this.state.bckgs } />
+
             { submissionInput }
           </div>
         </div>
@@ -253,5 +249,32 @@ export default class FileUploadAPI extends Component {
   }
 };
 
-// <div>
-// </div>
+
+
+
+// <ImageReel
+//   { ...props }
+//   bckgs={ this.state.bckgs } />
+
+
+
+// <output
+//   htmlFor="file-upload-btn"
+//   // ref={ (fileContainer) => { this.fileContainer = fileContainer; }}
+//   name="photos">
+//   <div
+//     className="pan-left"
+//     onClick={ () => ::this.panReel() }>
+//     <i className="material-icons">chevron_left</i>
+//   </div>
+//   <div
+//     className="img-reel"
+//     ref={ (fileContainer) => { this.fileContainer = fileContainer; }} />
+//   <div
+//     className="pan-right"
+//     onClick={ () => ::this.panReel() }>
+//     <i className="material-icons">chevron_right</i>
+//   </div>
+// </output>
+
+
