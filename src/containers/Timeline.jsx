@@ -161,7 +161,17 @@ export default class Timeline extends Component {
     return (
       <div>
         <ul className="tl">
+          <li className="tl-event--beginning">
+            <div className="tl-marker--beginning">
+              <i className="material-icons">timeline</i>
+            </div>
+          </li>
           { ::this.renderOrderedEvents(Utils.orderTimelineEvents(this.props.seedData)) }
+          <li className="tl-event--end">
+            <div className="tl-marker--end">
+              <i className="material-icons">more_vert</i>
+            </div>
+          </li>
         </ul>
         
         <EditEventModal
