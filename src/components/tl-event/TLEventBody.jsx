@@ -93,7 +93,7 @@ return (
       className="tl-photos"
       onClick={ debounceToggle }>
       <i className="material-icons">collections</i>
-      <em>{ photosTagLine(photoCount) }</em>
+      <em>{ photosTagLine((cloudinaryImageStore && cloudinaryImageStore.length) || 0) }</em>
       <i className="material-icons toggle-glyph">keyboard_arrow_right</i>
       <ImageReel
         { ...props }

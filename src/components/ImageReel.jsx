@@ -13,16 +13,12 @@ export default class ImageReel extends Component {
   }
 
   componentDidMount() {
-    console.log('COMPONENT DID MOUNT', this.props);
-    console.log('\n\n\n\n\n\nGET MY IMAGES:', this.props.getMyImgs(this.props.uuid));
-    
     const { cloudinaryImageStore: imgStore } = this.props;
     if (!!imgStore && Array.isArray(imgStore)) ::this._loadImagesToState(this.props);
     ::this.injectImages(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('COMPONENT WILL RECEIVE PROPS', nextProps);
     if (this.props.cloudinaryImageStore !== nextProps.cloudinaryImageStore) {
       ::this._loadImagesToState(nextProps);
       ::this.injectImages(nextProps);      
@@ -152,7 +148,6 @@ export default class ImageReel extends Component {
             $thumbs = $wrapper.find('.thumb-wrapper'),
             $sign = ($evtClass === 'pan-left' ? -1 : 1);
 
-
       console.log('REEL STATE PRE:', self.state);
       if (!self.state.lateralShift) {
         self.setState({ lateralShift: ($wrapperWidth / $thumbs.length) });
@@ -177,8 +172,8 @@ export default class ImageReel extends Component {
   render() {
     return (
       <output
+        className="img-reel"
         htmlFor="file-upload-btn"
-        // ref={ (fileContainer) => { this.fileContainer = fileContainer; }}
         name="photos">
         <div
           className="pan-left"
