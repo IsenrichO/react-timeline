@@ -32,6 +32,14 @@
   background-clip: content-box;
 }
 
+.no-content:before {
+  position: relative;
+  content: attr(data-fallback);
+  width: 100%;
+  text-align: center;
+  font: oblique normal lighter 1.5rem/92px 'Helvetica Neue', sans-serif;
+}
+
 // Overrides Bootstrap `.hidden` class' display property:
 .hidden,
 .shown { display: block !important; }

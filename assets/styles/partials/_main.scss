@@ -28,7 +28,8 @@
       .tl-event-panel {
         @include cbTransform(translateX(100px));
         left: 20px;
-        margin-right: 22.5%;
+        margin-right: 7.5%;
+        // margin-right: 22.5%;
         float: right;
         &:before { @extend %tt-left-shadow; }
         &:after { @extend %tt-left; }
@@ -54,8 +55,10 @@
     @include cbBoxShadow(0 1px 6px rgba(0, 0, 0, 0.175));
     @extend %hidden;
     position: relative;
-    width: 70%;
-    left: calc(22.5% - 20px);
+    width: 85%;
+    left: calc(7.5% - 20px);
+    // width: 70%;
+    // left: calc(22.5% - 20px);
     border: 1px solid $theme-border;
     transition: outline 0.5s ease-in-out,
                 transform 0.75s linear;
@@ -233,6 +236,7 @@
   &-body,
   &-footer {
     position: relative;
+    width: 100%;  // width: inherit;
     padding: 1.25rem;
     border: none;
   }
@@ -313,7 +317,10 @@
     background-color: #F4F4F4;
     .glyphicon-star,
     .glyphicon-star-empty { cursor: pointer; }
-    .glyphicon-star { color: #F6DB3D; }
+    .glyphicon-star {
+      color: #F6DB3D;
+      text-shadow: 0 0 1px $theme-primary;
+    }
   }
 }
 
@@ -357,3 +364,20 @@
     outline: 21px solid rgba(177, 91, 91, 0.23);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+.tl-photos {
+  width: inherit;
+  max-width: 290px;
+}
+
+
