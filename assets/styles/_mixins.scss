@@ -107,9 +107,11 @@
   position: absolute;
   content: '';
   width: 12px;
-  height: 100%;
+  height: inherit;
   #{$pos}: -15px;
-  background: linear-gradient(unquote('#{$angle}deg, transparent 0, rgba(232, 206, 206, 0.38) 35%, #E8CECE 100%'));
+  top: -3px;
+  background: linear-gradient(unquote('#{$angle}deg, #{$trans}, rgba(232, 206, 206, 0.38) 35%, #E8CECE 100%'));
+  background: linear-gradient(unquote('#{$angle}deg, #{$trans}, hsla(0, 0%, 100%, 0.38) 35%, #{$theme-content-lt}'));
   z-index: 9;
 }
 
@@ -125,10 +127,13 @@
       @if ($dir == right) {
         left: auto;
       }
-      #{$dir}: -5px;
+      #{$dir}: 0; // -5px;
       border-radius: if($dir == left, 6px 0 0 6px, 0 6px 6px 0);
       &:before { @include preFader(if($dir == left, right, left)); }
-      > i { text-shadow: unquote('#{$offsetX}px -1px 1px rgba(128, 128, 128, 0.48)'); }
+      > i {
+        margin: 0 0 0 -0.25rem !important;
+        text-shadow: unquote('#{$offsetX}px -1px 1px rgba(128, 128, 128, 0.48)');
+      }
     }
   }
 }

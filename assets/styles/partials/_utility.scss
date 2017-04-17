@@ -37,7 +37,8 @@
   content: attr(data-fallback);
   width: 100%;
   text-align: center;
-  font: oblique normal lighter 1.5rem/92px 'Helvetica Neue', sans-serif;
+  font: oblique normal lighter 1.5rem 'Helvetica Neue', sans-serif;
+  line-height: inherit;
 }
 
 // Overrides Bootstrap `.hidden` class' display property:
