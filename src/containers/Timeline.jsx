@@ -4,13 +4,22 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TimelineEvent from '../components/tl-event/TimelineEvent';
-import EditEventModal from '../components/EditEventModal';
-import NewEventModal from '../components/NewEventModal';
+// import EditEventModal from '../components/EditEventModal';
+// import NewEventModal from '../components/NewEventModal';
 import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
 import ConfirmDeletionModal from '../components/ConfirmDeletionModal';
 import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection, setNewBckgImage } from '../actions/index';
-import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchCloudinaryImageData, uploadToCloudinary, fetchAllCloudinary, fetchAllEventTags } from '../actions/asyncActions';
+import {
+  addSingleEvent,
+  deleteSingleEvt,
+  updateSingleEvent,
+  deleteBatchEvents,
+  fetchCloudinaryImageData,
+  uploadToCloudinary,
+  fetchAllCloudinary,
+  fetchAllEventTags
+} from '../actions/asyncActions';
 import Utils from '../utilities/index';
 
 import CloudinaryUploader from '../CloudinaryUploadAPI';
@@ -56,19 +65,25 @@ export default class Timeline extends Component {
       confirmModal: false,
       confirmationEvt: null
     };
+    this.getMyImgs = this.getMyImgs.bind(this);
   }
 
   static propTypes = {
     seedData: PropTypes.array.isRequired
   };
-  
-  componentDidMount() {
-    this.props.fetchAllCloudinary();
 
-    $(window).on('scroll resize', this.checkViewAndAnimate);
-    setTimeout(() => {
-      window.scroll(0, 1);
-    }, 500);
+  componentDidMount() {
+    // $(window).on('scroll resize', this.checkViewAndAnimate);
+    // setTimeout(() => {
+    //   window.scroll(0, 1);
+    // }, 500);
+  }
+
+  getMyImgs(uuid) {
+    const imgStore = this.props.cloudinaryImageStore;
+    return (!!imgStore.hasOwnProperty(uuid) && !!imgStore[uuid].images.length
+      ? imgStore[uuid].images
+      : null);
   }
 
   checkViewAndAnimate() {
@@ -117,14 +132,28 @@ export default class Timeline extends Component {
     this.setState({ confirmationEvt });
   }
 
+  getTags() {
+    this.props.fetchAllEventTags();
+  }
+
   renderOrderedEvents(events) {
+    // let imageStore = new Promise((resolve, reject) =>
+    //   resolve(this.props.fetchAllCloudinary())
+    // )
+    // .then(res => {
+    //   console.log('Promise res:', res);
+    //   return res;
+    // });
     let imageStore = this.props.cloudinaryImageStore;
+    const self = this;
+    
     return events.map((evt, index) => {
       let attrs;
       if (imageStore.hasOwnProperty(evt.uuid)) {
         attrs = { imageData: imageStore[evt.uuid] };
       }
       console.log('IMAGE STORE:', imageStore);
+
       return (
         <TimelineEvent
           evt={{ ...evt }}
@@ -142,14 +171,15 @@ export default class Timeline extends Component {
           getStarGlyphClass={ Utils.getStarGlyphClass(this.props.seedDataAggregator, evt.uuid) }
           hasMultipleTags={ Utils.hasMultipleTags(this.props.seedDataAggregator, evt.uuid) }
           inverted={ index % 2 ? true : false }
-          { ...attrs } />
+          cloudinaryImageStore={ this.props.cloudinaryImageStore }
+          { ...attrs }
+          getMyImgs={ self.getMyImgs } />
       );
     });
   }
 
   cliccc(evt) {
     evt.preventDefault();
-    console.log('\n\nFILE FOR UPLOAD:', this.upldBtn.value, this.upldBtn.files);
     this.props.uploadToCloudinary(this.upldBtn.files[0], this.upldBtn.value);
   }
 
@@ -174,20 +204,6 @@ export default class Timeline extends Component {
           </li>
         </ul>
         
-        <EditEventModal
-          modalData={ this.props.eventEditingModalData }
-          modalStatus={ this.props.eventEditingModalState }
-          toggleModal={ ::this.toggleModal }
-          updEvt={ (evtData) => this.props.updateSingleEvent(evtData) }
-          uploadToCloudinary={ this.props.uploadToCloudinary }
-          cloudinaryImageStore={ this.props.cloudinaryImageStore }
-          fetchAllEventTags={ ::this.props.fetchAllEventTags }
-          setNeww={ ::this.setNeww } />
-        <NewEventModal
-          modalStatus={ this.state.newModal }
-          toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
-          addSingleEvent={ (evtData) => this.props.addSingleEvent(evtData) }
-          uploadToCloudinary={ this.props.uploadToCloudinary } />
         <BatchActionButtons
           batchSelectionState={ this.props.batchSelectionState }
           batchSelectionItems={ this.props.batchSelectionItems }
@@ -206,3 +222,22 @@ export default class Timeline extends Component {
     );
   }
 };
+
+
+/*
+<EditEventModal
+  modalData={ this.props.eventEditingModalData }
+  modalStatus={ this.props.eventEditingModalState }
+  toggleModal={ ::this.toggleModal }
+  updEvt={ (evtData) => this.props.updateSingleEvent(evtData) }
+  uploadToCloudinary={ this.props.uploadToCloudinary }
+  cloudinaryImageStore={ this.props.cloudinaryImageStore }
+  fetchTags={ ::this.getTags }
+  setNeww={ ::this.setNeww } />
+
+<NewEventModal
+  modalStatus={ this.state.newModal }
+  toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
+  addSingleEvent={ (evtData) => this.props.addSingleEvent(evtData) }
+  uploadToCloudinary={ this.props.uploadToCloudinary } /> 
+*/
