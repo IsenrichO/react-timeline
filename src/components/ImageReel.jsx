@@ -5,23 +5,48 @@ import React, { Component } from 'react';
 export default class ImageReel extends Component {
   constructor(props) {
     super(props);
-    console.log('\n\n\nIMAGE REEL -- PROPS:', props);
     this.state = {
-      // bckgs: [],
+      cims: [],
       uploads: {},
       imgReelShift: 0
     };
   }
 
   componentDidMount() {
-    const { cloudinaryImageStore: imgStore, evt: { uuid } } = this.props,
-          uploadedImages = (imgStore.hasOwnProperty(uuid) && !!imgStore[uuid].images.length
-            ? imgStore[uuid].images.map(img => img.secure_url)
-            : null);
+    console.log('COMPONENT DID MOUNT', this.props);
+    console.log('\n\n\n\n\n\nGET MY IMAGES:', this.props.getMyImgs(this.props.uuid));
+    
+    const { cloudinaryImageStore: imgStore } = this.props;
+    if (!!imgStore && Array.isArray(imgStore)) ::this._loadImagesToState(this.props);
+    ::this.injectImages(this.props);
+  }
 
-    if (!!uploadedImages) {
-      this.renderUploadedCloudinaryImages(uploadedImages);
+  componentWillReceiveProps(nextProps) {
+    console.log('COMPONENT WILL RECEIVE PROPS', nextProps);
+    if (this.props.cloudinaryImageStore !== nextProps.cloudinaryImageStore) {
+      ::this._loadImagesToState(nextProps);
+      ::this.injectImages(nextProps);      
     }
+  }
+
+  _loadImagesToState(props) {
+    this.setState({ cims: props.cloudinaryImageStore });
+  }
+
+  injectImages(props) {
+    const { cloudinaryImageStore: imgStore, uuid } = props,
+          { fileContainer: outputBin } = this;
+
+    $(outputBin).empty();
+    if (!imgStore || !imgStore.length || !uuid) {
+      $(outputBin).addClass('no-content');
+      return null;
+    } else if ($(outputBin).hasClass('no-content')) {
+      $(outputBin).removeClass('no-content');
+    }
+
+    const imgUrls = imgStore.map(img => img.secure_url);
+    ::this.renderUploadedCloudinaryImages(imgUrls);
   }
 
   // Appends a `.thumb` <div> with nested a <img> element to specified output target:
@@ -162,6 +187,7 @@ export default class ImageReel extends Component {
         </div>
         <div
           className="img-reel"
+          data-fallback="No photos to display"
           ref={ (fileContainer) => { this.fileContainer = fileContainer; }} />
         <div
           className="pan-right"

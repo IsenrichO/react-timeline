@@ -2,6 +2,7 @@
 import React from 'react';
 // import { debounce } from 'lodash';
 import StaticGMap from '../StaticMapEventLocation';
+import ImageReel from '../ImageReel';
 import { formatDate } from '../../utilities/index';
 import { toggleAccordionSection } from '../../utilities/utility_classes/general';
 
@@ -59,7 +60,10 @@ const ShowMoreControl = (txtLen = 100) => txtLen >= 300
     </div>
   ) : null;
 
-const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => (
+const TLEventBody = (props) => {
+  let { evt, evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount, imageData, cloudinaryImageStore } = props;
+  console.log('TLEVENTBODY images:', cloudinaryImageStore);
+return (
   <div className="panel-body">
     <div className="tl-description">
       <blockquote
@@ -91,8 +95,13 @@ const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, p
       <i className="material-icons">collections</i>
       <em>{ photosTagLine(photoCount) }</em>
       <i className="material-icons toggle-glyph">keyboard_arrow_right</i>
+      <ImageReel
+        { ...props }
+        cloudinaryImageStore={ cloudinaryImageStore }
+        getMyImgs={ props.getMyImgs } />
     </div>
   </div>
 );
+};
 
 export default TLEventBody;

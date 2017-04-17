@@ -35,15 +35,19 @@ const TimelineEvent = (props) => {
       uuid
     },
     evtAlign, logModalData, toggleModal, deleteEvt, batchSelectionState, addSelectionToBatch, isInBatch, addEventToFavorites, getStarGlyphClass,
-    hasMultipleTags, inverted, confirmDeleteModal, confirmDeletionEvt, imageData
+    hasMultipleTags, inverted, confirmDeleteModal, confirmDeletionEvt, imageData, cloudinaryImageStore
   } = props;
+
+  const ci = (cloudinaryImageStore.hasOwnProperty(uuid) && cloudinaryImageStore[uuid].images.length
+    ? cloudinaryImageStore[uuid].images
+    : null);
 
   return (
     <li className={ `tl-event${evtAlign}` }>
       <div className="tl-marker">
         <i className="material-icons">{ !!getStarGlyphClass ? 'stars' : 'adjust' }</i>
       </div>
-      <div className={ `tl-event-panel${isInBatch ? ' batch-select-active' : ''}` }>
+      <div className={ `in-view tl-event-panel${isInBatch ? ' batch-select-active' : ''}` }>
         <TimelineEventToolbar
           evt={ evt }
           logModalData={ logModalData }
@@ -59,11 +63,16 @@ const TimelineEvent = (props) => {
           inverted={ inverted }
           imageData={ imageData } />
         <TLEventBody
+          evt={ evt }
+          { ...evt }
           evtDescription={ evtDescription }
           evtLocation={ evtLocation }
           evtDate={ evtDate }
           photoCount={ photoCount }
-          evtFormattedDate={ evtFormattedDate } />
+          evtFormattedDate={ evtFormattedDate }
+          // imageData={ imageData }
+          cloudinaryImageStore={ ci }
+          getMyImgs={ props.getMyImgs } />
         <TLEventFooter
           evt={ evt }
           evtType={ evtType }
