@@ -43,6 +43,8 @@ const crudAsync2 = (operation, endpoint = RoutePaths.Events, dispatch, actionCre
 
 // Returns a function to be called within the Redux-Thunk middleware:
 export const fetchSeedData = () => {
+      // .then(dispatchActionCreator(dispatch, fetchSeedData_Success))
+      // .catch(catchAsyncError('Error encountered while attempting to fetch seed data'));
   return (dispatch) => {
     return Axios
       .get(RoutePaths.Events, {
@@ -53,8 +55,11 @@ export const fetchSeedData = () => {
         maxRedirects: 3,
         timeout: 30000
       })
-      .then(dispatchActionCreator(dispatch, fetchSeedData_Success))
-      .catch(catchAsyncError('Error encountered while attempting to fetch seed data'));
+      .then(resp => {
+        console.log('seed:', resp);
+        dispatch(fetchSeedData_Success(resp.data));
+      })
+      .catch(err => console.log('ERROR while fetching seed data:', err));
   };
 };
 
@@ -114,5 +119,5 @@ export const deleteBatchEvents = (evts) => (dispatch) =>
   crudAsync2(Axios.delete, Events, dispatch, deleteBatchEvents_Success, evts);
 
 // 
-export const fetchAllEventTags = () => (dispatch) =>
+export const fetchAllEventTags = (...args) => (dispatch) =>
   crudAsync2(Axios.get, Tags, dispatch, fetchAllEventTags_Success);
