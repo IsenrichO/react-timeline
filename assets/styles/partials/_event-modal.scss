@@ -385,13 +385,14 @@
 
 
 
-.img-reel {
+output.img-reel {
   @include flex(flex, row nowrap);
   @include shadowedArrows();
-  width: inherit;
-  height: 10vw;
+  @extend %tl-item;
+  // width: inherit; // calc(100% - 0.714286rem);
+  height: calc(10vw + 0.5rem - 1px);
   padding-top: 0;
-  line-height: 10vw;
+  line-height: calc(10vw + 0.5rem - 1px);
   .pan-left,
   .pan-right {
     @include cbTransition(0.25s ease-in, transform opacity visibility background);
@@ -448,9 +449,9 @@
   .img-reel {
     @include flex(flex, row nowrap, flex-start);
     position: relative;
-    width: calc(100% - 8vw - 8px);
+    width: calc(100% - 0.714286rem);  // calc(100% - 8vw - 0.714286rem);
     height: inherit;
-    margin: 0 4px;
+    margin-left: 0.714286rem;
     line-height: inherit;
     overflow: hidden;
   }
@@ -458,6 +459,7 @@
     position: relative;
     width: calc(10vw - 10px);
     height: calc(10vw - 6px);
+    top: 3px;
     flex-shrink: 0;
     background: transparent no-repeat center / contain;
     overflow: hidden;
@@ -467,7 +469,7 @@
       position: relative;
       height: inherit;
       padding: 2px 4px;
-      border: 1px solid $theme-content-lt-gray;
+      border: 1px groove $theme-content-lt-gray;
       background-color: #F7F7F7;
       &:before {
         @include cbTransition(0.25s ease-in);
@@ -519,6 +521,30 @@
     }
     img { @include center(); }
   }
+}
+
+
+
+#tl-container .tl-photos {
+  .pan-left,
+  .pan-right {
+    @extend %hidden;
+    // @include reveal-on-hover('.img-reel');
+    div.img-reel:hover ~ & {
+      @extend %visible;
+    }
+    border: none;
+    background: rgba(0, 0, 0, 0.56);
+    &:before { display: none; }
+    > i {
+      height: inherit;
+      line-height: inherit;
+      color: $theme-content-lt;
+    }
+    &:hover { @extend %visible; }
+  }
+  div.img-reel:hover ~ .pan-right,
+  div.img-reel:hover ~ .pan-left { @extend %visible; }
 }
 
 

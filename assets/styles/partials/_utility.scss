@@ -41,6 +41,10 @@
   line-height: inherit;
 }
 
+.tl-row-summary {
+  margin-top: 0 !important;
+}
+
 // Overrides Bootstrap `.hidden` class' display property:
 .hidden,
 .shown { display: block !important; }

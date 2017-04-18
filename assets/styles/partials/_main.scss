@@ -281,11 +281,12 @@
     [class^='tl-'] {
       margin: 1rem 0 0;
       .toggle-glyph {
-        @include cbTransition();
+        @include cbTransition(0.75s 0.125s ease, transform);
         position: relative;
         right: -0.5rem;
         float: right;
         font-size: 2rem;
+        line-height: 16px;
         &.active { transform: rotateZ(90deg); }
       }
     }
@@ -295,25 +296,22 @@
       }
     }
     .tl-location,
-    .tl-photos { cursor: pointer; }
-    .static-map-wrapper {
-      position: relative;
-      height: 0;
-      margin: 0.5rem 1rem 0 0.5rem;
-      border-left: thin dashed $theme-red;
+    .tl-photos {
+      @include cbTransition(0.75s 0.125s ease, height);
+      height: 16px;
       overflow: hidden;
-      &.active { height: auto; }
+      cursor: pointer;
+    }
+    .static-map-wrapper {
+      @extend %tl-item;
       img {
-        width: calc(100% - 0.714286rem);
+        width: calc(100% - 0.714286rem); // calc(100% - 0.714286rem);
         margin-left: 0.714286rem;
       }
     }
   }
   &-footer {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
+    @include flex(flex, row nowrap, space-between);
     background-color: #F4F4F4;
     .glyphicon-star,
     .glyphicon-star-empty { cursor: pointer; }
