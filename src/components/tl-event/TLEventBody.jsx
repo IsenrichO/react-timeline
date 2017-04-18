@@ -26,7 +26,8 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
-const debounceToggle = (evt) => debounce(toggleAccordionSection, 200, true)(evt),
+// const debounceToggle = (evt) => debounce(toggleAccordionSection, 200, true)(evt),
+const debounceToggle = function(evt) { return debounce(toggleAccordionSection, 200, true)(evt); },
       photosTagLine = (numPhotos) => `${numPhotos} Photo${numPhotos !== 1 ? 's' : ''}`;
 
 const slider = (evt) => {
@@ -65,41 +66,45 @@ const TLEventBody = (props) => {
   console.log('TLEVENTBODY images:', cloudinaryImageStore);
 return (
   <div className="panel-body">
-    <div className="tl-description">
+    <section className="tl-description">
       <blockquote
         className={ 'hidden' + (evtDescription.length === 0 ? ' empty-summary' : '') }
         style={{ height: '4em' }}>
         { evtDescription }
       </blockquote>
       { ShowMoreControl(evtDescription.length) }
-    </div>
+    </section>
     { evtDescription.length >= 300 ? <br /> : null }
 
-    <div className="tl-date">
+    <section className="tl-date">
       <i className="material-icons">event</i>
       <em>{ evtFormattedDate }</em>
-    </div>
+    </section>
     
-    <div
-      className="tl-location"
-      onClick={ debounceToggle }>
-      <i className="material-icons">place</i>
-      <em key={ `Location_${evtLocation}` }>{ evtLocation }</em>
-      <i className="material-icons toggle-glyph">keyboard_arrow_right</i>
+    <section className="tl-location">
+      <div
+        className="tl-row-summary"
+        onClick={ debounceToggle }>
+        <i className="material-icons">place</i>
+        <em key={ `Location_${evtLocation}` }>{ evtLocation }</em>
+        <i className="material-icons toggle-glyph">keyboard_arrow_right</i>
+      </div>
       <StaticGMap evtLocation={ evtLocation } />
-    </div>
+    </section>
     
-    <div
-      className="tl-photos"
-      onClick={ debounceToggle }>
-      <i className="material-icons">collections</i>
-      <em>{ photosTagLine((cloudinaryImageStore && cloudinaryImageStore.length) || 0) }</em>
-      <i className="material-icons toggle-glyph">keyboard_arrow_right</i>
+    <section className="tl-photos">
+      <div
+        className="tl-row-summary"
+        onClick={ debounceToggle }>
+        <i className="material-icons">collections</i>
+        <em>{ photosTagLine((cloudinaryImageStore && cloudinaryImageStore.length) || 0) }</em>
+        <i className="material-icons toggle-glyph">keyboard_arrow_right</i>
+      </div>
       <ImageReel
         { ...props }
         cloudinaryImageStore={ cloudinaryImageStore }
         getMyImgs={ props.getMyImgs } />
-    </div>
+    </section>
   </div>
 );
 };
