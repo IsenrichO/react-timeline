@@ -176,14 +176,14 @@ export default class ImageReel extends Component {
         htmlFor="file-upload-btn"
         name="photos">
         <div
+          className="img-reel"
+          data-fallback="No photos to display"
+          ref={ (fileContainer) => { this.fileContainer = fileContainer; }} />
+        <div
           className="pan-left"
           onClick={ () => ::this.panReel() }>
           <i className="material-icons">chevron_left</i>
         </div>
-        <div
-          className="img-reel"
-          data-fallback="No photos to display"
-          ref={ (fileContainer) => { this.fileContainer = fileContainer; }} />
         <div
           className="pan-right"
           onClick={ () => ::this.panReel() }>
