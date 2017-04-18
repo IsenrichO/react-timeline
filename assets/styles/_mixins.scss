@@ -124,11 +124,11 @@
     $offsetX: nth($multipliers, index($dirs, $dir)) * 4;
 
     .pan-#{$dir} {
-      @if ($dir == right) {
-        left: auto;
-      }
-      #{$dir}: 0; // -5px;
-      border-radius: if($dir == left, 6px 0 0 6px, 0 6px 6px 0);
+      @if ($dir == right) { left: auto; }
+      @if ($dir == left) { margin-left: 0.714286rem; }
+      
+      #{$dir}: 0;
+      border-radius: if($dir == left, 4px 0 0 4px, 0 4px 4px 0);
       &:before { @include preFader(if($dir == left, right, left)); }
       > i {
         margin: 0 0 0 -0.25rem !important;
@@ -136,4 +136,11 @@
       }
     }
   }
+}
+
+// 
+@mixin reveal-on-hover($parent) {
+  @include cbTransition(0.5s 0.125s ease-in-out);
+  @extend %hidden;
+  #{$parent}:hover ~ & { @extend %visible; }
 }
