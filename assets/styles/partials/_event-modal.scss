@@ -395,9 +395,9 @@ output.img-reel {
   line-height: calc(10vw + 0.5rem - 1px);
   .pan-left,
   .pan-right {
-    @include cbTransition(0.25s ease-in, transform opacity visibility background);
+    @include cbTransition(0.25s ease-in, width transform background);
     position: absolute;
-    width: 4vw;
+    width: 1vw;
     height: inherit;
     border: 3px double $theme-gray;
     background:
@@ -420,6 +420,7 @@ output.img-reel {
       // .pan-right `background` Linear-Gradient:
       //    background: linear-gradient(to left, rgba(42, 39, 39, 0.67) 13%, rgba(0, 0, 0, 0.2) 156%);
 
+    overflow: hidden;
     cursor: pointer;
     z-index: 10;
     &:hover {
@@ -447,7 +448,7 @@ output.img-reel {
   // .pan-left:hover { animation: bckgGradientSlideLeft 0.35s 0s linear forwards; }
 
   .img-reel {
-    @include flex(flex, row nowrap, flex-start);
+    @include flex();
     position: relative;
     width: calc(100% - 0.714286rem);  // calc(100% - 8vw - 0.714286rem);
     height: inherit;
@@ -461,13 +462,14 @@ output.img-reel {
     height: calc(10vw - 6px);
     top: 3px;
     flex-shrink: 0;
-    background: transparent no-repeat center / contain;
+    background: transparent no-repeat center / cover;
     overflow: hidden;
     &-wrapper {
       @include cbTransition(0.5s ease, transform);
       @include cbBorderRadii(4px);
       position: relative;
       height: inherit;
+      margin: 0 0.5vw;
       padding: 2px 4px;
       border: 1px groove $theme-content-lt-gray;
       background-color: #F7F7F7;
@@ -498,7 +500,7 @@ output.img-reel {
         transition: opacity ease 0.25s;
         &:hover { opacity: 1; }
       }
-      + .thumb-wrapper { margin-left: 1vw; }
+      // + .thumb-wrapper { margin-left: 1vw; }
       .glyphicon,
       .material-icons {
         @extend %hidden;
@@ -528,11 +530,7 @@ output.img-reel {
 #tl-container .tl-photos {
   .pan-left,
   .pan-right {
-    @extend %hidden;
-    // @include reveal-on-hover('.img-reel');
-    div.img-reel:hover ~ & {
-      @extend %visible;
-    }
+    div.img-reel:hover ~ & { width: 4vw; }
     border: none;
     background: rgba(0, 0, 0, 0.56);
     &:before { display: none; }
@@ -541,10 +539,10 @@ output.img-reel {
       line-height: inherit;
       color: $theme-content-lt;
     }
-    &:hover { @extend %visible; }
+    &:hover { width: 4vw; }
   }
   div.img-reel:hover ~ .pan-right,
-  div.img-reel:hover ~ .pan-left { @extend %visible; }
+  div.img-reel:hover ~ .pan-left { width: 4vw; }
 }
 
 

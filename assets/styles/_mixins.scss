@@ -137,10 +137,3 @@
     }
   }
 }
-
-// 
-@mixin reveal-on-hover($parent) {
-  @include cbTransition(0.5s 0.125s ease-in-out);
-  @extend %hidden;
-  #{$parent}:hover ~ & { @extend %visible; }
-}
