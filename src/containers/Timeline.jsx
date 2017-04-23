@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TimelineEvent from '../components/tl-event/TimelineEvent';
-// import EditEventModal from '../components/EditEventModal';
+import EditEventModal from '../components/EditEventModal';
 // import NewEventModal from '../components/NewEventModal';
 import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
@@ -187,6 +187,22 @@ export default class Timeline extends Component {
     this.props.setNewBckgImage(imgUrl);
   }
 
+  injectEditingModal() {
+    if (this.props.eventEditingModalState) {
+      return (
+        <EditEventModal
+          modalData={ this.props.eventEditingModalData }
+          modalStatus={ this.props.eventEditingModalState }
+          toggleModal={ ::this.toggleModal }
+          updEvt={ (evtData) => this.props.updateSingleEvent(evtData) }
+          uploadToCloudinary={ this.props.uploadToCloudinary }
+          cloudinaryImageStore={ this.props.cloudinaryImageStore }
+          fetchTags={ ::this.getTags }
+          setNeww={ ::this.setNeww } />
+      );
+    }
+  }
+
   render() {
     return (
       <div>
@@ -204,6 +220,7 @@ export default class Timeline extends Component {
           </li>
         </ul>
         
+        { this.injectEditingModal() }
         <BatchActionButtons
           batchSelectionState={ this.props.batchSelectionState }
           batchSelectionItems={ this.props.batchSelectionItems }
