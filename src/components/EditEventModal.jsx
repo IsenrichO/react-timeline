@@ -30,7 +30,8 @@ export default class EditEventModal extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchAllEventTags();
+    console.log('fETCH TAGS:', this.props);
+    // this.props.fetchTags();
   }
 
   constructCurrentFormattedDate() {

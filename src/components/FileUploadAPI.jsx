@@ -8,7 +8,6 @@ export default class FileUploadAPI extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bckgs: [],
       uploads: {},
       imgReelShift: 0
     };
@@ -205,7 +204,13 @@ export default class FileUploadAPI extends Component {
   }
 
   render() {
+    console.log('FILE UPLOAD API props:', this.props);
     const submissionInput = (this.props.submittable ? this.renderSubmitButton() : null);
+    const { cloudinaryImageStore, evt: { uuid }} = this.props;
+    const ci = (cloudinaryImageStore.hasOwnProperty(uuid) && cloudinaryImageStore[uuid].images.length
+      ? cloudinaryImageStore[uuid].images
+      : null);
+
     return (
       <fieldset className="dz-wrapper">
         <div
@@ -239,7 +244,8 @@ export default class FileUploadAPI extends Component {
 
             <ImageReel
               { ...this.props }
-              bckgs={ this.state.bckgs } />
+              cloudinaryImageStore={ ci }
+              uuid={ uuid } />
 
             { submissionInput }
           </div>
@@ -248,13 +254,6 @@ export default class FileUploadAPI extends Component {
     );
   }
 };
-
-
-
-
-// <ImageReel
-//   { ...props }
-//   bckgs={ this.state.bckgs } />
 
 
 
@@ -276,5 +275,3 @@ export default class FileUploadAPI extends Component {
 //     <i className="material-icons">chevron_right</i>
 //   </div>
 // </output>
-
-
