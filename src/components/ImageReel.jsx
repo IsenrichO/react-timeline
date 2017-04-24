@@ -8,11 +8,13 @@ export default class ImageReel extends Component {
     this.state = {
       cims: [],
       uploads: {},
-      imgReelShift: 0
+      imgReelShift: 0,
+      lateralShift: 0
     };
   }
 
   componentDidMount() {
+    console.log('IMAGE REEL props:', this.props);
     const { cloudinaryImageStore: imgStore } = this.props;
     if (!!imgStore && Array.isArray(imgStore)) ::this._loadImagesToState(this.props);
     ::this.injectImages(this.props);
@@ -43,6 +45,11 @@ export default class ImageReel extends Component {
 
     const imgUrls = imgStore.map(img => img.secure_url);
     ::this.renderUploadedCloudinaryImages(imgUrls);
+
+    if (!(outputBin.children.length % 2)) {
+      $(outputBin).css({ paddingLeft: 'calc(10vw + (.714286rem / 2))' });
+      $(outputBin).children().first().css({ marginLeft: 'calc(0.5vw + 7px)' });
+    }
   }
 
   // Appends a `.thumb` <div> with nested a <img> element to specified output target:
@@ -128,7 +135,6 @@ export default class ImageReel extends Component {
   // Loops through selection of files and asynchronously executes callback on each:
   loadSelectedImages(evt, cb) {
     const [Images, OutputBin] = [evt.target.files, this.fileContainer];
-    // Loop through selected images and render as thumbnails:
     for (let i = 0, currImg; currImg = Images[i]; i++) {
       // Secondary check to ensure only allowable MIME types pass through for image processing:
       if (!/image(\/.*)?/.test(currImg.type)) { continue; }
@@ -136,37 +142,51 @@ export default class ImageReel extends Component {
     }
   }
 
+  // 
+  renderReelNavigation(numImages) {
+    const self = this,
+          DIRECTIONS = ['left', 'right'];
+    
+    if (numImages <= 2) return;
+    
+    return DIRECTIONS.map((dir, index) =>
+      <div
+        key={ `imgReel${dir}Nav` }
+        className={ `pan-${dir}` }
+        onClick={ ::this.panReel }>
+        <i className="material-icons">{ `chevron_${dir}` }</i>
+      </div>
+    );
+  }
+
   // Allows for smooth lateral panning of the image reel when enough images are present
   //  as to overflow outside the containing element's side boundaries:
-  panReel() {
-    const self = this;
-    $('[class^="pan-"]').on('click', function(evt) {
-      evt.stopPropagation();
-      const $evtClass = $(evt.currentTarget).attr('class'),
-            $wrapper = $(this).siblings('.img-reel'),
-            $wrapperWidth = $wrapper.get(0).scrollWidth,
-            $thumbs = $wrapper.find('.thumb-wrapper'),
-            $sign = ($evtClass === 'pan-left' ? -1 : 1);
+  panReel(evt) {
+    const $evtClass = $(evt.currentTarget).attr('class'),
+          $wrapper = $(evt.currentTarget).siblings('.img-reel'),
+          $wrapperWidth = $wrapper.get(0).scrollWidth + +/(\d|\.)+/g.exec($wrapper.css('paddingLeft'))[0],
+          $thumbs = $wrapper.find('.thumb-wrapper'),
+          $sign = ($evtClass === 'pan-left' ? -1 : 1);
+    
+    let { lateralShift } = this.state;
+    if (!this.state.lateralShift) {
+      const divisor = ($thumbs.length + (($thumbs.length + 1) % 2));
 
-      console.log('REEL STATE PRE:', self.state);
-      if (!self.state.lateralShift) {
-        self.setState({ lateralShift: ($wrapperWidth / $thumbs.length) });
-      }
-      let lateralShift = (self.state.hasOwnProperty('lateralShift') && self.state.lateralShift);
-      console.log('LATERAL SHIFT:', lateralShift);
-      
-      if (
-        (self.state.imgReelShift == 0) && ($evtClass === 'pan-right')
-        || ($(evt.currentTarget).siblings('.img-reel').width() + self.state.imgReelShift <= self.state.lateralShift) && ($evtClass === 'pan-left')
-      ) return;
-      
-      self.setState({ imgReelShift: self.state.imgReelShift + ($sign * lateralShift) });
-      console.log('REEL STATE POST:', self.state);
-
-      $thumbs.css({
-        transform: `translateX(${self.state.imgReelShift}px)`
-      });
-    });
+      lateralShift = $thumbs.first().outerWidth(true) - 7;
+      this.setState({ lateralShift });
+    } else {
+      // let { lateralShift } = this.state;
+      console.log('lateralShift PULLED OFF STATE:', lateralShift);
+    }
+    
+    if (
+      (this.state.imgReelShift >= lateralShift) && ($evtClass === 'pan-right')
+      || ((this.state.imgReelShift < -lateralShift) && ($evtClass === 'pan-left'))
+    ) return;
+    
+    const imgReelShift = (this.state.imgReelShift + ($sign * lateralShift));
+    this.setState({ imgReelShift });
+    $thumbs.css({ transform: `translateX(${imgReelShift}px)` });
   }
 
   render() {
@@ -178,17 +198,9 @@ export default class ImageReel extends Component {
         <div
           className="img-reel"
           data-fallback="No photos to display"
-          ref={ (fileContainer) => { this.fileContainer = fileContainer; }} />
-        <div
-          className="pan-left"
-          onClick={ () => ::this.panReel() }>
-          <i className="material-icons">chevron_left</i>
-        </div>
-        <div
-          className="pan-right"
-          onClick={ () => ::this.panReel() }>
-          <i className="material-icons">chevron_right</i>
-        </div>
+          ref={ (fileContainer) => { this.fileContainer = fileContainer; }}
+          style={{ justifyContent: this.state.cims.length <= 2 ? 'flex-start' : 'space-around' }} />
+        { ::this.renderReelNavigation(this.state.cims.length) }
       </output>
     );
   }
