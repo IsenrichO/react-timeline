@@ -39,8 +39,9 @@ const uploadOptions = (evt, uploadTitle) => ({
 
 // 
 const addNewPhoto = (req, res, next) => {
-  const { title, url, dateTaken, locationTaken, isCoverPhoto } = req.body;
-  const photoData = { title, url, dateTaken, locationTaken, isCoverPhoto };
+  console.log('\n\n\n\nADD NEW PHOTO (Server):');
+  const { title, event, url, dateTaken, locationTaken, isCoverPhoto = false } = req.body;
+  const photoData = { title, url, event, dateTaken, locationTaken, isCoverPhoto };
   new Photo(photoData)
     .save()
     .then(() => Photo.findOne({ url }))
@@ -64,9 +65,14 @@ const serverSideCloudinaryUpload = (req, res, next) => {
 
   console.log('\nUpload Options:', uploadOptions(evt, title));
 
+  addNewPhoto(req, res, next);
+
   Cloudinary.uploader
     .upload(url, uploadOptions(evt, title))
-    .then(photo => res.json(photo))
+    .then(photo => {
+      console.log('\n\n\nPHOTO UPLOADER:', photo);
+      return res.json(photo);
+    })
     .catch(err => {
       console.log(`Error uploading photo to Cloudinary:\t${err}`);
       next();
