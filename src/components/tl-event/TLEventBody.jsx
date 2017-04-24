@@ -2,6 +2,7 @@
 import React from 'react';
 // import { debounce } from 'lodash';
 import StaticGMap from '../StaticMapEventLocation';
+import ImageReel from '../ImageReel';
 import { formatDate } from '../../utilities/index';
 import { toggleAccordionSection } from '../../utilities/utility_classes/general';
 
@@ -25,34 +26,87 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
-const debounceToggle = (evt) => debounce(toggleAccordionSection, 200, true)(evt),
+// const debounceToggle = (evt) => debounce(toggleAccordionSection, 200, true)(evt),
+const debounceToggle = function(evt) { return debounce(toggleAccordionSection, 200, true)(evt); },
       photosTagLine = (numPhotos) => `${numPhotos} Photo${numPhotos !== 1 ? 's' : ''}`;
 
-const TLEventBody = ({ evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount }) => {
+const slider = (evt) => {
+  const $evt = $(evt.currentTarget),
+        $linkText = $evt.text().toUpperCase(),
+        $block = $evt.closest('.show-more-wrapper').prev('blockquote');
 
-  return (
+  $block
+    .toggleClass('hidden shown')
+    .css({ height: $block.hasClass('shown') ? $block.get(0).scrollHeight : '4em' });
+  setTimeout(() => {
+    $evt.text(`Show ${$linkText === 'SHOW MORE' ? 'Less' : 'More'}`);
+  }, 575);
+};
+
+const ShowMoreControl = (txtLen = 100) => txtLen >= 300
+  ? (
+    <div className="show-more-wrapper">
+      <hr className="separator-fade" />
+      <div className="show-more">
+        <span className="bg-line" />
+        <a
+          href="javascript://"
+          target="_self"
+          rel="nofollow"
+          onClick={ slider }>
+          Show More
+        </a>
+        <span className="bg-line" />
+      </div>
+    </div>
+  ) : null;
+
+const TLEventBody = (props) => {
+  let { evt, evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount, imageData, cloudinaryImageStore } = props;
+  console.log('TLEVENTBODY images:', cloudinaryImageStore);
+return (
   <div className="panel-body">
-    <blockquote className={ evtDescription.length === 0 ? 'empty-summary' : '' }>{ evtDescription }</blockquote>
-    <div className="tl-date">
-      <i className="glyphicon glyphicon-calendar" />
+    <section className="tl-description">
+      <blockquote
+        className={ 'hidden' + (evtDescription.length === 0 ? ' empty-summary' : '') }
+        style={{ height: '4em' }}>
+        { evtDescription }
+      </blockquote>
+      { ShowMoreControl(evtDescription.length) }
+    </section>
+    { evtDescription.length >= 300 ? <br /> : null }
+
+    <section className="tl-date">
+      <i className="material-icons">event</i>
       <em>{ evtFormattedDate }</em>
-    </div>
-    <div
-      className="tl-location"
-      onClick={ debounceToggle }>
-      <i className="glyphicon glyphicon-map-marker" />
-      <em key={ `Location_${evtLocation}` }>{ evtLocation }</em>
-      <i className="toggle-glyph glyphicon glyphicon-menu-right" />
+    </section>
+    
+    <section className="tl-location">
+      <div
+        className="tl-row-summary"
+        onClick={ debounceToggle }>
+        <i className="material-icons">place</i>
+        <em key={ `Location_${evtLocation}` }>{ evtLocation }</em>
+        <i className="material-icons toggle-glyph">keyboard_arrow_right</i>
+      </div>
       <StaticGMap evtLocation={ evtLocation } />
-    </div>
-    <div
-      className="tl-photos"
-      onClick={ debounceToggle }>
-      <i className="glyphicon glyphicon-picture" />
-      <em>{ photosTagLine(photoCount) }</em>
-      <i className="toggle-glyph glyphicon glyphicon-menu-right" />
-    </div>
+    </section>
+    
+    <section className="tl-photos">
+      <div
+        className="tl-row-summary"
+        onClick={ debounceToggle }>
+        <i className="material-icons">collections</i>
+        <em>{ photosTagLine((cloudinaryImageStore && cloudinaryImageStore.length) || 0) }</em>
+        <i className="material-icons toggle-glyph">keyboard_arrow_right</i>
+      </div>
+      <ImageReel
+        { ...props }
+        cloudinaryImageStore={ cloudinaryImageStore }
+        getMyImgs={ props.getMyImgs } />
+    </section>
   </div>
-);}
+);
+};
 
 export default TLEventBody;

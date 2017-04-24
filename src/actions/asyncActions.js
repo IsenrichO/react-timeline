@@ -11,7 +11,8 @@ import {
   fetchAllEvents_Success,
   fetchStarredEvents_Success,
   fetchRecentlyModifiedEvents_Sucess,
-  fetchCloudinaryImages_Success
+  fetchCloudinaryImages_Success,
+  fetchAllEventTags_Success
 } from './index';
 
 import cloudinary from 'cloudinary';
@@ -42,6 +43,8 @@ const crudAsync2 = (operation, endpoint = RoutePaths.Events, dispatch, actionCre
 
 // Returns a function to be called within the Redux-Thunk middleware:
 export const fetchSeedData = () => {
+      // .then(dispatchActionCreator(dispatch, fetchSeedData_Success))
+      // .catch(catchAsyncError('Error encountered while attempting to fetch seed data'));
   return (dispatch) => {
     return Axios
       .get(RoutePaths.Events, {
@@ -52,13 +55,16 @@ export const fetchSeedData = () => {
         maxRedirects: 3,
         timeout: 30000
       })
-      .then(dispatchActionCreator(dispatch, fetchSeedData_Success))
-      .catch(catchAsyncError('Error encountered while attempting to fetch seed data'));
+      .then(resp => {
+        console.log('seed:', resp);
+        dispatch(fetchSeedData_Success(resp.data));
+      })
+      .catch(err => console.log('ERROR while fetching seed data:', err));
   };
 };
 
 
-const { Events, getEditEvent, AllEvents, StarredEvents, RecentlyModifiedEvents, Photos } = RoutePaths;
+const { Events, getEditEvent, AllEvents, StarredEvents, RecentlyModifiedEvents, Photos, Tags } = RoutePaths;
 
 // 
 export const fetchAllEvents = () => (dispatch) =>
@@ -111,3 +117,7 @@ export const deleteSingleEvt = (evt) => (dispatch) =>
 // 
 export const deleteBatchEvents = (evts) => (dispatch) =>
   crudAsync2(Axios.delete, Events, dispatch, deleteBatchEvents_Success, evts);
+
+// 
+export const fetchAllEventTags = (...args) => (dispatch) =>
+  crudAsync2(Axios.get, Tags, dispatch, fetchAllEventTags_Success);

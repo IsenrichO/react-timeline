@@ -7,16 +7,17 @@ import TLEventFooter from '../tl-event/TLEventFooter';
 
 const SingleEvent = (props) => {
   const {
-    evt, addEventToFavorites, getStarGlyphClass, hasMultipleTags, imageData,
+    evt, addEventToFavorites, getStarGlyphClass, hasMultipleTags, imageStore,
     evt: { name, uuid, description, location, date, photoCount, formattedDate, type }
   } = props;
+  console.log('\nIMAGE STORE:', imageStore);
 
   return (
     <li className="evt-card">
       <TLEventHeader
         evtName={ name }
         evtUuid={ uuid }
-        imageData={ imageData } />
+        imageData={ imageStore } />
       <TLEventBody
         evtDescription={ description }
         evtLocation={ location }

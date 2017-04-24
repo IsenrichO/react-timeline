@@ -7,7 +7,7 @@ import App from '../components/pages/App';
 import TimelineEventPage from '../components/pages/TimelineEventPage';
 
 // Action creator & middleware imports:
-import { fetchSeedData } from '../actions/asyncActions';
+import { fetchSeedData, fetchAllCloudinary } from '../actions/asyncActions';
 import { StoreWithMiddleware as Store } from '../store/configureStore';
 
 // Child route configuration imports:
@@ -17,8 +17,12 @@ import SearchSubRoutes from './SearchSubRoutes';
 export default (
   <Route
     path="/"
-    onEnter={ () => Store.dispatch(fetchSeedData()) }>
-    <IndexRoute component={ App } />
+    onEnter={ () => Store.dispatch(fetchSeedData()) }
+    onEnter={ fetchSeedData }>
+    <IndexRoute
+      component={ App }
+      // onEnter={ () => Store.dispatch(fetchAllCloudinary()) }
+      />
     <Route
       path="events/edit/:uuid"
       component={ TimelineEventPage } />

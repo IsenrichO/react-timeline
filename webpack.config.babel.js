@@ -131,7 +131,7 @@ const BASE_CONFIG = {
   },
   cache: true,
   watch: true,
-  devtool: `${isProdEnv ? 'cheap-eval' : 'inline'}-source-map`,
+  devtool: `cheap-${isProdEnv ? '' : 'module'}-source-map`,
   resolve: {
     extensions: ['.js', '.jsx']
   },

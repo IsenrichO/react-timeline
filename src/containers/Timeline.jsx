@@ -5,12 +5,21 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TimelineEvent from '../components/tl-event/TimelineEvent';
 import EditEventModal from '../components/EditEventModal';
-import NewEventModal from '../components/NewEventModal';
+// import NewEventModal from '../components/NewEventModal';
 import ButtonControls from '../components/ButtonControls';
 import BatchActionButtons from '../components/BatchActionButtons';
 import ConfirmDeletionModal from '../components/ConfirmDeletionModal';
-import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection } from '../actions/index';
-import { addSingleEvent, deleteSingleEvt, updateSingleEvent, deleteBatchEvents, fetchCloudinaryImageData, uploadToCloudinary, fetchAllCloudinary } from '../actions/asyncActions';
+import { logEventModalData, toggleEventModal, allowBatchSelection, addEventToBatchSelection, clearBatchSelection, setNewBckgImage } from '../actions/index';
+import {
+  addSingleEvent,
+  deleteSingleEvt,
+  updateSingleEvent,
+  deleteBatchEvents,
+  fetchCloudinaryImageData,
+  uploadToCloudinary,
+  fetchAllCloudinary,
+  fetchAllEventTags
+} from '../actions/asyncActions';
 import Utils from '../utilities/index';
 
 import CloudinaryUploader from '../CloudinaryUploadAPI';
@@ -43,7 +52,9 @@ import cloudinary from 'cloudinary';
     clearBatchSelection,
     fetchCloudinaryImageData,
     uploadToCloudinary,
-    fetchAllCloudinary
+    fetchAllCloudinary,
+    fetchAllEventTags,
+    setNewBckgImage
   }, dispatch)
 )
 export default class Timeline extends Component {
@@ -54,14 +65,42 @@ export default class Timeline extends Component {
       confirmModal: false,
       confirmationEvt: null
     };
+    this.getMyImgs = this.getMyImgs.bind(this);
   }
 
   static propTypes = {
     seedData: PropTypes.array.isRequired
   };
-  
+
   componentDidMount() {
-    this.props.fetchAllCloudinary();
+    // $(window).on('scroll resize', this.checkViewAndAnimate);
+    // setTimeout(() => {
+    //   window.scroll(0, 1);
+    // }, 500);
+  }
+
+  getMyImgs(uuid) {
+    const imgStore = this.props.cloudinaryImageStore;
+    return (!!imgStore.hasOwnProperty(uuid) && !!imgStore[uuid].images.length
+      ? imgStore[uuid].images
+      : null);
+  }
+
+  checkViewAndAnimate() {
+    const [$winHeight, $winScrollTop] = [$(window).height(), $(window).scrollTop()],
+          $winBottom = ($winHeight + $winScrollTop);
+
+    $.each($('.tl-event-panel'), function(index, el) {
+      const $el = $(this),
+            [$elHeight, $elOffsetTop] = [$el.outerHeight(), $el.offset().top],
+            $elBottom = ($elHeight + $elOffsetTop);
+
+      if (($elOffsetTop <= $winBottom) && ($elBottom >= $winScrollTop)) {
+        $el.offset().top < window.innerHeight
+          ? setTimeout(() => $el.addClass('in-view'), (index * 1000) + 650)
+          : $el.addClass('in-view');
+      }
+    });
   }
 
   cacheInLocalStorage(data) {
@@ -93,14 +132,28 @@ export default class Timeline extends Component {
     this.setState({ confirmationEvt });
   }
 
+  getTags() {
+    this.props.fetchAllEventTags();
+  }
+
   renderOrderedEvents(events) {
+    // let imageStore = new Promise((resolve, reject) =>
+    //   resolve(this.props.fetchAllCloudinary())
+    // )
+    // .then(res => {
+    //   console.log('Promise res:', res);
+    //   return res;
+    // });
     let imageStore = this.props.cloudinaryImageStore;
+    const self = this;
+    
     return events.map((evt, index) => {
       let attrs;
       if (imageStore.hasOwnProperty(evt.uuid)) {
         attrs = { imageData: imageStore[evt.uuid] };
       }
       console.log('IMAGE STORE:', imageStore);
+
       return (
         <TimelineEvent
           evt={{ ...evt }}
@@ -118,37 +171,56 @@ export default class Timeline extends Component {
           getStarGlyphClass={ Utils.getStarGlyphClass(this.props.seedDataAggregator, evt.uuid) }
           hasMultipleTags={ Utils.hasMultipleTags(this.props.seedDataAggregator, evt.uuid) }
           inverted={ index % 2 ? true : false }
-          { ...attrs } />
+          cloudinaryImageStore={ this.props.cloudinaryImageStore }
+          { ...attrs }
+          getMyImgs={ self.getMyImgs } />
       );
     });
   }
 
   cliccc(evt) {
     evt.preventDefault();
-    console.log('\n\nFILE FOR UPLOAD:', this.upldBtn.value, this.upldBtn.files);
     this.props.uploadToCloudinary(this.upldBtn.files[0], this.upldBtn.value);
   }
 
-  render() {
-    return (
-      <div>
-        <CloudinaryUploader />
+  setNeww(imgUrl) {
+    this.props.setNewBckgImage(imgUrl);
+  }
 
-        <ul className="tl">
-          { ::this.renderOrderedEvents(Utils.orderTimelineEvents(this.props.seedData)) }
-        </ul>
-        
+  injectEditingModal() {
+    if (this.props.eventEditingModalState) {
+      return (
         <EditEventModal
           modalData={ this.props.eventEditingModalData }
           modalStatus={ this.props.eventEditingModalState }
           toggleModal={ ::this.toggleModal }
           updEvt={ (evtData) => this.props.updateSingleEvent(evtData) }
-          uploadToCloudinary={ this.props.uploadToCloudinary } />
-        <NewEventModal
-          modalStatus={ this.state.newModal }
-          toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
-          addSingleEvent={ (evtData) => this.props.addSingleEvent(evtData) }
-          uploadToCloudinary={ this.props.uploadToCloudinary } />
+          uploadToCloudinary={ this.props.uploadToCloudinary }
+          cloudinaryImageStore={ this.props.cloudinaryImageStore }
+          fetchTags={ ::this.getTags }
+          setNeww={ ::this.setNeww } />
+      );
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <ul className="tl">
+          <li className="tl-event--beginning">
+            <div className="tl-marker--beginning">
+              <i className="material-icons">timeline</i>
+            </div>
+          </li>
+          { ::this.renderOrderedEvents(Utils.orderTimelineEvents(this.props.seedData)) }
+          <li className="tl-event--end">
+            <div className="tl-marker--end">
+              <i className="material-icons">more_vert</i>
+            </div>
+          </li>
+        </ul>
+        
+        { this.injectEditingModal() }
         <BatchActionButtons
           batchSelectionState={ this.props.batchSelectionState }
           batchSelectionItems={ this.props.batchSelectionItems }
@@ -167,3 +239,22 @@ export default class Timeline extends Component {
     );
   }
 };
+
+
+/*
+<EditEventModal
+  modalData={ this.props.eventEditingModalData }
+  modalStatus={ this.props.eventEditingModalState }
+  toggleModal={ ::this.toggleModal }
+  updEvt={ (evtData) => this.props.updateSingleEvent(evtData) }
+  uploadToCloudinary={ this.props.uploadToCloudinary }
+  cloudinaryImageStore={ this.props.cloudinaryImageStore }
+  fetchTags={ ::this.getTags }
+  setNeww={ ::this.setNeww } />
+
+<NewEventModal
+  modalStatus={ this.state.newModal }
+  toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
+  addSingleEvent={ (evtData) => this.props.addSingleEvent(evtData) }
+  uploadToCloudinary={ this.props.uploadToCloudinary } /> 
+*/

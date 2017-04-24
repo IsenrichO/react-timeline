@@ -101,5 +101,5 @@ module.exports = {
   listEvents,
   updateSingleEvent,
   deleteSingleEvent,
-  deleteBatchEvents  
+  deleteBatchEvents
 };

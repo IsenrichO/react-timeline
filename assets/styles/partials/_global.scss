@@ -60,25 +60,12 @@ textarea {
 }
 
 blockquote {
-  position: relative;
+  @include cbTransition($transition-ease, height);
+  margin-bottom: 0;
   padding: 0 1rem;
   border: none;
   font: oblique 1.2rem/1 'Raleway', 'Helvetica Neue', sans-serif;
-  &:before,
-  &:after {
-    position: absolute;
-    color: $theme-border;
-    font: italic bold 2.5rem/1 -webkit-pictograph, sans-serif;
-  }
-  &:before {
-    content: open-quote;
-    left: -0.75rem;
-    top: -0.75rem;
-  }
-  &:after {
-    content: close-quote;
-    right: 0;
-  }
+  overflow-y: hidden;
 }
 
 button:active,
@@ -91,9 +78,13 @@ button:visited {
   display: none;
 }
 
+output { position: relative; }
+
 strong,
 em { color: $theme-black; }
 
 img {
   vertical-align: bottom !important;
 }
+
+.material-icons { font-family: 'Material Icons' !important; }

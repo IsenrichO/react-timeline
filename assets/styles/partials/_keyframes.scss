@@ -159,3 +159,35 @@
     visibility: visible;
   }
 }
+
+
+
+@-webkit-keyframes bckgGradientSlideLeft {
+  from { background-position: center center; }
+  to { background-position: -79px -10px; }
+}
+@-moz-keyframes bckgGradientSlideLeft {
+  from { background-position: center center; }
+  to { background-position: -79px -10px; }
+}
+@-o-keyframes bckgGradientSlideLeft {
+  from { background-position: center center; }
+  to { background-position: -79px -10px; }
+}
+@keyframes bckgGradientSlideLeft {
+  from { background-position: center center; }
+  to { background-position: -79px -10px; }
+}
+
+@keyframes radialGradientBurst {
+  from {
+    background:
+      linear-gradient(to right, rgba(42, 39, 39, 0.67) 13%, rgba(0, 0, 0, 0.2) 156%)
+      repeat-x center center / 7vw 12vw;
+  }
+  to {
+    background:
+      linear-gradient(to right, rgba(42, 39, 39, 0.67) 13%, rgba(0, 0, 0, 0.2) 156%)
+      repeat-x center center / 7vw 12vw;
+  }
+}

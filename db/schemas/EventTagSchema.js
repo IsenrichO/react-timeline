@@ -11,7 +11,15 @@ const EventTagSchema = new Schema({
       message: 'You have not given a name to your tag.'
     },
     required: [true, 'This tag requires a name.']
+  },
+  event: {
+    type: Schema.Types.ObjectId,
+    ref: 'Event'
   }
+}, {
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true },
+  collection: 'EventTags'
 });
 
 module.exports = EventTagSchema;

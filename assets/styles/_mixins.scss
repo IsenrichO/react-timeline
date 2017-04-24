@@ -77,3 +77,63 @@
     $index: $index + 1;
   }
 }
+
+// Render :before & :after pseudoclass counterparts for quotation-style
+//  text blocks:
+@mixin quotes($top: -0.75rem, $right: 0, $bottom: -1rem, $left: -0.75rem) {
+  position: relative;
+  &:before,
+  &:after {
+    position: absolute;
+    color: $theme-border;
+    font: italic bold 2.5rem/1 -webkit-pictograph, sans-serif;
+  }
+  &:before {
+    content: open-quote;
+    top: $top;
+    left: $left;
+  }
+  &:after {
+    content: close-quote;
+    bottom: $bottom;
+    right: $right;
+  }
+}
+
+// 
+@mixin preFader($pos: right) {
+  $angle: 90 + if($pos == right, 180, 0);
+
+  position: absolute;
+  content: '';
+  width: 12px;
+  height: inherit;
+  #{$pos}: -15px;
+  top: -3px;
+  background: linear-gradient(unquote('#{$angle}deg, #{$trans}, rgba(232, 206, 206, 0.38) 35%, #E8CECE 100%'));
+  background: linear-gradient(unquote('#{$angle}deg, #{$trans}, hsla(0, 0%, 100%, 0.38) 35%, #{$theme-content-lt}'));
+  z-index: 9;
+}
+
+// 
+@mixin shadowedArrows() {
+  $dirs: left, right;
+  $multipliers: -1, 1;
+
+  @each $dir in $dirs {
+    $offsetX: nth($multipliers, index($dirs, $dir)) * 4;
+
+    .pan-#{$dir} {
+      @if ($dir == right) { left: auto; }
+      @if ($dir == left) { margin-left: 0.714286rem; }
+      
+      #{$dir}: 0;
+      border-radius: if($dir == left, 4px 0 0 4px, 0 4px 4px 0);
+      &:before { @include preFader(if($dir == left, right, left)); }
+      > i {
+        margin: 0 0 0 -0.25rem !important;
+        text-shadow: unquote('#{$offsetX}px -1px 1px rgba(128, 128, 128, 0.48)');
+      }
+    }
+  }
+}

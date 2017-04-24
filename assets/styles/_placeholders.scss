@@ -41,6 +41,12 @@
   border-left: 0 solid #CCC;
 }
 
+%tl-item {
+  position: relative;
+  margin: 0.5rem 0 0.25rem 0.5rem;
+  border-left: thin dashed $theme-red;
+}
+
 %primaryBtn {
   // @include fade(0.25s, 0s, ease-in-out);
   @include cbBorderRadii(4px);
@@ -102,4 +108,11 @@
   background: $theme-red -o-linear-gradient(270deg, $slider-active-gradient-start 15%, $slider-active-gradient-stop 70%) repeat-x;
   background: $theme-red linear-gradient(270deg, $slider-active-gradient-start 15%, $slider-active-gradient-stop 70%) repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF904444', endColorstr='#FF9C5454', GradientType=0);
+}
+
+// Material Design Icons (MDI) inverse color scheme:
+%mdi-invert {
+  color: #000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }

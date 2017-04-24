@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import { getOtherItem } from './functional';
 
 
 // 
@@ -39,12 +40,13 @@ const hasMultipleTags = (srcData, uuid) => {
 // Controller for animation/behavior of Google Static Maps image wrapper:
 const toggleAccordionSection = (evt) => {
   evt.persist();
-  const $target = $(evt.currentTarget),
-        [$mapWrapper, $toggleArrow] = [$('.static-map-wrapper', $target), $('.toggle-glyph', $target)];
-
-  $.each([$toggleArrow, $mapWrapper], (index, el) => {
-    el.toggleClass('active');
-  });
+  console.log('Event:', evt);
+  const { currentTarget: currTarg, currentTarget: { lastChild: toggleGlyph }} = evt,
+        $heights = [$(currTarg).parent('section').get(0).scrollHeight, 16];
+  console.log('Curr Target:', currTarg);
+  
+  $(toggleGlyph).toggleClass('active');
+  $(currTarg).parent('section').css({ height: `${getOtherItem($heights, $(currTarg).parent('section').height())}px` });
 };
 
 
