@@ -21,6 +21,13 @@ export default class EditEventModal extends Component {
   constructor(props) {
     super(props);
     this.state = { uploads: {} };
+
+    this.fieldsetProps = {
+      id: 'edit-evt-description-inpt',
+      className: 'form-cont',
+      placeholder: 'Event description',
+      rows: '6'
+    };
   }
 
   static propTypes = {
@@ -88,7 +95,8 @@ export default class EditEventModal extends Component {
       description: evtDescription,
       type: evtTags
     } = this.props.eventEditingModalData;
-    console.log('DATA:', this.props.eventEditingModalData);
+    // console.log('DATA:', this.props.eventEditingModalData);
+    console.log('FIELDSET PROPS:', this.fieldsetProps);
     return (
       <Modal
         contentLabel={ `EditEventModal_` }
@@ -157,11 +165,8 @@ export default class EditEventModal extends Component {
                 </span>
                 <label htmlFor="edit-evt-description-inpt" />
                 <textarea
-                  id="edit-evt-description-inpt"
-                  className="form-cont"
+                  { ...this.fieldsetProps }
                   ref={ (editEvtDescriptionInpt) => { this.editEvtDescriptionInpt = editEvtDescriptionInpt; }}
-                  placeholder="Event description"
-                  rows="6"
                   defaultValue={ evtDescription } />
               </div>
             </fieldset>
@@ -206,3 +211,6 @@ export default class EditEventModal extends Component {
     );
   }
 };
+
+// ref: { (editEvtDescriptionInpt) => { this.editEvtDescriptionInpt = editEvtDescriptionInpt; }}
+// defaultValue: { evtDescription }
