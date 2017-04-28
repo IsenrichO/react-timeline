@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
+import GoogleMapsAPIStyles from '../constants/json/GoogleMapsAPIStyles.json';
 
 
 export default class GMap extends Component {
@@ -12,23 +13,30 @@ export default class GMap extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.Gmap.panTo({ lat: nextProps.lat, lng: nextProps.lng });
+    this.GMap.panTo({ lat: nextProps.lat, lng: nextProps.lng });
   }
 
   componentDidMount() {
-    this.Gmap = new google.maps.Map(this.map, {
+    this.StyledGMap = new google.maps.StyledMapType(GoogleMapsAPIStyles, { name: 'React-Timeline' });
+
+    this.GMap = new google.maps.Map(this.map, {
       center: { lat: this.props.lat, lng: this.props.lng },
-      zoom: 8
+      zoom: 8,
+      scrollwheel: false,
+      mapTypeControlOptions: {
+        mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain', 'styled_map']
+      }
     });
+
+    this.GMap.mapTypes.set('styled_map', this.StyledGMap);
+    this.GMap.setMapTypeId('styled_map');
   }
 
   render() {
     return (
       <div
         className="gmap-wrapper"
-        ref={ (map) => { this.map = map; }}>
-
-      </div>
+        ref={ (map) => { this.map = map; }} />
     );
   }
 };
