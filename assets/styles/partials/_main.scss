@@ -9,7 +9,7 @@
   width: 75vw;
   height: 100%;
   list-style: none;
-  margin: 2rem 12.5vw;
+  margin: 10vh 12.5vw;
   padding: 0;
   > li {
     position: relative;
@@ -29,7 +29,6 @@
         @include cbTransform(translateX(100px));
         left: 20px;
         margin-right: 7.5%;
-        // margin-right: 22.5%;
         float: right;
         &:before { @extend %tt-left-shadow; }
         &:after { @extend %tt-left; }
@@ -40,10 +39,10 @@
     position: absolute;
     content: '';
     width: 5px;
-    height: 100%;
+    height: auto;
     left: 50%;
-    top: 0;
-    bottom: 0;
+    top: 2rem;
+    bottom: 2rem;
     margin-left: -2.5px;
     border-radius: 1rem;
     background-color: $theme-content-lt;
@@ -131,30 +130,20 @@
     font: normal normal bold 3rem/1 'Material Icons', sans-serif;
     text-align: center;
 
-    .tl-marker--beginning i,
-    .tl-marker--end i {
+    .tl-marker--beginning,
+    .tl-marker--end {
       @extend %br-circle;
       position: relative;
       left: -2px;
-      top: -1rem;
+      top: 0;
+      margin-bottom: 10vh;
       padding: 0.5rem;
       border: 2px solid $theme-bckg;
       font: inherit;
       background-color: $theme-bckg;
       box-shadow: 0 0 8px $bckg-black-op;
-      &:after {
-        @include cbTransform(translateX(-50%));
-        position: absolute;
-        content: '';
-        width: 4px;
-        height: 8px;
-        left: calc(50% + 2px);
-        top: 100%;
-        background-color: $theme-content-lt;
-      }
     }
-
-    // + .tl-event { margin-top: 3.571429rem; }    // Add space above for beginning of timeline
+    .tl-marker--end { margin: 10vh auto 0 ; }
   }
   > li:nth-child(2) { margin-top: 3.571429rem; }          // Add space above for beginning of timeline
   > li:nth-last-child(2) { margin-bottom: 3.571429rem; }  // Add space below for end of timeline
@@ -236,7 +225,7 @@
   &-body,
   &-footer {
     position: relative;
-    width: 100%;  // width: inherit;
+    width: 100%;
     padding: 1.25rem;
     border: none;
   }
@@ -247,6 +236,20 @@
     min-height: 7.142857142857143rem;   // => (100 / 14)px
     background: rgba(108, 108, 108, 0.63) no-repeat center 30% / 100%;
     background-blend-mode: soft-light;
+    &:after {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 2.25rem;
+      top: calc(100% - 1.5rem);
+      background: linear-gradient(
+        to bottom,
+        transparent 0,
+        rgba(255, 255, 255, 0.12) 15%,
+        rgba(255, 255, 255, 0.38) 28%,
+        $theme-content-lt 55%
+      );
+    }
     &:hover {
       @include cbTransition(2.25s linear, background-size);
       background-size: 150%;
@@ -255,8 +258,14 @@
     .collapse-up {
       color: $theme-content-lt;
       text-shadow: -2px -1px 5px Dimgrey;
+      font-variant: small-caps;
     }
-    h3 { width: 95%; }
+    h3 {
+      position: relative;
+      width: 95%;
+      top: -0.25rem;
+      text-align: end;
+    }
     .collapse-up {
       @include cbTransition(0.25s 0.25s cubic-bezier(0, 0.25, 0.7, 0.4));
       @extend %hidden;
@@ -350,11 +359,7 @@
 }
 
 .tl-event {
-  .panel-header {
-    h3 {
-      width: 80% !important;
-      text-align: end;
-    }
+  &-invert .panel-header {
     &.inverted h3 { text-align: start; }
   }
   &-panel.batch-select-active {
