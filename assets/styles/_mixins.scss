@@ -137,3 +137,15 @@
     }
   }
 }
+
+@mixin tlBookends($bound: start) {
+  @include cbTransform(translateX(-50%));
+  #{if($bound == start, top, bottom)}: 100%;
+  position: absolute;
+  content: '';
+  width: 4px;
+  height: 8px;
+  left: calc(50% + 2px);
+  top: auto;
+  background-color: $theme-content-lt;
+}
