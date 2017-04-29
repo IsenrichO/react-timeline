@@ -42,7 +42,9 @@
 }
 
 .tl-row-summary {
+  @include flex(flex, row nowrap, flex-start);
   margin-top: 0 !important;
+  > em { width: 100%; }
 }
 
 // Overrides Bootstrap `.hidden` class' display property:
