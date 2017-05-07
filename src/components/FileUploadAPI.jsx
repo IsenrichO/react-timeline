@@ -90,7 +90,7 @@ export default class FileUploadAPI extends Component {
   // 
   triggerCloudinaryUpload(evt) {
     evt.preventDefault();
-    console.log('\n\n\nFILES:', this.fileUploadsInpt.files);
+    // console.log('\n\n\nFILES:', this.fileUploadsInpt.files);
     const [sourceEvt, files] = [this.props.evt, Array.from(this.fileUploadsInpt.files)];
     // files.forEach((file, index, fileList) => );
     for (var i = 0; i < files.length; i++) {
@@ -128,7 +128,7 @@ export default class FileUploadAPI extends Component {
         .siblings('.thumb')
         .css('backgroundImage')
         .replace(/^url\(["|'](.+)["|']\)$/i, '$1');
-      console.log('$bckgImgUrl:', $bckgImgUrl);
+      // ie.log('$bckgImgUrl:', $bckgImgUrl);
       self.props.setNeww($bckgImgUrl);
     });
 
@@ -204,7 +204,7 @@ export default class FileUploadAPI extends Component {
   }
 
   render() {
-    console.log('FILE UPLOAD API props:', this.props);
+    // console.log('FILE UPLOAD API props:', this.props);
     const submissionInput = (this.props.submittable ? this.renderSubmitButton() : null);
     const { cloudinaryImageStore, evt: { uuid }} = this.props;
     const ci = (cloudinaryImageStore.hasOwnProperty(uuid) && cloudinaryImageStore[uuid].images.length
