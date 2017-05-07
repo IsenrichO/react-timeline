@@ -1,7 +1,9 @@
 'use strict';
 import ReduxThunk from 'redux-thunk';
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
+// import { composeWithDevTools } from 'remote-redux-devtools';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { browserHistory } from 'react-router';
 import reducers from '../reducers/index';
 
@@ -30,13 +32,29 @@ import reducers from '../reducers/index';
 //   })
 // ));
 // const History = syncHistoryWithStore(browserHistory, StoreWithMiddleware);
-const routerMid = routerMiddleware(browserHistory),
-      createStoreWithMiddleware = applyMiddleware(ReduxThunk, routerMid)(createStore),
-      StoreWithMiddleware = createStoreWithMiddleware(combineReducers({
-        ...reducers,
-        routing: routerReducer
-      })),
-      History = syncHistoryWithStore(browserHistory, StoreWithMiddleware);
+
+
+// const composeEnhancers = composeWithDevTools({ port: 3000 });
+const middlewares = [ReduxThunk, routerMiddleware(browserHistory)];
+const StoreWithMiddleware = createStore(
+  combineReducers({
+    ...reducers,
+    routing: routerReducer
+  }),
+  composeWithDevTools(applyMiddleware(...middlewares))
+);
+
+
+// const routerMid = routerMiddleware(browserHistory),
+//       composeEnhancers = composeWithDevTools({ realtime: true, port: process.env.PORT || 3000 }),
+//       createStoreWithMiddleware = composeEnhancers(applyMiddleware(ReduxThunk, routerMid)(createStore),
+//       StoreWithMiddleware = createStoreWithMiddleware(combineReducers({
+//         ...reducers,
+//         routing: routerReducer
+//       })),
+const History = syncHistoryWithStore(browserHistory, StoreWithMiddleware);
+
+
 
 
 // Create an enhanced history that syncs navigation events with the store:
