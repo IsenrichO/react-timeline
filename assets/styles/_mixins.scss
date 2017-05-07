@@ -67,6 +67,17 @@
   }
 }
 
+@mixin equalSides($sideLength: 1rem) {
+  width: $sideLength;
+  height: $sideLength;
+}
+
+@mixin brCorners($side: left, $borderStyle: 1px solid $theme-red) {
+  border-top-#{$side}-radius: inherit;
+  border-bottom-#{$side}-radius: inherit;
+  border: $borderStyle;
+}
+
 @mixin nthChildIterator($prop, $limit: 1, $step: 1) {
   $index: 1;
   @while $index <= $limit {

@@ -58,9 +58,7 @@
   cursor: pointer;
 }
 
-%br-circle {
-  @include cbBorderRadii(50%);
-}
+%br-circle { @include cbBorderRadii(50%); }
 
 %txt-of {
   white-space: nowrap;
@@ -78,6 +76,9 @@
   visibility: visible;
 }
 
+// Used to give cursor indication of an explicitly non-allowable action:
+%disallow { cursor: not-allowed; }
+
 %no-select {
   -ms-pointer-events: visiblePainted;
       pointer-events: visiblePainted;
@@ -88,6 +89,18 @@
         -ms-user-select: none;
          -o-user-select: none;
             user-select: none;
+}
+
+%button-hover {
+  border-bottom-width: 3px;
+  transform: translateY(1px);
+  line-height: calc(1.4rem + 1px);  
+}
+
+%button-active {
+  border-bottom-width: 2px;
+  transform: translateY(2px);
+  line-height: calc(1.4rem + 2px);
 }
 
 %slider-shading {

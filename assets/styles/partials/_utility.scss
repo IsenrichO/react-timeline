@@ -26,6 +26,9 @@
   overflow: hidden;
 }
 
+// Used to give cursor indication of an explicitly non-allowable action:
+.disallow { cursor: not-allowed; }
+
 .empty-summary {
   height: 50px;
   background: transparent url("data:image/svg+xml;utf8,<svg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'><g fill='%23E8BAA5' fill-opacity='0.4' fill-rule='evenodd'><path d='M5 0h1L0 6V5zM6 5v1H5z'/></g></svg>") repeat center;
@@ -211,6 +214,7 @@ input[type='checkbox'] {
 
 .form-btn {
   min-width: 20%;
+  margin-left: 1rem;
   padding: 0.75rem 1.75rem;
   float: right;
   border: none;
@@ -218,14 +222,13 @@ input[type='checkbox'] {
   border-radius: 8px;
   transition: all 0.05s linear;
   color: $theme-content-lt;
-  font: normal normal bolder 1.4rem/1 'Helvetica Neue', Arial, sans-serif;
-  &:hover {
-    border-bottom-width: 3px;
-    transform: translateY(1px);
-  }
-  &:active {
-    border-bottom-width: 2px;
-    transform: translateY(2px);
+  font: normal normal bolder 1.4rem/1.4rem 'Helvetica Neue', Arial, sans-serif;
+  &:hover { @extend %button-hover; }
+  &:active { @extend %button-active; }
+  &[disabled] {
+    @extend %button-active;
+    @extend %disallow;
+    color: rgba(255, 255, 255, 0.65);
   }
 }
 
