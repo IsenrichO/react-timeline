@@ -1,9 +1,15 @@
-'use strict';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { browserHistory, Router, Route, Link } from 'react-router';
 
-
-const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt, confirmDeleteModal, confirmDeletionEvt }) => (
+const TimelineEventToolbar = ({
+  confirmDeleteModal,
+  confirmDeletionEvt,
+  // deleteEvt,
+  evt,
+  logModalData,
+  toggleModal,
+}) => (
   <div className="tl-toolbar">
     <button
       type="button"
@@ -22,7 +28,8 @@ const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt, confi
         onClick={ () => {
           logModalData(evt);
           toggleModal();
-        }} />
+        }}
+      />
     </button>
     <button
       type="button"
@@ -31,7 +38,7 @@ const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt, confi
       <i
         className="glyphicon glyphicon-send"
         // onClick={ () => {} }
-        />
+      />
     </button>
     <button
       type="button"
@@ -43,9 +50,28 @@ const TimelineEventToolbar = ({ evt, logModalData, toggleModal, deleteEvt, confi
           confirmDeletionEvt(evt);
           confirmDeleteModal();
           // deleteEvt(evt); }
-        }} />
+        }}
+      />
     </button>
   </div>
 );
+
+TimelineEventToolbar.propTypes = {
+  confirmDeleteModal: PropTypes.func.isRequired,
+  confirmDeletionEvt: PropTypes.func.isRequired,
+  deleteEvt: PropTypes.func.isRequired,
+  evt: PropTypes.object,
+  logModalData: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+};
+
+TimelineEventToolbar.defaultProp = {
+  confirmDeleteModal() {},
+  confirmDeletionEvt() {},
+  deleteEvt() {},
+  evt: {},
+  logModalData() {},
+  toggleModal() {},
+};
 
 export default TimelineEventToolbar;

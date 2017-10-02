@@ -1,10 +1,9 @@
-'use strict';
 import React, { Component } from 'react';
+import { classes } from 'aesthetic';
 import { Motion, StaggeredMotion, TransitionMotion, spring, presets } from 'react-motion';
 import MotionComponent from './MotionComponent';
 
-
-export default class ButtonControls extends MotionComponent {
+export default class ButtonControlsPure extends MotionComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,6 +61,8 @@ export default class ButtonControls extends MotionComponent {
   }
 
   renderChildBtns() {
+    const { classNames } = this.props;
+
     return (
       <TransitionMotion
         defaultStyles={ ::this.getDefaultStyles() }
@@ -71,7 +72,7 @@ export default class ButtonControls extends MotionComponent {
             interpolatedStyles.map(({ key, style }, index) => (
               <button
                 key={ `ChildBtn_${key}` }
-                className="btn-controls-child"
+                className={classNames.childBtnControl} // "btn-controls-child"
                 style={ style }
                 onClick={ (evt) => ::this.execChildBtnAction(evt, index) }>
                 <i className={ super.getChildBtnGlyph(index).glyphName() } />
@@ -87,15 +88,24 @@ export default class ButtonControls extends MotionComponent {
   }
 
   renderMainBtn() {
+    const { classNames } = this.props;
     const { isOpen } = this.state;
+
     return ({ rotate }) => (
       <button
-        className="btn-controls"
+        className={classNames.mainBtnControls} // "btn-controls"
         type="button"
         name="mainControlBtn"
         style={{ ...super.mainBtnStyles(), transform: `rotate(${rotate}deg)` }}
         onClick={ ::this.toggleMenu }>
-        <i className="material-icons">{ isOpen ? 'apps' : 'edit' }</i>
+        <i
+          className={classes(
+            "material-icons",
+            classNames.mainBtnIcon,
+          )}
+        >
+          { isOpen ? 'apps' : 'edit' }
+        </i>
       </button>
     );    
   }

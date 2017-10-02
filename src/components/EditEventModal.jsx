@@ -32,6 +32,7 @@ function validate(values) {
     eventEditingModalData: state.eventEditingModalData,
     eventEditingModalState: state.eventEditingModalState,
     initialValues: state.eventEditingModalData,
+    rdxForm: state.form.EditEventModalForm,
   })
 )
 @reduxForm({
@@ -41,13 +42,6 @@ function validate(values) {
 export default class EditEventModal extends Component {
   constructor(props) {
     super(props);
-    this.fieldsetProps = {
-      id: 'edit-evt-description-inpt',
-      className: 'form-cont',
-      placeholder: 'Event description',
-      rows: '6'
-    };
-
     this.inputFields = [
       {
         icon: 'title',
@@ -58,6 +52,7 @@ export default class EditEventModal extends Component {
         type: 'text',
         title: 'Give this event a title',
         placeholder: 'West Coast Roadtrip',
+        ctxAttrs: { },
         otherAttrs: {
           // ref={ (editEvtTitleInpt) => { this.editEvtTitleInpt = editEvtTitleInpt; }}
           // defaultValue: 'evtName',
@@ -73,6 +68,7 @@ export default class EditEventModal extends Component {
         type: 'date',
         title: 'When did this event occur?',
         placeholder: '03/15/2016',
+        ctxAttrs: { },
         otherAttrs: {
           // ref={ (editEvtDateInpt) => { this.editEvtDateInpt = editEvtDateInpt; }},
           isRequiredField: true,
@@ -86,6 +82,7 @@ export default class EditEventModal extends Component {
         type: 'text',
         title: 'Include a location for this event?',
         placeholder: 'San Francisco, CA',
+        ctxAttrs: { },
         otherAttrs: {
           // ref={ (editEvtLocationInpt) => { this.editEvtLocationInpt = editEvtLocationInpt; }},
           isRequiredField: false,
@@ -100,11 +97,11 @@ export default class EditEventModal extends Component {
         type: 'text',
         title: 'Provide details for event',
         placeholder: 'Event Description',
+        ctxAttrs: { rows: 6, },
         otherAttrs: {
           // ref={ (editEvtDescriptionInpt) => { this.editEvtDescriptionInpt = editEvtDescriptionInpt; }},
           isRequiredField: false,
           // defaultValue: 'evtDescription',
-          rows: 6,
         }
       }, {
         icon: 'label', // tags
@@ -115,10 +112,10 @@ export default class EditEventModal extends Component {
         type: 'text',
         title: 'Include tags for categorizing this event',
         placeholder: 'Event Tags',
+        ctxAttrs: { contentEditable: true, },
         otherAttrs: {
           // ref={ (editEvtTagsInpt) => { this.editEvtTagsInpt = editEvtTagsInpt; }},
           isRequiredField: false,
-          contentEditable: true,
         }
       }
     ];
@@ -144,15 +141,9 @@ export default class EditEventModal extends Component {
     // this.set
   }
 
-  updateSingleEvent(name, date, location, description) {
-    const updatedData = {
-      name: this.editEvtTitleInpt.value,
-      date: this.editEvtDateInpt.value,
-      location: this.editEvtLocationInpt.value,
-      description: this.editEvtDescriptionInpt.value
-    };
-    const newEvtData = Object.assign({}, this.props.eventEditingModalData, updatedData);
-    this.props.updEvt(newEvtData);
+  updateSingleEvent() {
+    const { name, date, location, description } = this.props.rdxForm.values;
+    this.props.updEvt({ ...this.props.eventEditingModalData, name, date, location, description });
     this.props.toggleModal();
   }
 
@@ -205,6 +196,7 @@ export default class EditEventModal extends Component {
 
   renderField({ input, label: id, name, other, meta: { touched, error }}) {
     name = other.name;
+    const { ctxAttrs, otherAttrs } = other;
     console.log('\n\nFIELD State:', 'input:', input, 'id:', id, 'name:', name, 'other:', other);
 
     const FormElementMap = new Map([
@@ -218,14 +210,12 @@ export default class EditEventModal extends Component {
     const cn = `form-group ${touched && error ? 'has-danger' : ''}`;
 
     return (
-      <div className={ `input-gr ${other.otherAttrs.isRequiredField ? 'required-field' : ''}` }>
+      <div className={ `input-gr ${otherAttrs.isRequiredField ? 'required-field' : ''}` }>
         <span className="input-gr-addon">
           <i className="material-icons">{ icon }</i>
         </span>
         <label htmlFor={ id }>Label</label>
-        <input
-          { ...attrs }
-          { ...input } />
+        { FormElementMap.get(other.element)({ ...attrs, ...input, ...ctxAttrs }) }
         <span className="validation-msg">{ touched ? error : '' }</span>
       </div>
     );
@@ -250,19 +240,8 @@ export default class EditEventModal extends Component {
   }
 
   render() {
-    // const {
-    //   name: evtName,
-    //   date: evtDate,
-    //   location: evtLocation,
-    //   description: evtDescription,
-    //   type: evtTags
-    // } = this.props.eventEditingModalData;
     const { handleSubmit, pristine, reset, submitting } = this.props;
     console.log('\n\nEVENT EDITING MODAL DATA:', this.props.eventEditingModalData);
-
-    // if (!this.props.initialValues.title) {
-    //   return (<div>Loading...</div>);
-    // }
 
     return (
       <Modal
@@ -282,33 +261,21 @@ export default class EditEventModal extends Component {
             method="post"
             encType="multipart/form-data"
             onSubmit={ handleSubmit(::this.onSubmit) }>
-            <fieldset>
-              { this.reduxFormField(this.inputFields[0]) }
-            </fieldset>
+
+            <fieldset>{ this.reduxFormField(this.inputFields[0]) }</fieldset>
 
             <fieldset>
               {[
                 this.reduxFormField(this.inputFields[1]),
                 this.reduxFormField(this.inputFields[2])
               ]}
-
               <GMap
                 lat={ -34.397 }
                 lng={ 150.644 } />
             </fieldset>
 
             <fieldset>
-              <div className="input-gr">
-                <span className="input-gr-addon">
-                  <i className="glyphicon glyphicon-list-alt" />
-                </span>
-                <label htmlFor="edit-evt-description-inpt" />
-                <textarea
-                  { ...this.fieldsetProps }
-                  ref={ (editEvtDescriptionInpt) => { this.editEvtDescriptionInpt = editEvtDescriptionInpt; }}
-                  // defaultValue={ evtDescription }
-                  />
-              </div>
+              { this.reduxFormField(this.inputFields[3]) }
             </fieldset>
 
             <fieldset>
@@ -339,7 +306,7 @@ export default class EditEventModal extends Component {
                 className="form-btn"
                 type="submit"
                 name="updateEvtBtn"
-                // onClick={ ::this.updateSingleEvent }
+                onClick={ ::this.updateSingleEvent }
                 disabled={ pristine || submitting }>
                 Update Event
               </button>
@@ -358,6 +325,17 @@ export default class EditEventModal extends Component {
   }
 };
 
+// <div className="input-gr">
+//   <span className="input-gr-addon">
+//     <i className="glyphicon glyphicon-list-alt" />
+//   </span>
+//   <label htmlFor="edit-evt-description-inpt" />
+//   <textarea
+//     { ...this.fieldsetProps }
+//     ref={ (editEvtDescriptionInpt) => { this.editEvtDescriptionInpt = editEvtDescriptionInpt; }}
+//     // defaultValue={ evtDescription }
+//     />
+// </div>
 
 // ref: { (editEvtDescriptionInpt) => { this.editEvtDescriptionInpt = editEvtDescriptionInpt; }}
 // defaultValue: { evtDescription }

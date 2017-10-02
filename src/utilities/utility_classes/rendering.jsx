@@ -1,4 +1,3 @@
-'use strict';
 import React from 'react';
 import SingleEvent from '../../components/search/SingleEvent';
 import BatchSelectCheckbox from '../../components/BatchSelectCheckbox';
@@ -7,34 +6,34 @@ import { addEventToFavorites, getStarGlyphClass, hasMultipleTags } from './gener
 
 
 // 
-const renderItemActionControl = (bool, evtUuid, func) => bool
-  ? (
-    <BatchSelectCheckbox
-      evtUuid={ evtUuid }
-      addSelectionToBatch={ func } />
-  ) : (
-    <i 
-      className="collapse-up glyphicon glyphicon-chevron-up"
-      onClick={ collapseBody } />    
-  );
+const renderItemActionControl = (bool, evtUuid, func) => bool ? (
+  <BatchSelectCheckbox
+    evtUuid={evtUuid}
+    addSelectionToBatch={func}
+  />
+) : (
+  <i
+    className="collapse-up glyphicon glyphicon-chevron-up"
+    onClick={collapseBody}
+  />
+);
 
 // 
-const renderStarredEvents = (evts, eventsStore, updateSingleEvent, imageStore) => evts.map((evt, index) => {
-  console.log('IMAGE STORE:', imageStore);
-  return (
+const renderStarredEvents = (evts, eventsStore, updateSingleEvent, imageStore) => evts.map((evt, index) => (
   <SingleEvent
-    evt={ evt }
-    key={ `SearchEventCard_${index}` }
-    addEventToFavorites={ () => addEventToFavorites(updateSingleEvent, evt) }
-    getStarGlyphClass={ getStarGlyphClass(eventsStore, evt.uuid) }
-    hasMultipleTags={ hasMultipleTags(eventsStore, evt.uuid) }
-    imageStore={ imageStore[evt.uuid] } />
-)});
+    key={`SearchEventCard_${index}`}
+    evt={evt}
+    addEventToFavorites={() => addEventToFavorites(updateSingleEvent, evt)}
+    getStarGlyphClass={getStarGlyphClass(eventsStore, evt.uuid)}
+    hasMultipleTags={hasMultipleTags(eventsStore, evt.uuid)}
+    imageStore={imageStore[evt.uuid]}
+  />
+));
 
 
 const RenderingUtils = {
   renderItemActionControl,
-  renderStarredEvents
+  renderStarredEvents,
 };
 
 export default RenderingUtils;

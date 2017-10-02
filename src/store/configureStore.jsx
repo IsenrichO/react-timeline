@@ -4,7 +4,7 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 // import { composeWithDevTools } from 'remote-redux-devtools';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { browserHistory } from 'react-router';
+import { BrowserRouter, Route } from 'react-router-dom';  // browserHistory
 import reducers from '../reducers/index';
 
 
@@ -33,9 +33,7 @@ import reducers from '../reducers/index';
 // ));
 // const History = syncHistoryWithStore(browserHistory, StoreWithMiddleware);
 
-
-// const composeEnhancers = composeWithDevTools({ port: 3000 });
-const middlewares = [ReduxThunk, routerMiddleware(browserHistory)];
+const middlewares = [ReduxThunk]; // routerMiddleware(browserHistory)
 const StoreWithMiddleware = createStore(
   combineReducers({
     ...reducers,
@@ -52,7 +50,9 @@ const StoreWithMiddleware = createStore(
 //         ...reducers,
 //         routing: routerReducer
 //       })),
-const History = syncHistoryWithStore(browserHistory, StoreWithMiddleware);
+
+
+// const History = syncHistoryWithStore(browserHistory, StoreWithMiddleware);
 
 
 
@@ -60,7 +60,7 @@ const History = syncHistoryWithStore(browserHistory, StoreWithMiddleware);
 // Create an enhanced history that syncs navigation events with the store:
   // const History = syncHistoryWithStore(browserHistory, StoreWithMiddleware);
 
-export { History, StoreWithMiddleware };
+export { StoreWithMiddleware }; // History
 
 // var createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(Redux.createStore);
 // var store = createStoreWithMiddleware(rootReducer);

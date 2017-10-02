@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Match, Route, Switch } from 'react-router-dom';
 
 // Page-level layout component imports:
 import App from '../components/pages/App';
@@ -15,17 +15,28 @@ import SearchSubRoutes from './SearchSubRoutes';
 
 
 export default (
-  <Route
-    path="/"
-    onEnter={ () => Store.dispatch(fetchSeedData()) }
-    onEnter={ fetchSeedData }>
-    <IndexRoute
-      component={ App }
-      // onEnter={ () => Store.dispatch(fetchAllCloudinary()) }
-      />
-    <Route
-      path="events/edit/:uuid"
-      component={ TimelineEventPage } />
-    { SearchSubRoutes }
-  </Route>
+  <div>
+  <Switch>
+    <Route path="/events/edit/:uuid" component={ TimelineEventPage } />
+    <Route exact path="/" component={ App }/>
+  </Switch>
+  { SearchSubRoutes }
+  </div>
 );
+
+
+// <Router
+//   path="/"
+//   onEnter={ () => Store.dispatch(fetchSeedData()) }
+//   onEnter={ fetchSeedData }>
+
+// <IndexRoute
+//   component={ App }
+//   // onEnter={ () => Store.dispatch(fetchAllCloudinary()) }
+//   />
+
+// <Route
+//   path="events/edit/:uuid"
+//   component={ TimelineEventPage } />
+
+// { SearchSubRoutes }

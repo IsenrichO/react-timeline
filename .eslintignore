@@ -1,0 +1,2 @@
+# Ignore root-level 'server.js' file where CommonJS is employed:
+server.js

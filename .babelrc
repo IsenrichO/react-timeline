@@ -1,32 +1,65 @@
-
 {
+  "ignore": [
+    "**/dist/**/*.js*",
+  ],
   "presets": [
     ["env", {
       "debug": false,
+      "modules": "commonjs",
+      "spec": false,
       "targets": {
-        "chrome": 52,
-        "edge": 14,
-        // "safari": ">10%",
         "browsers": [
           "last 3 versions",
-          "Safari >= 7",
-          "not IE <= 6"
-        ]
-      }
+          "safari >= 7",
+          // "Safari > 10%",
+          "not IE <= 6",
+        ],
+        "chrome": 52,
+        "edge": 14,
+        "node": "4.0",
+        "uglify": true,
+      },
+      "useBuiltIns": false,
     }],
     ["es2015", {
       "loose": true,
-      "modules": false
+      "modules": false,
     }],
-    "stage-2",
-    "react"
+    "stage-0",
+    "react",
   ],
   "plugins": [
+    ["minify-dead-code-elimination", {
+      "keepClassName": true,
+      "keepFnArgs": true,
+      "keepFnName": true,
+      "optimizeRawSize": true,
+      "tdz": true,
+    }],
     "react-hot-loader/babel",
-    "transform-decorators-legacy",
+    "transform-async-to-generator",
     "transform-class-properties",
+    "transform-decorators-legacy",
+    "transform-es2015-object-super",
+    "transform-es2015-template-literals",
+    "transform-es2015-typeof-symbol",
+    "transform-exponentiation-operator",
     "transform-function-bind",
-    "transform-object-rest-spread"
+    ["babel-plugin-transform-builtin-extend", {
+      "globals": [
+        "Array",
+        "Date",
+        "DOM",
+        "Error",
+      ],
+      "approximate": true,
+    }],
+    ["transform-object-rest-spread", {
+      "useBuiltIns": false,
+    }],
+    "transform-remove-debugger",
+    "transform-optional-chaining",
+    "syntax-optional-chaining",
   ],
-  "ignore": ["**/dist/**/*.js*"]
+  "sourceMaps": true,
 }
