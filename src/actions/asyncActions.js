@@ -1,5 +1,5 @@
-'use strict';
 import Axios from 'axios';
+import cloudinary from 'cloudinary';
 import * as RoutePaths from '../routing/RoutePaths';
 import { dispatchActionCreator, catchAsyncError, config, generateUuid } from './asyncConfig';
 import {
@@ -12,11 +12,8 @@ import {
   fetchStarredEvents_Success,
   fetchRecentlyModifiedEvents_Sucess,
   fetchCloudinaryImages_Success,
-  fetchAllEventTags_Success
+  fetchAllEventTags_Success,
 } from './index';
-
-import cloudinary from 'cloudinary';
-
 
 const crudOperation = new Map([
   ['GET', Axios.get],
@@ -24,42 +21,42 @@ const crudOperation = new Map([
   ['PUT', Axios.put],
   ['DELETE', Axios.delete],
   ['ALL', Axios.all],
-  ['SPREAD', Axios.spread]
+  ['SPREAD', Axios.spread],
 ]);
 
 const crudAsync2 = (operation, endpoint = RoutePaths.Events, dispatch, actionCreator, curriedArgs, ...configOpts) => {
   const reqData = { data: curriedArgs };
   const request = operation.bind(null, endpoint, reqData, Object.assign({}, config, reqData, ...configOpts));
   return request()
-    .then(resp => {
+    .then((resp) => {
       actionCreator && !!actionCreator
         ? dispatch(actionCreator(resp.data))
         : null;
     })
-    .catch(err => {
+    .catch((err) => {
       console.error.call(console, `\nError encountered while making request to the '${endpoint}' endpoint:\n>\t${err}`);
     });
 };
 
 // Returns a function to be called within the Redux-Thunk middleware:
 export const fetchSeedData = () => {
-      // .then(dispatchActionCreator(dispatch, fetchSeedData_Success))
-      // .catch(catchAsyncError('Error encountered while attempting to fetch seed data'));
+  // .then(dispatchActionCreator(dispatch, fetchSeedData_Success))
+  // .catch(catchAsyncError('Error encountered while attempting to fetch seed data'));
   return (dispatch) => {
     return Axios
       .get(RoutePaths.Events, {
-        responseType: 'json',
         maxContentLength: Number.MAX_SAFE_INTEGER,
-        onUploadProgress: (progressEvt) => { console.log('Upload in progress...'); },
-        validateStatus: (statusCode) => statusCode >= 200 && statusCode < 300,
         maxRedirects: 3,
-        timeout: 30000
+        onUploadProgress: (progressEvt) => { console.log('Upload in progress...'); },
+        responseType: 'json',
+        timeout: 30000,
+        validateStatus: (statusCode) => statusCode >= 200 && statusCode < 300,
       })
-      .then(resp => {
+      .then((resp) => {
         console.log('seed:', resp);
         dispatch(fetchSeedData_Success(resp.data));
       })
-      .catch(err => console.log('ERROR while fetching seed data:', err));
+      .catch((err) => console.log('ERROR while fetching seed data:', err));
   };
 };
 
@@ -80,16 +77,12 @@ export const fetchRecentlyModifiedEvents = () => (dispatch) =>
   // headers: { 'X-Limit-Size': 3 }
 
 // 
-export const fetchCloudinaryImageData = (list = 'Unsigned') => {
-  return (dispatch) => {
-    return Axios
-      .get(`http://res.cloudinary.com/http-isenrich-io/image/list/${list}.json`)
-      .then(resp => {
-        dispatch(fetchCloudinaryImages_Success(resp.data));
-      })
-      .catch(err => { console.log('ERROR ERROR:', err); });
-  }
-};
+export const fetchCloudinaryImageData = (list = 'Unsigned') => (dispatch) => Axios
+  .get(`http://res.cloudinary.com/http-isenrich-io/image/list/${list}.json`)
+  .then((resp) => {
+    dispatch(fetchCloudinaryImages_Success(resp.data));
+  })
+  .catch((err) => { console.log('ERROR ERROR:', err); });
 
 // 
 export const uploadToCloudinary = (evt, file, filePath) => (dispatch) =>
@@ -107,7 +100,7 @@ export const addSingleEvent = (evtData) => (dispatch) =>
   crudAsync2(Axios.post, Events, dispatch, addSingleEvent_Success, evtData);
 
 // 
-export const updateSingleEvent = (evtData) => (dispatch) => 
+export const updateSingleEvent = (evtData) => (dispatch) =>
   crudAsync2(Axios.put, getEditEvent(evtData.uuid), dispatch, updateSingleEvent_Success, evtData);
 
 // 

@@ -8,9 +8,9 @@ const urlBase = 'http://res.cloudinary.com/http-isenrich-io/image/upload/',
         ? images.find(img => !!img.isHeroImg)
         : images[0]).secure_url;
 
-const TLEventHeader = ({ evtName, evtUuid, batchSelectionState, addSelectionToBatch, inverted, imageData }) => (
+const TLEventHeader = ({ evtName, evtUuid, batchSelectionState, addSelectionToBatch, isInverted, imageData }) => (
   <header
-    className={ `panel-header${inverted ? ' inverted' : ''}` }
+    className={ `panel-header${!!isInverted ? ' inverted' : ''}` }
     // style={{ backgroundImage: imageData ? `url(${urlBase}${<encodeURI><imageData class="public_id"></imageData></encodeURI>})` : 'none' }}
     style={{ backgroundImage: imageData ? `url(${fetchHeroImage(imageData.images)})` : 'none' }}>
     { Utils.renderItemActionControl(batchSelectionState, evtUuid, addSelectionToBatch) }

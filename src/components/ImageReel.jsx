@@ -14,7 +14,7 @@ export default class ImageReel extends Component {
   }
 
   componentDidMount() {
-    console.log('IMAGE REEL props:', this.props);
+    // console.log('IMAGE REEL props:', this.props);
     const { cloudinaryImageStore: imgStore } = this.props;
     if (!!imgStore && Array.isArray(imgStore)) ::this._loadImagesToState(this.props);
     ::this.injectImages(this.props);

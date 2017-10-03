@@ -4,7 +4,9 @@
     "uuid": "TEST001-cd94-4187-ab6f-e201289724af",
     "eventId": "1mv2",
     "type": "Life",
-    "description": "Moved to SF from Raleigh, NC to begin the Hack Reactor software engineering immersive.",
+    "description": [
+      "Moved to SF from Raleigh, NC to begin the Hack Reactor software engineering immersive."
+    ],
     "location": "San Francisco, CA",
     "date": "2016-05-26",
     "photos": []
@@ -13,7 +15,9 @@
     "uuid": "TEST0002-c08e-4be6-9459-51cf632a2e79",
     "eventId": "2kk1",
     "type": "Professional",
-    "description": "Accepted offer to work at Robert Half Technology, beginning January 2017.",
+    "description": [
+      "Accepted offer to work at Robert Half Technology, beginning January 2017."
+    ],
     "location": "San Ramon, CA",
     "date": "2017-01-03",
     "photos": []
@@ -21,7 +25,7 @@
     "name": "Date of Birth",
     "eventId": "3ihl",
     "type": "Life",
-    "description": "The day I came into this world. Alas... to be alive!",
+    "description": ["The day I came into this world. Alas... to be alive!"],
     "location": "Jonesboro, AK",
     "date": "1991-10-13",
     "photos": []
@@ -29,7 +33,9 @@
     "name": "Began School At The University of North Carolina at Chapel Hill",
     "eventId": "441k",
     "type": "Education",
-    "description": "Started university majoring in polymer chemistry and with ambitions of becoming a research scientist.",
+    "description": [
+      "Started university majoring in polymer chemistry and with ambitions of becoming a research scientist."
+    ],
     "location": "Chapel Hill, NC",
     "date": "2010-08-17",
     "photos": []
@@ -38,7 +44,10 @@
     "uuid": "TEST0003-c1b8-4835-8caa-1568f1e5531c",
     "eventId": "5kso",
     "type": "Education",
-    "description": "Date of matriculation from the world's premier software engineering immersive — Hack Reactor! Here I received my first true exposure to what the world of software engineering is really about. Divided into two distinct parts, the HR program begins with a grueling six-week onslaught of video and instructor-led lectures, gating student assessments and topical paired code sprints.\n\nThe 'juniors', as students of the first half of the program are known as, then transition into the thesis portion of the program. The intent behind this phase is to develop a Full-Stack application that, ultimately, may serve as a testament to the student's evolution as a developer, résumé padding and content for discussion in interviews.",
+    "description": [
+      "Date of matriculation from the world's premier software engineering immersive — Hack Reactor! Here I received my first true exposure to what the world of software engineering is really about. Divided into two distinct parts, the HR program begins with a grueling six-week onslaught of video and instructor-led lectures, gating student assessments and topical paired code sprints.",
+      "The 'juniors', as students of the first half of the program are known, then transition into the thesis portion of the program. The intent behind this phase is to develop a Full-Stack application that, ultimately, may serve as a testament to the student's evolution as a developer, résumé padding and content for discussion in interviews."
+    ],
     "location": "San Francisco, CA",
     "date": "2016-08-26",
     "photos": []

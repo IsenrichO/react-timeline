@@ -67,6 +67,17 @@
   }
 }
 
+@mixin equalSides($sideLength: 1rem) {
+  width: $sideLength;
+  height: $sideLength;
+}
+
+@mixin brCorners($side: left, $borderStyle: 1px solid $theme-red) {
+  border-top-#{$side}-radius: inherit;
+  border-bottom-#{$side}-radius: inherit;
+  border: $borderStyle;
+}
+
 @mixin nthChildIterator($prop, $limit: 1, $step: 1) {
   $index: 1;
   @while $index <= $limit {
@@ -136,4 +147,16 @@
       }
     }
   }
+}
+
+@mixin tlBookends($bound: start) {
+  @include cbTransform(translateX(-50%));
+  #{if($bound == start, top, bottom)}: 100%;
+  position: absolute;
+  content: '';
+  width: 4px;
+  height: 8px;
+  left: calc(50% + 2px);
+  top: auto;
+  background-color: $theme-content-lt;
 }

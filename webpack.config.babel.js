@@ -1,16 +1,15 @@
-'use strict';
-import Webpack from 'webpack';
-import Merge from 'webpack-merge';
+import Path from 'path';
+
+import DotEnv from 'dotenv-webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
-import DotEnv from 'dotenv-webpack';
-import Path from 'path';
+import Merge from 'webpack-merge';
+import Webpack from 'webpack';
+
 import PostCSS from './postcss.config';
 
-
-// const appEnv = (process.env.NODE_ENV || 'dev');
 const isProdEnv = (process.env.NODE_ENV === 'production');
-  console.log(`Node Environment:\t${process.env.NODE_ENV}`);
+console.log(`Node Environment:\t${process.env.NODE_ENV}`);
 
 const VENDOR_LIBS = [
   'body-parser',
@@ -25,13 +24,11 @@ const VENDOR_LIBS = [
   'react-dom',
   'react-motion',
   'react-redux',
-  'react-router',
+  'react-router-dom',
   'react-router-redux',
   'redux',
   'redux-thunk',
-  // 'request',
-  'uuid'
-  // 'webpack-merge'
+  'uuid',
 ];
 
 // 'react-hot-loader/patch', 'webpack-dev-server/client?http://localhost:3000', 'webpack/hot/only-dev-server'
@@ -45,40 +42,36 @@ const VENDOR_LIBS = [
 
 
 const BASE_CONFIG = {
+  cache: true,
+  devtool: 'eval-source-map', // `cheap-${isProdEnv ? '' : 'module'}-source-map`,
   entry: {
-    patch: 'react-hot-loader/patch',
-    hmr: 'webpack/hot/only-dev-server',
     bundle: Path.resolve(__dirname, 'src/App'),
-    vendor: VENDOR_LIBS
-  },
-  output: {
-    path: Path.join(__dirname, 'dist'),
-    filename: '[name].[hash].js',
-    // publicPath: '/' // Server-Relative
-    publicPath: '/'
+    hmr: 'webpack/hot/only-dev-server',
+    patch: 'react-hot-loader/patch',
+    vendor: VENDOR_LIBS,
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/i,
-        include: Path.resolve(__dirname, 'src'),
         exclude: /(node_modules|bower_components)/,
-        use: 'babel'
+        include: Path.resolve(__dirname, 'src'),
+        test: /\.jsx?$/i,
+        use: 'babel',
       }, {
-        test: /\.css$/i,
         loader: ExtractTextPlugin.extract({
           fallback: 'style',
-          use: 'css'
-        })
+          use: 'css',
+        }),
+        test: /\.css$/i,
       }, {
-        test: /\.(scss|sass)$/i,
         loaders: ExtractTextPlugin.extract({
           fallback: 'style',
-          use: ['css', 'postcss', 'sass?outputStyle=expanded']
-        })
+          use: ['css', 'postcss', 'sass?outputStyle=expanded'],
+        }),
+        test: /\.(scss|sass)$/i,
       }, {
         test: /\.json$/i,
-        use: 'json'
+        use: 'json',
       }, {
         test: /\.(bmp|gif|jpe?g|png|svg|ttif)$/i,
         use: [
@@ -87,64 +80,65 @@ const BASE_CONFIG = {
           //   options: { limit: 40000 }
           // },
           'file?name=/images/[name].[ext]',
-          'image-webpack'
-        ]
+          'image-webpack',
+        ],
       }, {
         test: /\.(pdf|doc[mstx]?|ppt[mstx]?|od[fpst])$/i,
-        use: 'file?name=/docs/[name].[ext]'
-      }
-    ]
+        use: 'file?name=/docs/[name].[ext]',
+      },
+    ],
   },
-  plugins: [
-    // Configure and read in local environment variables:
-    new DotEnv({
-      path: './.env'
-    }),
-    new Webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'manifest'],
-      minChunks: Infinity
-    }),
-    new Webpack.DefinePlugin({
-      // 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-
-      // 'process.env': {
-      //   NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      // }
-    }),
-    new Webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false,
-      options: {
-        postcss: { PostCSS }
-      }
-    }),
-    new ExtractTextPlugin('styles.css'),
-    new HTMLWebpackPlugin({
-      template: 'assets/index.html'
-    })
-  ],
   node: {
     console: false,
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
+    tls: 'empty',
   },
-  cache: true,
-  watch: true,
-  devtool: `cheap-${isProdEnv ? '' : 'module'}-source-map`,
+  output: {
+    filename: '[name].[hash].js',
+    path: Path.join(__dirname, 'dist'),
+    publicPath: '',  // Server-Relative
+  },
+  plugins: [
+    // Configure and read in local environment variables:
+    new DotEnv({
+      path: './.env',
+      safe: false,
+      silent: false,
+      systemvars: false,
+    }),
+    new ExtractTextPlugin('styles.css'),
+    new HTMLWebpackPlugin({
+      template: 'assets/index.html',
+    }),
+    // Must follow DotEnv to prevent `NODE_ENV` being overwritten:
+    new Webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV) || 'dev',
+      },
+    }),
+    new Webpack.LoaderOptionsPlugin({
+      debug: false,
+      minimize: true,
+      options: {
+        postcss: { PostCSS },
+      },
+    }),
+    new Webpack.optimize.CommonsChunkPlugin({
+      minChunks: Infinity,
+      names: ['vendor', 'manifest'],
+    }),
+  ],
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   resolveLoader: {
-    moduleExtensions: ['-loader']
-  }
+    moduleExtensions: ['-loader'],
+  },
+  watch: true,
 };
 
 const DEV_SERVER = {
-  plugins: [
-    new Webpack.HotModuleReplacementPlugin(),
-    new Webpack.NamedModulesPlugin()
-  ],
   devServer: {
     contentBase: Path.resolve(__dirname, 'dist'),
     historyApiFallback: true,
@@ -153,8 +147,12 @@ const DEV_SERVER = {
     inline: true,
     noInfo: false,
     port: 3000,
-    publicPath: '/'
+    publicPath: '/',
   },
+  plugins: [
+    new Webpack.HotModuleReplacementPlugin(),
+    new Webpack.NamedModulesPlugin(),
+  ],
   stats: {
     assets: true,
     children: false,
@@ -165,7 +163,7 @@ const DEV_SERVER = {
       green: '\u001b[1m\u001b[32m',
       magenta: '\u001b[1m\u001b[35m',
       red: '\u001b[1m\u001b[31m',
-      yellow: '\u001b[1m\u001b[33m'
+      yellow: '\u001b[1m\u001b[33m',
     },
     errorDetails: true,
     hash: false,
@@ -174,8 +172,8 @@ const DEV_SERVER = {
     reasons: true,
     timings: true,
     version: false,
-    warnings: true
-  }
+    warnings: true,
+  },
 };
 
 const AGGREGATE_CONFIG = isProdEnv
@@ -190,3 +188,8 @@ export default AGGREGATE_CONFIG;
 //       output: { comments: false },
 //       sourceMap: false
 //     })
+
+
+// resolve: {
+//   alias:
+// }

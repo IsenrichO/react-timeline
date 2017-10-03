@@ -5,19 +5,18 @@ import React from 'react';
 // True Constants:
 const ALPH = [
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
 ];
 
 
 // 
-const getOtherItem = (list = [], entry) => list.find(item => item !== entry);
-export { getOtherItem };
+export const getOtherItem = (list = [], entry) => list.find(item => item !== entry);
 
 // Returns a function, that, as long as it continues to be invoked, will not
 //  be triggered. The function will be called after it stops being called for
 //  N milliseconds. If `immediate` is passed, trigger the function on the
 //  leading edge, instead of the trailing.
-const debounce = (func, wait, immediate) => {
+export const debounce = (func, wait, immediate) => {
   let timeout;
   return function() {
     const [context, args] = [this, arguments],
@@ -51,7 +50,8 @@ const getRange = function(start = 0, stop, step = 1, inclusive = false) {
     //  alphabetic character:
     if (stop !== 0 && typeof stop === 'string') {
       if (start > stop) { isDescending = true; }
-      let startChar = start.toUpperCase(), endChar;
+      let endChar,
+          startChar = start.toUpperCase();
 
       if (!regCharSet.test(stop) || stop.length !== 1) {
         throw new Error(`Invalid input: ${start}\nShould be an alphabetic character.`);
@@ -91,7 +91,7 @@ const getRange = function(start = 0, stop, step = 1, inclusive = false) {
 const FunctionalUtils = {
   debounce,
   getOtherItem,
-  getRange
+  getRange,
 };
 
 export { ALPH };

@@ -1,32 +1,31 @@
-'use strict';
-const Mongoose = require('mongoose'),
-      Schema = Mongoose.Schema,
-      Bcrypt = require('bcrypt-nodejs');
+const Mongoose = require('mongoose');
+const Bcrypt = require('bcrypt-nodejs');
 
+const Schema = Mongoose.Schema;
 
 const UserSchema = new Schema({
-  firstName: {
-    type: String,
-    required: [true, 'Please provide your given name']
-  },
-  lastName: {
-    type: String,
-    required: [true, 'Please provide your surname']
-  },
   email: {
+    lowercase: true,
+    required: [true, 'An email address is required'],
     type: String,
     unique: true,
-    lowercase: true,
-    required: [true, 'An email address is required']
+  },
+  firstName: {
+    required: [true, 'Please provide your given name'],
+    type: String,
+  },
+  lastName: {
+    required: [true, 'Please provide your surname'],
+    type: String,
   },
   password: {
+    required: [true, 'A valid password is required'],
     type: String,
-    required: [true, 'A valid password is required']
-  }
+  },
 }, {
-  toObject: { virtuals: true },
+  collection: 'Users',
   toJSON: { virtuals: true },
-  collection: 'Users'
+  toObject: { virtuals: true },
 });
 
 // Encrypt password via `save` hook:

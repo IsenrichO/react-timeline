@@ -1,40 +1,54 @@
-'use strict';
 import React from 'react';
+import PropTypes from 'prop-types';
+import FontIcon from 'material-ui/FontIcon';
+import { classes } from 'aesthetic';
 import SingleEvent from '../../components/search/SingleEvent';
 import BatchSelectCheckbox from '../../components/BatchSelectCheckbox';
-import { collapseBody } from './general';
-import { addEventToFavorites, getStarGlyphClass, hasMultipleTags } from './general';
+import { addEventToFavorites, collapseBody, getStarGlyphClass, hasMultipleTags } from './general';
 
+//
+const renderItemActionControl = (hasSelectionState, evtUuid, callback) => hasSelectionState ? (
+  <BatchSelectCheckbox
+    addSelectionToBatch={callback}
+    evtUuid={evtUuid}
+  />
+) : (
+  <FontIcon
+    className={classes('material-icons')}
+    // "collapse-up glyphicon glyphicon-chevron-up"
+    onClick={collapseBody}
+  >
+    keyboard_arrow_up
+  </FontIcon>
+);
 
-// 
-const renderItemActionControl = (bool, evtUuid, func) => bool
-  ? (
-    <BatchSelectCheckbox
-      evtUuid={ evtUuid }
-      addSelectionToBatch={ func } />
-  ) : (
-    <i 
-      className="collapse-up glyphicon glyphicon-chevron-up"
-      onClick={ collapseBody } />    
-  );
+renderItemActionControl.displayName = 'ItemActionControl';
 
-// 
-const renderStarredEvents = (evts, eventsStore, updateSingleEvent, imageStore) => evts.map((evt, index) => {
-  console.log('IMAGE STORE:', imageStore);
-  return (
-  <SingleEvent
-    evt={ evt }
-    key={ `SearchEventCard_${index}` }
-    addEventToFavorites={ () => addEventToFavorites(updateSingleEvent, evt) }
-    getStarGlyphClass={ getStarGlyphClass(eventsStore, evt.uuid) }
-    hasMultipleTags={ hasMultipleTags(eventsStore, evt.uuid) }
-    imageStore={ imageStore[evt.uuid] } />
-)});
-
-
-const RenderingUtils = {
-  renderItemActionControl,
-  renderStarredEvents
+renderItemActionControl.propTypes = {
+  callback: PropTypes.func,
+  evtUuid: PropTypes.string.isRequired,
+  hasSelectionState: PropTypes.bool,
 };
 
-export default RenderingUtils;
+renderItemActionControl.defaultProps = {
+  callback: Function.prototype,
+  hasSelectionState: false,
+};
+
+//
+const renderStarredEvents = (evts, eventsStore, updateSingleEvent, imageStore) => evts.map((evt, index) => (
+  <SingleEvent
+    key={`SearchEventCard${evt.uuid}`}
+    addEventToFavorites={() => addEventToFavorites(updateSingleEvent, evt)}
+    evt={evt}
+    getStarGlyphClass={getStarGlyphClass(eventsStore, evt.uuid)}
+    hasMultipleTags={hasMultipleTags(eventsStore, evt.uuid)}
+    imageStore={imageStore[evt.uuid]}
+  />
+));
+
+/* EXPORT */
+export default {
+  renderItemActionControl,
+  renderStarredEvents,
+};

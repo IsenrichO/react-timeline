@@ -1,6 +1,4 @@
-'use strict';
 import React from 'react';
-
 
 const buttonsMap = [
   {
@@ -24,7 +22,7 @@ const buttonsMap = [
 const renderBatchActionButtons = (btnsArr, props) => btnsArr.map((btn, index) =>
   <button
     key={ `batchActionBtn_${btn.name}` }
-    className="batch-action-btns"
+    className={classNames.batchActionBtns} // "batch-action-btns"
     type="button"
     name={ `${btn.name}-btn` }
     onClick={ () => btn.action(props) }

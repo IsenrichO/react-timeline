@@ -1,7 +1,5 @@
-'use strict';
 import React, { Component } from 'react';
 import { Motion, StaggeredMotion, spring } from 'react-motion';
-
 
 // // True constants:
 const MAIN_BTN_DIAM = 70,
@@ -216,5 +214,4 @@ export default class MotionComponent extends Component {
     
     return null;
   }
-
 };

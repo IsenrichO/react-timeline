@@ -1,5 +1,3 @@
-'use strict';
-
 export const Events = '/api/events';
 export const SingleEvent = '/api/events/:uuid';
 export const EditEvent = '/api/events/edit/:uuid';
