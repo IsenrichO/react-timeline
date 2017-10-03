@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
+import { isArray, isEmpty, isString } from 'lodash';
 import EventPanelHeader from './EventPanelHeader';
 import EventPanelBody from './EventPanelBody';
 import EventPanelFooter from './EventPanelFooter';
@@ -9,9 +10,10 @@ import TLToolbar from './TLToolbar';
 // import TLEventHeader from '../TLEventHeader';
 
 const destructureEvent = (evtObj) => {
-  let oo = {};
-  for (let key in evtObj) {
-    let formattedKey = `evt${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+  const oo = {};
+
+  for (const key in evtObj) {
+    const formattedKey = `evt${key.charAt(0).toUpperCase()}${key.slice(1)}`;
     oo[formattedKey] = evtObj[key];
   }
 
@@ -26,16 +28,18 @@ export default class TLEventPure extends Component {
   static propTypes = {
     classNames: ClassNamesPropType.isRequired,
     index: PropTypes.number.isRequired,
-    inverted: PropTypes.bool,
+    isInverted: PropTypes.bool,
   };
 
   static defaultProps = {
-    inverted: false,
+    isInverted: false,
   };
 
-  constructor(props) {
-    super(props);
-  }
+  static validateEventDescription = (description = []) => isArray(description)
+    ? description
+      .filter((paragraph) => isString(paragraph) && !isEmpty(paragraph.trim()))
+      .map((paragraph) => paragraph.trim())
+    : null;
 
   render() {
     const {
@@ -53,10 +57,10 @@ export default class TLEventPure extends Component {
       },
       index,
       evtAlign, logModalData, toggleModal, deleteEvt, batchSelectionState, addSelectionToBatch, isInBatch, addEventToFavorites, getStarGlyphClass,
-      hasMultipleTags, inverted, confirmDeleteModal, confirmDeletionEvt, imageData, cloudinaryImageStore,
+      hasMultipleTags, isInverted, confirmDeleteModal, confirmDeletionEvt, imageData, cloudinaryImageStore,
       getMyImgs,
     } = this.props;
-
+    console.log({ evt });
     const ci = cloudinaryImageStore.hasOwnProperty(uuid) && cloudinaryImageStore[uuid].images.length
       ? cloudinaryImageStore[uuid].images
       : null;
@@ -65,13 +69,13 @@ export default class TLEventPure extends Component {
       <li
         className={classes(
           classNames.tlEvent,
-          inverted && classNames.inverted,
+          !!isInverted && classNames.inverted,
         )}
       >
         <div
           className={classes(
             classNames.tlMarker,
-            inverted && classNames.invertedMarker,
+            !!isInverted && classNames.invertedMarker,
           )}
         >
           <i
@@ -88,7 +92,7 @@ export default class TLEventPure extends Component {
             classNames.inView,
             classNames.tlEventPanel,
             isInBatch && classNames.batchSelectActive,
-            inverted && classNames.invertedPanel,
+            !!isInverted && classNames.invertedPanel,
           )}
         >
           <TLToolbar
@@ -96,7 +100,7 @@ export default class TLEventPure extends Component {
             confirmDeletionEvt={confirmDeletionEvt}
             confirmDeleteModal={confirmDeleteModal}
             deleteEvt={deleteEvt}
-            inverted={inverted}
+            isInverted={isInverted}
             logModalData={logModalData}
             toggleModal={toggleModal}
           />
@@ -107,14 +111,14 @@ export default class TLEventPure extends Component {
             evtUuid={uuid}
             imageData={imageData}
             index={index}
-            inverted={inverted}
+            isInverted={isInverted}
           />
           <EventPanelBody
             {...evt}
             cloudinaryImageStore={ci}
             evt={evt}
             evtDate={evtDate}
-            evtDescription={evtDescription}
+            evtDescription={TLEventPure.validateEventDescription(evtDescription)}
             evtFormattedDate={evtFormattedDate}
             evtLocation={evtLocation}
             getMyImgs={getMyImgs}

@@ -3,7 +3,7 @@ import React from 'react';
 import { inRange, isArray, isEmpty, isNumber } from 'lodash';
 import { classes, ClassNamesPropType } from 'aesthetic';
 
-import TlEventItemActionControlPure from '../../Atomic/TLEventItemActionControl';
+import TlEventItemActionControl from '../../Atomic/TLEventItemActionControl';
 import FallbackCardHeroImages from '../../../../assets/images/fallback';
 // import BackgroundImageFallback from '../../../../../assets/images/tile-bg-6.jpg';
 
@@ -26,13 +26,13 @@ const EventPanelHeaderPure = ({
   evtUuid,
   imageData,
   index,
-  inverted,
+  isInverted,
 }) => {
   return (
     <header
       className={classes(
         classNames.panelHeader,
-        inverted && classNames.invertedPanel,
+        !!isInverted && classNames.invertedPanel,
       )}
       style={{
         backgroundImage: `url('${(!isEmpty(imageData) && fetchHeroImage(imageData.images))
@@ -40,11 +40,11 @@ const EventPanelHeaderPure = ({
       }}
       // style={{ backgroundImage: imageData ? `url(${urlBase}${<encodeURI><imageData class="public_id"></imageData></encodeURI>})` : 'none' }}
     >
-      <TlEventItemActionControlPure
+      <TlEventItemActionControl
         addSelectionToBatch={addSelectionToBatch}
         batchSelectionState={batchSelectionState}
         evtUuid={evtUuid}
-        inverted={inverted}
+        isInverted={isInverted}
       />
       <h3 className={classNames.panelHeaderTitle}>{ evtName }</h3>
     </header>
@@ -61,14 +61,14 @@ EventPanelHeaderPure.propTypes = {
   evtUuid: PropTypes.string.isRequired,
   imageData: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  inverted: PropTypes.bool,
+  isInverted: PropTypes.bool,
 };
 
 EventPanelHeaderPure.defaultProps = {
   addSelectionToBatch() {},
   batchSelectionState: false,
   imageData: {},
-  inverted: false,
+  isInverted: false,
 };
 
 export default EventPanelHeaderPure;

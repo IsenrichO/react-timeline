@@ -1,8 +1,10 @@
 import TlEventItemActionControlPure from './TlEventItemActionControl.Pure';
 import styler from '../../../style/styler';
 
-export default styler(({ colors })=> ({
+export default styler(({ colors }) => ({
+  // Static declaration necessary for nested reference(s):
   invertedActionControl: {},
+
   collapseUp: {
     alignSelf: 'baseline',
     color: colors.white.primary,
@@ -29,10 +31,13 @@ export default styler(({ colors })=> ({
     },
     visibility: 'hidden',
     zIndex: 1,
+
     '&$invertedActionControl': {
       left: 'auto',
       order: 1,
       right: '-0.5rem',
     },
   },
-}))(TlEventItemActionControlPure);
+}), {
+  styleName: 'TimelineEventItemActionControlStyles',
+})(TlEventItemActionControlPure);

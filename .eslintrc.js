@@ -54,6 +54,9 @@ module.exports = {
     "eqeqeq": [2, "smart"],   // CORRECT: `typepof foo == 'undefined'`
     "func-names": 0,
     "global-require": 0,
+    "no-bitwise": [0, {
+      "int32Hint": true,
+    }],
     "no-class-assign": 2,
     "no-extra-boolean-cast": 0, // CORRECT: `!!value !== 0`
     "no-func-assign": 2,
@@ -115,6 +118,9 @@ module.exports = {
     "semi": [2, "always", {
       "omitLastInOneLineBlock": false,
     }],
+    "space-infix-ops": [2, {
+      "int32Hint": true, // CORRECT: `const foo = bar|0;`
+    }],
     "strict": [2, "global"],  // Default "safe" string option maps to "global" because the
                               // config specifies both the 'node' & 'commonjs' environments.
     "symbol-description": 1,
@@ -151,11 +157,6 @@ module.exports = {
       "tabWidth": 2,
     }],
     "newline-per-chained-call": 0,
-    "no-bitwise": [2, {
-      "allow": [
-        "~",
-      ],
-    }],
     "no-confusing-arrow": 0,
     "no-console": [1, {
       "allow": [
@@ -181,6 +182,16 @@ module.exports = {
     "no-extra-semi": 2,
     "no-fallthrough": [2, {
       "commentPattern": "Break[\\s\\w]*omitted",
+    }],
+    "no-mixed-operators": [2, {
+      "allowSamePrecedence": true,
+      "groups": [
+        ["+", "-", "*", "/", "%", "**"],                  // Arithmetic operators
+        ["&", "|", "^", "~", "<<", ">>", ">>>"],          // Bitwise operators
+        ["==", "!=", "===", "!==", ">", ">=", "<", "<="], // Comparison operators
+        ["&&", "||"],                                     // Logical operators
+        ["in", "instanceof"],                             // Relational operators
+      ],
     }],
     "no-multi-assign": 0,
     "no-multi-spaces": [2, {

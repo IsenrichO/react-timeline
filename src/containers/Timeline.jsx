@@ -283,8 +283,8 @@ export default class Timeline extends Component {
           getStarGlyphClass={Utils.getStarGlyphClass(this.props.seedDataAggregator, evt.uuid)}
           hasMultipleTags={Utils.hasMultipleTags(this.props.seedDataAggregator, evt.uuid)}
           index={index}
-          inverted={index % 2 ? true : false}
           isInBatch={this.props.batchSelectionItems.includes(evt.uuid)}
+          isInverted={index % 2 ? true : false}
           key={`Evt_${evt.name}_${index}`}
           logModalData={(data) => this.props.logEventModalData(data)}
           toggleModal={::this.toggleModal}

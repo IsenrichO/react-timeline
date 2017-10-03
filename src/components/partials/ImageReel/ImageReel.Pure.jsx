@@ -3,6 +3,7 @@ import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import uuidv4 from 'uuid/v4';
+import { FontIcon, IconButton} from 'material-ui';
 import { capitalize, isEmpty, isEqual, isNil, size } from 'lodash';
 import { classes, ClassNamesPropType } from 'aesthetic';
 import ImageThumbnail from './ImageThumbnail';
@@ -202,8 +203,6 @@ export default class ImageReelPure extends Component {
 
   // 
   renderReelNavigation(direction = this.DIRS.NEXT, numImages) {
-    // if (numImages <= 2) return;
-
     const { classNames } = this.props;
     const { NEXT, PREV } = this.DIRS;
 
@@ -219,19 +218,17 @@ export default class ImageReelPure extends Component {
           classNames[`navAlign${capitalize(dirMap.get(direction))}`],
         )}
       >
-        <div
+        <IconButton
           key={`imageRseel${dirMap.get(direction)}Nav`}
           className={classNames[`pan${capitalize(dirMap.get(direction))}`]}
           onClick={(evt) => this.panReel(direction, evt)}
         >
-          <i
-            className={classes(
-              'material-icons',
-            )}
+          <FontIcon
+            className={classes('material-icons')}
           >
             {`chevron_${dirMap.get(direction)}`}
-          </i>
-        </div>
+          </FontIcon>
+        </IconButton>
       </div>
     );
   }

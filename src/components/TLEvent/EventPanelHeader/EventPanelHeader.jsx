@@ -5,7 +5,9 @@ const headerTailLeft = 'polygon(0 0, 100% 0, 100% 100%, 1.5rem 100%, 1.5rem 1.5r
 const headerTailRight = 'polygon(0 0, 100% 0, calc(100% - 1.5rem) 1.5rem, calc(100% - 1.5rem) 100%, 0 100%)';
 
 export default styler(({ colors, helpers }) => ({
-  invertedPanel: {},  // Static declaration necessary for nested references
+  // Static declarations necessary for nested reference(s):
+  invertedPanel: {},
+
   panelHeader: {
     ...helpers.flexify(),
     ...helpers.hideOverflow,
@@ -81,25 +83,3 @@ export default styler(({ colors, helpers }) => ({
 }), {
   styleNaME: 'EventPanelHeader',
 })(EventPanelHeaderPure);
-
-//     filter: 'drop-shadow(1px 0 0 rgba(0, 0, 0, 0.35))',
-
-// @include flex(flex, row nowrap, space-around, center);
-// @include cbTransition($transition-timing-func, background-size);
-// transition-duration: 0.45s;
-// min-height: 7.142857142857143rem;   // => (100 / 14)px
-// background: rgba(108, 108, 108, 0.63) no-repeat center 30% / 100%;
-// background-blend-mode: soft-light;
-// &:after {
-//   position: absolute;
-//   content: '';
-//   width: 100%;
-//   height: 2.25rem;
-//   top: calc(100% - 1.5rem);
-//   background: linear-gradient(
-//     to bottom,
-//     transparent 0,
-//     rgba(255, 255, 255, 0.12) 15%,
-//     rgba(255, 255, 255, 0.38) 28%,
-//     $theme-content-lt 55%
-//   );

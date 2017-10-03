@@ -41,8 +41,8 @@ export default class EventPanelBodyPure extends Component {
   static propTypes = {
     classNames: ClassNamesPropType.isRequired,
     cloudinaryImageStore: PropTypes.array,
-    evtDescription: PropTypes.string,
-    evtFormattedDate: PropTypes.any,
+    evtDescription: PropTypes.arrayOf(PropTypes.string),
+    evtFormattedDate: PropTypes.string,
     evtLocation: PropTypes.string,
     theme: PropTypes.string,
     uuid: PropTypes.string.isRequired,
@@ -50,17 +50,14 @@ export default class EventPanelBodyPure extends Component {
 
   static defaultProps = {
     cloudinaryImageStore: [],
-    evtDescription: '',
-    evtFormattedDate: '',
+    evtDescription: [''],
+    evtFormattedDate: new Date(),
     evtLocation: 'Portland, OR',
     theme: 'base',
-    uuid: uuidv4(),
   };
 
   constructor(props) {
     super(props);
-    const { classNames } = props;
-    // let { evt, evtDate, evtFormattedDate, evtDescription, evtLocation, photoCount, imageData, cloudinaryImageStore } = props;
 
     this.state = {
       isExpanded: false,
@@ -151,8 +148,8 @@ export default class EventPanelBodyPure extends Component {
     } = this.props;
     const { isExpanded, linkText } = this.state;
 
-    const hasOverflowDescription = evtDescription.trim().length >= 240;
-    console.log({ evtDescription });
+    const combinedDescription = evtDescription.join(' ').trim();
+    const hasOverflowDescription = combinedDescription.length >= 240;
 
     return (
       <div className={classNames.panelBody}>
@@ -167,7 +164,7 @@ export default class EventPanelBodyPure extends Component {
             className={classes(
               classNames.bodyText,
               !!hasOverflowDescription && classNames[!isExpanded ? 'hidden' : 'shown'],
-              !evtDescription.trim().length && classNames.emptySummary,
+              !combinedDescription.length && classNames.emptySummary,
             )}
             style={{
               height: !!hasOverflowDescription && !!isExpanded
@@ -175,13 +172,18 @@ export default class EventPanelBodyPure extends Component {
                 : null,
             }}
           >
-            {evtDescription}
+            {evtDescription.map((paragraph, index) => [
+              !!index && (<br key={`${uuid}ParagraphBreak${index + 1}`} />),
+              <p key={`${uuid}EventDescriptionParagraph${index + 1}`}>
+                {paragraph}
+              </p>,
+            ])}
           </blockquote>
           <ShowMoreControl
             isExpanded={isExpanded}
             linkText={linkText}
             toggleContent={this.delayLinkTextChange}
-            txtLen={evtDescription.length}
+            txtLen={combinedDescription.length}
           />
         </section>
 

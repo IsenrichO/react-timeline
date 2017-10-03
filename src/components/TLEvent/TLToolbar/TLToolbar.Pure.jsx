@@ -5,9 +5,7 @@ import { classes, ClassNamesPropType } from 'aesthetic';
 import { isEmpty, isString } from 'lodash';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
-import FileCloudDownload from 'material-ui/svg-icons/file/cloud-download';
-import styler, { aesthetic } from '../../../style/styler';
-import { THEME_RED } from '../../../style/theming/base';
+import { aesthetic } from '../../../style/styler';
 
 const getIconButtonStyles = ({ colors, fonts, keywords }) => ({
   backgroundColor: colors.white.primary,
@@ -33,7 +31,7 @@ const TLToolbarPure = ({
   confirmDeletionEvt,
   // deleteEvt,
   evt,
-  inverted,
+  isInverted,
   logModalData,
   theme = 'base',
   toggleModal,
@@ -79,11 +77,12 @@ const TLToolbarPure = ({
   const renderToolbarButtons = toolbarButtonMap.map(({ clickHandler, icon, link, tooltip }) => {
     const toolbarButton = (
       <IconButton
+        key={Math.random()}
         iconStyle={getIconButtonStyles(themeStyles)}
         onClick={clickHandler}
         style={buttonStyles}
         tooltip={tooltip}
-        tooltipPosition={`top-${!!inverted ? 'right' : 'left'}`}
+        tooltipPosition={`top-${!!isInverted ? 'right' : 'left'}`}
         tooltipStyles={{ zIndex: 2 }}
       >
         <FontIcon
@@ -101,6 +100,7 @@ const TLToolbarPure = ({
     return !isEmpty(link) && isString(link) ? (
       <Link
         children={toolbarButton}
+        key={Math.random()}
         to={link}
       />) : toolbarButton;
   });
@@ -110,7 +110,7 @@ const TLToolbarPure = ({
       className={classes(
         'tlToolbar',  // Creates global '.tlToolbar' class accessible inside the scoped `tlEventPanel:hover` selector
         classNames.tlToolbar,
-        inverted && classNames.inverted,
+        !!isInverted && classNames.inverted,
       )}
     >
       {renderToolbarButtons}
@@ -126,7 +126,7 @@ TLToolbarPure.propTypes = {
   confirmDeletionEvt: PropTypes.func.isRequired,
   deleteEvt: PropTypes.func.isRequired,
   evt: PropTypes.object.isRequired,
-  inverted: PropTypes.bool.isRequired,
+  isInverted: PropTypes.bool,
   logModalData: PropTypes.func.isRequired,
   theme: PropTypes.string,
   toggleModal: PropTypes.func.isRequired,
@@ -136,7 +136,7 @@ TLToolbarPure.defaultProps = {
   confirmDeleteModal() {},
   confirmDeletionEvt() {},
   deleteEvt() {},
-  inverted: false,
+  isInverted: false,
   logModalData() {},
   theme: 'base',
   toggleModal() {},

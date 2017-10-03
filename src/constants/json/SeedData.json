@@ -25,9 +25,7 @@
     "name": "Date of Birth",
     "eventId": "3ihl",
     "type": "Life",
-    "description": [
-      "The day I came into this world. Alas... to be alive!"
-    ],
+    "description": ["The day I came into this world. Alas... to be alive!"],
     "location": "Jonesboro, AK",
     "date": "1991-10-13",
     "photos": []
