@@ -1,9 +1,9 @@
-'use strict';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-import FileUploadAPI from './FileUploadAPI';
+import FileUploadAPI from './partials/FileUploadApi';
 import { addSingleEvent } from '../actions/asyncActions';
 import EventEditingModalStyles from '../constants/json/EventEditingModalStyles.json';
 

@@ -3,7 +3,14 @@ import ImageThumbnailPure from './ImageThumbnail.Pure';
 import styler from '../../../../style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
+  // Static declarations necessary for subsequent reference(s):
   bckgSelectOption: {},
+  removeThumbButton: {},
+  selectedThumb: {},
+  thumbnailActionIcon: {},
+  thumbnailActionsBar: {},
+  thumbnailTooltip: {},
+
   thumb: {
     background: {
       attachment: null,
@@ -27,24 +34,49 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
       style: 'groove',
       width: 1,
     },
-    height: 'inherit',
+    height: '99%',
     margin: [0, '0.5vw'],
     padding: [2, 4],
     position: 'relative',
     transition: transitions.transitionAll,
     width: '10vw',
 
+    '& $thumbnailActionsBar': {
+      ...helpers.flexify('row', 'space-between', ['center', 'center']),
+      ...helpers.hide,
+      ...helpers.hideOverflow,
+      height: '1.5rem',
+      left: 7,
+      position: 'absolute',
+      top: 5,
+      transition: transitions.transitionVisibility,
+      width: 'calc(100% - 1rem)',
+      zIndex: 1,
+
+      '& $thumbnailActionIcon': {
+        color: colors.white.primary,
+        cursor: 'pointer',
+        font: {
+          family: fonts.face.material,
+          lineHeight: 1,
+          size: '1.35rem',
+          style: 'normal',
+          weight: 'lighter',
+        },
+        height: `1.6rem ${keywords.important}`,
+        padding: `0 ${keywords.important}`,
+        width: `1.6rem ${keywords.important}`,
+      },
+    },
+
     '&:before': {
       ...helpers.hide,
-      // background: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.69) 20%, rgba(0, 0, 0, 0.35) 65%, transparent 95%);
-      // background:    -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0.69) 20%, rgba(0, 0, 0, 0.35) 65%, transparent 95%);
-      // background:      -o-linear-gradient(to bottom, rgba(0, 0, 0, 0.69) 20%, rgba(0, 0, 0, 0.35) 65%, transparent 95%);
       backgroundImage: dedent(`
-        linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.69) 20%,
-          rgba(0, 0, 0, 0.35) 65%,
-          ${keywords.transparent} 95%
+        linear-gradient(\
+          to bottom, \
+          rgba(0, 0, 0, 0.69) 20%, \
+          rgba(0, 0, 0, 0.35) 65%, \
+          ${keywords.transparent} 95%\
         )
       `),
       borderRadius: 3,
@@ -60,51 +92,34 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
 
     [[
       '&:hover:before',
-      '&:hover .glyphicon',
-      '&:hover .material-icons',
+      '&:hover $thumbnailActionsBar',
     ].join(', ')]: {
       ...helpers.visible,
       height: '35%',
     },
 
-    '&:hover .material-icons': {
-      fontSize: '1.5rem',
-      lineHeight: '1.35rem',
-      opacity: 0.4,
-      transition: {
-        delay: null,
-        duration: 250,
-        property: 'opacity',
-        timingFunction: 'ease',
-      },
+    '&:hover $thumbnailActionsBar': {
+      height: '2rem',
 
-      '&:hover': {
-        ...helpers.visible,
-      },
-    },
+      '& $thumbnailActionIcon': {
+        fontSize: '1.5rem',
+        lineHeight: '1.35rem',
+        opacity: 0.4,
+        transition: {
+          delay: null,
+          duration: 250,
+          property: 'opacity',
+          timingFunction: 'ease',
+        },
 
-    '& .glyphicon, & .material-icons': {
-      ...helpers.hide,
-      color: colors.white.primary,
-      cursor: 'pointer',
-      font: {
-        family: fonts.face.glyphicons,
-        lineHeight: 1,
-        size: '1.35rem',
-        style: 'normal',
-        weight: 'lighter',
+        '&:hover': {
+          opacity: 1.0,
+        },
       },
-      position: 'absolute',
-      right: '0.35rem',
-      top: '0.35rem',
-      zIndex: 1,
     },
 
     '& .material-icons': {
-      left: '0.35rem',
-      right: 'auto',
-
-      '&$selectedBckg': {
+      '&$selectedThumb': {
         ...helpers.visible,
         opacity: `1 ${keywords.important}`,
       },

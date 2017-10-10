@@ -29,10 +29,18 @@ export default class TLEventPure extends Component {
     classNames: ClassNamesPropType.isRequired,
     index: PropTypes.number.isRequired,
     isInverted: PropTypes.bool,
+    location: PropTypes.shape({
+      pathname: '',
+    }).isRequired,
   };
 
   static defaultProps = {
     isInverted: false,
+  };
+
+  static isHomeRoute = () => {
+    const { pathname = '' } = window.location;
+    return isEmpty(pathname) || (pathname === '/');
   };
 
   static validateEventDescription = (description = []) => isArray(description)
@@ -56,8 +64,8 @@ export default class TLEventPure extends Component {
         uuid,
       },
       index,
-      evtAlign, logModalData, toggleModal, deleteEvt, batchSelectionState, addSelectionToBatch, isInBatch, addEventToFavorites, getStarGlyphClass,
-      hasMultipleTags, isInverted, confirmDeleteModal, confirmDeletionEvt, imageData, cloudinaryImageStore,
+      evtAlign, logModalData, toggleModal, deleteEvt, addSelectionToBatch, isInBatch, addEventToFavorites, getStarGlyphClass,
+      hasMultipleTags, isInverted, confirmDeleteModal, confirmDeletionEvt, imageData, isBatchSelectMode, cloudinaryImageStore,
       getMyImgs,
     } = this.props;
     console.log({ evt });
@@ -106,12 +114,13 @@ export default class TLEventPure extends Component {
           />
           <EventPanelHeader
             addSelectionToBatch={addSelectionToBatch}
-            batchSelectionState={batchSelectionState}
             evtName={evtName}
             evtUuid={uuid}
             imageData={imageData}
             index={index}
+            isBatchSelectMode={isBatchSelectMode}
             isInverted={isInverted}
+            withPointer={TLEventPure.isHomeRoute()}
           />
           <EventPanelBody
             {...evt}

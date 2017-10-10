@@ -1,29 +1,41 @@
-'use strict';
 import React from 'react';
 import { Match, Route, Switch } from 'react-router-dom';
 
 // Page-level layout component imports:
 import App from '../components/pages/App';
 import TimelineEventPage from '../components/pages/TimelineEventPage';
+import SearchResults from '../components/search/SearchResults';
+import SearchSidebar from '../components/search/SearchSidebar';
+import SearchWrapper from '../components/search/SearchWrapper';
 
 // Action creator & middleware imports:
-import { fetchSeedData, fetchAllCloudinary } from '../actions/asyncActions';
-import { StoreWithMiddleware as Store } from '../store/configureStore';
+import { fetchAllCloudinary } from '../state/cloudinaryImageStore';
+import { fetchSeedData } from '../actions/asyncActions';
 
 // Child route configuration imports:
 import SearchSubRoutes from './SearchSubRoutes';
 
-
 export default (
   <div>
-  <Switch>
-    <Route path="/events/edit/:uuid" component={ TimelineEventPage } />
-    <Route exact path="/" component={ App }/>
-  </Switch>
-  { SearchSubRoutes }
+    <Switch>
+      <Route
+        exact
+        component={App}
+        path="/"
+      />
+      <Route
+        component={TimelineEventPage}
+        path="/events/edit/:uuid"
+      />
+      <Route
+        component={SearchSidebar} // SearchWrapper}
+        path="/search"
+        // routes={[ ]}
+      />
+    </Switch>
   </div>
 );
-
+// {SearchSubRoutes}
 
 // <Router
 //   path="/"

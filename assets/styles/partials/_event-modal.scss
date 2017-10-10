@@ -3,27 +3,27 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 #edit-event-form,
 #new-event-form {
-  fieldset {
-    width: 95%;
-    max-width: 665px;
-    margin: 2rem auto;
-  }
-  .dz {
-    @include cbBorderRadii(8px);
-    border: 0.357143rem dashed $theme-red;
-    text-align: center;
-    font: bold 20pt 'Vollkorn';
-    color: $theme-content-lt-gray;
-    &-box {
-      @include cbBorderRadii(8px);
-      margin: 0.65rem;
-      padding: 2.5rem 1.785714rem 1.785714rem;
-      background-color: $theme-red-op;
-      border-radius: 8px;
-      > div { margin-top: 1.5rem; }
-      label { cursor: pointer; }
-    }
-  }
+  // fieldset {
+  //   width: 95%;
+  //   max-width: 665px;
+  //   margin: 2rem auto;
+  // }
+  // .dz {
+  //   @include cbBorderRadii(8px);
+  //   border: 0.357143rem dashed $theme-red;
+  //   text-align: center;
+  //   font: bold 20pt 'Vollkorn';
+  //   color: $theme-content-lt-gray;
+  //   &-box {
+  //     @include cbBorderRadii(8px);
+  //     margin: 0.65rem;
+  //     padding: 2.5rem 1.785714rem 1.785714rem;
+  //     background-color: $theme-red-op;
+  //     border-radius: 8px;
+  //     > div { margin-top: 1.5rem; }
+  //     label { cursor: pointer; }
+  //   }
+  // }
   .dz-wrapper {
     // output {
     //   width: calc(96% + 1.5rem);
@@ -155,44 +155,44 @@
     .file-upload-btn { display: none; }
   }  
 }
-.close-btn {
-  @extend %primaryBtn;
-  @extend %br-circle;
-  @extend %no-select;
-  position: absolute;
-  width: 4rem;
-  height: 4rem;
-  right: -2rem;
-  top: -2rem;
-  z-index: 11;
-  &:hover { background-color: $theme-primary-focus; }
-}
+// .close-btn {
+//   @extend %primaryBtn;
+//   @extend %br-circle;
+//   @extend %no-select;
+//   position: absolute;
+//   width: 4rem;
+//   height: 4rem;
+//   right: -2rem;
+//   top: -2rem;
+//   z-index: 11;
+//   &:hover { background-color: $theme-primary-focus; }
+// }
 
-.modal-wrapper {
-  height: 100%;
-  max-height: 75vh;
-  margin: 5% 0;
-  padding: 0 5%;
-  overflow-y: scroll;
-  &:before,
-  &:after {
-    position: absolute;
-    content: '';
-    width: 100%;
-    left: 0;
-    height: 5vh;
-    border-radius: 14px;
-    z-index: 10;
-  }
-  &:before {
-    top: 0;
-    background: linear-gradient(to bottom, #FFF 20%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.08) 99%);
-  }
-  &:after{
-    background: linear-gradient(to top, #FFF 20%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.08) 99%);
-    bottom: 0;
-  }
-}
+// .modal-wrapper {
+//   height: 100%;
+//   max-height: 75vh;
+//   margin: 5% 0;
+//   padding: 0 5%;
+//   overflow-y: scroll;
+//   &:before,
+//   &:after {
+//     position: absolute;
+//     content: '';
+//     width: 100%;
+//     left: 0;
+//     height: 5vh;
+//     border-radius: 14px;
+//     z-index: 10;
+//   }
+//   &:before {
+//     top: 0;
+//     background: linear-gradient(to bottom, #FFF 20%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.08) 99%);
+//   }
+//   &:after{
+//     background: linear-gradient(to top, #FFF 20%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.08) 99%);
+//     bottom: 0;
+//   }
+// }
 
 // form { }
 
@@ -234,21 +234,6 @@
     cursor: pointer;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // output {
 //   width: calc(96% + 1.5rem);
@@ -378,12 +363,6 @@
 //     img { @include center(); }
 //   }
 // }
-
-
-
-
-
-
 
 output.img-reel {
   @include flex(flex, row nowrap);
@@ -525,8 +504,6 @@ output.img-reel {
   }
 }
 
-
-
 #tl-container .tl-photos {
   .pan-left,
   .pan-right {
@@ -544,5 +521,3 @@ output.img-reel {
   div.img-reel:hover ~ .pan-right,
   div.img-reel:hover ~ .pan-left { width: 4vw; }
 }
-
-

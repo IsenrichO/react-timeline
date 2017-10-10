@@ -8,12 +8,12 @@
 }
 
 .input-gr {
-  position: relative;
-  display: table;
-  width: 100%;
-  margin-bottom: 1rem;
-  border-radius: 0.25rem;
-  border-collapse: separate;
+  // position: relative;
+  // display: table;
+  // width: 100%;
+  // margin-bottom: 1rem;
+  // border-radius: 0.25rem;
+  // border-collapse: separate;
   &-addon {
     @include brCorners(left, 1px solid $theme-red);
     @extend %input-group;
@@ -28,31 +28,31 @@
   }
 }
 
-.validation-msg {
-  position: absolute;
-  right: 15%;
-  bottom: calc(100% + 0.375rem);
-  font: normal 600 0.75rem/1 $theme-fonts;
-  color: $theme-danger;
-}
+// .validation-msg {
+//   position: absolute;
+//   right: 15%;
+//   bottom: calc(100% + 0.375rem);
+//   font: normal 600 0.75rem/1 $theme-fonts;
+//   color: $theme-danger;
+// }
 
 .warn-field {
   box-shadow: 0 0 5px #FF2F47;
   border-radius: 0.25rem;
 }
 
-.required-field {
-  &:after {
-    @include equalSides(0.5rem);
-    @extend %br-circle;
-    position: absolute;
-    content: '';
-    left: calc(100% + 0.5rem);
-    top: 50%;
-    margin-top: -0.125rem;
-    background-color: $theme-danger;
-  }
-}
+// .required-field {
+//   &:after {
+//     @include equalSides(0.5rem);
+//     @extend %br-circle;
+//     position: absolute;
+//     content: '';
+//     left: calc(100% + 0.5rem);
+//     top: 50%;
+//     margin-top: -0.125rem;
+//     background-color: $theme-danger;
+//   }
+// }
 
 .form-cont {
   @include brCorners(right);

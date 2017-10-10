@@ -2,45 +2,78 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
 import { isNil } from 'lodash';
+import IconButton from 'material-ui/IconButton';
+import SelectionCircleIcon from 'material-ui/svg-icons/image/panorama-fish-eye';
+import RemoveIcon from 'material-ui/svg-icons/navigation/cancel';
+import { aesthetic } from '../../../../style/styler';
 
-const ImageThumbnailPure = ({ classNames, horizontalTranslation, thumbRef, thumbSource }) => (
-  <div
-    className={classNames.thumbWrapper}
-    // ref={!isNil(thumbRef) && thumbRef}
-    ref={thumbRef}
-    style={{
-      transform: `translateX(${horizontalTranslation}px)`,
-      transition: 'all 500ms ease',
-    }}
-  >
-    <i
-      className={classes(
-        'material-icons',
-        classNames.bckgSelectOption,
-      )}
-    >
-      panorama_fish_eye
-    </i>
-    <i
-      className={classes(
-        'glyphicon',
-        'glyphicon-remove-circle',
-      )}
-    />
+const ImageThumbnailPure = ({
+  classNames,
+  horizontalTranslation,
+  imageRemovalHandler,
+  imageSelectionHandler,
+  isSelected,
+  theme,
+  thumbRef,
+  thumbSource,
+}) => {
+  const { colors } = aesthetic.themes[theme || 'base'];
+
+  return (
     <div
-      className={classNames.thumb}
+      ref={!isNil(thumbRef) ? thumbRef : null}
+      className={classNames.thumbWrapper}
       style={{
-        backgroundImage: `url("${thumbSource}")`,
+        transform: `translateX(${horizontalTranslation}px)`,
+        transition: 'all 500ms ease',
       }}
-    />
-  </div>
-);
+    >
+      <div className={classNames.thumbnailActionsBar}>
+        <IconButton
+          className={classes(
+            'material-icons',
+            classNames.bckgSelectOption,
+            classNames.thumbnailActionIcon,
+            !!isSelected && classNames.selectedThumb,
+          )}
+          onClick={imageSelectionHandler}
+          tooltip={<span className={classNames.thumbnailTooltip}>Set Cover Image</span>}
+          tooltipPosition="bottom-right"
+        >
+          <SelectionCircleIcon color={colors.white.pure} />
+        </IconButton>
+        <IconButton
+          className={classes(
+            'material-icons',
+            classNames.removeThumbButton,
+            classNames.thumbnailActionIcon,
+          )}
+          onClick={imageRemovalHandler}
+          tooltip={<span className={classNames.thumbnailTooltip}>Remove Image</span>}
+          tooltipPosition="bottom-left"
+        >
+          <RemoveIcon color={colors.white.pure} />
+        </IconButton>
+      </div>
+      <div
+        className={classNames.thumb}
+        style={{
+          backgroundImage: `url("${thumbSource}")`,
+        }}
+      />
+    </div>
+  );
+};
 
 ImageThumbnailPure.displayName = 'ImageThumbnail';
 
 ImageThumbnailPure.propTypes = {
   classNames: ClassNamesPropType.isRequired,
   horizontalTranslation: PropTypes.number,
+  imageRemovalHandler: PropTypes.func,
+  imageSelectionHandler: PropTypes.func,
+  isSelected: PropTypes.bool,
+  theme: PropTypes.string,
   thumbRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.oneOf([null]),
@@ -50,12 +83,15 @@ ImageThumbnailPure.propTypes = {
 
 ImageThumbnailPure.defaultProps = {
   horizontalTranslation: 0,
+  imageRemovalHandler: Function.prototype,
+  imageSelectionHandler: Function.prototype,
+  isSelected: false,
+  theme: 'base',
   thumbRef: null,
   thumbSource: '',
 };
 
 export default ImageThumbnailPure;
-
 
 // // createNewThumbnail(img, output) {
 //   // const NewThumb = (
@@ -115,7 +151,7 @@ export default ImageThumbnailPure;
 //       .find('.selected-bckg')
 //       .removeClass('selected-bckg')
 //       .text('panorama_fish_eye');
-      
+
 //     $(this)
 //       .text($(this).hasClass('selected-bckg') ? 'panorama_fish_eye' : 'check_circle')
 //       .toggleClass('selected-bckg');

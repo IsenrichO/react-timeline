@@ -158,59 +158,59 @@
 }
 
 // Custom checkbox inputs:
-.checkbox { margin: 0; }
-input[type='checkbox'] {
-  position: absolute;
-  left: -9999px;
-  visibility: hidden;
-  + label {
-    position: relative;
-    padding-left: 2.5rem;
-    cursor: pointer;
-    &:before {
-      @include cbTransition();
-      position: absolute;
-      content: '';
-      width: 1rem;
-      height: 1rem;
-      left: 0.35rem;
-      border: 2.5px solid $cb-unchecked;
-      border-radius: 3px;
-    }
-  }
-  &:checked {
-    + label {
-      &:before {
-        @include cbBorder();
-        width: 12px;
-        height: 22px;
-        left: 0.15rem;
-        top: -9px;
-        transform: rotate(40deg);
-      }
-    }    
-  }
-  &.batch-select {
-    + label:before {
-      width: 1.75rem;
-      height: 1.75rem;
-      left: -0.25rem;
-    }
-    &:checked + label:before {
-      width: 1rem;
-      height: 2rem;
-      top: 0.05rem;
-      left: 0.5rem !important;
-    }
-  }
-}
-.tl-event-invert input[type='checkbox'] {
-  &:checked + label:before,
-  + label:before {
-    left: auto;
-    right: 0.25rem;
-  }
-}
+// .checkbox { margin: 0; }
+// input[type='checkbox'] {
+//   position: absolute;
+//   left: -9999px;
+//   visibility: hidden;
+//   + label {
+//     position: relative;
+//     padding-left: 2.5rem;
+//     cursor: pointer;
+//     &:before {
+//       @include cbTransition();
+//       position: absolute;
+//       content: '';
+//       width: 1rem;
+//       height: 1rem;
+//       left: 0.35rem;
+//       border: 2.5px solid $cb-unchecked;
+//       border-radius: 3px;
+//     }
+//   }
+  // &:checked {
+  //   + label {
+  //     &:before {
+  //       @include cbBorder();
+  //       width: 12px;
+  //       height: 22px;
+  //       left: 0.15rem;
+  //       top: -9px;
+  //       transform: rotate(40deg);
+  //     }
+  //   }    
+  // }
+  // &.batch-select {
+  //   + label:before {
+  //     width: 1.75rem;
+  //     height: 1.75rem;
+  //     left: -0.25rem;
+  //   }
+  //   &:checked + label:before {
+  //     width: 1rem;
+  //     height: 2rem;
+  //     top: 0.05rem;
+  //     left: 0.5rem !important;
+  //   }
+  // }
+// }
+// .tl-event-invert input[type='checkbox'] {
+//   &:checked + label:before,
+//   + label:before {
+//     left: auto;
+//     right: 0.25rem;
+//   }
+// }
 
 .form-btn {
   min-width: 20%;

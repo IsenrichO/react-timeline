@@ -30,7 +30,6 @@ const quotesPseudoShared = (color = themeColors.grey.border) => ({
 
 export default styler(({ colors, fonts, helpers, keywords, imageAssetUrls }) => ({
   // Static `className` declarations necessary for nested references:
-  accordionContainer: {},
   accordionToggleBtn: {},
   active: {},
   bodyFieldIcon: {},
@@ -41,6 +40,12 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssetUrls }) => 
   shown: {},
   tlDescription: {},
 
+  accordionContainer: {
+    // Remove focus ring produced as consequence of making `<div />` tabbable/focusable:
+    '&:focus': {
+      outline: keywords.none,
+    },
+  },
   bodyText: {
     display: `block ${keywords.important}`,
     lineHeight: 1.2,
@@ -75,14 +80,11 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssetUrls }) => 
       width: '100%',
     },
 
-    '& [class^="material-icons"]': {
-      fontSize: fonts.size.large,
-    },
+    '& [class^="material-icons"]': {},
 
     '& $bodyFieldIcon': {
-      color: colors.red.primary,
+      fontSize: `${fonts.size.large}px ${keywords.important}`,
       marginRight: '1rem',
-      position: 'relative',
       top: 2,
     },
 
@@ -121,6 +123,10 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssetUrls }) => 
     margin: ['1rem', 0, 0],
     marginTop: `0 ${keywords.important}`,
 
+    '&:hover $toggleGlyph': {
+      transform: 'scale(1.25)',
+    },
+
     '& > em': {
       width: '100%',
     },
@@ -133,12 +139,12 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssetUrls }) => 
     },
     position: 'relative',
     right: '-0.5rem',
-    transition: {
-      delay: 125,
+    transition: helpers.condenseStyles({
       duration: 750,
+      delay: 125, // eslint-disable-line sort-keys
       property: 'transform',
       timingFunction: 'ease',
-    },
+    }, true),
 
     '&$active': {
       transform: 'rotateZ(90deg)',

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { classes, ClassNamesPropType } from 'aesthetic';
+import { Link } from 'react-router-dom';
+import { ClassNamesPropType } from 'aesthetic';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -32,7 +33,9 @@ export default class AppBarPure extends PureComponent {
         className={classNames.appBarRootNode}
         iconElementLeft={
           <IconButton>
-            <NavigationMenuIcon />
+            <Link to="/search">
+              <NavigationMenuIcon />
+            </Link>
           </IconButton>
         }
         iconElementRight={<AppBarMenuPure />}
@@ -69,5 +72,7 @@ const AppBarMenuPure = (props) => (
     <MenuItem primaryText="Log out" />
   </IconMenu>
 );
+
+AppBarMenuPure.displayName = 'AppBarMenu';
 
 AppBarMenuPure.muiName = 'IconMenu';

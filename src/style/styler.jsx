@@ -9,6 +9,7 @@ import BaseTheme from './theming/base';
 const defaultUnit = {
   'animation-delay': 'ms',
   'animation-duration': 'ms',
+  'background-size': '%',
   'transition-delay': 'ms',
   'transition-duration': 'ms',
 };

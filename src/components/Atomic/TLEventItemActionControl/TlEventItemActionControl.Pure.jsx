@@ -2,48 +2,50 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
 import FontIcon from 'material-ui/FontIcon';
-import BatchSelectCheckbox from '../../BatchSelectCheckbox';
+import BatchSelectCheckbox from '../BatchSelectCheckbox';
 // import SingleEvent from '../../search/SingleEvent';
-import { collapseBody } from '../../../utilities/utility_classes/general';
+import { collapseBody } from '../../../util/general';
 
 //
 const TlEventItemActionControlPure = ({
   addSelectionToBatch,
-  batchSelectionState,
   classNames,
   evtUuid,
+  isBatchSelectMode,
   isInverted,
-}) => batchSelectionState
+}) => !!isBatchSelectMode
   ? (
     <BatchSelectCheckbox
       addSelectionToBatch={addSelectionToBatch}
       evtUuid={evtUuid}
+      isInverted={isInverted}
     />
   ) : (
-    <i
+    <FontIcon
       className={classes(
-        'glyphicon',
-        'glyphicon-chevron-up',
+        'material-icons',
         'tl-evt-hover-state',
         classNames.collapseUp,
         !!isInverted && classNames.invertedActionControl,
       )}
       onClick={collapseBody}
-    />
+    >
+      keyboard_arrow_up
+    </FontIcon>
   );
 
 TlEventItemActionControlPure.displayName = 'TlEventItemActionControl';
 
 TlEventItemActionControlPure.propTypes = {
   addSelectionToBatch: PropTypes.func.isRequired,
-  batchSelectionState: PropTypes.bool,
   classNames: ClassNamesPropType.isRequired,
   evtUuid: PropTypes.string.isRequired,
+  isBatchSelectMode: PropTypes.bool,
   isInverted: PropTypes.bool,
 };
 
 TlEventItemActionControlPure.defaultProps = {
-  batchSelectionState: false,
+  isBatchSelectMode: false,
   isInverted: false,
 };
 

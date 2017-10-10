@@ -8,28 +8,23 @@ import { Link, Route, Redirect, withRouter } from 'react-router-dom';
 
 import Timeline from '../../containers/Timeline';
 import EditEventModal from '../EditEventModal';
-import { fetchSeedData, fetchAllCloudinary } from '../../actions/asyncActions';
+import { fetchAllCloudinary } from '../../state/cloudinaryImageStore';
+import { fetchSeedData } from '../../actions/asyncActions';
 import styler from '../../style/styler';
 
+// Import global CSS transpiled stylesheet:
 import '../../../assets/styles/master.scss';
 
-@connect(
-  ({ cloudinaryImageStore, seedDataAggregator }) => ({
-    cloudinaryImageStore,
-    seedData: seedDataAggregator,
-  }),
-  (dispatch) => bindActionCreators({ fetchAllCloudinary, fetchSeedData }, dispatch),
-)
-@styler(({ fonts }) => ({
+@styler(({ fonts, keywords }) => ({
   hamburger: {
     cursor: 'pointer',
     font: {
       family: fonts.face.default,
       lineHeight: 1,
       size: '4rem',
-      stretch: 'normal',
-      style: 'normal',
-      variant: 'normal',
+      stretch: keywords.normal,
+      style: keywords.normal,
+      variant: keywords.normal,
       weight: 'lighter',
     },
     margin: ['1.5rem', '2rem'],
@@ -39,7 +34,16 @@ import '../../../assets/styles/master.scss';
   tlContainer: {
     minHeight: '75vh',
   },
-}))
+}), {
+  styleName: 'AppViewStyles',
+})
+@connect(
+  ({ cloudinaryImageStore, seedDataAggregator }) => ({
+    cloudinaryImageStore,
+    seedData: seedDataAggregator,
+  }),
+  (dispatch) => bindActionCreators({ fetchAllCloudinary, fetchSeedData }, dispatch),
+)
 export default class App extends Component {
   static displayName = 'App';
 
@@ -50,7 +54,9 @@ export default class App extends Component {
     ]),
     classNames: ClassNamesPropType.isRequired,
     cloudinaryImageStore: PropTypes.arrayOf(PropTypes.object),
-    location: PropTypes.object.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
     seedData: PropTypes.arrayOf(PropTypes.object),
   };
 

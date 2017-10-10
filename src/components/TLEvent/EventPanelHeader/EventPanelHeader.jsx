@@ -7,26 +7,23 @@ const headerTailRight = 'polygon(0 0, 100% 0, calc(100% - 1.5rem) 1.5rem, calc(1
 export default styler(({ colors, helpers }) => ({
   // Static declarations necessary for nested reference(s):
   invertedPanel: {},
+  panelHeaderWithPointer: {},
 
   panelHeader: {
     ...helpers.flexify(),
     ...helpers.hideOverflow,
     background: {
-      color: colors.grey.lite,
+      color: colors.white.hue,
       position: ['center', '30%'],
       repeat: 'no-repeat',
-      size: '100%',
+      size: 100,
     },
     backgroundBlendMode: 'multiply',
     border: 'none',
-    WebkitClipPath: headerTailRight, // eslint-disable-line sort-keys
-    clipPath: headerTailRight,
     maxHeight: 150,
     minHeight: '7.142857142857143rem',  // => (100 / 14)px
     padding: '1.25rem',
     position: 'relative',
-    WebkitShapeOutside: headerTailRight, // eslint-disable-line sort-keys
-    shapeOutside: headerTailRight,
     textAlign: 'end',
     transition: {
       delay: 125,
@@ -34,34 +31,45 @@ export default styler(({ colors, helpers }) => ({
       property: 'background-size',
       timingFunction: 'cubic-bezier(0, 0.25, 0.7, 0.4)', // $transitionTimingFunc
     },
-    width: 'calc(100% + 1.5rem)',
+    width: '100%',
 
     '&$invertedPanel': {
-      WebkitClipPath: headerTailLeft,
-      clipPath: headerTailLeft,
-      left: '-1.5rem',
-      WebkitShapeOutside: headerTailLeft, // eslint-disable-line sort-keys
-      shapeOutside: headerTailLeft,
-
       '& $panelHeaderTitle': {
         margin: [0, 0, 0, '1.5rem'],  // Four-value syntax necessary to override `margin-right` value
         textAlign: 'start',
       },
     },
 
+    '&$panelHeaderWithPointer': {
+      WebkitClipPath: headerTailRight, // eslint-disable-line sort-keys
+      clipPath: headerTailRight,
+      WebkitShapeOutside: headerTailRight, // eslint-disable-line sort-keys
+      shapeOutside: headerTailRight,
+      width: 'calc(100% + 1.5rem)',
+
+      '&$invertedPanel': {
+        WebkitClipPath: headerTailLeft,
+        clipPath: headerTailLeft,
+        left: '-1.5rem',
+        WebkitShapeOutside: headerTailLeft, // eslint-disable-line sort-keys
+        shapeOutside: headerTailLeft,
+      },
+    },
+
     '&:hover': {
+      backgroundSize: 145,
       transition: {
-        delay: null,
-        duration: 450,
+        delay: 350,
+        duration: 750,
         property: 'background-size',
         timingFunction: 'ease-in-out',
       },
     },
   },
   panelHeaderTitle: {
+    ...helpers.flexify('column', 'center'),
     ...helpers.hideOverflow,
     color: colors.white.primary,
-    display: '-webkit-box',
     fontVariant: 'small-caps',
     marginRight: '1.5rem',
     position: 'relative',
@@ -81,5 +89,5 @@ export default styler(({ colors, helpers }) => ({
     zIndex: 1,
   },
 }), {
-  styleNaME: 'EventPanelHeader',
+  styleName: 'EventPanelHeaderStyles',
 })(EventPanelHeaderPure);

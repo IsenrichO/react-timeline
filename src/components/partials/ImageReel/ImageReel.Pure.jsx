@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import uuidv4 from 'uuid/v4';
 import { FontIcon, IconButton} from 'material-ui';
-import { capitalize, isEmpty, isEqual, isNil, size } from 'lodash';
+import { isArray, capitalize, isEmpty, isEqual, isNil, size } from 'lodash';
 import { classes, ClassNamesPropType } from 'aesthetic';
 import ImageThumbnail from './ImageThumbnail';
+import { aesthetic } from '../../../style/styler';
 
 export default class ImageReelPure extends Component {
   static displayName = 'ImageReel';
@@ -41,6 +42,7 @@ export default class ImageReelPure extends Component {
         width: PropTypes.number,
       }).isRequired,
     ),
+    theme: PropTypes.string,
     uuid: PropTypes.string.isRequired,
   };
 
@@ -59,26 +61,36 @@ export default class ImageReelPure extends Component {
       version: 1000000000,
       width: 6000,
     }],
+    theme: 'base',
     uuid: uuidv4(),
   };
 
   constructor(props) {
     super(props);
-    const { theme = 'base' } = props;
+    const { images = [], theme = 'base' } = props;
 
     this.state = {
       imageReelShift: 0,
       lateralShift: 0,
-      thumbs: [],
+      thumbs: !isNil(images) && isArray(images)
+        ? images
+        : [],
     };
 
     this.DIRS = {
       NEXT: 'PAN_RIGHT',
       PREV: 'PAN_LEFT',
     };
+    const { NEXT, PREV } = this.DIRS;
+    this.DIR_MAP = new Map([
+      [NEXT, 'right'],
+      [PREV, 'left'],
+    ]);
 
-    this.panRight = ::this.panReel(this.DIRS.NEXT);
-    this.panLeft = ::this.panReel(this.DIRS.PREV);
+    this.theme = aesthetic.themes[theme];
+    this.panLeft = ::this.panReel(PREV);
+    this.panRight = ::this.panReel(NEXT);
+    this._removeThumbnailFromState = ::this._removeThumbnailFromState;
   }
 
   componentWillReceiveProps({ images: nextImages }) {
@@ -87,26 +99,6 @@ export default class ImageReelPure extends Component {
     return !isEqual(images, nextImages)
       ? this._addImageToState(nextImages)
       : null;
-  }
-
-  _addImageToState(image) {
-    return this.setState(update(this.state, {
-      thumbs: { $push: image },
-    }));
-  }
-
-  createNewThumbnail({ name: fileName }, src) {
-    const { classNames } = this.props;
-
-    return (
-      <div className={classNames.imageReelThumb}>
-        <img
-          alt={`Thumbnail graphic '${fileName}'`}
-          src={src}
-          title={`'${fileName.replace(/['"]/gm, '')}'`}
-        />
-      </div>
-    );
   }
 
   getElementMargin = (el) => {
@@ -158,6 +150,34 @@ export default class ImageReelPure extends Component {
     }
   };
 
+  createNewThumbnail({ name: fileName }, src) {
+    const { classNames } = this.props;
+
+    return (
+      <div className={classNames.imageReelThumb}>
+        <img
+          alt={`Thumbnail graphic '${fileName}'`}
+          src={src}
+          title={`'${fileName.replace(/['"]/gm, '')}'`}
+        />
+      </div>
+    );
+  }
+
+  _addImageToState(image) {
+    return this.setState(update(this.state, {
+      thumbs: { $push: image },
+    }));
+  }
+
+  _removeThumbnailFromState(imageIndex) {
+    const { thumbs } = this.state;
+
+    return this.setState(update(this.state, {
+      thumbs: { $splice: [[imageIndex, 1]] },
+    }));
+  }
+
   // Allows for smooth lateral panning of the image reel when enough images are present
   // as to overflow outside the containing element's side boundaries:
   panReel(direction = this.DIRS.NEXT) {
@@ -166,14 +186,8 @@ export default class ImageReelPure extends Component {
 
     if (isNil(this.imageReelEl)) return;
 
-    const reelEl = findDOMNode(this.imageReelEl || this);
     const firstThumbEl = findDOMNode(this.thumbEl);
-    console.log({ firstThumbEl, reelEl });
-
-    const reelWidth = reelEl.scrollWidth;
     const adjustmentFactorParity = Math.sign([null, NEXT].indexOf(direction));
-    console.log({ adjustmentFactorParity, reelWidth });
-
     const { width: thumbWrapperWidth } = firstThumbEl.getBoundingClientRect();
     const firstThumbOffset = thumbWrapperWidth
       + (2 * this.getElementMargin(firstThumbEl).left)
@@ -191,42 +205,45 @@ export default class ImageReelPure extends Component {
   }
 
   // Appends a `.thumb` <div> with nested a <img> element to specified output target:
-  readInThumbnailWithImageElement(file) {
-    (function(file) {
+  readInThumbnailWithImageElement = (file) => {
+    (function(imageFile) {
       const Reader = new FileReader();
-      Reader.onload = (evt) => Reader.onload = (evt) => this._addImageToState(this.createNewThumbnail(file, evt.target.result));
+      Reader.onload = (evt) => this._addImageToState(this.createNewThumbnail(imageFile, evt.target.result));
 
       // Read in the image file as a data URL:
-      Reader.readAsDataURL(file);
+      Reader.readAsDataURL(imageFile);
     })(file);
-  }
+  };
 
   // 
   renderReelNavigation(direction = this.DIRS.NEXT, numImages) {
     const { classNames } = this.props;
-    const { NEXT, PREV } = this.DIRS;
-
-    const dirMap = new Map([
-      [NEXT, 'right'],
-      [PREV, 'left'],
-    ]);
+    const { helpers } = this.theme;
+    const currDir = capitalize(this.DIR_MAP.get(direction));
 
     return (
       <div
         className={classes(
           classNames.navArrowWrapper,
-          classNames[`navAlign${capitalize(dirMap.get(direction))}`],
+          classNames[`navAlign${currDir}`],
         )}
       >
         <IconButton
-          key={`imageRseel${dirMap.get(direction)}Nav`}
-          className={classNames[`pan${capitalize(dirMap.get(direction))}`]}
+          key={`imageReel${currDir}Nav`}
+          className={classNames[`pan${currDir}`]}
           onClick={(evt) => this.panReel(direction, evt)}
+          style={{
+            ...helpers.styleInheritor('height', 'width'),
+          }}
         >
           <FontIcon
-            className={classes('material-icons')}
+            className={classes(
+              'material-icons',
+              classNames.reelNavArrowIcon,
+              classNames[`reelNavArrow${currDir}`],
+            )}
           >
-            {`chevron_${dirMap.get(direction)}`}
+            {`chevron_${currDir.toLowerCase()}`}
           </FontIcon>
         </IconButton>
       </div>
@@ -236,12 +253,13 @@ export default class ImageReelPure extends Component {
   renderThumbs = (thumbs = []) => !isEmpty(thumbs) && thumbs.map(({ secure_url }, index) => (
     <ImageThumbnail
       key={Math.random()}
+      imageRemovalHandler={this._removeThumbnailFromState}
       // horizontalTranslation={this.state.imageReelShift || 0}
       thumbRef={!index
         ? (thumbEl) => { this.thumbEl = thumbEl; }
         : null
       }
-      thumbSource={secure_url}
+      thumbSource={secure_url} // eslint-disable-line camelcase
     />
   ));
 
@@ -273,11 +291,11 @@ export default class ImageReelPure extends Component {
         >
           {!!withNavArrows && this.renderReelNavigation(PREV, size(thumbs))}
           <div
+            ref={(imageReelEl) => { this.imageReelEl = imageReelEl; }}
             className={classes(
               classNames.reelContainer,
               isEmpty(thumbs) && classNames.reelWithFallbackMessage,
             )}
-            ref={(imageReelEl) => { this.imageReelEl = imageReelEl; }}
             style={{
               transform: `translateX(${imageReelShift}px)`,
             }}

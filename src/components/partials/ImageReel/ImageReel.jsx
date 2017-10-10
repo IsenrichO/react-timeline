@@ -1,83 +1,36 @@
 import { capitalize } from 'lodash';
-import dedent from 'dedent';
 import ImageReelPure from './ImageReel.Pure';
-import { hexToRgba } from '../../../utilities/utility_classes/general';
 import styler from '../../../style/styler';
 
-const renderNavigationButton = (direction = 'right', colors, helpers, transitions) => {
-  const formattedDirName = capitalize(direction.toLowerCase());
-  const [isNext, isPrev] = [formattedDirName === 'Right', formattedDirName === 'Left'];
+const renderNavigationButton = (direction = 'right', colors, helpers, keywords, transitions) => {
+  const formattedDir = capitalize(direction.toLowerCase());
+  const [isNext, isPrev] = [formattedDir === 'Right', formattedDir === 'Left'];
 
   return {
-    // background: {
-    //   attachment: null,
-    //   color: colors.white.primary,
-    //   image: dedent(`
-    //     radial-gradient(
-    //       ellipse farthest-corner at 20px 55px,
-    //       #B7BABE 0,
-    //       ${hexToRgba(colors.white.primary, 0.01)} 40%,
-    //       ${hexToRgba(colors.white.primary, 0.28)} 75%,
-    //       ${hexToRgba(colors.white.primary, 0.55)} 99%
-    //     )
-    //   `),
-    //   position: [`${75 - (100 * !!['Left'].includes(formattedDirName))}%`, 0],
-    //   repeat: 'no-repeat',
-    //   size: ['200%', '220%'],
-    // },
-    // border: {
-    //   color: colors.grey.primary,
-    //   radius: [
-    //     isPrev ? 10 : 0,
-    //     isNext ? 10 : 0,
-    //     isNext ? 10 : 0,
-    //     isPrev ? 10 : 0,
-    //   ],
-    //   style: 'double',
-    //   width: 3,
-    // },
-    ...helpers.styleInheritor('height', 'width'),
-    backgroundColor: colors.black.navReelBackground,
+    ...helpers.styleInheritor('height'),
     cursor: 'pointer',
-    overflow: 'hidden',
-    position: 'absolute',
-    // transition: transitions.transitionAll,
+    overflow: `hidden ${keywords.important}`,
+    padding: `0 ${keywords.important}`,
+    position: `absolute ${keywords.important}`,
 
     '&:hover': {
-      // background: {
-      //   attachment: null,
-      //   color: colors.white.primary,
-      //   image: dedent(`
-      //     radial-gradient(
-      //       ellipse farthest-corner at 20px 55px,
-      //       #B7BABE 0,
-      //       ${hexToRgba(colors.white.primary, 0.01)} 40%,
-      //       ${hexToRgba(colors.white.primary, 0.28)} 75%,
-      //       ${hexToRgba(colors.white.primary, 0.55)} 99%
-      //     )
-      //   `),
-      //   position: Array(2).fill('0'),
-      //   repeat: 'no-repeat',
-      //   size: ['230%', '200%'],
-      // },
-      // transition: transitions.transitionAll,
-
-      '& > .material-icons': {
+      '& $reelNavArrowIcon': {
         marginLeft: '10%',
-        transition: transitions.transitionAll,
+        transition: helpers.condenseStyles(transitions.transitionAll, true),
         transitionDuration: 100,
       },
     },
 
-    '& > .material-icons': {
+    '& $reelNavArrowIcon': {
       ...helpers.styleInheritor('lineHeight'),
       color: colors.white.primary,
       fontSize: '3rem !important', // Necessary Material-Icons library override
       height: '100%',
-      marginLeft: `${Math.sign([null, 'Left'].indexOf(formattedDirName)) * 100}%`,
+      marginLeft: `${(Math.sign([null, 'Left'].indexOf(formattedDir)) * (100 * (!!isNext ? 1.7 : 1)))}%`,
       position: 'static !important',
-      transition: transitions.transitionAll,
-      transitionDuration: 100,
+      transition: helpers.condenseStyles(transitions.transitionAll, true), // `${transitions.transitionAll} ${keywords.important}`,
+      transitionDelay: `100ms ${keywords.important}`,
+      transitionDuration: `200ms ${keywords.important}`,
     },
   };
 };
@@ -104,10 +57,11 @@ export default styler(({ colors, fonts, helpers, imageAssetUrls, keywords, trans
   },
   navArrowWrapper: {
     ...helpers.styleInheritor('height'),
+    backgroundColor: colors.black.navReelBackground,
     overflow: 'hidden',
     position: 'absolute',
     transition: transitions.transitionAll,
-    width: '2rem',
+    width: '1.5rem',
     zIndex: 10,
 
     '&$navAlignLeft': { left: 0 },
@@ -123,15 +77,15 @@ export default styler(({ colors, fonts, helpers, imageAssetUrls, keywords, trans
 
     '&:hover': {
       '& $navArrowWrapper': {
-        width: '3.5rem',
+        width: '2.8rem',
       },
     },
   },
   panLeft: {
-    ...renderNavigationButton('left', colors, helpers, transitions),
+    ...renderNavigationButton('left', colors, helpers, keywords, transitions),
   },
   panRight: {
-    ...renderNavigationButton('right', colors, helpers, transitions),
+    ...renderNavigationButton('right', colors, helpers, keywords, transitions),
   },
   reelContainer: {
     ...helpers.flexify(),
@@ -165,6 +119,9 @@ export default styler(({ colors, fonts, helpers, imageAssetUrls, keywords, trans
         position: 'relative',
       },
     },
+  },
+  reelNavArrowIcon: {
+    color: `${colors.white.primary} ${keywords.important}`,
   },
   // thumb: {
   //   background: {

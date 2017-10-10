@@ -1,35 +1,29 @@
 import TlEventItemActionControlPure from './TlEventItemActionControl.Pure';
 import styler from '../../../style/styler';
 
-export default styler(({ colors }) => ({
+export default styler(({ colors, helpers, keywords, transitions }) => ({
   // Static declaration necessary for nested reference(s):
   invertedActionControl: {},
 
   collapseUp: {
+    ...helpers.setElementVisibility(),
     alignSelf: 'baseline',
-    color: colors.white.primary,
+    color: `${colors.white.primary} ${keywords.important}`,
     cursor: 'pointer',
     font: {
-      size: '1.5rem',
-      variant: 'small-caps',
+      size: `2.5rem ${keywords.important}`,
+      variant: 'common-ligatures',
+      weight: 'bolder',
     },
-    left: '-0.5rem',
-    opacity: 0,
-    position: 'relative',
+    left: '-0.8rem',
     textShadow: {
       blur: 5,
       color: colors.grey.dim,
       x: -2,
       y: -1,
     },
-    top: '-0.5rem',
-    transition: {
-      delay: 250,
-      duration: 250,
-      property: 'all',
-      timingFunction: 'cubic-bezier(0, 0.25, 0.7, 0.4)',
-    },
-    visibility: 'hidden',
+    top: '-1rem',
+    transition: helpers.condenseStyles(transitions.hoverTransition, true),
     zIndex: 1,
 
     '&$invertedActionControl': {

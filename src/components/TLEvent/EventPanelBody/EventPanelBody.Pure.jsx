@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
+import FontIcon from 'material-ui/FontIcon';
 import update from 'immutability-helper';
-import uuidv4 from 'uuid/v4';
-import { isEmpty, throttle } from 'lodash';
+import { isEmpty, size, throttle } from 'lodash';
 import ShowMoreControl from '../../Atomic/ShowMore';
 import ImageReel from '../../partials/ImageReel';
 import StaticGMap from '../../Atomic/StaticMap';
-import { toggleAccordionSection } from '../../../utilities/utility_classes/general';
+import { aesthetic } from '../../../style/styler';
+import { toggleAccordionSection } from '../../../util/general';
 
 
 // Returns a function, that, as long as it continues to be invoked, will not
@@ -33,14 +34,13 @@ const debounce = (func, wait, immediate) => {
 
 // const debounceToggle = (evt) => debounce(toggleAccordionSection, 200, true)(evt),
 const debounceToggle = function(evt) { return debounce(toggleAccordionSection, 200, true)(evt); };
-const photosTagLine = (numPhotos) => `${numPhotos} Photo${numPhotos !== 1 ? 's' : ''}`;
 
 export default class EventPanelBodyPure extends Component {
   static displayName = 'EventPanelBody';
 
   static propTypes = {
     classNames: ClassNamesPropType.isRequired,
-    cloudinaryImageStore: PropTypes.array,
+    cloudinaryImageStore: PropTypes.arrayOf(PropTypes.object),
     evtDescription: PropTypes.arrayOf(PropTypes.string),
     evtFormattedDate: PropTypes.string,
     evtLocation: PropTypes.string,
@@ -56,13 +56,17 @@ export default class EventPanelBodyPure extends Component {
     theme: 'base',
   };
 
+  static getPhotosTagLine = (numPhotos) => `${numPhotos} Photo${numPhotos !== 1 ? 's' : ''}`;
+
   constructor(props) {
     super(props);
+    const { theme = 'base' } = this.props;
 
     this.state = {
       isExpanded: false,
       linkText: 'SHOW MORE',
     };
+    this.theme = aesthetic.themes[theme];
 
     this.expansionTimer = null;
     this.delayLinkTextChange = throttle(::this.delayLinkTextChange, 600);
@@ -89,14 +93,14 @@ export default class EventPanelBodyPure extends Component {
 
   clearExistingTimers = () => clearTimeout(this.expansionTimer);
 
-  // Returns a function, that, as long as it continues to be invoked, will not
+  // Returns a function, that, while continuing to be invoked, will not
   //  be triggered. The function will be called after it stops being called for
   //  N milliseconds. If `immediate` is passed, trigger the function on the
   //  leading edge, instead of the trailing.
   debounce = (func, wait, immediate) => {
     let timeout;
     return function() {
-      const [context, args] = [this, arguments];
+      const [context, args] = [this, arguments]; // eslint-disable-line prefer-rest-params
       const later = () => {
         timeout = null;
         if (!immediate) { func.apply(context, args); }
@@ -147,7 +151,12 @@ export default class EventPanelBodyPure extends Component {
       uuid,
     } = this.props;
     const { isExpanded, linkText } = this.state;
+    const { colors } = this.theme;
 
+    const {
+      black: { primary: themeBlack },
+      red: { primary: themeRed },
+    } = colors;
     const combinedDescription = evtDescription.join(' ').trim();
     const hasOverflowDescription = combinedDescription.length >= 240;
 
@@ -196,57 +205,70 @@ export default class EventPanelBodyPure extends Component {
         ]}
 
         <section className={classNames.tlDate}>
-          <i className={classes('material-icons', bodyFieldIcon)}>
+          <FontIcon
+            className={classes('material-icons', bodyFieldIcon)}
+            color={themeRed}
+          >
             event
-          </i>
+          </FontIcon>
           <em>{evtFormattedDate}</em>
         </section>
 
         <section className={classNames.tlLocation}>
-          <button
+          <div
             className={classes(accordionContainer, accordionToggleBtn)}
             onClick={this.throttleMapToggle}
-            type="button"
+            role="button"
+            tabIndex={0}
           >
             <div className={classes(accordionContainer, tlRowSummary)}>
-              <i className={classes('material-icons', bodyFieldIcon)}>
+              <FontIcon
+                className={classes('material-icons', bodyFieldIcon)}
+                color={themeRed}
+              >
                 place
-              </i>
-              <em key={`Location_${evtLocation}`}>{evtLocation}</em>
-              <i
+              </FontIcon>
+              <em>{evtLocation}</em>
+              <FontIcon
                 ref={(mapToggle) => { this.mapToggle = mapToggle; }}
                 className={classes('material-icons', toggleGlyph)}
+                color={themeBlack}
               >
                 keyboard_arrow_right
-              </i>
+              </FontIcon>
             </div>
             <StaticGMap evtLocation={evtLocation} />
-          </button>
+          </div>
         </section>
 
         <section className={classNames.tlPhotos}>
-          <button
+          <div
             className={classes(accordionContainer, accordionToggleBtn)}
             onClick={this.throttlePhotoToggle}
-            type="button"
+            role="button"
+            tabIndex={0}
           >
             <div className={classes(accordionContainer, tlRowSummary)}>
-              <i className={classes('material-icons', bodyFieldIcon)}>
+              <FontIcon
+                className={classes('material-icons', bodyFieldIcon)}
+                color={themeRed}
+              >
                 collections
-              </i>
-              <em>{photosTagLine((cloudinaryImageStore && cloudinaryImageStore.length) || 0)}</em>
-              <i
+              </FontIcon>
+              <em>{EventPanelBodyPure.getPhotosTagLine(size(cloudinaryImageStore) || 0)}</em>
+              <FontIcon
                 ref={(photosToggle) => { this.photosToggle = photosToggle; }}
                 className={classes('material-icons', toggleGlyph)}
+                color={themeBlack}
               >
                 keyboard_arrow_right
-              </i>
+              </FontIcon>
             </div>
             <ImageReel
               images={cloudinaryImageStore}
               uuid={uuid}
             />
-          </button>
+          </div>
         </section>
       </div>
     );

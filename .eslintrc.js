@@ -58,8 +58,27 @@ module.exports = {
       "int32Hint": true,
     }],
     "no-class-assign": 2,
+    "no-continue": 0,
     "no-extra-boolean-cast": 0, // CORRECT: `!!value !== 0`
+    "no-fallthrough": [2, {
+      "commentPattern": "Break[\\s\\w]*omitted", // CORRECT: `// Break omitted`
+    }],
     "no-func-assign": 2,
+    "no-param-reassign": [1, {
+      "props": true,
+      "ignorePropertyModificationsFor": [
+        "acc", "curr",        // Enabled for use with Array#reduce method calls
+        "channel",            // Allows parameter reassignment in Reselect selector
+        "context", "ctx",     // Allows setting of the appropriate `this` context
+        "e", "evt", "event",  // Allows working with event objects
+        "fpInstance",         // Allows internal modification of FlatPickr instance(s)
+        "monitor",            // Allow mutation of React-DnD monitor(s)
+        "node",               // Allow modifications to `node` objects in GraphQL
+        "registration",       // Enabled for registration of Service Worker(s)
+        "result",             // Enabled for `countriesByGeos.js`
+        "state",              // Enabled primarily for reassignment inside reducers
+      ],
+     }],
     "no-this-before-super": 2,
     "no-undef": [2, {
       "typeof": true,
@@ -80,6 +99,8 @@ module.exports = {
       "vars": "local",
       "varsIgnorePattern": "^due|[rR]eact",  // Allows `import React from 'react';`
     }],
+    "no-useless-call": 2, // INCORRECT: `foo.apply(null, [1, 2, 3]);`
+                          // CORRECT:   `foo.apply(bar, [1, 2, 3]);`
     "no-useless-computed-key": 2,
     "no-useless-concat": 2,
     "no-useless-constructor": 2,
@@ -131,8 +152,16 @@ module.exports = {
 
 
     /* STYLISTIC RULES */
+    "array-bracket-spacing": [2, "never", {
+      "singleValue": false,
+      "objectsInArrays": false,
+      "arraysInArrays": false,
+    }],
     "arrow-parens": [2, "always", {
       "requireForBlockBody": false, // CORRECT: `(x) => x + 1`, `(x, y) => x + y`
+    }],
+    "camelcase": [2, {        // CORRECT:   `const myFavoriteColor = 'Orange';`
+      "properties": "always", // INCORRECT: `const my_favorite_Color = 'Pink';`
     }],
     "comma-dangle": [2, {
       "arrays": "always-multiline",
@@ -141,6 +170,7 @@ module.exports = {
       "exports": "always-multiline",
       "functions": "always-multiline",
     }],
+    "computed-property-spacing": [2, "never"], // CORRECT: `const foo = { [bar]: 'baz' };`
     "eol-last": [2, "always"],
     "indent": [2, 2, {
       "ignoredNodes": ["ConditionalExpression"],
@@ -201,20 +231,6 @@ module.exports = {
       "skipBlankLines": false,
     }],
     "no-nested-ternary": 0,
-    "no-param-reassign": [1, {
-      "props": true,
-      "ignorePropertyModificationsFor": [
-        "acc", "curr",        // Enabled for use with Array#reduce method calls
-        "channel",            // Allows parameter reassignment in Reselect selector
-        "context", "ctx",     // Allows setting of the appropriate `this` context
-        "e", "evt", "event",  // Allows working with event objects
-        "fpInstance",         // Allows internal modification of FlatPickr instance(s)
-        "monitor",            // Allow mutation of React-DnD monitor(s)
-        "node",               // Allow modifications to `node` objects in GraphQL
-        "registration",       // Enabled for registration of Service Worker(s)
-        "result",             // Enabled for `countriesByGeos.js`
-      ],
-     }],
     "no-plusplus": [2, {
       "allowForLoopAfterthoughts": true,
     }],
@@ -280,6 +296,14 @@ module.exports = {
       "anonymous": "never",     // CORRECT: function() {}
       "named": "never",         // CORRECT: function foo() {}
       "asyncArrow": "always",   // CORRECT: async () => {}
+    }],
+    "space-unary-ops": [2, {
+      "words": true,      // CORRECT:   `new Foo;`
+      "nonwords": false,  // INCORRECT: `++bar;`
+      "overrides": {
+        "void": false,    // CORRECT*:  `void{foo:0};`
+        "yield": false,   // CORRECT*:  `yield(0);`
+      },
     }],
     "template-curly-spacing": [2, "never"],
     "wrap-iife": [2, "inside", {        // CORRECT: `const x = (function () { return { y: 1 };})();`
@@ -394,7 +418,7 @@ module.exports = {
         "bool",
         "mutuallyExclusiveTrueProps",
       ],
-      "rule": "^(doe|[hw]a|i)s[A-Z]([\w\d]?)+",  // CORRECT: `doesWork`, `hasChildren`, `isEnabled`, `wasCalled`
+      "rule": "^disabled|mini|(doe|[hw]a|i)s[A-Z]([\w\d]?)+",  // CORRECT: `doesWork`, `hasChildren`, `isEnabled`, `wasCalled`
     }],
     "react/default-props-match-prop-types": [2, {
       "allowRequiredDefaults": true,

@@ -1,30 +1,73 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { ClassNamesPropType } from 'aesthetic';
-import Utils from '../../utilities/index';
+import SingleEvent from './SingleEvent';
+import { fetchSeedData } from '../../actions/asyncActions';
+import { fetchAllCloudinary, fetchCloudinaryImageData } from '../../state/cloudinaryImageStore';
+import { updateSingleEvent } from '../../state/sourceEventData';
+import { getStarGlyphClass } from '../../util/general';
+import Utils from '../../util';
 
-const SearchResults = ({
-  classNames,
-  eventsStore,
-  imageStore,
-  searchEvents,
-  updateSingleEvent,
-}) => (
-  <ul className="evt-search-starred">
-    {Utils.renderStarredEvents(searchEvents, eventsStore, updateSingleEvent, imageStore)}
-  </ul>
-);
+// const SearchResults = ({
+//   classNames,
+//   eventsStore,
+//   imageStore,
+//   searchEvents,
+//   updateSingleEvent,
+// }) => {
 
-SearchResults.displayName = 'SearchResults';
+@connect(
+  ({ cloudinaryState, searchEvents, seedDataAggregator }) => ({
+    cloudinaryImageStore: cloudinaryState,
+    searchEvents,
+    seedDataAggregator,
+  }),
+  (dispatch) => bindActionCreators({
+    fetchAllCloudinary,
+    fetchCloudinaryImageData,
+    fetchSeedData,
+    updateSingleEvent,
+  }, dispatch),
+)
+export default class SearchResults extends React.Component {
+  static displayName = 'SearchResults';
 
-SearchResults.propTypes = {
-  classNames: ClassNamesPropType.isRequired,
-  eventsStore: PropTypes.arrayOf(PropTypes.object).isRequired,
-  imageStore: PropTypes.objectOf(PropTypes.object).isRequired,
-  searchEvents: PropTypes.arrayOf(PropTypes.object).isRequired,
-  updateSingleEvent: PropTypes.func.isRequired,
-};
+  static propTypes = {
+    classNames: ClassNamesPropType.isRequired,
+    eventsStore: PropTypes.arrayOf(PropTypes.object).isRequired,
+    imageStore: PropTypes.arrayOf(PropTypes.object),
+    searchEvents: PropTypes.arrayOf(PropTypes.object),
+    updateSingleEvent: PropTypes.func.isRequired,
+  };
 
-SearchResults.defaultProps = {};
+  static defaultProps = {
+    imageStore: [],
+    searchEvents: [],
+  };
 
-export default SearchResults;
+  //
+  renderStarredEvents() {
+    const { cloudinaryImageStore, updateSingleEvent, seedDataAggregator } = this.props;
+
+    return seedDataAggregator.map((evt, index) => (
+      <SingleEvent
+        key={`SearchEventCard${evt.uuid}`}
+        addEventToFavorites={() => updateSingleEvent({ starred: !evt.starred, uuid: evt.uuid })}
+        evt={evt}
+        getStarGlyphClass={getStarGlyphClass(seedDataAggregator, evt.uuid)} // getStarGlyphClass(eventsStore, evt.uuid)}
+        hasMultipleTags={false} // {hasMultipleTags(eventsStore, evt.uuid)}
+        imageStore={cloudinaryImageStore[evt.uuid]}
+      />
+    ));
+  }
+
+  render() {
+    return (
+      <ul className="evt-search-starred">
+        {this.renderStarredEvents()}
+      </ul>
+    );
+  }
+}

@@ -1,5 +1,2 @@
-import ButtonControlsPure from './ButtonControlsPure';
-import ButtonControls from './ButtonControls';
-
-export {  ButtonControls, ButtonControlsPure };
-export { default } from './BatchActionButtons';
+export { default as BatchActionButtons } from './BatchActionButtons';
+export { default as ButtonControls } from './ButtonControls';

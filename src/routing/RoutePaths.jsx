@@ -8,7 +8,10 @@ export const StarredEvents = '/api/search/starred';
 export const Photos = '/api/photos';
 export const Tags = '/api/tags';
 
-const getSingleEvent = (uuid) => `/api/events/${uuid}`;
-const getEditEvent = (uuid) => `/api/events/edit/${uuid}`;
+export const getSingleEvent = (uuid) => `/api/events/${uuid}`;
+export const getEditEvent = (uuid) => `/api/events/edit/${uuid}`;
 
-export { getSingleEvent, getEditEvent };
+export default {
+  getEditEvent,
+  getSingleEvent,
+};
