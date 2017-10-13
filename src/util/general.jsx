@@ -60,8 +60,11 @@ export const toggleAccordionSection = (classNames, ref) => (evt) => {
   evt.persist();
   const evtTarget = evt.target;
   const accordionContainer = evt.currentTarget.parentNode;
+  console.log({ accordionContainer });
 
-  if (!evtTarget.classList.contains(classNames.accordionContainer)
+  if (!!evtTarget
+    && !!evtTarget.parentNode
+    && !evtTarget.classList.contains(classNames.accordionContainer)
     && !evtTarget.parentNode.classList.contains(classNames.accordionContainer)
   ) return evt.stopPropagation();
 

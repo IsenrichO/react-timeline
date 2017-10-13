@@ -4,6 +4,7 @@ import { classes, ClassNamesPropType } from 'aesthetic';
 import { isNil } from 'lodash';
 import IconButton from 'material-ui/IconButton';
 import SelectionCircleIcon from 'material-ui/svg-icons/image/panorama-fish-eye';
+import SelectedItemIcon from 'material-ui/svg-icons/av/fiber-manual-record';
 import RemoveIcon from 'material-ui/svg-icons/navigation/cancel';
 import { aesthetic } from '../../../../style/styler';
 
@@ -36,11 +37,18 @@ const ImageThumbnailPure = ({
             classNames.thumbnailActionIcon,
             !!isSelected && classNames.selectedThumb,
           )}
-          onClick={imageSelectionHandler}
+          onClick={(evt) => imageSelectionHandler(thumbSource)}
           tooltip={<span className={classNames.thumbnailTooltip}>Set Cover Image</span>}
           tooltipPosition="bottom-right"
+          tooltipStyles={{
+            left: '10%',
+            top: '75%',
+          }}
         >
-          <SelectionCircleIcon color={colors.white.pure} />
+          {!!isSelected
+            ? (<SelectedItemIcon color={colors.white.pure} />)
+            : (<SelectionCircleIcon color={colors.white.pure} />)
+          }
         </IconButton>
         <IconButton
           className={classes(
@@ -51,6 +59,10 @@ const ImageThumbnailPure = ({
           onClick={imageRemovalHandler}
           tooltip={<span className={classNames.thumbnailTooltip}>Remove Image</span>}
           tooltipPosition="bottom-left"
+          tooltipStyles={{
+            right: '10%',
+            top: '75%',
+          }}
         >
           <RemoveIcon color={colors.white.pure} />
         </IconButton>

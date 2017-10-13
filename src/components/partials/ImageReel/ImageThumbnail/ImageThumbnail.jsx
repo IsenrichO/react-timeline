@@ -2,7 +2,7 @@ import dedent from 'dedent';
 import ImageThumbnailPure from './ImageThumbnail.Pure';
 import styler from '../../../../style/styler';
 
-export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
+export default styler(({ colors, fonts, helpers, imageAssets, keywords, transitions }) => ({
   // Static declarations necessary for subsequent reference(s):
   bckgSelectOption: {},
   removeThumbButton: {},
@@ -27,7 +27,8 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
     width: 'calc(10vw - 10px)',
   },
   thumbWrapper: {
-    backgroundColor: colors.white.haze,
+    // backgroundColor: colors.white.haze,
+    ...imageAssets.checkeredTransparencyBckg,
     border: {
       color: colors.grey.lite,
       radius: 4,
@@ -38,13 +39,14 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
     margin: [0, '0.5vw'],
     padding: [2, 4],
     position: 'relative',
+    top: '0.5%',
     transition: transitions.transitionAll,
     width: '10vw',
 
     '& $thumbnailActionsBar': {
       ...helpers.flexify('row', 'space-between', ['center', 'center']),
       ...helpers.hide,
-      ...helpers.hideOverflow,
+      // ...helpers.hideOverflow,
       height: '1.5rem',
       left: 7,
       position: 'absolute',
@@ -118,11 +120,9 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
       },
     },
 
-    '& .material-icons': {
-      '&$selectedThumb': {
-        ...helpers.visible,
-        opacity: `1 ${keywords.important}`,
-      },
+    '& $selectedThumb': {
+      ...helpers.visible,
+      opacity: `1 ${keywords.important}`,
     },
   },
 }), {

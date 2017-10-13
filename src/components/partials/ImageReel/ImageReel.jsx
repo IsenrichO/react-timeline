@@ -11,7 +11,6 @@ const renderNavigationButton = (direction = 'right', colors, helpers, keywords, 
     cursor: 'pointer',
     overflow: `hidden ${keywords.important}`,
     padding: `0 ${keywords.important}`,
-    position: `absolute ${keywords.important}`,
 
     '&:hover': {
       '& $reelNavArrowIcon': {
@@ -35,25 +34,30 @@ const renderNavigationButton = (direction = 'right', colors, helpers, keywords, 
   };
 };
 
-export default styler(({ colors, fonts, helpers, imageAssetUrls, keywords, transitions }) => ({
+export default styler(({ colors, fonts, helpers, imageAssets, keywords, transitions }) => ({
   // Static declarations necessary for subsequent reference(s):
   navAlignLeft: {},
   navAlignRight: {},
+  offsetWrapperWithEventCard: {},
   reelWithFallbackMessage: {},
   selectedBckg: {},
+  withEventCard: {},
 
   imageReel: {
     ...helpers.flexify('row'),
-    borderLeft: {
-      color: colors.red.primary,
-      style: 'dashed',
-      width: 'thin',
-    },
     height: 'calc(10vw + 0.5rem - 1px)',
     lineHeight: 'calc(10vw + 0.5rem - 1px)',
     margin: ['0.5rem', 0, '0.25rem', '0.5rem'],
     paddingTop: 0,
     transition: transitions.transitionAll,
+
+    '&$withEventCard': {
+      borderLeft: {
+        color: colors.red.primary,
+        style: 'dashed',
+        width: 'thin',
+      },
+    },
   },
   navArrowWrapper: {
     ...helpers.styleInheritor('height'),
@@ -71,14 +75,18 @@ export default styler(({ colors, fonts, helpers, imageAssetUrls, keywords, trans
     ...helpers.flexify('row', 'space-evenly'),
     ...helpers.hideOverflow,
     ...helpers.styleInheritor('height'),
-    marginLeft: '0.714286rem',
     position: 'relative',
-    width: 'calc(100% - 0.714286rem)',
+    width: '100%',
 
     '&:hover': {
       '& $navArrowWrapper': {
         width: '2.8rem',
       },
+    },
+
+    '&$offsetWrapperWithEventCard': {
+      marginLeft: '0.714286rem',
+      width: 'calc(100% - 0.714286rem)',
     },
   },
   panLeft: {
@@ -98,7 +106,7 @@ export default styler(({ colors, fonts, helpers, imageAssetUrls, keywords, trans
       background: {
         attachment: null,
         color: keywords.transparent,
-        image: `url("${imageAssetUrls.emptyContent}")`,
+        image: `url("${imageAssets.emptyContent}")`,
         position: 'center',
         repeat: 'repeat',
         size: 'auto',

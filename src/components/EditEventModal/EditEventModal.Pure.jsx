@@ -53,6 +53,16 @@ export default class EditEventModal extends Component {
   constructor(props) {
     super(props);
 
+    this.coordinates = {
+      portland: {
+        lat: 45.5231,
+        lng: -122.6765,
+      },
+      sydney: {
+        lat: -33.8688,
+        lng: 151.2093,
+      },
+    };
     this.inputFields = [{
       icon: 'title',
       label: 'name', // edit-evt-title-inpt
@@ -291,8 +301,8 @@ export default class EditEventModal extends Component {
                 this.reduxFormField(this.inputFields[2])
               ]}
               <GMap
-                lat={-34.397}
-                lng={150.644}
+                lat={45.5231}
+                lng={122.6765}
               />
             </fieldset>
 

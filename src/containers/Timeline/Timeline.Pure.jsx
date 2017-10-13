@@ -193,6 +193,7 @@ export default class TimelinePure extends Component {
           isInBatch={items.includes(evt.uuid)}
           isInverted={!!(index % 2)}
           logModalData={(data) => logEventModalData(data)}
+          setNewBackgroundImage={this.setNeww}
           toggleModal={this.toggleModal}
         />
       );

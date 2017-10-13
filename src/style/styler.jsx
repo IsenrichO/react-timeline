@@ -7,9 +7,13 @@ import Aesthetic, { createStyler } from 'aesthetic';
 import BaseTheme from './theming/base';
 
 const defaultUnit = {
+  '-moz-background-size': 'px',
+  '-o-background-size': 'px',
+  '-webkit-background-size': 'px',
   'animation-delay': 'ms',
   'animation-duration': 'ms',
   'background-size': '%',
+  'border-radius': '%',
   'transition-delay': 'ms',
   'transition-duration': 'ms',
 };
@@ -20,6 +24,9 @@ const globalStyles = {
     '*::selection': {
       backgroundColor: baseThemeColors.red.primary,
       color: baseThemeColors.white.primary,
+    },
+    'a:focus, a:hover': {
+      textDecoration: 'none',
     },
   },
 };

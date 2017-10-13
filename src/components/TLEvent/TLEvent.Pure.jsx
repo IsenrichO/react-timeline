@@ -32,6 +32,7 @@ export default class TLEventPure extends Component {
     location: PropTypes.shape({
       pathname: '',
     }).isRequired,
+    setNewBackgroundImage: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -67,8 +68,9 @@ export default class TLEventPure extends Component {
       evtAlign, logModalData, toggleModal, deleteEvt, addSelectionToBatch, isInBatch, addEventToFavorites, getStarGlyphClass,
       hasMultipleTags, isInverted, confirmDeleteModal, confirmDeletionEvt, imageData, isBatchSelectMode, cloudinaryImageStore,
       getMyImgs,
+      setNewBackgroundImage,
     } = this.props;
-    console.log({ evt });
+
     const ci = cloudinaryImageStore.hasOwnProperty(uuid) && cloudinaryImageStore[uuid].images.length
       ? cloudinaryImageStore[uuid].images
       : null;
@@ -133,6 +135,7 @@ export default class TLEventPure extends Component {
             getMyImgs={getMyImgs}
             // imageData={imageData}
             photoCount={photoCount}
+            setNewBackgroundImage={setNewBackgroundImage}
             uuid={uuid}
           />
           <EventPanelFooter

@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ClassNamesPropType } from 'aesthetic';
-import SingleEvent from './SingleEvent';
-import { fetchSeedData } from '../../actions/asyncActions';
-import { fetchAllCloudinary, fetchCloudinaryImageData } from '../../state/cloudinaryImageStore';
-import { updateSingleEvent } from '../../state/sourceEventData';
-import { getStarGlyphClass } from '../../util/general';
-import Utils from '../../util';
+import SingleEvent from '../SingleEvent';
+import { fetchSeedData } from '../../../actions/asyncActions';
+import { fetchAllCloudinary, fetchCloudinaryImageData } from '../../../state/cloudinaryImageStore';
+import { updateSingleEvent } from '../../../state/sourceEventData';
+import { getStarGlyphClass } from '../../../util/general';
 
 // const SearchResults = ({
 //   classNames,
@@ -31,7 +30,7 @@ import Utils from '../../util';
     updateSingleEvent,
   }, dispatch),
 )
-export default class SearchResults extends React.Component {
+export default class SearchResults extends Component {
   static displayName = 'SearchResults';
 
   static propTypes = {
@@ -64,8 +63,10 @@ export default class SearchResults extends React.Component {
   }
 
   render() {
+    const { classNames } = this.props;
+
     return (
-      <ul className="evt-search-starred">
+      <ul className={classNames.searchResultsStarred}>
         {this.renderStarredEvents()}
       </ul>
     );

@@ -23,8 +23,8 @@ const TlEventItemActionControlPure = ({
   ) : (
     <FontIcon
       className={classes(
+        classNames.eventHoverState, // Must be ordered before other classese
         'material-icons',
-        'tl-evt-hover-state',
         classNames.collapseUp,
         !!isInverted && classNames.invertedActionControl,
       )}

@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
+import { cloneDeepWith, isEmpty, reduce } from 'lodash';
 import { Photos } from '../routing/RoutePaths';
 import { crudAsync2 } from '../actions/asyncActions';
 
@@ -49,23 +50,30 @@ export default (state = initialState, action = null) => {
         memo[curr.name] = Object.assign({}, curr, { images });
         return memo;
       }, {});
-      const newState = Object.assign({}, state, foldersObj);
-      return newState;
-      // return update(state, {});
+
+      return Object.assign({}, state, foldersObj);
     }
 
     case SET_BACKGROUND_IMAGE: {
-      const folderPath = action.payload.replace(/^.+\/React-Timeline\/(.+)\/.+$/, '$1');
-      const newFolderImages = state[folderPath].images.map((img) => img.secure_url === action.payload
-          ? Object.assign({}, img, { isHeroImg: true })
-          : img);
-      const newFolderPath = Object.assign({}, state[folderPath], { images: newFolderImages });
+      const { payload: imageUrl = '' } = action;
+
+      const folderPath = imageUrl.replace(/^.+\/React-Timeline\/(.+)\/.+$/, '$1');
+      const resetState = state[folderPath].images.map((img) => cloneDeepWith(img, ({ secure_url = '', ...evtImg }) => ({
+        ...evtImg,
+        isHeroImg: !isEmpty(secure_url) && (secure_url === imageUrl),
+        secure_url,
+      })));
+
+      // const newFolderImages = state[folderPath].images.map((img) => img.secure_url === action.payload
+      //     ? Object.assign({}, img, { isHeroImg: true })
+      //     : img);
+      // const newFolderPath = Object.assign({}, state[folderPath], { images: newFolderImages });
 
       return update(state, {
         [folderPath]: {
           $set: {
             ...(state[folderPath]),
-            images: newFolderImages,
+            images: resetState,
           },
         },
       });

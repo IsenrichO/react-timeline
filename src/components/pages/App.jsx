@@ -4,8 +4,6 @@ import { ClassNamesPropType } from 'aesthetic';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Route, Redirect, withRouter } from 'react-router-dom';
-// import { push } from 'react-router-redux';
-
 import Timeline from '../../containers/Timeline';
 import EditEventModal from '../EditEventModal';
 import { fetchAllCloudinary } from '../../state/cloudinaryImageStore';
@@ -96,15 +94,6 @@ export default class App extends Component {
 
     return (
       <div className={classNames.tlContainer}>
-        <Link to="/search">
-          <i
-            className={classNames.hamburger}
-            // onClick={() => this.props.push('/search')}
-            // onClick={this.clickHandler}
-          >
-            &#9776;
-          </i>
-        </Link>
         <Timeline
           seedData={seedData}
           cIS={cloudinaryImageStore}

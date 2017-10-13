@@ -3,6 +3,7 @@ import styler from '../../../style/styler';
 
 export default styler(({ colors, helpers, keywords, transitions }) => ({
   // Static declaration necessary for nested reference(s):
+  eventHoverState: {},
   invertedActionControl: {},
 
   collapseUp: {
@@ -25,6 +26,8 @@ export default styler(({ colors, helpers, keywords, transitions }) => ({
     top: '-1rem',
     transition: helpers.condenseStyles(transitions.hoverTransition, true),
     zIndex: 1,
+
+    '&$eventHoverState': {},
 
     '&$invertedActionControl': {
       left: 'auto',

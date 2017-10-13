@@ -1,7 +1,7 @@
 import EventPanelBodyPure from './EventPanelBody.Pure';
 import styler, { aesthetic } from '../../../style/styler';
 
-const { colors: themeColors } = aesthetic.themes.base;
+const { colors: baseThemeColors } = aesthetic.themes.base;
 
 const TlLocNPhotos = {
   cursor: 'pointer',
@@ -16,7 +16,7 @@ const TlLocNPhotos = {
   },
 };
 
-const quotesPseudoShared = (color = themeColors.grey.border) => ({
+const quotesPseudoShared = (color = baseThemeColors.grey.border) => ({
   color,
   font: {
     family: '-webkit-pictograph, sans-serif',
@@ -28,7 +28,7 @@ const quotesPseudoShared = (color = themeColors.grey.border) => ({
   position: 'absolute',
 });
 
-export default styler(({ colors, fonts, helpers, keywords, imageAssetUrls }) => ({
+export default styler(({ colors, fonts, helpers, keywords, imageAssets }) => ({
   // Static `className` declarations necessary for nested references:
   accordionToggleBtn: {},
   active: {},
@@ -54,7 +54,7 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssetUrls }) => 
       background: {
         attachment: null,
         color: keywords.transparent,
-        image: `url("${imageAssetUrls.emptyContent}")`,
+        image: `url("${imageAssets.emptyContent}")`,
         position: 'center',
         repeat: 'repeat',
       },
@@ -85,7 +85,6 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssetUrls }) => 
     '& $bodyFieldIcon': {
       fontSize: `${fonts.size.large}px ${keywords.important}`,
       marginRight: '1rem',
-      top: 2,
     },
 
     '& $tlDescription': {
@@ -114,14 +113,13 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssetUrls }) => 
     },
   },
   tlDate: {
+    ...helpers.flexify('row', 'flex-start', ['center', 'center']),
     margin: ['1rem', 0, 0],
   },
   tlLocation: { ...TlLocNPhotos },
   tlPhotos: { ...TlLocNPhotos },
   tlRowSummary: {
-    ...helpers.flexify('row', 'flex-start'),
-    margin: ['1rem', 0, 0],
-    marginTop: `0 ${keywords.important}`,
+    ...helpers.flexify('row', 'flex-start', ['center', 'center']),
 
     '&:hover $toggleGlyph': {
       transform: 'scale(1.25)',

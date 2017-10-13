@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import uuidv4 from 'uuid/v4';
 import { FontIcon, IconButton} from 'material-ui';
-import { isArray, capitalize, isEmpty, isEqual, isNil, size } from 'lodash';
+import { capitalize, isArray, isEmpty, isEqual, isNil, size } from 'lodash';
 import { classes, ClassNamesPropType } from 'aesthetic';
 import ImageThumbnail from './ImageThumbnail';
 import { aesthetic } from '../../../style/styler';
@@ -42,8 +42,10 @@ export default class ImageReelPure extends Component {
         width: PropTypes.number,
       }).isRequired,
     ),
+    setNewBackgroundImage: PropTypes.func.isRequired,
     theme: PropTypes.string,
     uuid: PropTypes.string.isRequired,
+    withEventCard: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -63,6 +65,7 @@ export default class ImageReelPure extends Component {
     }],
     theme: 'base',
     uuid: uuidv4(),
+    withEventCard: false,
   };
 
   constructor(props) {
@@ -97,7 +100,9 @@ export default class ImageReelPure extends Component {
     const { images } = this.props;
 
     return !isEqual(images, nextImages)
-      ? this._addImageToState(nextImages)
+      ? this.setState(update(this.state, {
+        thumbs: { $set: nextImages },
+      }))
       : null;
   }
 
@@ -171,7 +176,7 @@ export default class ImageReelPure extends Component {
   }
 
   _removeThumbnailFromState(imageIndex) {
-    const { thumbs } = this.state;
+    const { thumbs = [] } = this.state;
 
     return this.setState(update(this.state, {
       thumbs: { $splice: [[imageIndex, 1]] },
@@ -187,15 +192,15 @@ export default class ImageReelPure extends Component {
     if (isNil(this.imageReelEl)) return;
 
     const firstThumbEl = findDOMNode(this.thumbEl);
-    const adjustmentFactorParity = Math.sign([null, NEXT].indexOf(direction));
+    const adjustmentFactorParity = Math.sign([null, PREV].indexOf(direction));
     const { width: thumbWrapperWidth } = firstThumbEl.getBoundingClientRect();
     const firstThumbOffset = thumbWrapperWidth
       + (2 * this.getElementMargin(firstThumbEl).left)
       - 7;
 
     if (!!lateralShift
-      && (((imageReelShift >= lateralShift) && (direction === NEXT))
-      || ((imageReelShift <= -lateralShift) && (direction === PREV)))
+      && (((imageReelShift <= -lateralShift) && (direction === NEXT))
+      || ((imageReelShift >= lateralShift) && (direction === PREV)))
     ) return;
 
     this.setState(update(this.state, {
@@ -250,21 +255,22 @@ export default class ImageReelPure extends Component {
     );
   }
 
-  renderThumbs = (thumbs = []) => !isEmpty(thumbs) && thumbs.map(({ secure_url }, index) => (
+  renderThumbs = (thumbs = []) => !isEmpty(thumbs) && thumbs.map(({ isHeroImg, secure_url }, index) => (
     <ImageThumbnail
       key={Math.random()}
       imageRemovalHandler={this._removeThumbnailFromState}
-      // horizontalTranslation={this.state.imageReelShift || 0}
+      imageSelectionHandler={this.props.setNewBackgroundImage}
+      isSelected={!!isHeroImg}
       thumbRef={!index
         ? (thumbEl) => { this.thumbEl = thumbEl; }
         : null
       }
-      thumbSource={secure_url} // eslint-disable-line camelcase
+      thumbSource={secure_url}
     />
   ));
 
   render() {
-    const { classNames } = this.props;
+    const { classNames, withEventCard } = this.props;
     const { imageReelShift, thumbs } = this.state;
     const { NEXT, PREV } = this.DIRS;
 
@@ -272,7 +278,10 @@ export default class ImageReelPure extends Component {
 
     return (
       <output
-        className={classNames.imageReel}
+        className={classes(
+          classNames.imageReel,
+          !!withEventCard && classNames.withEventCard,
+        )}
         htmlFor="file-upload-btn"
         name="photos"
         style={{
@@ -282,7 +291,10 @@ export default class ImageReelPure extends Component {
         }}
       >
         <div
-          className={classNames.offsetWrapper}
+          className={classes(
+            classNames.offsetWrapper,
+            !!withEventCard && classNames.offsetWrapperWithEventCard,
+          )}
           style={{
             justifyContent: !!thumbs && !withNavArrows
               ? 'flex-start'

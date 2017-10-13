@@ -11,7 +11,7 @@ const pseudoClassStyles = {
   zIndex: 10,
 };
 
-export default styler(({ colors, fonts, keywords, helpers, imageAssetUrls }) => ({
+export default styler(({ colors, fonts, keywords, helpers, imageAssets }) => ({
   // Static declarations necessary for subsequent reference(s):
   dropzone: {},
   dropzoneBox: {},
@@ -58,13 +58,13 @@ export default styler(({ colors, fonts, keywords, helpers, imageAssetUrls }) => 
 
     '&:before': {
       ...pseudoClassStyles,
-      backgroundImage: imageAssetUrls.modalGradient('bottom'),
+      backgroundImage: imageAssets.modalGradient('bottom'),
       top: 0,
     },
 
     '&:after': {
       ...pseudoClassStyles,
-      backgroundImage: imageAssetUrls.modalGradient('top'),
+      backgroundImage: imageAssets.modalGradient('top'),
       bottom: 0,
     },
   },

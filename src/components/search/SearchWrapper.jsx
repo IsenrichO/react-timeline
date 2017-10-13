@@ -9,7 +9,6 @@ import { fetchAllCloudinary, fetchCloudinaryImageData } from '../../state/cloudi
 import { updateSingleEvent } from '../../state/sourceEventData';
 import Utils from '../../util';
 
-
 @connect(
   ({ cloudinaryState, searchEvents, seedDataAggregator }) => ({
     cloudinaryImageStore: cloudinaryState,
@@ -92,11 +91,12 @@ export default class SearchWrapper extends Component {
     );
   }
 }
-          // {cloneElement(children, {
-          //   addEventToFavorites: (evt) => Utils.addEventToFavorites(updateSingleEvent, evt),
-          //   eventsStore: seedDataAggregator,
-          //   imageStore: cloudinaryImageStore,
-          //   key: pathname,
-          //   searchEvents: this.delegateAsyncCallback(pathname),
-          //   updateSingleEvent: this.updateSingleEvent,
-          // })}
+
+// {cloneElement(children, {
+//   addEventToFavorites: (evt) => Utils.addEventToFavorites(updateSingleEvent, evt),
+//   eventsStore: seedDataAggregator,
+//   imageStore: cloudinaryImageStore,
+//   key: pathname,
+//   searchEvents: this.delegateAsyncCallback(pathname),
+//   updateSingleEvent: this.updateSingleEvent,
+// })}

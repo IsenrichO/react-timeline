@@ -1,10 +1,39 @@
-import ReduxThunk from 'redux-thunk';
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
-import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
-// import { composeWithDevTools } from 'remote-redux-devtools';
+import thunk from 'redux-thunk';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+// import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
+import { ConnectedRouter, push, routerMiddleware, routerReducer } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Route } from 'react-router-dom';  // browserHistory
 import reducers from '../state';
+
+
+// Build the appropriate navigation history — in this case a `BrowserHistory`:
+export const history = createHistory({
+  basename: '',         // The base (i.e., "canonical") URL of the application
+  forceRefresh: false,  // Setting to `true` forces full-page refreshes
+  keyLength: 6,         // The length of the `location.key` property
+});
+
+// Erect the middleware for dispatching and intercepting navigation actions:
+export const middleware = routerMiddleware(history);
+
+// Add the reducer to your store on the `router` key & apply the middleware for navigation:
+const store = createStore(
+  combineReducers({
+    ...reducers,
+    router: routerReducer,
+  }),
+  composeWithDevTools(applyMiddleware(thunk, middleware)),
+);
+
+// Now you can dispatch navigation actions from anywhere!
+// For example: `store.dispatch(push('/foo'));`
+
+export default store;
+
+// ===========================================================================================================
+// ===========================================================================================================
 
 
 // const routerMid = routerMiddleware(browserHistory),
@@ -20,11 +49,11 @@ import reducers from '../state';
 //     ...reducers,
 //     routing: routerReducer
 //   }),
-//   applyMiddleware(ReduxThunk)
+//   applyMiddleware(thunk)
 // );
 
 
-// const StoreWithMiddleware = applyMiddleware(ReduxThunk, routerMiddleware(browserHistory))(createStore(
+// const StoreWithMiddleware = applyMiddleware(thunk, routerMiddleware(browserHistory))(createStore(
 //   combineReducers({
 //     ...reducers,
 //     routing: routerReducer
@@ -32,7 +61,7 @@ import reducers from '../state';
 // ));
 // const History = syncHistoryWithStore(browserHistory, StoreWithMiddleware);
 
-const middlewares = [ReduxThunk]; // routerMiddleware(browserHistory)
+const middlewares = [thunk]; // routerMiddleware(browserHistory)
 const StoreWithMiddleware = createStore(
   combineReducers({
     ...reducers,
@@ -44,7 +73,7 @@ const StoreWithMiddleware = createStore(
 
 // const routerMid = routerMiddleware(browserHistory),
 //       composeEnhancers = composeWithDevTools({ realtime: true, port: process.env.PORT || 3000 }),
-//       createStoreWithMiddleware = composeEnhancers(applyMiddleware(ReduxThunk, routerMid)(createStore),
+//       createStoreWithMiddleware = composeEnhancers(applyMiddleware(thunk, routerMid)(createStore),
 //       StoreWithMiddleware = createStoreWithMiddleware(combineReducers({
 //         ...reducers,
 //         routing: routerReducer

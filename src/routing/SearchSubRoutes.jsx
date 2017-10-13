@@ -10,9 +10,6 @@ import SearchResults from '../components/search/SearchResults';
 import { fetchSeedData, fetchAllEvents } from '../actions/asyncActions';
 import { fetchRecentlyModifiedEvents, fetchStarredEvents } from '../state/searchEvents';
 
-const Doasd = () => <h2>SHIT YOOOOOOOOO</h2>;
-
-
 // {
 //   <Route
 //     component={SearchResults}

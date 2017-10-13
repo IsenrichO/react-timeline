@@ -44,6 +44,7 @@ export default class EventPanelBodyPure extends Component {
     evtDescription: PropTypes.arrayOf(PropTypes.string),
     evtFormattedDate: PropTypes.string,
     evtLocation: PropTypes.string,
+    setNewBackgroundImage: PropTypes.func.isRequired,
     theme: PropTypes.string,
     uuid: PropTypes.string.isRequired,
   };
@@ -78,7 +79,7 @@ export default class EventPanelBodyPure extends Component {
 
   componentDidMount() {
     const { classNames } = this.props;
-    const throttleOpts = [600, { leading: true, trailing: true }];
+    const throttleOpts = [600, { leading: true, trailing: false }];
 
     this.throttleMapToggle = throttle(this.toggleAccordionSection(classNames, this.mapToggle), ...throttleOpts);
     this.throttlePhotoToggle = throttle(this.toggleAccordionSection(classNames, this.photosToggle), ...throttleOpts);
@@ -148,6 +149,7 @@ export default class EventPanelBodyPure extends Component {
       evtDescription,
       evtFormattedDate,
       evtLocation,
+      setNewBackgroundImage,
       uuid,
     } = this.props;
     const { isExpanded, linkText } = this.state;
@@ -265,7 +267,9 @@ export default class EventPanelBodyPure extends Component {
               </FontIcon>
             </div>
             <ImageReel
+              withEventCard
               images={cloudinaryImageStore}
+              setNewBackgroundImage={setNewBackgroundImage}
               uuid={uuid}
             />
           </div>

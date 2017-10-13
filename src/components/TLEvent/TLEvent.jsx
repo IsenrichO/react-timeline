@@ -1,9 +1,14 @@
 import TLEventPure from './TLEvent.Pure';
 import styler from '../../style/styler';
 
-export default styler(({ colors, keywords }) => ({
+export default styler(({ colors, fonts, helpers, keywords }) => ({
+  // Static declarations necessary for subsequent reference(s):
+  invertedMarker: {},
+  invertedPanel: {},
+
   tlEvent: {
     clear: 'both',
+    display: 'table-cell',
     float: 'left',
     marginBottom: '10vh',
     maxHeight: 1000,
@@ -12,15 +17,13 @@ export default styler(({ colors, keywords }) => ({
       delay: null,
       duration: 1000,
       property: 'all',
-      timingFunction: 'ease',
+      timingFunction: 'ease-in',
     },
     width: '50%',
   },
   inverted: {
     float: 'right',
   },
-  invertedMarker: {},
-  invertedPanel: {},
   tlEventPanel: {
     backgroundColor: colors.white.primary,
     boxShadow: {
@@ -54,33 +57,13 @@ export default styler(({ colors, keywords }) => ({
     visibility: 'hidden',
     width: '85%',
 
-    // '&:before': {
-    //   borderBottom: `calc(1.5rem + 2px) solid ${keywords.transparent}`,
-    //   borderLeft: `calc(1.5rem + 2px) solid ${colors.grey.border}`,
-    //   borderRight: `0 solid ${colors.grey.border}`,
-    //   content: '""',
-    //   left: '100%',
-    //   position: 'absolute',
-    //   top: -1,
-    // },
-    // '&:after': {
-    //   borderBottom: `1.5rem solid ${keywords.transparent}`,
-    //   borderLeft: `1.5rem solid ${colors.white.primary}`,
-    //   borderRight: `0 solid ${colors.white.primary}`,
-    //   content: '""',
-    //   left: '100%',
-    //   position: 'absolute',
-    //   top: 0,
-    // },
     '&:hover': {
       '& .tlToolbar': {
-        opacity: '1 !important',
-        visibility: 'visible !important',
+        ...helpers.markObjectValuesImportant(helpers.setElementVisibility(false)),
       },
 
-      '& .tl-evt-hover-state': {
-        opacity: 1,
-        visibility: 'visible',
+      '& [class^="eventHoverState"]': {
+        ...helpers.markObjectValuesImportant(helpers.setElementVisibility(false)),
       },
     },
 
@@ -88,25 +71,49 @@ export default styler(({ colors, keywords }) => ({
       left: '5rem',
 
       '&:before': {
-        borderBottom: `calc(1.5rem + 2px) solid ${keywords.transparent}`,
-        borderLeft: `0 solid ${colors.grey.border}`,
-        borderRight: `calc(1.5rem + 2px) solid ${colors.grey.border}`,
-        left: 'auto',
+        borderBottom: {
+          color: keywords.transparent,
+          style: 'solid',
+          width: 'calc(1.5rem + 2px)',
+        },
+        borderLeft: {
+          color: colors.grey.border,
+          style: 'solid',
+          width: 0,
+        },
+        borderRight: {
+          color: colors.grey.border,
+          style: 'solid',
+          width: 'calc(1.5rem + 2px)',
+        },
+        left: keywords.auto,
         right: '100%',
       },
 
       '&:after': {
-        borderBottom: `1.5rem solid ${keywords.transparent}`,
-        borderLeft: `0 solid ${colors.white.primary}`,
-        borderRight: `1.5rem solid ${colors.white.primary}`,
-        left: 'auto',
+        borderBottom: {
+          color: keywords.transparent,
+          style: 'solid',
+          width: '1.5rem',
+        },
+        borderLeft: {
+          color: colors.white.primary,
+          style: 'solid',
+          width: 0,
+        },
+        borderRight: {
+          color: colors.white.primary,
+          style: 'solid',
+          width: '1.5rem',
+        },
+        left: keywords.auto,
         right: '100%',
       },
     },
   },
   inView: {
     opacity: 1,
-    transform: 'translateX(0) !important',
+    transform: `translateX(0) ${keywords.important}`,
     visibility: 'visible',
   },
   tlMarker: {
@@ -125,7 +132,7 @@ export default styler(({ colors, keywords }) => ({
     backgroundColor: colors.white.background,
     border: {
       color: colors.white.background,
-      radius: '50%',
+      radius: 50,
       style: 'solid',
       width: 2,
     },
@@ -138,12 +145,12 @@ export default styler(({ colors, keywords }) => ({
       y: 0,
     },
     font: {
-      family: '"Material Icons", sans-serif',
+      family: fonts.face.material,
       lineHeight: 1,
       size: '2rem',
-      stretch: 'normal',
-      style: 'normal',
-      variant: 'normal',
+      stretch: keywords.normal,
+      style: keywords.normal,
+      variant: keywords.normal,
       weight: 'bold',
     },
 
@@ -165,54 +172,3 @@ export default styler(({ colors, keywords }) => ({
 }), {
   styleName: 'TimelineEventStyles',
 })(TLEventPure);
-
-
-
-
-// @include cbTransform(translateX(-100px));
-// @include cbBoxShadow(0 1px 6px rgba(0, 0, 0, 0.175));
-// @extend %hidden;
-// position: relative;
-// width: 85%;
-// left: calc(7.5% - 20px);
-// // width: 70%;
-// // left: calc(22.5% - 20px);
-// border: 1px solid $theme-border;
-// transition: outline 0.5s ease-in-out,
-//             transform 0.75s linear;
-// outline: 0 solid $theme-transparent;
-// background-color: $theme-content-lt;
-// &:before { @extend %tt-right-shadow; }
-// &:after { @extend %tt-right; }
-// &:hover {
-//   .tl-toolbar,
-//   .collapse-up { @extend %visible; }
-// }
-
-// > li {
-//   position: relative;
-//   width: 50%;
-//   max-height: 1000px;
-//   margin-bottom: 2.5rem;
-//   float: left;
-//   clear: both;
-//   transition: all 1s ease;
-//   &.tl-event-invert {
-//     width: 50%;
-//     left: 0;
-//     float: right;
-//     .tl-marker { left: -1rem; }
-//     .tl-toolbar { left: calc(100% + 1.6rem); }
-//     .tl-event-panel {
-//       @include cbTransform(translateX(100px));
-//       left: 20px;
-//       margin-right: 7.5%;
-//       float: right;
-//       &:before { @extend %tt-left-shadow; }
-//       &:after { @extend %tt-left; }
-//     }
-//   }
-// }
-
-// @include cbTransform(translateX(0) !important);
-// @extend %visible;

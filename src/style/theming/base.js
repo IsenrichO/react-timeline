@@ -29,8 +29,11 @@ const colors = {
     backgroundLine: '#C3C3C3',
     backgroundSemiOp: 'rgba(212, 212, 212, 0.47)',
     border: '#CCCCCC',
+    boxShadow: '#6C6C6C',
     buttonFace: '#595959',
     dim: '#696969', // DimGrey
+    granite: '#DDDDDD',
+    hover: '#4689F8',
     lite: '#BBBBBB',
     medium: '#999999',
     placeholder: '#AEAEAE',
@@ -68,6 +71,7 @@ const colors = {
     offWhite: '#F1E5E6',
     primary: PURE_WHITE, // White
     pure: PURE_WHITE, // White
+    semiTransparent: 'rgba(254, 254, 254, 0.6)',
   },
 };
 
@@ -80,7 +84,7 @@ const fonts = {
     material: `"Material Icons", ${DEFAULT_FONTS}`,
     neue: HELVETICA_NEUE,
     raleway: `Raleway, ${HELVETICA_NEUE}`,
-    robot: `Roboto, Arial, ${DEFAULT_FONTS}`,
+    roboto: `Roboto, Arial, ${DEFAULT_FONTS}`,
     slant: `oblique 1.2rem/1 Raleway, ${HELVETICA_NEUE}`,
     vollkorn: `'Vollkorn', ${DEFAULT_FONTS}`,
   },
@@ -152,7 +156,29 @@ export const keywords = {
 };
 
 /* IMAGE ASSETS */
-const imageAssetUrls = {
+const gradientParameters = dedent(`
+  45deg,
+  #CBCBCB 25%,
+  transparent 25%,
+  transparent 75%,
+  #CBCBCB 75%,
+  #CBCBCB
+`);
+export const checkeredTransparencyBckg = { /* eslint-disable no-dupe-keys,sort-keys */
+  backgroundColor: colors.white.semiTransparent,
+  backgroundImage: `-webkit-linear-gradient(${gradientParameters}), -webkit-linear-gradient(${gradientParameters})`,
+  backgroundImage: `-moz-linear-gradient(${gradientParameters}), -moz-linear-gradient(${gradientParameters})`,
+  backgroundImage: `-o-linear-gradient(${gradientParameters}), -o-linear-gradient(${gradientParameters})`,
+  backgroundImage: `-ms-linear-gradient(${gradientParameters}), -ms-linear-gradient(${gradientParameters})`,
+  backgroundImage: `linear-gradient(${gradientParameters}), linear-gradient(${gradientParameters})`,
+  MozBackgroundSize: [20, 20],
+  WebkitBackgroundSize: [20, 20],
+  backgroundSize: [20, 20],
+  backgroundPosition: '0 0, 10px 10px',
+}; /* eslint-enable no-dupe-keys,sort-keys */
+
+export const imageAssets = {
+  checkeredTransparencyBckg,
   emptyContent: dedent(`
     data:image/svg+xml;utf8,\
     <svg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'>\
@@ -170,6 +196,7 @@ const imageAssetUrls = {
       )
     `);
   },
+  searchIcon: 'http://petersenhotels.com/2015/wp-content/themes/petersen-hotels/images/search.svg',
 };
 
 /* UTILITY METHODS */
@@ -240,6 +267,11 @@ export const disableSelection = { /* eslint-disable indent,sort-keys */
             'user-select': 'none',
 }; /* eslint-enable indent,sort-keys */
 
+export const markObjectValuesImportant = (styleObject = {}) => Object
+  .entries(styleObject)
+  .map(([property, value]) => [property, `${value} ${keywords.important}`])
+  .reduce((acc, [currProperty, currValue]) => ({ ...acc, [currProperty]: currValue }), {});
+
 export const styleInheritor = (...propNames) => propNames.reduce((acc, curr) => ({
   ...acc,
   [curr]: 'inherit',
@@ -267,6 +299,7 @@ export const helpers = {
   flexify,
   hide,
   hideOverflow,
+  markObjectValuesImportant,
   setElementVisibility,
   styleInheritor,
   visible,
@@ -277,7 +310,7 @@ export default {
   colors,
   fonts,
   helpers,
-  imageAssetUrls,
+  imageAssets,
   keywords,
   transitions,
 };
