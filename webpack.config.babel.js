@@ -1,15 +1,36 @@
-import Path from 'path';
-
+import path from 'path';
 import DotEnv from 'dotenv-webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import Merge from 'webpack-merge';
-import Webpack from 'webpack';
+import Webpack, {
+  EnvironmentPlugin,
+  HotModuleReplacementPlugin,
+  LoaderOptionsPlugin,
+  optimize,
+} from 'webpack';
 
+// PWA Manifest Webpack Plugins:
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+import PwaManifestPlugin from 'webpack-pwa-manifest';
+import WebappManifestPlugin, { FAVICON_PLUGIN } from 'webapp-manifest-plugin';
+import WebpackManifestPlugin from 'webpack-manifest-plugin';
+
+// Webpack Plugins:
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
+import CompressionPlugin from 'compression-webpack-plugin';
+import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
+
+// PostCSS Post-Processor Configuration:
 import PostCSS from './postcss.config';
 
+/* CONSTANTS */
 const isProdEnv = (process.env.NODE_ENV === 'production');
-console.log(`Node Environment:\t${process.env.NODE_ENV}`);
+console.info(`Node Environment:\t${process.env.NODE_ENV}`);
+
+const hmrScriptEntry = 'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr&timeout=2000&reload=true';
+// __webpack_hmr
 
 const VENDOR_LIBS = [
   'body-parser',
@@ -17,7 +38,6 @@ const VENDOR_LIBS = [
   'cloudinary',
   'cloudinary-react',
   'cloudinary_js',
-  // 'dotenv-webpack',
   'jquery',
   'lodash',
   'react',
@@ -37,56 +57,90 @@ const VENDOR_LIBS = [
 // client: 'webpack-dev-server/client?http://localhost:3000',
 // hmr: 'webpack/hot/only-dev-server',
 
-// bundle: Path.resolve(__dirname, 'src/App'),
-// context: Path.resolve(__dirname, 'src'),
+// bundle: path.resolve(__dirname, 'src/App'),
+// context: path.resolve(__dirname, 'src'),
 
+
+const PwaManifestData = { /* eslint-disable camelcase */
+  background_color: '#F6F8FB',
+  description: 'Construct beautiful layouts to catalog and record import points in your life!',
+  dir: 'ltr',
+  display: 'standalone',
+  icons: [],
+  lang: 'en-US',
+  name: 'React Timeline - Web-Based Timeline Visualizer',
+  orientation: 'portrait-primary',
+  prefer_related_applications: false,
+  related_applications: [],
+  scope: '.',
+  short_name: 'React Timeline',
+  start_url: '.',
+  theme_color: '#B15B5B',
+}; /* eslint-enable camelcase */
 
 const BASE_CONFIG = {
   cache: true,
+  context: __dirname,
   devtool: 'eval-source-map', // `cheap-${isProdEnv ? '' : 'module'}-source-map`,
   entry: {
-    bundle: Path.resolve(__dirname, 'src/App'),
-    hmr: 'webpack/hot/only-dev-server',
     patch: 'react-hot-loader/patch',
+    polyfills: [
+      'babel-polyfill',
+      require.resolve('./config/polyfills'),
+    ],
+    hmr: 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&overlay=false&name=hmr&reload=true',
     vendor: VENDOR_LIBS,
+    bundle: path.resolve(__dirname, 'src/HMR'),
   },
   module: {
-    rules: [
-      {
-        exclude: /(node_modules|bower_components)/,
-        include: Path.resolve(__dirname, 'src'),
-        test: /\.jsx?$/i,
-        use: 'babel',
-      }, {
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style',
-          use: 'css',
-        }),
-        test: /\.css$/i,
-      }, {
-        loaders: ExtractTextPlugin.extract({
-          fallback: 'style',
-          use: ['css', 'postcss', 'sass?outputStyle=expanded'],
-        }),
-        test: /\.(scss|sass)$/i,
-      }, {
-        test: /\.json$/i,
-        use: 'json',
-      }, {
-        test: /\.(bmp|gif|jpe?g|png|svg|ttif)$/i,
+    rules: [{
+      exclude: /(node_modules|bower_components)/,
+      include: path.resolve(__dirname, 'src'),
+      test: /\.jsx?$/i,
+      use: 'babel',
+    }, {
+      test: /\.css$/i,
+      use: ExtractTextPlugin.extract({
+        fallback: 'style',
+        use: 'css',
+      }),
+    }, {
+      test: /\.(scss|sass)$/i,
+      use: ExtractTextPlugin.extract({
+        fallback: 'style',
         use: [
-          // {
-          //   loader: 'url',
-          //   options: { limit: 40000 }
-          // },
-          'file?name=/images/[name].[ext]',
-          'image-webpack',
+          {
+            loader: 'css',
+            options: {
+              minimize: true,
+              url: false,
+            },
+          },
+          'postcss',
+          'sass?outputStyle=expanded',
         ],
-      }, {
-        test: /\.(pdf|doc[mstx]?|ppt[mstx]?|od[fpst])$/i,
-        use: 'file?name=/docs/[name].[ext]',
-      },
-    ],
+      }),
+    }, {
+      test: /\.json$/i,
+      use: 'json',
+    }, {
+      test: /\.ico$/i,
+      use: 'file',
+    }, {
+      include: path.join(__dirname, 'assets', 'images'),
+      test: /\.(bmp|gif|jpe?g|png|svg|ttif)$/i,
+      use: [
+        // {
+        //   loader: 'url',
+        //   options: { limit: 40000 }
+        // },
+        'file?name=assets/images/[name].[ext]',
+        'image-webpack',
+      ],
+    }, {
+      test: /\.(pdf|doc[mstx]?|ppt[mstx]?|od[fpst])$/i,
+      use: 'file?name=/docs/[name].[ext]',
+    }],
   },
   node: {
     console: false,
@@ -96,10 +150,31 @@ const BASE_CONFIG = {
   },
   output: {
     filename: '[name].[hash].js',
-    path: Path.join(__dirname, 'dist'),
-    publicPath: '',  // Server-Relative
+    hotUpdateChunkFilename: 'hot/hot-update.js',
+    hotUpdateMainFilename: 'hot/hot-update.json',
+    path: path.join(__dirname, 'build'), // `__dirname === root`
+    publicPath: '/', // Server-Relative
+  },
+  performance: {
+    hints: 'warning',
   },
   plugins: [
+    new CleanWebpackPlugin(['build', 'dist'], {
+      allowExternal: false,
+      dry: false,
+      root: path.resolve(__dirname),
+      verbose: true,
+      watch: false,
+    }),
+    new HotModuleReplacementPlugin(),
+    new CompressionPlugin({
+      algorithm: 'gzip',
+      deleteOriginalAssets: false,
+      filename(asset) { return asset; },
+      minRatio: 0.90,
+      test: /\.(s?css|gif|jpe?g|jsx?|png|svg)$/i,
+      threshold: 0,
+    }),
     // Configure and read in local environment variables:
     new DotEnv({
       path: './.env',
@@ -108,50 +183,185 @@ const BASE_CONFIG = {
       systemvars: false,
     }),
     new ExtractTextPlugin('styles.css'),
-    new HTMLWebpackPlugin({
-      template: 'assets/index.html',
-    }),
-    // Must follow DotEnv to prevent `NODE_ENV` being overwritten:
-    new Webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV) || 'dev',
+    // new WebpackManifestPlugin({
+    //   basePath: '',
+    //   fileName: 'manifest.json',
+    //   publicPath: '/',
+    //   seed: {
+    //     ...PwaManifestData,
+
+    //   },
+    //   writeToFileEmit: false,
+    // }),
+
+    new FaviconsWebpackPlugin({
+      background: 'transparent',
+      emitStats: false,
+      icons: {
+        android: true,
+        appleIcon: true,
+        appleStartup: true,
+        coast: false,
+        favicons: true,
+        firefox: true,
+        opengraph: false,
+        twitter: false,
+        windows: false,
+        yandex: false,
       },
+      inject: true,
+      logo: path.resolve(__dirname, 'assets/images/rt-logo.png'),
+      persistentCache: true,
+      prefix: 'images/favicons-[hash]/',
+      statsFilename: 'iconStats-[hash].json',
+      title: 'React-Timeline Logo',
     }),
-    new Webpack.LoaderOptionsPlugin({
+    new WebappManifestPlugin({
+      ...PwaManifestData,
+      icons: FAVICON_PLUGIN,
+    }),
+
+    // new PwaManifestPlugin({
+    //   ...PwaManifestData,
+    //   filename: 'manifest.json',
+    //   fingerprints: false,
+    //   inject: true,
+    //   publicPath: '/',
+    // }),
+
+    // background_color: '#ffffff',
+    // description: 'My awesome Progressive Web App!',
+    // name: 'My Progressive Web App',
+    // short_name: 'MyPWA',
+    // icons: [{
+    //   sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
+    //   src: path.resolve('src/assets/icon.png'),
+    // }, {
+    //   size: '1024x1024', // you can also use the specifications pattern
+    //   src: path.resolve('src/assets/large-icon.png'),
+    // }],
+    new HTMLWebpackPlugin({
+      favicon: path.resolve(__dirname, 'assets/images/favicon.ico'),
+      filename: 'index.html', // output (relative to `output.path`)
+      inject: 'body',
+      showErrors: false,
+      template: path.resolve(__dirname, 'assets/index.html'),
+      title: 'Home | React-Timeline',
+      xhtml: true,
+    }),
+    // new UglifyJSPlugin({
+    //   extractComments: true,
+    //   parallel: true,
+    //   test: /\.jsx?$/i,
+    //   uglifyOptions: {
+    //     compress: {
+    //       arrows: true,
+    //       conditionals: true,
+    //       dead_code: true,
+    //       ecma: 8,
+    //       global_defs: {
+    //         '@alert': 'console.log',
+    //       },
+    //       hoist_vars: false, // Setting to `true` increases output size
+    //       keep_fargs: true,
+    //       keep_fnames: true,
+    //       keep_infinity: true,
+    //       warnings: false,
+    //     },
+    //     ecma: 8,
+    //     ie8: true,
+    //     mangle: true,
+    //     output: {
+    //       beautify: false,
+    //       comments: false,
+    //     },
+    //     parse: {
+    //       ecma: 8,
+    //       html5_comments: true,
+    //       shebang: true,
+    //     },
+    //     toplevel: false,
+    //   },
+    // }),
+    // Must follow DotEnv to prevent `NODE_ENV` being overwritten:
+    new EnvironmentPlugin({
+      DEBUG: true,
+      NODE_ENV: 'development', // Use 'development' unless `process.env.NODE_ENV` is defined
+    }),
+    new LoaderOptionsPlugin({
       debug: false,
       minimize: true,
       options: {
+        context: __dirname,
         postcss: { PostCSS },
       },
     }),
-    new Webpack.optimize.CommonsChunkPlugin({
-      minChunks: Infinity,
-      names: ['vendor', 'manifest'],
+    new optimize.CommonsChunkPlugin({
+      // This prevents stylesheet resources with the .css or .scss extension
+      // from being moved from their original chunk to the vendor chunk
+      minChunks(module, count) {
+        if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
+          return false;
+        }
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      },
+      name: 'vendor',
+    }),
+    new optimize.CommonsChunkPlugin({
+      minChunks: Number.POSITIVE_INFINITY,
+      name: 'manifest',
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    alias: {
+      'react-native': 'react-native-web',
+    },
+    extensions: ['.css', '.js', '.json', '.jsx'],
+    plugins: [],
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],
   },
-  watch: true,
+  target: 'web',
 };
 
 const DEV_SERVER = {
   devServer: {
-    contentBase: Path.resolve(__dirname, 'dist'),
+    clientLogLevel: 'info',
+    compress: true,
+    contentBase: path.resolve(__dirname, 'build'),
     historyApiFallback: true,
     host: 'localhost',
     hot: true,
     inline: true,
     noInfo: false,
     port: 3000,
-    publicPath: '/',
+    publicPath: '', // '/assets/',
   },
   plugins: [
-    new Webpack.HotModuleReplacementPlugin(),
-    new Webpack.NamedModulesPlugin(),
+    // new Webpack.BannerPlugin({
+    //   banner: `
+    //     chunkHash:\t[chunkhash],
+    //     file:\t[file]
+    //     fileBase:\t[filebase],
+    //     hash:\t[hash],
+    //     name:\t[name],
+    //     query:\t[query],
+    //   `,
+    //   entryOnly: false,
+    //   raw: false,
+    // }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerHost: '127.0.0.1',
+    //   analyzerMode: 'server',
+    //   analyzerPort: 8888,
+    //   defaultSizes: 'parsed',
+    //   generateStatsFile: true,
+    //   logLevel: 'info',
+    //   statsFilename: 'bundle-stats.json',
+    // }),
+    new HotModuleReplacementPlugin(),
+    // new Webpack.NamedModulesPlugin(),
   ],
   stats: {
     assets: true,
@@ -176,11 +386,11 @@ const DEV_SERVER = {
   },
 };
 
-const AGGREGATE_CONFIG = isProdEnv
-  ? BASE_CONFIG
-  : Merge(BASE_CONFIG, DEV_SERVER);
+// const AGGREGATE_CONFIG = isProdEnv
+//   ? BASE_CONFIG
+//   : Merge(BASE_CONFIG, DEV_SERVER);
 
-export default AGGREGATE_CONFIG;
+export default BASE_CONFIG; // AGGREGATE_CONFIG;
 
 //     new Webpack.optimize.DedupePlugin(),
 //     new Webpack.optimize.UglifyJsPlugin({
@@ -188,7 +398,6 @@ export default AGGREGATE_CONFIG;
 //       output: { comments: false },
 //       sourceMap: false
 //     })
-
 
 // resolve: {
 //   alias:

@@ -9,8 +9,8 @@ export const ALLOW_BATCH_SELECTION = 'ALLOW_BATCH_SELECTION';
 export const CLEAR_BATCH = 'CLEAR_BATCH';
 
 /* ACTION CREATORS */
-export const addEventToBatchSelection = (evt) => ({
-  payload: evt,
+export const addEventToBatchSelection = (evtUuid) => ({
+  evtUuid,
   type: ADD_EVENT_TO_BATCH,
 });
 
@@ -29,17 +29,34 @@ const initialState = {
   items: [],
 };
 
-export default (state = initialState, action = null) => {
+export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case ADD_EVENT_TO_BATCH:
-      if (state.includes(action.payload)) {
-        const newState = Array.of(...state);
-        const removalIndex = state.findIndex((evt) => evt === action.payload);
-        newState.splice(removalIndex, 1);
+    case ADD_EVENT_TO_BATCH: {
+      const { items } = state;
+      const evtUuid = action.evtUuid.toLowerCase();
 
-        return newState;
-      }
-      return [...state, action.payload];
+      return items.includes(evtUuid)
+        ? update(state, {
+          items: {
+            $splice: [[items.findIndex((item) => item === evtUuid), 1]],
+          },
+        })
+        : update(state, {
+          items: { $push: [evtUuid] },
+        });
+
+      // if (items.includes(payload)) {
+      //   const newState = Array.of(...state);
+      //   const removalIndex = state.findIndex((evt) => evt === action.payload);
+      //   newState.splice(removalIndex, 1);
+
+      //   return newState;
+      // }
+
+      return update(state, {
+        items: { $push: [evtUuid] },
+      });
+    }
 
     case ALLOW_BATCH_SELECTION: {
       const { shouldEnable } = action;

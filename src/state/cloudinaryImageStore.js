@@ -72,7 +72,7 @@ export default (state = initialState, action = null) => {
       return update(state, {
         [folderPath]: {
           $set: {
-            ...(state[folderPath]),
+            ...state[folderPath],
             images: resetState,
           },
         },

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import { ThemeProvider } from 'aesthetic';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import store, { history, StoreWithMiddleware as Store } from '../store/configureStore';
+import store, { history } from '../store/configureStore';
 import Routes from './Routes';
 
 /**
@@ -13,12 +12,12 @@ import Routes from './Routes';
  */
 export default (
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <ThemeProvider name="base">
+    <ThemeProvider name="base">
+      <ConnectedRouter history={history}>
         <MuiThemeProvider>
           <Routes />
         </MuiThemeProvider>
-      </ThemeProvider>
-    </ConnectedRouter>
+      </ConnectedRouter>
+    </ThemeProvider>
   </Provider>
 );

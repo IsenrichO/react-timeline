@@ -30,14 +30,28 @@ export const fetchRecentlyModifiedEvents = () => (dispatch) =>
   crudAsync2(Axios.get, RecentlyModifiedEvents, dispatch, onFetchRecentlyModifiedEventsSuccess);
 
 /* REDUCER */
-const initialState = [];
+const initialState = {
+  all: [],
+  recent: [],
+  starred: [],
+};
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case FETCH_ALL_EVENTS_SUCCESS:
+      return update(state, {
+        all: { $set: action.payload },
+      });
+
     case FETCH_RECENTLY_MODIFIED_EVENTS_SUCCESS:
+      return update(state, {
+        recent: { $set: action.payload },
+      });
+
     case FETCH_STARRED_EVENTS_SUCCESS:
-      return action.payload;
+      return update(state, {
+        starred: { $set: action.payload },
+      });
 
     default:
       return state;
@@ -63,7 +77,11 @@ const SearchEventsActionCreatorPropTypes = PropTypes.shape({
   onFetchRecentlyModifiedEventsSuccess: PropTypes.func,
   onFetchStarredEventsSuccess: PropTypes.func,
 }).isRequired;
-const SearchEventsStatePropTypes = PropTypes.arrayOf(PropTypes.object);
+const SearchEventsStatePropTypes = PropTypes.shape({
+  all: PropTypes.arrayOf(PropTypes.object),
+  recent: PropTypes.arrayOf(PropTypes.object),
+  starred: PropTypes.arrayOf(PropTypes.object),
+});
 
 export {
   SearchEventsActionCreators,

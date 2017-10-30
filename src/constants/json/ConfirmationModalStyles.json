@@ -1,12 +1,12 @@
 {
   "overlay" : {
-    "position": "fixed",
-    "top": 0,
-    "bottom": 0,
-    "left": 0,
-    "right": 0,
     "background": "rgba(94, 94, 94, 0.75)",
     "backgroundBlendMode": "soft-light",
+    "bottom": 0,
+    "left": 0,
+    "position": "fixed",
+    "right": 0,
+    "top": 0,
     "WebkitTransition": "all 0.5s ease-in-out",
     "MozTransition":    "all 0.5s ease-in-out",
     "OTransition":      "all 0.5s ease-in-out",
@@ -14,14 +14,15 @@
     "zIndex": 150
   }, 
   "content": {
-    "position": "relative",
-    "width": "45vw",
-    "maxWidth": "500px",
-    "height": "25vh",
     "left": "50%",
-    "top": "-100vh",
     "marginRight": "-50%",
+    "maxWidth": "500px",
+    "minHeight": "18vh",
+    "overflow": "visible",
     "padding": "2.5%",
+    "position": "relative",
+    "top": "-100vh",
+    "width": "45vw",
     "WebkitBorderRadius": "14px",
     "MozBorderRadius":    "14px",
     "borderRadius":       "14px",
@@ -30,7 +31,6 @@
     "MsAnimation":     "modalEntrance 0.85s 0.35s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
     "OAnimation":      "modalEntrance 0.85s 0.35s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
     "animation":       "modalEntrance 0.85s 0.35s cubic-bezier(0.64, 0.2, 0.17, 0.83) 1 forwards",
-    "overflow": "visible",
     "zIndex": 200
   }  
 }

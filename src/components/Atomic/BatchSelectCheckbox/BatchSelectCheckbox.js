@@ -29,7 +29,7 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
           height: '1rem',
           left: '0.35rem',
           position: 'absolute',
-          transition: transitions.customTimingFunction,
+          transition: transitions.customTimingFunction(),
           width: '1rem',
         },
       },
@@ -57,33 +57,36 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
       '&$batchSelect': {
         '& + label:before': {
           height: '1.75rem',
-          left: '-0.25rem',
+          left: '0.75rem',
+          top: '0.75rem',
           width: '1.75rem',
         },
 
         '&:checked + label:before': {
           height: '2rem',
-          left: '0.5rem',
-          top: '0.05rem',
+          left: '1.25rem',
+          top: '0.50rem',
           width: '1rem',
         },
       },
 
     },
     '&$invertedCheckbox': {
-      position: 'absolute',
-      right: 0,
+      order: 1,
 
       '& input[type="checkbox"]': {
+        left: keywords.auto,
+        right: -9999,
+
         '&$batchSelect': {
           '& + label:before': {
             left: keywords.auto,
-            right: '0.25rem',
+            right: '0.75rem',
           },
 
           '&:checked + label:before': {
             left: keywords.auto,
-            right: '0.25rem',
+            right: '1.25rem',
           },
         },
       },

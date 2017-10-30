@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
+import { flow, get, has, isEmpty, mapKeys, merge, pick } from 'lodash';
+import update from 'immutability-helper';
 import FileUploadGlyph from '../../../constants/svg/FileUploadGlyph_SVG';
 import ImageReel from '../ImageReel';
 
@@ -10,7 +12,10 @@ export default class FileUploadApiPure extends Component {
   static propTypes = {
     classNames: ClassNamesPropType.isRequired,
     cloudinaryImageStore: PropTypes.objectOf(PropTypes.object),
-    submittable: PropTypes.bool,
+    evt: PropTypes.shape({
+      uuid: PropTypes.string.isRequired,
+    }).isRequired,
+    submittable: PropTypes.bool, // eslint-disable-line react/boolean-prop-naming
     uploadToCloudinary: PropTypes.func.isRequired,
   };
 
@@ -23,16 +28,18 @@ export default class FileUploadApiPure extends Component {
     super(props);
 
     this.state = {
+      images: [],
       imgReelShift: 0,
       uploads: {},
     };
 
-    this.createNewThumbnail = ::this.createNewThumbnail;
+    // this.createNewThumbnail = ::this.createNewThumbnail;
     this.handleDragEnter = ::this.handleDragEnter;
     this.handleDragOver = ::this.handleDragOver;
     this.handleFileSelect = ::this.handleFileSelect;
     this.loadSelectedImages = ::this.loadSelectedImages;
     this.readInThumbnailWithBckgImage = ::this.readInThumbnailWithBckgImage;
+    this.registerNewThumbnailToState = ::this.registerNewThumbnailToState;
     this.triggerCloudinaryUpload = ::this.triggerCloudinaryUpload;
   }
 
@@ -46,6 +53,60 @@ export default class FileUploadApiPure extends Component {
   //     this.renderUploadedCloudinaryImages(uploadedImages);
   //   }
   // }
+
+  componentDidMount() {
+    return this.initializeState();
+  }
+
+  getValidatedCloudinaryImages() {
+    const {
+      evt: { uuid },
+      cloudinaryImageStore,
+    } = this.props;
+
+    return has(cloudinaryImageStore, uuid) && !isEmpty(get(cloudinaryImageStore, `${uuid}.images`, []))
+      ? get(cloudinaryImageStore, `${uuid}.images`, [])
+      : null;
+  }
+
+  initializeState() {
+    return this.setState(update(this.state, {
+      images: { $set: this.getValidatedCloudinaryImages() },
+    }));
+  }
+
+  registerNewThumbnailToState(img, imageMetaData) {
+    const newThumb = {
+      isHeroImg: false,
+      resource_type: 'image',
+      secure_url: img,
+      ...imageMetaData,
+    };
+
+    return this.setState(update(this.state, {
+      images: { $push: [newThumb] },
+    }));
+  }
+
+  preprocessImageDataObject = ({
+    lastModified,
+    lastModifiedDate,
+    name,
+    size,
+    type: mimeType,
+    webkitRelativePath,
+  }, index) => {
+    const baseImageUploadDefaults = {
+      mimeType: 'image/png',
+      name: `ImageUploadNo_${index}`,
+      size: 10000,
+    };
+
+    return flow([
+      (imageData = {}) => mapKeys(imageData, (value, key) => key.toLowerCase() === 'type' ? 'mimeType' : key),
+      (transformedData = {}) => merge(baseImageUploadDefaults, transformedData),
+    ])({ lastModified, lastModifiedDate, mimeType, name, size, webkitRelativePath });
+  };
 
   // Appends a `.thumb` <div> with nested a <img> element to specified output target:
   readInThumbnailWithImageElement = (file, index, output) => {
@@ -71,17 +132,26 @@ export default class FileUploadApiPure extends Component {
   // Appends a `.thumb` <div> with `background-image` property-value pair to output target:
   readInThumbnailWithBckgImage(file, index, output) {
     const self = this;
-    (function(imageFile) {
+
+    return (function(imageFile) {
       const Reader = new FileReader();
       Reader.onload = (evt) => {
         const uploads = Object.assign({}, self.state.uploads, { [imageFile.name]: evt.target.result });
-        self.setState({ uploads });
-        self.createNewThumbnail(evt.target.result, output);
+        self.setState(update(self.state, {
+          uploads: { $set: uploads },
+        }));
+
+        self.registerNewThumbnailToState(
+          evt.target.result,
+          self.preprocessImageDataObject(imageFile, index),
+        );
       };
+
       // Read in the image file as a data URL:
       Reader.readAsDataURL(imageFile);
     })(file);
   }
+
 
   // Event handler for the HTML5 drag-n-drop API implementation:
   handleFileSelect(evt) {
@@ -113,7 +183,6 @@ export default class FileUploadApiPure extends Component {
     return null;
   };
 
-  // 
   triggerCloudinaryUpload(evt) {
     evt.preventDefault();
     const { evt: sourceEvt, uploadToCloudinary } = this.props;
@@ -125,47 +194,10 @@ export default class FileUploadApiPure extends Component {
     }
   }
 
-  // 
-  chooseNewBckgPhoto = (evt) => {};
-
-  // 
-  createNewThumbnail(img, output) {
-    const self = this;
-    let $newThumb = $('<div />').addClass('thumb').css({ backgroundImage: `url(${img})` }),
-        $thumbWrapper = $('<div />').addClass('thumb-wrapper'),
-        $chooseBckgGlyph = $('<i class="material-icons bckg-select-opt">panorama_fish_eye</i>'),
-        $removeThumbGlyph = $('<i class="glyphicon glyphicon-remove-circle" />');
-
-    $thumbWrapper.append($chooseBckgGlyph, $removeThumbGlyph, $newThumb);
-    output.insertBefore($thumbWrapper[0], null);
-
-    $('.bckg-select-opt').click(function() {
-      $(this)
-        .closest('output')
-        .find('.selected-bckg')
-        .removeClass('selected-bckg')
-        .text('panorama_fish_eye');
-
-      $(this)
-        .text($(this).hasClass('selected-bckg') ? 'panorama_fish_eye' : 'check_circle')
-        .toggleClass('selected-bckg');
-
-      let $bckgImgUrl = $(this)
-        .siblings('.thumb')
-        .css('backgroundImage')
-        .replace(/^url\(["|'](.+)["|']\)$/i, '$1');
-      // ie.log('$bckgImgUrl:', $bckgImgUrl);
-      self.props.setNeww($bckgImgUrl);
-    });
-
-    $('.glyphicon').click(function() {
-      $(this).closest('.thumb-wrapper').remove();
-    });
-  }
-
   // Loops through selection of files and asynchronously executes callback on each:
   loadSelectedImages(evt, cb) {
     const [Images, OutputBin] = [evt.target.files, this.fileContainer];
+
     // Loop through selected images and render as thumbnails:
     for (let i = 0, currImg; currImg = Images[i]; i++) {
       // Secondary check to ensure only allowable MIME types pass through for image processing:
@@ -189,9 +221,9 @@ export default class FileUploadApiPure extends Component {
     return (
       <input
         ref={(submitUploadsBtn) => { this.submitUploadsBtn = submitUploadsBtn; }}
-        type="submit"
         name="submit-btn"
         onClick={this.triggerCloudinaryUpload}
+        type="submit"
       />
     );
   }
@@ -199,15 +231,10 @@ export default class FileUploadApiPure extends Component {
   render() {
     const {
       classNames,
-      cloudinaryImageStore,
       evt: { uuid },
       submittable,
     } = this.props;
-
-    const submissionInput = (!!submittable ? this.renderSubmitButton() : null);
-    const ci = (cloudinaryImageStore.hasOwnProperty(uuid) && cloudinaryImageStore[uuid].images.length
-      ? cloudinaryImageStore[uuid].images
-      : null);
+    const { images: collectedImages } = this.state;
 
     return (
       <fieldset className={classNames.formFieldset}>
@@ -228,8 +255,8 @@ export default class FileUploadApiPure extends Component {
               className={classNames.fileUploadButton}
               id="file-upload-btn"
               name="files[]"
-              type="file"
               onChange={this.loadSelectedImages}
+              type="file"
             />
             <div className={classNames.directiveText}>
               {[
@@ -245,11 +272,11 @@ export default class FileUploadApiPure extends Component {
 
             <ImageReel
               {...this.props}
-              images={ci}
+              images={collectedImages}
               uuid={uuid}
             />
 
-            {submissionInput}
+            {!!submittable && this.renderSubmitButton()}
           </div>
         </div>
       </fieldset>

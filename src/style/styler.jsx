@@ -28,6 +28,25 @@ const globalStyles = {
     'a:focus, a:hover': {
       textDecoration: 'none',
     },
+
+    // Remove scroll on the body when `react-modal` is open:
+    '.ReactModal__Body--open': {
+      overflow: 'hidden',
+    },
+
+    // React-Infinite-Calendar:
+    '.Cal__Header__active': {
+      height: '156px !important',
+      textTransform: 'unset !important',
+    },
+
+    // React-Geosuggest Library Internal HTML Styles:
+    '.geosuggest__input-wrapper': {
+      borderRadius: 'inherit',
+    },
+    '.geosuggest__suggests-wrapper': {
+      width: 'inherit',
+    },
   },
 };
 

@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 
 import RouterConfig from './routing/RouterConfig';
 
-const predicateFunc = (componentName, elementId, failureMsg) => { // eslint-disable-next-line no-console
-  console.log(`\
+const predicateFunc = (componentName, elementId, failureMsg) => {
+  console.info(`\
     • Component/React Element:\t${componentName}\n\
     • Element ID:\t${elementId}\n\
     • Failure Report:\t${failureMsg}\n\

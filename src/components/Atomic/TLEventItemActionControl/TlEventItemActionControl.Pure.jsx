@@ -12,21 +12,25 @@ const TlEventItemActionControlPure = ({
   classNames,
   evtUuid,
   isBatchSelectMode,
+  isInBatch,
   isInverted,
+  withAlternation,
 }) => !!isBatchSelectMode
   ? (
     <BatchSelectCheckbox
       addSelectionToBatch={addSelectionToBatch}
       evtUuid={evtUuid}
+      isInBatch={isInBatch}
       isInverted={isInverted}
     />
   ) : (
     <FontIcon
       className={classes(
-        classNames.eventHoverState, // Must be ordered before other classese
+        classNames.eventHoverState, // Must be ordered before other classes
         'material-icons',
         classNames.collapseUp,
         !!isInverted && classNames.invertedActionControl,
+        !withAlternation && classNames.actionControlForceAlignRight,
       )}
       onClick={collapseBody}
     >
@@ -41,12 +45,16 @@ TlEventItemActionControlPure.propTypes = {
   classNames: ClassNamesPropType.isRequired,
   evtUuid: PropTypes.string.isRequired,
   isBatchSelectMode: PropTypes.bool,
+  isInBatch: PropTypes.bool,
   isInverted: PropTypes.bool,
+  withAlternation: PropTypes.bool,
 };
 
 TlEventItemActionControlPure.defaultProps = {
   isBatchSelectMode: false,
+  isInBatch: false,
   isInverted: false,
+  withAlternation: true,
 };
 
 export default TlEventItemActionControlPure;

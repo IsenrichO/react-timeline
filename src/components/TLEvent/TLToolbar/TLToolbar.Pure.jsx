@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -6,6 +7,11 @@ import { isEmpty, isString } from 'lodash';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import { aesthetic } from '../../../style/styler';
+
+type Props = {
+  isInverted?: boolean,
+  theme?: string,
+};
 
 const getIconButtonStyles = ({ colors, fonts, keywords }) => ({
   backgroundColor: colors.white.primary,
@@ -34,8 +40,9 @@ const TLToolbarPure = ({
   isInverted,
   logModalData,
   theme = 'base',
+  setEventInvertedState,
   toggleModal,
-}) => {
+}: Props) => {
   const themeStyles = aesthetic.themes[theme];
   const buttonStyles = {
     height: '2.5rem',
@@ -53,6 +60,7 @@ const TLToolbarPure = ({
   }, {
     clickHandler() {
       logModalData(evt);
+      setEventInvertedState(!!isInverted);
       toggleModal();
     },
     icon: 'mode_edit',
@@ -128,6 +136,7 @@ TLToolbarPure.propTypes = {
   evt: PropTypes.object.isRequired,
   isInverted: PropTypes.bool,
   logModalData: PropTypes.func.isRequired,
+  setEventInvertedState: PropTypes.func.isRequired,
   theme: PropTypes.string,
   toggleModal: PropTypes.func.isRequired,
 };

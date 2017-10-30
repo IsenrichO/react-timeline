@@ -3,23 +3,21 @@ import styler from '../../../style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
   // Static declarations necessary for subsequent reference(s):
+  activeFilterIndicator: {},
   searchCategoryAccordion: {},
   searchCategoryActive: {},
+  searchCategoryButton: {},
+  searchCategoryButtonTooltip: {},
   searchCategoryCondensed: {},
   searchCategoryIconCondensed: {},
+  searchCategoryTitle: {},
+  searchCategoryTitleHidden: {},
   searchSidebarCollapsed: {},
   sidebarHomeIconTooltip: {},
 
-  activeFilterIndicator: {
-    alignSelf: 'center',
-    position: 'absolute',
-    right: '2rem',
-    top: '50%',
-    transform: 'translateY(-50%)',
-  },
   fixedPositioningContainer: {
     ...helpers.styleInheritor('height', 'width'),
-    backgroundColor: colors.blue.primary,
+    backgroundColor: colors.red.primary,
     boxShadow: {
       blur: 16,
       color: colors.grey.boxShadow,
@@ -38,12 +36,14 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
       style: keywords.normal,
       weight: 'lighter',
     },
-    margin: `1rem ${keywords.important}`,
+    height: `64px ${keywords.important}`,
     position: `absolute ${keywords.important}`,
     right: 0,
     top: 0,
+    width: `64px ${keywords.important}`,
   },
   searchCategory: {
+    ...helpers.flexify('column', 'flex-start', ['center', 'center']),
     borderBottom: {
       color: colors.grey.granite,
       style: 'solid',
@@ -63,12 +63,12 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
     },
 
     '&:hover': {
-      backgroundColor: colors.grey.hover,
+      backgroundColor: colors.red.hover,
       zIndex: 0,
     },
 
     '&$searchCategoryActive': {
-      backgroundColor: colors.grey.hover,
+      backgroundColor: colors.red.hover,
 
       /**
        * '&:not($searchCategoryCondensed):before': {
@@ -96,30 +96,36 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
        */
 
       '& $searchCategoryIconCondensed': {
-        color: `${colors.red.primary} ${keywords.important}`,
+        // color: `${colors.red.primary} ${keywords.important}`,
       },
     },
 
     '&$searchCategoryCondensed': {
-      ...helpers.flexify('column', 'center', ['center', 'center']),
+      ...helpers.flexify('column', 'center', ['flex-start', 'center']),
       height: 64,
-    },
-  },
-  searchCategoryIcon: {
-    ...helpers.styleInheritor('lineHeight'),
-    color: `${colors.white.pure} ${keywords.important}`,
-    fontSize: `2.571429rem ${keywords.important}`,
-    marginRight: '3rem',
+      transition: transitions.transitionAll(),
 
-    '&$searchCategoryIconCondensed': {
-      fontSize: `3.5rem ${keywords.important}`,
-      margin: keywords.auto,
-      textAlign: 'center',
-      width: 64,
+      '& $searchCategoryHeader': {
+        maxWidth: 64,
+        padding: 0,
+        transition: transitions.transitionAll(),
+        width: keywords.auto,
+      },
+
+      '& $searchCategoryTitle': {
+        transition: transitions.transitionVisibility(),
+      },
+
+      '& $searchCategoryTitleHidden': {
+        ...helpers.setElementVisibility(),
+        height: 0,
+        transition: transitions.transitionVisibility(),
+        width: 0,
+      },
     },
   },
-  searchCategoryTitle: {
-    ...helpers.flexify('row', 'flex-start'),
+  searchCategoryHeader: {
+    ...helpers.flexify('row', 'flex-start', ['center', 'center']),
     color: colors.white.pure,
     font: {
       family: fonts.face.raleway,
@@ -127,8 +133,23 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
       size: 22,
     },
     margin: 0,
+    minWidth: 64,
     padding: ['0.5rem', '2rem', '0.5rem', '3rem'],
     position: 'relative',
+    transition: transitions.transitionAll(),
+    width: 408,
+
+    '& $searchCategoryButton > div': {
+      height: 64,
+    },
+
+    '& $activeFilterIndicator': {
+      alignSelf: 'center',
+      position: 'absolute',
+      right: '2rem',
+      top: '50%',
+      transform: 'translateY(-50%)',
+    },
 
     '&$searchCategoryAccordion:after': {
       content: '&#43;', // Octal Literal: `\002B`
@@ -144,17 +165,36 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
     },
 
   },
+  searchCategoryIcon: {
+    color: `${colors.white.pure} ${keywords.important}`,
+    fontSize: `2.571429rem ${keywords.important}`,
+    marginRight: '3rem',
+
+    '&$searchCategoryIconCondensed': {
+      font: {
+        lineHeight: `64px ${keywords.important}`,
+        size: `3.5rem ${keywords.important}`,
+      },
+      margin: keywords.auto,
+      textAlign: 'center',
+      width: 64,
+    },
+  },
   searchSidebar: {
     height: '100vh',
     minWidth: 408,
     position: 'relative',
-    transition: transitions.transitionAll,
+    transition: transitions.transitionAll(),
     width: 408,
     zIndex: 10,
 
     '&$searchSidebarCollapsed': {
       minWidth: 64,
       width: 64,
+
+      '& $homeSidebarButton': {
+        margin: `0 ${keywords.important}`,
+      },
     },
   },
 }), {

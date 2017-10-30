@@ -1,6 +1,6 @@
 {
   "ignore": [
-    "**/dist/**/*.js*",
+    "**/build/**/*.js*",
   ],
   "presets": [
     ["env", {
@@ -21,6 +21,7 @@
       },
       "useBuiltIns": false,
     }],
+    "flow",
     ["es2015", {
       "loose": true,
       "modules": false,
@@ -29,6 +30,7 @@
     "react",
   ],
   "plugins": [
+    "react-hot-loader/babel",
     ["minify-dead-code-elimination", {
       "keepClassName": true,
       "keepFnArgs": true,
@@ -36,16 +38,18 @@
       "optimizeRawSize": true,
       "tdz": true,
     }],
-    "react-hot-loader/babel",
     "transform-async-to-generator",
     "transform-class-properties",
     "transform-decorators-legacy",
+    ["transform-flow-strip-types", {
+      "requireDirective": true,
+    }],
     "transform-es2015-object-super",
     "transform-es2015-template-literals",
     "transform-es2015-typeof-symbol",
     "transform-exponentiation-operator",
     "transform-function-bind",
-    ["babel-plugin-transform-builtin-extend", {
+    ["transform-builtin-extend", {
       "globals": [
         "Array",
         "Date",
@@ -58,8 +62,6 @@
       "useBuiltIns": false,
     }],
     "transform-remove-debugger",
-    "transform-optional-chaining",
-    "syntax-optional-chaining",
   ],
   "sourceMaps": true,
 }

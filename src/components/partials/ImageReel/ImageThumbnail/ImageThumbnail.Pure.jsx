@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
-import { isNil } from 'lodash';
+import { isNil, isNumber } from 'lodash';
 import IconButton from 'material-ui/IconButton';
 import SelectionCircleIcon from 'material-ui/svg-icons/image/panorama-fish-eye';
 import SelectedItemIcon from 'material-ui/svg-icons/av/fiber-manual-record';
@@ -9,16 +9,18 @@ import RemoveIcon from 'material-ui/svg-icons/navigation/cancel';
 import { aesthetic } from '../../../../style/styler';
 
 const ImageThumbnailPure = ({
+  bytes,
   classNames,
   horizontalTranslation,
   imageRemovalHandler,
   imageSelectionHandler,
   isSelected,
+  size,
   theme,
   thumbRef,
   thumbSource,
 }) => {
-  const { colors } = aesthetic.themes[theme || 'base'];
+  const { colors, keywords } = aesthetic.themes[theme || 'base'];
 
   return (
     <div
@@ -26,7 +28,7 @@ const ImageThumbnailPure = ({
       className={classNames.thumbWrapper}
       style={{
         transform: `translateX(${horizontalTranslation}px)`,
-        transition: 'all 500ms ease',
+        transition: `${keywords.all} 500ms ease`,
       }}
     >
       <div className={classNames.thumbnailActionsBar}>
@@ -71,6 +73,9 @@ const ImageThumbnailPure = ({
         className={classNames.thumb}
         style={{
           backgroundImage: `url("${thumbSource}")`,
+          backgroundSize: (isNumber(size) && (+size < 10000)) || (isNumber(bytes) && (+bytes < 10000))
+            ? 'contain'
+            : null,
         }}
       />
     </div>
@@ -80,11 +85,13 @@ const ImageThumbnailPure = ({
 ImageThumbnailPure.displayName = 'ImageThumbnail';
 
 ImageThumbnailPure.propTypes = {
+  bytes: PropTypes.number,
   classNames: ClassNamesPropType.isRequired,
   horizontalTranslation: PropTypes.number,
   imageRemovalHandler: PropTypes.func,
   imageSelectionHandler: PropTypes.func,
   isSelected: PropTypes.bool,
+  size: PropTypes.number,
   theme: PropTypes.string,
   thumbRef: PropTypes.oneOfType([
     PropTypes.func,
@@ -94,10 +101,12 @@ ImageThumbnailPure.propTypes = {
 };
 
 ImageThumbnailPure.defaultProps = {
+  bytes: 0,
   horizontalTranslation: 0,
   imageRemovalHandler: Function.prototype,
   imageSelectionHandler: Function.prototype,
   isSelected: false,
+  size: null,
   theme: 'base',
   thumbRef: null,
   thumbSource: '',

@@ -1,8 +1,15 @@
 import TlEventItemActionControlPure from './TlEventItemActionControl.Pure';
 import styler from '../../../style/styler';
 
+const rightAlignedActionControlStyles = (keywords) => ({
+  left: keywords.auto,
+  order: 1,
+  right: '-0.5rem',
+});
+
 export default styler(({ colors, helpers, keywords, transitions }) => ({
   // Static declaration necessary for nested reference(s):
+  actionControlForceAlignRight: {},
   eventHoverState: {},
   invertedActionControl: {},
 
@@ -24,16 +31,13 @@ export default styler(({ colors, helpers, keywords, transitions }) => ({
       y: -1,
     },
     top: '-1rem',
-    transition: helpers.condenseStyles(transitions.hoverTransition, true),
+    transition: helpers.condenseStyles(transitions.hoverTransition(), true),
     zIndex: 1,
 
     '&$eventHoverState': {},
 
-    '&$invertedActionControl': {
-      left: 'auto',
-      order: 1,
-      right: '-0.5rem',
-    },
+    '&$invertedActionControl': rightAlignedActionControlStyles(keywords),
+    '&$actionControlForceAlignRight': rightAlignedActionControlStyles(keywords),
   },
 }), {
   styleName: 'TimelineEventItemActionControlStyles',

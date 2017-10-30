@@ -30,19 +30,21 @@ export default class ImageReelPure extends Component {
           'svg',
         ]),
         height: PropTypes.number,
-        public_id: PropTypes.string.isRequired,
+        name: PropTypes.string,
+        public_id: PropTypes.string,
         resource_type: PropTypes.oneOf([
           'image',
           'video',
         ]).isRequired,
         secure_url: PropTypes.string.isRequired,
+        size: PropTypes.number,
         type: PropTypes.string,
         url: PropTypes.string.isRequired,
         version: PropTypes.number,
         width: PropTypes.number,
       }).isRequired,
     ),
-    setNewBackgroundImage: PropTypes.func.isRequired,
+    setNewBackgroundImage: PropTypes.func,
     theme: PropTypes.string,
     uuid: PropTypes.string.isRequired,
     withEventCard: PropTypes.bool,
@@ -55,14 +57,17 @@ export default class ImageReelPure extends Component {
       created_at: '2017-03-15T10:51:31Z',
       format: 'jpg',
       height: 4000,
+      name: '',
       public_id: 'React-Timeline/TEST0002-c08e-4be6-9459-51cf632a2e79/Site_bg-min',
       resource_type: 'image',
       secure_url: 'https://lorempixel.com/1920/1920/abstract/',
+      size: 10000,
       type: 'upload',
       url: 'http://lorempixel.com/1920/1920/abstract/',
       version: 1000000000,
       width: 6000,
     }],
+    setNewBackgroundImage() {},
     theme: 'base',
     uuid: uuidv4(),
     withEventCard: false,
@@ -255,8 +260,9 @@ export default class ImageReelPure extends Component {
     );
   }
 
-  renderThumbs = (thumbs = []) => !isEmpty(thumbs) && thumbs.map(({ isHeroImg, secure_url }, index) => (
+  renderThumbs = (thumbs = []) => !isEmpty(thumbs) && thumbs.map(({ isHeroImg, secure_url, ...imgMeta }, index) => (
     <ImageThumbnail
+      {...imgMeta}
       key={Math.random()}
       imageRemovalHandler={this._removeThumbnailFromState}
       imageSelectionHandler={this.props.setNewBackgroundImage}

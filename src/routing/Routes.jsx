@@ -28,11 +28,12 @@ export default class RouteWrapper extends Component {
   static displayName = 'RouteViewWrapper';
 
   static propTypes = {
-    classNames: ClassNamesPropType.isRequired,
+    classNames: ClassNamesPropType,
     theme: PropTypes.string,
   };
 
   static defaultProps = {
+    classNames: {},
     theme: 'base',
   };
 
@@ -56,9 +57,8 @@ export default class RouteWrapper extends Component {
             path="/search"
           />
           <Route
-            exact
             component={SearchResults}
-            path="/search"
+            path="/search/:filter?"
           />
         </div>
       </div>

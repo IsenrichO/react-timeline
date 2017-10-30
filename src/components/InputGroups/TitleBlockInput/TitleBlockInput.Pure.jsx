@@ -1,67 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { classes, ClassNamesPropType } from 'aesthetic';
-import FontIcon from 'material-ui/FontIcon';
-import { aesthetic } from '../../../style/styler';
+import { ClassNamesPropType } from 'aesthetic';
+import TextBasedInput from '../TextBasedInput';
 
-const TitleBlockInputPure = ({ attrs, classNames, ctxAttrs, error, id, input, isRequired, otherAttrs, theme = 'base', touched }) => (
-  <div
-    className={classes(
-      classNames.inputGroup,
-      !!isRequired && classNames.requiredField,
-    )}
-  >
-    <span className={classNames.inputGroupAddon}>
-      <FontIcon
-        className={classes(
-          'material-icons',
-          classNames.titleBlockInputIcon,
-        )}
-        color={aesthetic.themes[theme].colors.red.primary}
-      >
-        title
-      </FontIcon>
-    </span>
-    <label
-      className={classNames.inputGroupLabel}
-      htmlFor={id}
-    >
-      Label
-    </label>
-    <input
-      contentEditable
-      className={classes(
-        'form-cont',
-      )}
-      id={id}
-      name="name"
-      placeholder="West Coast roadtrip"
-      title={`Give this event a title${!!isRequired ? ' (REQUIRED)' : ''}`}
-      type="text"
-    />
-    <span className={classNames.validationMessage}>{touched ? error : ''}</span>
-  </div>
+const TitleBlockInputPure = ({
+  classNames,
+  error,
+  id,
+  input,
+  isRequired,
+  theme = 'base',
+  touched,
+}) => (
+  <TextBasedInput
+    error={error}
+    icon="title"
+    id={id}
+    inputProps={{
+      ...input,
+      placeholder: 'West Coast roadtrip',
+      title: `Give this event a title${!!isRequired ? ' (REQUIRED)' : ''}`,
+      type: 'text',
+    }}
+    isRequired={isRequired}
+    tagName="INPUT"
+    touched={touched}
+  />
 );
 
 TitleBlockInputPure.displayName = 'TitleBlockInput';
 
 TitleBlockInputPure.propTypes = {
   classNames: ClassNamesPropType.isRequired,
-  ctxAttrs: PropTypes.shape({
-    rows: PropTypes.number,
-  }),
+  error: PropTypes.bool,
+  id: PropTypes.string,
+  input: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string,
+  }).isRequired,
   isRequired: PropTypes.bool,
-  otherAttrs: PropTypes.shape({
-    isRequiredField: PropTypes.bool,
-  }),
+  theme: PropTypes.string,
+  touched: PropTypes.bool,
 };
 
 TitleBlockInputPure.defaultProps = {
-  ctxAttrs: null,
-  isRequired: false,
-  otherAttrs: {
-    isRequiredField: false,
-  },
+  error: false,
+  id: null,
+  isRequired: true,
+  theme: 'base',
+  touched: false,
 };
 
 export default TitleBlockInputPure;

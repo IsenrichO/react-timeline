@@ -20,13 +20,6 @@ import eventModalState, {
   EventModalStateInitializer,
   EventModalStatePropTypes,
 } from './eventModal';
-import eventTags, {
-  EventTagsActionCreators,
-  EventTagsActionCreatorPropTypes,
-  EventTagsActionTypes,
-  EventTagsStateInitializer,
-  EventTagsStatePropTypes,
-} from './eventTags';
 import searchEvents, {
   SearchEventsActionCreators,
   SearchEventsActionCreatorPropTypes,
@@ -41,16 +34,23 @@ import seedDataAggregator, {
   SourceEventDataStateInitializer,
   SourceEventDataStatePropTypes,
 } from './sourceEventData';
+import tags, {
+  TagsActionCreators,
+  TagsActionCreatorPropTypes,
+  TagsActionTypes,
+  TagsStateInitializer,
+  TagsStatePropTypes,
+} from './tags';
 
 /* ROOT REDUCER */
 export default {
   batchSelectState,
   cloudinaryState,
   eventModalState,
-  eventTags,
   form: formReducer,
   searchEvents,
   seedDataAggregator,
+  tags,
 };
 
 /* AGGREGATE EXPORTS */
@@ -58,41 +58,41 @@ const AllActionCreators = {
   ...BatchSelectActionCreators,
   ...CloudinaryActionCreators,
   ...EventModalActionCreators,
-  ...EventTagsActionCreators,
   ...SearchEventsActionCreators,
   ...SourceEventDataActionCreators,
+  ...TagsActionCreators,
 };
 const AllActionTypes = {
   ...BatchSelectActionTypes,
   ...CloudinaryActionTypes,
   ...EventModalActionTypes,
-  ...EventTagsActionTypes,
   ...SearchEventsActionTypes,
   ...SourceEventDataActionTypes,
+  ...TagsActionTypes,
 };
 const AllActionCreatorPropTypes = {
   BatchSelectActionCreatorPropTypes,
   CloudinaryActionCreatorPropTypes,
   EventModalActionCreatorPropTypes,
-  EventTagsActionCreatorPropTypes,
   SearchEventsActionCreatorPropTypes,
   SourceEventDataActionCreatorPropTypes,
+  TagsActionCreatorPropTypes,
 };
 const AllStateInitializers = {
   BatchSelectStateInitializer,
   CloudinaryStateInitializer,
   EventModalStateInitializer,
-  EventTagsStateInitializer,
   SearchEventsStateInitializer,
   SourceEventDataStateInitializer,
+  TagsStateInitializer,
 };
 const AllStatePropTypes = {
   BatchSelectStatePropTypes,
   CloudinaryStatePropTypes,
   EventModalStatePropTypes,
-  EventTagsStatePropTypes,
   SearchEventsStatePropTypes,
   SourceEventDataStatePropTypes,
+  TagsStatePropTypes,
 };
 
 export {

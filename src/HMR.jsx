@@ -1,23 +1,27 @@
-'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-// AppContainer is a necessary wrapper component for HMR
-import RouterConfig from './routing/RouterConfig';
-
+import App from './containers/App';
+// import RouterConfig from './routing/RouterConfig';
 
 const render = (Component) => {
+  // The `AppContainer` import is a necessary wrapper component for HMR:
   ReactDOM.render(
     <AppContainer>
       <Component />
     </AppContainer>,
-    document.getElementById('root')
+    document.getElementById('root'),
   );
 };
 
-render(RouterConfig);
+render(App);
 
-// Hot Module Replacement API
+// Webpack Hot Module Replacement API:
 if (module.hot) {
-  module.hot.accept('./routing/RouterConfig', () => render(RouterConfig));
+  // NOTE: Providing the `App` component path as the first parameter to `accept`
+  // causes the DOM re-render to fail:
+  module.hot.accept(
+    '../src/HMR',
+    () => render(App),
+  );
 }

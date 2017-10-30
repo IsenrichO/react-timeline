@@ -17,6 +17,7 @@ module.exports = {
   },
   "extends": [
     "airbnb", // See <https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb>
+    "plugin:flowtype/recommended",
   ],
   "globals": {
     "beforeEach": true,
@@ -42,6 +43,7 @@ module.exports = {
     "sourceType": "module",
   },
   "plugins": [
+    "flowtype",
     "import",
     "jest",
     "jsx-a11y",
@@ -325,7 +327,7 @@ module.exports = {
       "scss": "always",
       "svg": "always",
     }],
-    "import/first": 2,
+    "import/first": 0,
     "import/max-dependencies": [1, {
       "max": 35,
     }],
@@ -351,17 +353,21 @@ module.exports = {
     "import/no-duplicates": 2,
     "import/no-dynamic-require": 1,
     "import/no-extraneous-dependencies": [2, {
-      "devDependencies": [  // Specify allowable deps by glob patterns
-        "**/*.js",          // General *.js-extension files
-        "**/*.jsx",         // React-specific *.jsx-extension files
-        "**/*.test.js",     // Test suite *.test.js-extension files
-        "**/*.spec.js",     // Test suite *.spec.js-extension files
-        "prop-types",       // Allow import of the `prop-types` DevDependency
-        // "mongodb",          // Allow import of the `mongodb` DevDependency
-      ],
+      "devDependencies": true,
       "optionalDependencies": true,
       "peerDependencies": true,
-      // "packageDir": "./", // Specifies path to the folder against whose package.json file the above are referenced
+      "packageDir": __dirname,
+      // "devDependencies": [  // Specify allowable deps by glob patterns
+      //   "**/*.js",          // General *.js-extension files
+      //   "**/*.jsx",         // React-specific *.jsx-extension files
+      //   "**/*.test.js",     // Test suite *.test.js-extension files
+      //   "**/*.spec.js",     // Test suite *.spec.js-extension files
+      //   "prop-types",       // Allow import of the `prop-types` DevDependency
+      //   // "mongodb",          // Allow import of the `mongodb` DevDependency
+      // ],
+      // "optionalDependencies": true,
+      // "peerDependencies": true,
+      // // "packageDir": "./", // Specifies path to the folder against whose package.json file the above are referenced
     }],
     "import/no-internal-modules": [2, {
       "allow": [
@@ -372,6 +378,8 @@ module.exports = {
         "**/src/**/*",    // Whitelist primary app dir
         "lodash/**",      // Enable `lodash` module accession: `import map from 'lodash/map';`
         "material-ui/**", // Enable `material-ui` module accession: `import FontIcon from 'material-ui/FontIcon';`
+        "react-infinite-calendar/**", // Enable `react-infinite-calendar` CSS stylesheet import(s)
+        "promise/**",     // Enables setting a polyfill for the ES2015 Promise object
         "uuid/*",         // Enable `uuid` module accession: `import uuidv4 from 'uuid/v4';`
       ],
     }],
@@ -388,7 +396,16 @@ module.exports = {
     }],
     "import/no-unassigned-import": [2, {
       "allow": [
-        "**/assets/**",   // Whitelist stylesheet & image asset imports
+        // Whitelist stylesheet & image asset imports:
+        "**/assets/**",
+
+        // Polyfill packages:
+        "**/promise/**",
+        "core-js",
+        "match-media",
+        "react-infinite-calendar/**",
+        "url-search-params-polyfill",
+        "whatwg-fetch",
       ],
     }],
     "import/no-unresolved": [2, {
@@ -418,7 +435,8 @@ module.exports = {
         "bool",
         "mutuallyExclusiveTrueProps",
       ],
-      "rule": "^disabled|mini|(doe|[hw]a|i)s[A-Z]([\w\d]?)+",  // CORRECT: `doesWork`, `hasChildren`, `isEnabled`, `wasCalled`
+      "rule": "^disabled|error|mini|submit|touched|(with|(doe|[hw]a|i)s)[A-Z]([\w\d]?)+", 
+      // CORRECT: `doesWork`, `hasChildren`, `isEnabled`, `wasCalled`
     }],
     "react/default-props-match-prop-types": [2, {
       "allowRequiredDefaults": true,

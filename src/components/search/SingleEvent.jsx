@@ -4,6 +4,7 @@ import { ClassNamesPropType } from 'aesthetic';
 import TLEventHeader from '../TLEvent/EventPanelHeader';
 import TLEventBody from '../TLEvent/EventPanelBody';
 import TLEventFooter from '../TLEvent/EventPanelFooter';
+const formatDate = require('../../../server/utilities');
 
 const SingleEventPure = ({
   addEventToFavorites,
@@ -11,7 +12,8 @@ const SingleEventPure = ({
   hasMultipleTags,
   imageStore,
   evt,
-  evt: { name, uuid, description, location, date, photoCount, formattedDate, type },
+  evt: { date, description, location, name, photoCount, type, uuid },
+  setNewBackgroundImage,
 }) => (
   <li className="evt-card">
     <TLEventHeader
@@ -24,10 +26,11 @@ const SingleEventPure = ({
       evtLocation={location}
       evtDate={date}
       photoCount={photoCount}
-      evtFormattedDate={formattedDate}
+      evtFormattedDate={formatDate(date)}
+      setNewBackgroundImage={setNewBackgroundImage}
+      uuid={uuid}
     />
     <TLEventFooter
-      // {...props}
       evt={evt}
       evtType={type}
       addEventToFavorites={addEventToFavorites}
@@ -41,12 +44,29 @@ SingleEventPure.displayName = 'SingleEvent';
 
 SingleEventPure.propTypes = {
   addEventToFavorites: PropTypes.func.isRequired,
-  classNames: ClassNamesPropType.isRequired,
+  classNames: ClassNamesPropType,
+  evt: PropTypes.shape({
+    date: PropTypes.string,
+    description: PropTypes.arrayOf(PropTypes.string),
+    location: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    photoCount: PropTypes.number,
+    type: PropTypes.string.isRequired,
+    uuid: PropTypes.string.isRequired,
+  }).isRequired,
   hasMultipleTags: PropTypes.bool,
+  imageStore: PropTypes.shape({
+    images: PropTypes.arrayOf(PropTypes.object),
+    name: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+  }),
+  setNewBackgroundImage: PropTypes.func.isRequired,
 };
 
 SingleEventPure.defaultProps = {
+  classNames: null,
   hasMultipleTags: false,
+  imageStore: null,
 };
 
 export default SingleEventPure;

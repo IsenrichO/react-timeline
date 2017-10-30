@@ -4,15 +4,19 @@ import styler from '../../../style/styler';
 const headerTailLeft = 'polygon(0 0, 100% 0, 100% 100%, 1.5rem 100%, 1.5rem 1.5rem)';
 const headerTailRight = 'polygon(0 0, 100% 0, calc(100% - 1.5rem) 1.5rem, calc(100% - 1.5rem) 100%, 0 100%)';
 
-export default styler(({ colors, helpers }) => ({
+export default styler(({ colors, helpers, transitions }) => ({
   // Static declarations necessary for nested reference(s):
   invertedPanel: {},
-  panelHeaderWithPointer: {},
+  panelHeaderShapeWithPointer: {},
 
-  panelHeader: {
+  panelHeaderContainer: {
+    position: 'relative',
+  },
+  panelHeaderShape: {
     ...helpers.flexify(),
     ...helpers.hideOverflow,
     background: {
+      attachment: null,
       color: colors.white.hue,
       position: ['center', '30%'],
       repeat: 'no-repeat',
@@ -25,12 +29,10 @@ export default styler(({ colors, helpers }) => ({
     padding: '1.25rem',
     position: 'relative',
     textAlign: 'end',
-    transition: {
-      delay: 125,
-      duration: 450,
+    transition: transitions.customTimingFunction({
+      duration: 250,
       property: 'background-size',
-      timingFunction: 'cubic-bezier(0, 0.25, 0.7, 0.4)', // $transitionTimingFunc
-    },
+    }),
     width: '100%',
 
     '&$invertedPanel': {
@@ -40,7 +42,7 @@ export default styler(({ colors, helpers }) => ({
       },
     },
 
-    '&$panelHeaderWithPointer': {
+    '&$panelHeaderShapeWithPointer': {
       WebkitClipPath: headerTailRight, // eslint-disable-line sort-keys
       clipPath: headerTailRight,
       WebkitShapeOutside: headerTailRight, // eslint-disable-line sort-keys
@@ -73,7 +75,7 @@ export default styler(({ colors, helpers }) => ({
     fontVariant: 'small-caps',
     marginRight: '1.5rem',
     position: 'relative',
-    textAlign: 'end',
+    textAlign: '-webkit-auto', // Fallback used when inline value is `null`
     textShadow: {
       blur: 5,
       color: colors.grey.dim,

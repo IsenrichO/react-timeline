@@ -1,6 +1,3 @@
-'use strict';
-
-
 const monthNames = [
   'January',
   'February',
@@ -13,7 +10,7 @@ const monthNames = [
   'September',
   'October',
   'November',
-  'December'
+  'December',
 ];
 
 const formatDate = (date) => {
@@ -25,4 +22,4 @@ const formatDate = (date) => {
 };
 
 
-module.exports = formatDate;
+module.exports = { formatDate };

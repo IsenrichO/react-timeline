@@ -13,22 +13,27 @@ const SidebarSettingsBarPure = ({ classNames, clickHandler, isSidebarExpanded, t
     <footer className={classNames.sidebarSettingsBar}>
       <IconButton
         className={classNames.collapseSidebarButton}
+        iconStyle={{
+          fill: baseThemeColors.white.pure,
+          height: 48,
+          width: 48,
+        }}
         onClick={clickHandler}
+        style={{
+          height: 64,
+          padding: 8,
+          width: 64,
+        }}
         tooltip={
           <span className={classNames.sidebarCloseIconTooltip}>
             {`${!!isSidebarExpanded ? 'Collapse' : 'Expand'} Menu`}
           </span>
         }
         tooltipPosition="top-right"
-        iconStyle={{
-          fill: baseThemeColors.white.pure,
-          height: 48,
-          width: 48,
-        }}
-        style={{
-          height: 64,
-          padding: 8,
-          width: 64,
+        tooltipStyles={{
+          left: '100%',
+          transform: 'translateY(50%)',
+          zIndex: 30,
         }}
       >
         {!!isSidebarExpanded

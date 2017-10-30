@@ -19,7 +19,6 @@ const EventSchema = new Schema({
   dateModified: Date,
   description: [String],
   eventId: String,
-  formattedDate: String,
   geometry: PointSchema,
   links: [EventLinkSchema],
   location: String,
@@ -51,7 +50,7 @@ const EventSchema = new Schema({
 
 EventSchema
   .virtual('photoCount')
-  .get(function() {
+  .get(function() { // eslint-disable-line prefer-arrow-callback
     return this.photos.length;
   });
 

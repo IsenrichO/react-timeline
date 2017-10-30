@@ -8,7 +8,7 @@ export default styler(({ colors, helpers }) => ({
   sidebarSettingsBar: {
     ...helpers.flexify('row', 'flex-end', ['center', 'center']),
     ...helpers.styleInheritor('width'),
-    backgroundColor: '#6F97DD',
+    backgroundColor: colors.red.dark,
     borderTop: {
       color: colors.white.pure,
       style: 'solid',

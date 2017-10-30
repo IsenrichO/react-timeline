@@ -27,7 +27,6 @@ const MapStyle = `\
   &style=feature:transit%7Ccolor:0xD2D0D4%7Cvisibility:off`;
 
 
-
 const mm = `\
   https://maps.googleapis.com/maps/api/staticmap\
   ?key=YOUR_API_KEY\

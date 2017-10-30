@@ -1,10 +1,12 @@
 import TLEventPure from './TLEvent.Pure';
 import styler from '../../style/styler';
 
-export default styler(({ colors, fonts, helpers, keywords }) => ({
+export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
   // Static declarations necessary for subsequent reference(s):
+  batchSelectActive: {},
   invertedMarker: {},
   invertedPanel: {},
+  tlEventPanelFullWidth: {},
 
   tlEvent: {
     clear: 'both',
@@ -56,6 +58,21 @@ export default styler(({ colors, fonts, helpers, keywords }) => ({
     }],
     visibility: 'hidden',
     width: '85%',
+
+    '&$batchSelectActive': {
+      outline: {
+        color: 'rgba(177, 91, 91, 0.23)',
+        style: 'solid',
+        width: 21,
+      },
+      transition: transitions.customTimingFunction(),
+      transitionProperty: 'outline',
+    },
+
+    '&$tlEventPanelFullWidth': {
+      right: keywords.auto,
+      width: keywords.auto,
+    },
 
     '&:hover': {
       '& .tlToolbar': {
@@ -162,7 +179,7 @@ export default styler(({ colors, fonts, helpers, keywords }) => ({
       left: '50%',
       position: 'absolute',
       transform: 'translateX(-50%)',
-      width: 5.5,
+      width: 4.5,
     },
 
     '&:after': {

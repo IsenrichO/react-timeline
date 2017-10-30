@@ -10,7 +10,6 @@ const UUID = require('uuid/v4'); // Generate a v4 (randomized) UUID
 const Event = require('../db/models/Event');
 const Photo = require('../db/models/EventPhoto');
 const Tag = require('../db/models/EventTag');
-const formatDate = require('./utilities');
 // const eventsRoute = require('./routes/events');
 
 const ApI = require('./controllers/EventsController');
@@ -23,42 +22,43 @@ const PathnameBase = '/api/v1/';
 const Upload = Multer({ dest: 'uploads/' });
 
 // Invoke Express's `static` middleware for configuring `assets`
-//  as our default static locale; defaults to serving the index.html
-//  file location therein.
-App.use(Express.static(Path.join(__dirname, '../dist')));
-App.use(BodyParser.json());                           // Parses application/json
-App.use(BodyParser.urlencoded({ extended: true }));   // Parses application/x-www-form-urlencoded
+// as our default static locale; defaults to serving the index.html
+// file location therein.
+App.use(Express.static(Path.join(__dirname, 'build')));
+App.use(BodyParser.json());                         // Parses application/json
+App.use(BodyParser.urlencoded({ extended: true })); // Parses application/x-www-form-urlencoded
 
 // Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
 //  This assignment addresses the Mongoose mpromise library deprecation warning.
 Mongoose.Promise = global.Promise;
 
 const [Db, Server] = [Mongo.Db, Mongo.Server];
-// Connect to the database:
 // const db = new Db('events', new Server('localhost', 27017));
-Mongoose.connect('mongodb://localhost:27017/events', {
-  useMongoClient: true,
-});
-const db = Mongoose.connection;
+// const db = Mongoose.connection;
 Mongoose.set('debug', true);
 
-db
+// Connect to the database:
+Mongoose
+  .connect('mongodb://localhost:27017/events', {
+    useMongoClient: true,
+  })
+  .on('error', (err) => console.error.bind(console, `Connection Error:\t${err}`))
+  .on('close', () => console.info('Seeding Finished!'))
   .once('open', () => {
     Mongoose.connection.collections.EventData.drop();
     Mongoose.connection.collections.EventPhotos.drop();
     Mongoose.connection.collections.EventTags.drop();
 
     seedData.forEach((evt, index) => {
-      [evt.formattedDate, evt.uuid, evt.photos, evt.dateModified, evt.starred] =
-        [formatDate(evt.date), evt.uuid || UUID(), new Array(), Date.now(), index % 2];
+      [evt.uuid, evt.photos, evt.dateModified, evt.starred] = [evt.uuid || UUID(), [], Date.now(), index % 2];
 
-      let newEvt = new Event(evt);
-      let newPhoto = new Photo({
+      const newEvt = new Event(evt);
+      const newPhoto = new Photo({
         title: 'Medium site hero image',
         url: 'https://cdn-images-1.medium.com/max/2000/1*J-jjDviwGUfzka1HX5LG9A.jpeg',
       });
-      let newTag = new Tag({
-        name: (evt.type || 'No Tag'),
+      const newTag = new Tag({
+        name: evt.type || 'No Tag',
       });
 
       // if (/^TEST/.test(evt.uuid)) { }
@@ -68,21 +68,8 @@ db
       newEvt.tags.push(newTag);
       newTag.event = newEvt;
 
-      // Event
-      //   .findOne({ name: evt.name })
-      //   .populate({
-      //     path: 'photos',
-      //     model: 'EventPhoto'
-      //   });
-
       Promise.all([newEvt.save(), newPhoto.save(), newTag.save()]);
     });
-  })
-  .on('error', (err) => {
-    console.error.call(console, `Connection Error:\t${err}`);
-  })
-  .on('close', () => {
-    console.info('Seeding Finished!');
   });
 
 // .put or .patch

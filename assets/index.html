@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head profile="https://www.w3.org/1999/xhtml/vocab">
-  <title>React Timeline</title>
+  <title>React-Timeline</title>
 
   <!-- Site Meta-Data -->
   <meta charset="UTF-8">
@@ -14,10 +14,21 @@
   <meta name="viewport"           content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Create and visualize your beautiful timelines for the periods that matter in your life." />
+    content="Create and visualize your beautiful timelines for the periods that matter in your life."
+  />
   <meta
     name="keywords"
-    content="isenrich.io, Oliver Isenrich, React Timeline" />
+    content="isenrich.io, Oliver Isenrich, React Timeline"
+  />
+
+  <!-- Enable Enhanced Safari Browser PWA Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#B15B5B" />
+  <meta name="apple-mobile-web-app-title" content="React-Timeline" />
+
+  <!-- Internet Explorer Enhanced Browser PWA Support -->
+  <meta name="msapplication-TileColor" content="#F6F8FB" />
+  <meta name="theme-color" content="#B15B5B" />
 
   <!-- Latest compiled and minified CSS -->
   <link
@@ -54,6 +65,9 @@
 
   <!-- React injection point -->
   <div id="root"></div>
+
+  <!-- React Portal injection point -->
+  <div id="modal-root"></div>
 
   <!-- Google Maps JavaScript API -->
   <script

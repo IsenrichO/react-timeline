@@ -17,6 +17,9 @@ lib-cov
 # Coverage directory used by tools like istanbul:
 coverage
 
+# JetBrains IDE-generated dot-folders:
+.idea
+
 # Grunt Intermediate Storage: 
 #   > [Ref. URL]:  <http://gruntjs.com/creating-plugins#storing-task-files>
 .grunt

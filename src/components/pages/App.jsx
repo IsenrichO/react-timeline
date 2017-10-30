@@ -13,6 +13,13 @@ import styler from '../../style/styler';
 // Import global CSS transpiled stylesheet:
 import '../../../assets/styles/master.scss';
 
+@connect(
+  ({ cloudinaryImageStore, seedDataAggregator }) => ({
+    cloudinaryImageStore,
+    seedData: seedDataAggregator,
+  }),
+  (dispatch) => bindActionCreators({ fetchAllCloudinary, fetchSeedData }, dispatch),
+)
 @styler(({ fonts, keywords }) => ({
   hamburger: {
     cursor: 'pointer',
@@ -35,13 +42,6 @@ import '../../../assets/styles/master.scss';
 }), {
   styleName: 'AppViewStyles',
 })
-@connect(
-  ({ cloudinaryImageStore, seedDataAggregator }) => ({
-    cloudinaryImageStore,
-    seedData: seedDataAggregator,
-  }),
-  (dispatch) => bindActionCreators({ fetchAllCloudinary, fetchSeedData }, dispatch),
-)
 export default class App extends Component {
   static displayName = 'App';
 
@@ -50,7 +50,7 @@ export default class App extends Component {
       PropTypes.element,
       PropTypes.node,
     ]),
-    classNames: ClassNamesPropType.isRequired,
+    classNames: ClassNamesPropType,
     cloudinaryImageStore: PropTypes.arrayOf(PropTypes.object),
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
@@ -60,6 +60,7 @@ export default class App extends Component {
 
   static defaultProps = {
     children: null,
+    classNames: {},
     cloudinaryImageStore: null,
     seedData: null,
   };

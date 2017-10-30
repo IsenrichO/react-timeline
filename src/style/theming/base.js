@@ -1,5 +1,6 @@
 import dedent from 'dedent';
-import { isNil, pickBy } from 'lodash';
+import { isNil, isPlainObject, noop, pickBy } from 'lodash';
+import SharedStylesGenerator from '../shared';
 
 /* TRUE CONSTANTS */
 export const PURE_WHITE = '#FFFFFF';
@@ -8,37 +9,63 @@ export const THEME_RED = '#B15B5B';
 export const DEFAULT_FONTS = 'Helvetica, sans-serif';
 export const HELVETICA_NEUE = `"Helvetica Neue", ${DEFAULT_FONTS}`;
 
+export const BUTTON_TIMING_FUNCTION = 'cubic-bezier(0, 0.44, 0.94, 1.29)';
+
+/* CSS KEYWORDS */
+export const keywords = {
+  all: 'all',
+  auto: 'auto',
+  buttonFace: 'buttonface',
+  important: '!important',
+  inherit: 'inherit',
+  initial: 'initial',
+  new: 'new',
+  none: 'none',
+  normal: 'normal',
+  transparent: 'transparent',
+  unset: 'unset',
+};
+
 /* THEME COLORS */
 const colors = {
   black: {
-    backgroundSemiOp: 'rgba(94, 94, 94, 0.65)',
+    backgroundSemiOp: 'rgba(94, 94, 94, 0.55)',
     boxShadow: 'rgba(0, 0, 0, 0.175)',
+    boxShadowStrong: '#474747',
     charcoal: '#625F5F',
     navReelBackground: 'rgba(0, 0, 0, 0.75)',
     primary: '#111111',
     pure: '#000000', // Black
   },
   blue: {
+    hover: '#4689F8',
     link: '#5395AF',
     note: '#C4D8FB',
     primary: '#4285F4',
     pure: '#0000FF', // Blue
     show: '#5395AF',
   },
+  green: {
+    oxidized: '#5DB7B7',
+  },
   grey: {
+    appBackground: '#F6F8FB',
     backgroundLine: '#C3C3C3',
     backgroundSemiOp: 'rgba(212, 212, 212, 0.47)',
     border: '#CCCCCC',
     boxShadow: '#6C6C6C',
+    buttonControl: '#8898A5',
     buttonFace: '#595959',
     dim: '#696969', // DimGrey
     granite: '#DDDDDD',
-    hover: '#4689F8',
+    line: '#EEEEEE',
     lite: '#BBBBBB',
+    loblolly: '#B7B7B7',
     medium: '#999999',
     placeholder: '#AEAEAE',
     primary: '#737373',
     pure: '#808080', // Grey|Gray
+    tuna: '#464A4C',
     unchecked: '#5A5A5A',
   },
   purple: {
@@ -46,13 +73,16 @@ const colors = {
     pure: '#800080', // Purple
   },
   red: {
-    disabled: 'rgba(177, 91, 91, 0.5)',
+    dark: '#7C3939',
+    disabled: 'rgba(177, 91, 91, 0.50)',
     focus: '#AB5252',
+    hover: '#B86969',
     noTransparent: '#CDABAC',
     oysterPink: '#E8CECE',
     primary: THEME_RED,
     pure: '#FF0000', // Red
-    semiTransparent: 'rgba(177, 91, 91, 0.3)',
+    secondary: '#DA7A7A',
+    semiTransparent: 'rgba(177, 91, 91, 0.30)',
   },
   status: {
     danger: '#C0182B',
@@ -67,11 +97,16 @@ const colors = {
     eggShell: '#F4F4F4',
     haze: '#F7F7F7',
     hue: '#B0A7A7',
+    lilac: '#E8E8E8',
     lite: PURE_WHITE, // White
     offWhite: '#F1E5E6',
     primary: PURE_WHITE, // White
     pure: PURE_WHITE, // White
-    semiTransparent: 'rgba(254, 254, 254, 0.6)',
+    semiTransparent: 'rgba(254, 254, 254, 0.60)',
+    smoke: '#F5F5F5',
+  },
+  yellow: {
+    warn: '#F6F6CF',
   },
 };
 
@@ -103,56 +138,58 @@ const fonts = {
 };
 
 /* TRANSITION STYLES */
-export const customTimingFunction = {
-  delay: 125,
-  duration: 250,
-  property: 'all',
-  timingFunction: 'cubic-bezier(0, 0.25, 0.7, 0.4)',
-};
-
-export const hoverTransition = {
-  delay: 250,
-  duration: 250,
-  property: 'all',
-  timingFunction: 'cubic-bezier(0, 0.25, 0.70, 0.40)',
-};
-
-export const transitionAll = {
+export const buttonRevealTransition = (transitionPropsOverride) => ({
   delay: null,
   duration: 250,
-  property: 'all',
-  timingFunction: 'linear',
-};
+  property: keywords.all,
+  timingFunction: BUTTON_TIMING_FUNCTION,
+  ...(isPlainObject(transitionPropsOverride) ? transitionPropsOverride : null),
+});
 
-export const transitionVisibility = [{
+export const customTimingFunction = (transitionPropsOverride) => ({
+  delay: 125,
+  duration: 250,
+  property: keywords.all,
+  timingFunction: 'cubic-bezier(0, 0.25, 0.70, 0.40)',
+  ...(isPlainObject(transitionPropsOverride) ? transitionPropsOverride : null),
+});
+
+export const hoverTransition = (transitionPropsOverride) => ({
+  delay: 250,
+  duration: 250,
+  property: keywords.all,
+  timingFunction: 'cubic-bezier(0, 0.25, 0.70, 0.40)',
+  ...(isPlainObject(transitionPropsOverride) ? transitionPropsOverride : null),
+});
+
+export const transitionAll = (transitionPropsOverride) => ({
+  delay: null,
+  duration: 250,
+  property: keywords.all,
+  timingFunction: 'linear',
+  ...(isPlainObject(transitionPropsOverride) ? transitionPropsOverride : null),
+});
+
+export const transitionVisibility = (transitionPropsOverride) => [{
   delay: null,
   duration: 250,
   property: 'opacity',
   timingFunction: 'ease-in-out',
+  ...(isPlainObject(transitionPropsOverride) ? transitionPropsOverride : null),
 }, {
   delay: null,
   duration: 250,
   property: 'visibility',
   timingFunction: 'ease-in-out',
+  ...(isPlainObject(transitionPropsOverride) ? transitionPropsOverride : null),
 }];
 
 export const transitions = {
+  buttonRevealTransition,
   customTimingFunction,
   hoverTransition,
   transitionAll,
   transitionVisibility,
-};
-
-/* CSS KEYWORDS */
-export const keywords = {
-  auto: 'auto',
-  buttonFace: 'buttonface',
-  important: '!important',
-  inherit: 'inherit',
-  initial: 'initial',
-  none: 'none',
-  normal: 'normal',
-  transparent: 'transparent',
 };
 
 /* IMAGE ASSETS */
@@ -255,6 +292,10 @@ export const condenseStyles = (styleObject = {}, withImportance = false, predefi
     .trim();
 };
 
+export const conditionalOverride = (overrideObj, predicate = noop, ...args) => !!predicate(overrideObj, ...args)
+  ? overrideObj
+  : null;
+
 export const disableSelection = { /* eslint-disable indent,sort-keys */
   '-ms-pointer-events': 'visiblePainted',
       'pointer-events': 'visiblePainted',
@@ -294,6 +335,7 @@ export const visible = {
 
 export const helpers = {
   condenseStyles,
+  conditionalOverride,
   disableSelection,
   enforceImportance,
   flexify,
@@ -305,6 +347,16 @@ export const helpers = {
   visible,
 };
 
+/* COMPILED BASE THEME */
+export const baseTheme = {
+  colors,
+  fonts,
+  helpers,
+  imageAssets,
+  keywords,
+  transitions,
+};
+
 /* DEFAULT THEME EXPORT */
 export default {
   colors,
@@ -312,6 +364,7 @@ export default {
   helpers,
   imageAssets,
   keywords,
+  shared: SharedStylesGenerator(baseTheme),
   transitions,
 };
 

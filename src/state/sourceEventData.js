@@ -87,15 +87,14 @@ export default (state = initialState, action = null) => {
     }
 
     case DELETE_BATCH_EVENTS_SUCCESS:
-      newState = Array
+      return Array
         .of(...state)
-        .filter((evt) => !action.payload.includes(evt.uuid));
-      return newState;
+        .filter(({ uuid }) => !action.payload.includes(uuid.toLowerCase()));
 
     case FETCH_STARRED_EVENTS_SUCCESS:
       // newState = Array
       //   .of(...state)
-      //   .filter(evt => evt.starred === true);
+      //   .filter(({ starred }) => Boolean(starred));
       // return newState;
 
       // Break omitted

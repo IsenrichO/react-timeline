@@ -54,36 +54,36 @@
 //   }
 // }
 
-.form-cont {
-  @include brCorners(right);
-  width: 100%;
-  padding: 0.5rem .75rem;
-  font: normal normal 1.25rem/1.75rem $theme-fonts;
-  color: #464A4C;
-  background-color: $theme-content-lt;
-  background-image: none;
-  -webkit-background-clip: padding-box;
-          background-clip: padding-box;
-  border-left: none;
-  -webkit-transition: border-color ease-in-out 0.15s,
-                      -webkit-box-shadow ease-in-out 0.15s;
-  -moz-transition:    border-color ease-in-out 0.15s,
-                      -webkit-box-shadow ease-in-out 0.15s;
-  transition:         border-color ease-in-out 0.15s,
-                      -webkit-box-shadow ease-in-out 0.15s;
-  -o-transition:      border-color ease-in-out 0.15s,
-                      box-shadow ease-in-out 0.15s;
-  transition:         border-color ease-in-out 0.15s,
-                      box-shadow ease-in-out 0.15s;
-  transition:         all 0.35s ease-in-out;
-  &:focus {
-    outline: 0;
-    font: normal normal 2rem/3rem $theme-fonts;
-    // border-color: transparent;
-    // -webkit-box-shadow: inset 0 0 4px 0 rgba(210, 210, 210, 0.3),
-    //                     0 0 2px 0 rgba(0, 183, 255, 0.42);
-    // box-shadow:         inset 0 0 4px 0 rgba(210, 210, 210, 0.3),
-    //                     0 0 2px 0 rgba(0, 183, 255, 0.42);
-  }
-}
-textarea.form-cont { max-height: 250px; }
+// .form-cont {
+//   @include brCorners(right);
+//   width: 100%;
+//   padding: 0.5rem .75rem;
+//   font: normal normal 1.25rem/1.75rem $theme-fonts;
+//   color: #464A4C;
+//   background-color: $theme-content-lt;
+//   background-image: none;
+//   -webkit-background-clip: padding-box;
+//           background-clip: padding-box;
+//   border-left: none;
+//   -webkit-transition: border-color ease-in-out 0.15s,
+//                       -webkit-box-shadow ease-in-out 0.15s;
+//   -moz-transition:    border-color ease-in-out 0.15s,
+//                       -webkit-box-shadow ease-in-out 0.15s;
+//   transition:         border-color ease-in-out 0.15s,
+//                       -webkit-box-shadow ease-in-out 0.15s;
+//   -o-transition:      border-color ease-in-out 0.15s,
+//                       box-shadow ease-in-out 0.15s;
+//   transition:         border-color ease-in-out 0.15s,
+//                       box-shadow ease-in-out 0.15s;
+//   transition:         all 0.35s ease-in-out;
+//   &:focus {
+//     outline: 0;
+//     font: normal normal 2rem/3rem $theme-fonts;
+//     border-color: transparent;
+//     -webkit-box-shadow: inset 0 0 4px 0 rgba(210, 210, 210, 0.3),
+//                         0 0 2px 0 rgba(0, 183, 255, 0.42);
+//     box-shadow:         inset 0 0 4px 0 rgba(210, 210, 210, 0.3),
+//                         0 0 2px 0 rgba(0, 183, 255, 0.42);
+//   }
+// }
+// textarea.form-cont { max-height: 250px; }

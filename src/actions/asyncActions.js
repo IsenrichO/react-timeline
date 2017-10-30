@@ -34,31 +34,24 @@ export const crudAsync2 = (operation, endpoint = RoutePaths.Events, dispatch, ac
         ? dispatch(actionCreator(resp.data))
         : null;
     })
-    .catch((err) => {
-      console.error.call(console, `\nError encountered while making request to the '${endpoint}' endpoint:\n>\t${err}`);
-    });
+    .catch((err) => console.error(`\nError encountered while making request to the '${endpoint}' endpoint:\n>\t${err}`));
 };
 
 // Returns a function to be called within the Redux-Thunk middleware:
 export const fetchSeedData = () => {
   // .then(dispatchActionCreator(dispatch, onFetchSeedDataSuccess))
   // .catch(catchAsyncError('Error encountered while attempting to fetch seed data'));
-  return (dispatch) => {
-    return Axios
-      .get(RoutePaths.Events, {
-        maxContentLength: Number.MAX_SAFE_INTEGER,
-        maxRedirects: 3,
-        onUploadProgress: (progressEvt) => { console.info('Upload in progress...'); },
-        responseType: 'json',
-        timeout: 30000,
-        validateStatus: (statusCode) => statusCode >= 200 && statusCode < 300,
-      })
-      .then((resp) => {
-        console.log('seed:', resp);
-        dispatch(onFetchSeedDataSuccess(resp.data));
-      })
-      .catch((err) => console.error('ERROR while fetching seed data:', err));
-  };
+  return (dispatch) => Axios
+    .get(RoutePaths.Events, {
+      maxContentLength: Number.MAX_SAFE_INTEGER,
+      maxRedirects: 3,
+      onUploadProgress(progressEvt) { return console.info('Upload in progress...'); },
+      responseType: 'json',
+      timeout: 30000,
+      validateStatus: (statusCode) => statusCode >= 200 && statusCode < 300,
+    })
+    .then((resp) => dispatch(onFetchSeedDataSuccess(resp.data)))
+    .catch((err) => console.error('ERROR while fetching seed data:', err));
 };
 
 

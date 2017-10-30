@@ -15,7 +15,7 @@ const renderNavigationButton = (direction = 'right', colors, helpers, keywords, 
     '&:hover': {
       '& $reelNavArrowIcon': {
         marginLeft: '10%',
-        transition: helpers.condenseStyles(transitions.transitionAll, true),
+        transition: helpers.condenseStyles(transitions.transitionAll(), true),
         transitionDuration: 100,
       },
     },
@@ -27,7 +27,7 @@ const renderNavigationButton = (direction = 'right', colors, helpers, keywords, 
       height: '100%',
       marginLeft: `${(Math.sign([null, 'Left'].indexOf(formattedDir)) * (100 * (!!isNext ? 1.7 : 1)))}%`,
       position: 'static !important',
-      transition: helpers.condenseStyles(transitions.transitionAll, true), // `${transitions.transitionAll} ${keywords.important}`,
+      transition: helpers.condenseStyles(transitions.transitionAll(), true), // `${transitions.transitionAll} ${keywords.important}`,
       transitionDelay: `100ms ${keywords.important}`,
       transitionDuration: `200ms ${keywords.important}`,
     },
@@ -49,7 +49,7 @@ export default styler(({ colors, fonts, helpers, imageAssets, keywords, transiti
     lineHeight: 'calc(10vw + 0.5rem - 1px)',
     margin: ['0.5rem', 0, '0.25rem', '0.5rem'],
     paddingTop: 0,
-    transition: transitions.transitionAll,
+    transition: transitions.transitionAll(),
 
     '&$withEventCard': {
       borderLeft: {
@@ -64,7 +64,7 @@ export default styler(({ colors, fonts, helpers, imageAssets, keywords, transiti
     backgroundColor: colors.black.navReelBackground,
     overflow: 'hidden',
     position: 'absolute',
-    transition: transitions.transitionAll,
+    transition: transitions.transitionAll(),
     width: '1.5rem',
     zIndex: 10,
 
@@ -99,7 +99,7 @@ export default styler(({ colors, fonts, helpers, imageAssets, keywords, transiti
     ...helpers.flexify(),
     ...helpers.styleInheritor('height', 'lineHeight'),
     position: 'relative',
-    transition: transitions.transitionAll,
+    transition: transitions.transitionAll(),
 
     '&$reelWithFallbackMessage': {
       ...helpers.styleInheritor('width'),

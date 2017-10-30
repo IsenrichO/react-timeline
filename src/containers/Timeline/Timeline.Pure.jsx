@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { classes, ClassNamesPropType } from 'aesthetic';
 import FontIcon from 'material-ui/FontIcon';
+import update from 'immutability-helper';
 import { BatchActionButtons, ButtonControls } from '../../components/ButtonControls';
 // import BatchActionButtons from '../../components/ButtonControls/BatchActionButtons';
-import ConfirmDeletionModal from '../../components/ConfirmDeletionModal';
+import ConfirmDeletionPrompt from '../../components/partials/ConfirmDeletionPrompt';
 import EditEventModal from '../../components/EditEventModal';
 import AppBar from '../../components/partials/AppBar';
 // import NewEventModal from '../../components/NewEventModal';
@@ -15,17 +16,11 @@ import Utils from '../../util';
 import { BatchSelectActionCreators, BatchSelectActionCreatorPropTypes, BatchSelectStateInitializer, BatchSelectStatePropTypes } from '../../state/batchSelectionItems';
 import { CloudinaryActionCreators, CloudinaryActionCreatorPropTypes, CloudinaryStateInitializer, CloudinaryStatePropTypes } from '../../state/cloudinaryImageStore';
 import { EventModalActionCreators, EventModalActionCreatorPropTypes, EventModalStateInitializer, EventModalStatePropTypes } from '../../state/eventModal';
-import { EventTagsActionCreators, EventTagsActionCreatorPropTypes, EventTagsStateInitializer, EventTagsStatePropTypes } from '../../state/eventTags';
+import { TagsActionCreators, TagsActionCreatorPropTypes, TagsStateInitializer, TagsStatePropTypes } from '../../state/tags';
 import { SourceEventDataActionCreators, SourceEventDataActionCreatorPropTypes, SourceEventDataStateInitializer, SourceEventDataStatePropTypes } from '../../state/sourceEventData';
 
 @connect(
-  ({
-    batchSelectState,
-    cloudinaryState,
-    eventModalState,
-    form,
-    seedDataAggregator,
-  }) => ({
+  ({ batchSelectState, cloudinaryState, eventModalState, form, seedDataAggregator }) => ({
     batchSelectState,
     cloudinaryState,
     eventModalState,
@@ -37,6 +32,7 @@ import { SourceEventDataActionCreators, SourceEventDataActionCreatorPropTypes, S
     cloudinaryActions: bindActionCreators(CloudinaryActionCreators, dispatch),
     eventModalActions: bindActionCreators(EventModalActionCreators, dispatch),
     sourceEventDataActions: bindActionCreators(SourceEventDataActionCreators, dispatch),
+    tagsActions: bindActionCreators(TagsActionCreators, dispatch),
   }),
 )
 export default class TimelinePure extends Component {
@@ -50,11 +46,11 @@ export default class TimelinePure extends Component {
     cloudinaryState: CloudinaryStatePropTypes,
     eventModalActions: EventModalActionCreatorPropTypes,
     eventModalState: EventModalStatePropTypes,
-    eventTagsActions: EventTagsActionCreatorPropTypes,
-    eventTagsState: EventTagsStatePropTypes,
     seedData: PropTypes.arrayOf(PropTypes.object).isRequired,
     sourceEventDataActions: SourceEventDataActionCreatorPropTypes,
     sourceEventDataState: SourceEventDataStatePropTypes,
+    tagsActions: TagsActionCreatorPropTypes,
+    tagsState: TagsStatePropTypes,
   };
 
   static defaultProps = {
@@ -64,11 +60,11 @@ export default class TimelinePure extends Component {
     cloudinaryState: CloudinaryStateInitializer,
     eventModalActions: EventModalActionCreators,
     eventModalState: EventModalStateInitializer,
-    eventTagsActions: EventTagsActionCreators,
-    eventTagsState: EventTagsStateInitializer,
     seedData: [],
     sourceEventDataActions: SourceEventDataActionCreators,
     sourceEventDataState: SourceEventDataStateInitializer,
+    tagsActions: TagsActionCreators,
+    tagsState: TagsStateInitializer,
   };
 
   constructor(props) {
@@ -77,14 +73,20 @@ export default class TimelinePure extends Component {
     this.state = {
       confirmModal: false,
       confirmationEvt: null,
+      isEditEventInverted: false,
       newModal: false,
     };
 
     this.confirmDeletionEvt = ::this.confirmDeletionEvt;
     this.getMyImgs = ::this.getMyImgs;
     this.getTags = ::this.getTags;
-    this.setNeww = ::this.setNeww;
+    this.setEventInvertedState = ::this.setEventInvertedState;
     this.toggleModal = ::this.toggleModal;
+  }
+
+  componentDidMount() {
+    const { fetchAllEventTags } = this.props.tagsActions;
+    return fetchAllEventTags();
   }
 
   // componentDidMount() {
@@ -141,7 +143,7 @@ export default class TimelinePure extends Component {
   }
 
   getTags() {
-    const { fetchAllEventTags } = this.props.eventTagsActions;
+    const { fetchAllEventTags } = this.props.tagsActions;
 
     return fetchAllEventTags();
   }
@@ -150,6 +152,7 @@ export default class TimelinePure extends Component {
     const {
       batchSelectActions: { addEventToBatchSelection },
       batchSelectState: { isEnabled, items },
+      cloudinaryActions: { setNewBackgroundImage },
       cloudinaryState,
       eventModalActions: { logEventModalData },
       seedDataAggregator,
@@ -177,6 +180,9 @@ export default class TimelinePure extends Component {
         <TLEvent
           {...attrs}
           key={`TimelineEvent${evt.uuid}`}
+          withAlternation
+          withPointer
+          withToolbar
           addEventToFavorites={() => Utils.addEventToFavorites(updateSingleEvent, evt)}
           addSelectionToBatch={(evtUuid) => addEventToBatchSelection(evtUuid)}
           cloudinaryImageStore={cloudinaryState}
@@ -184,20 +190,27 @@ export default class TimelinePure extends Component {
           confirmDeletionEvt={this.confirmDeletionEvt}
           deleteEvt={() => deleteSingleEvt(evt)}
           evt={evt}
-          evtAlign={new Array('', 'Invert')[index % 2]}
+          // evtAlign={new Array('', 'Invert')[index % 2]}
           getMyImgs={self.getMyImgs}
           getStarGlyphClass={Utils.getStarGlyphClass(seedDataAggregator, evt.uuid)}
           hasMultipleTags={Utils.hasMultipleTags(seedDataAggregator, evt.uuid)}
           index={index}
           isBatchSelectMode={isEnabled}
-          isInBatch={items.includes(evt.uuid)}
-          isInverted={!!(index % 2)}
+          isInBatch={items.includes(evt.uuid.toLowerCase())}
+          // isInverted={!!(index % 2)}
           logModalData={(data) => logEventModalData(data)}
-          setNewBackgroundImage={this.setNeww}
+          setEventInvertedState={this.setEventInvertedState}
+          setNewBackgroundImage={setNewBackgroundImage}
           toggleModal={this.toggleModal}
         />
       );
     });
+  }
+
+  setEventInvertedState(isEventInverted = false) {
+    return this.setState(update(this.state, {
+      isEditEventInverted: { $set: isEventInverted },
+    }));
   }
 
   cliccc(evt) {
@@ -205,11 +218,6 @@ export default class TimelinePure extends Component {
 
     const { uploadToCloudinary } = this.props.cloudinaryActions;
     return uploadToCloudinary(this.upldBtn.files[0], this.upldBtn.value);
-  }
-
-  setNeww(imgUrl) {
-    const { setNewBackgroundImage } = this.props.cloudinaryActions;
-    setNewBackgroundImage(imgUrl);
   }
 
   checkViewAndAnimate = () => {
@@ -237,11 +245,13 @@ export default class TimelinePure extends Component {
       eventModalState: { eventData, isModalOpen },
       sourceEventDataActions: { updateSingleEvent },
     } = this.props;
+    const { isEditEventInverted } = this.state;
 
     return !!isModalOpen && (
       <EditEventModal
         cloudinaryImageStore={cloudinaryState}
         fetchTags={this.getTags}
+        isInverted={isEditEventInverted}
         modalData={eventData}
         modalStatus={isModalOpen}
         setNeww={this.setNeww}
@@ -291,22 +301,22 @@ export default class TimelinePure extends Component {
 
         {this.injectEditingModal()}
         <BatchActionButtons
-          classNames={classNames}
           batchSelectionItems={items}
-          toggleBatchSelection={(bool = undefined) => allowBatchSelection(bool)}
-          deleteBatchEvents={deleteBatchEvents}
+          classNames={classNames}
           clearBatchSelection={clearBatchSelection}
+          deleteBatchEvents={deleteBatchEvents}
           isBatchSelectMode={isEnabled}
+          toggleBatchSelection={(bool = undefined) => allowBatchSelection(bool)}
         />
         <ButtonControls
-          toggleModal={() => this.setState({ newModal: !newModal })}
           toggleBatchSelection={(bool = undefined) => allowBatchSelection(bool)}
+          toggleModal={() => this.setState({ newModal: !newModal })}
         />
-        <ConfirmDeletionModal
-          modalStatus={confirmModal}
-          disableModal={() => this.setState({ confirmModal: !confirmModal })}
+        <ConfirmDeletionPrompt
           // confirmDeletionEvt={this.state.confirmDeletionEvt}
           deleteEvt={() => deleteSingleEvt(confirmationEvt)}
+          disableModal={() => this.setState({ confirmModal: !confirmModal })}
+          isPromptOpen={confirmModal}
         />
       </div>
     );

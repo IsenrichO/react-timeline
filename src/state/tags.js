@@ -32,26 +32,26 @@ export default (state = initialState, action = null) => {
 };
 
 /* EXPORTS */
-const EventTagsActionTypes = {
+const TagsActionTypes = {
   FETCH_ALL_EVENT_TAGS_SUCCESS,
 };
 
-const EventTagsActionCreators = {
+const TagsActionCreators = {
   fetchAllEventTags,
   onFetchAllEventTagsSuccess,
 };
 
-const EventTagsActionCreatorPropTypes = PropTypes.shape({
+const TagsActionCreatorPropTypes = PropTypes.shape({
   fetchAllEventTags: PropTypes.func,
   onFetchAllEventTagsSuccess: PropTypes.func,
 }).isRequired;
 
-const EventTagsStatePropTypes = PropTypes.arrayOf(PropTypes.string);
+const TagsStatePropTypes = PropTypes.arrayOf(PropTypes.string);
 
 export {
-  EventTagsActionCreators,
-  EventTagsActionCreatorPropTypes,
-  EventTagsActionTypes,
-  EventTagsStatePropTypes,
-  initialState as EventTagsStateInitializer,
+  TagsActionCreators,
+  TagsActionCreatorPropTypes,
+  TagsActionTypes,
+  TagsStatePropTypes,
+  initialState as TagsStateInitializer,
 };

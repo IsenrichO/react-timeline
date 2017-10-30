@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationMenuIcon from 'material-ui/svg-icons/navigation/menu';
 import { red900 } from 'material-ui/styles/colors';
+// import RTLogo from '../../../../assets/images/rt-logo.svg';
 
 export default class AppBarPure extends PureComponent {
   static displayName = 'RTAppBar';
