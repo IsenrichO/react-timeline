@@ -374,6 +374,7 @@ module.exports = {
         "**/actions/*",   // Whitelist Redux 'actions' directory
         "**/assets/**",   // Whitelist stylesheet & image asset imports
         "**/db/**",       // Whitelist internal database resources
+        "**/schema/**",   // Whitelist GraphQL schema resource imports
         "**/server/**",   // Whitelist 'server' directory resources
         "**/src/**/*",    // Whitelist primary app dir
         "lodash/**",      // Enable `lodash` module accession: `import map from 'lodash/map';`

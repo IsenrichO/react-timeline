@@ -1,4 +1,5 @@
 const Express = require('express');
+const ExpressGraphQL = require('express-graphql');
 const Mongo = require('mongodb');
 const Mongoose = require('mongoose');
 const BodyParser = require('body-parser');
@@ -14,6 +15,7 @@ const Tag = require('../db/models/EventTag');
 
 const ApI = require('./controllers/EventsController');
 const seedData = require('../src/constants/json/SeedData.json');
+const schema = require('../schema/schema');
 
 
 const App = Express();
@@ -27,22 +29,44 @@ const Upload = Multer({ dest: 'uploads/' });
 App.use(Express.static(Path.join(__dirname, 'build')));
 App.use(BodyParser.json());                         // Parses application/json
 App.use(BodyParser.urlencoded({ extended: true })); // Parses application/x-www-form-urlencoded
+App.use('/graphql', ExpressGraphQL((req) => ({
+  graphiql: true,
+  pretty: true,
+  rootValue: { db: req.app.locals.db },
+  schema,
+})));
+
+
+const MONGO_URL = 'mongodb://localhost:27017/events';
+const MONGO_OPTS = {
+  autoIndex: true,
+  autoReconnect: true,
+  promiseLibrary: global.Promise,
+  reconnectInterval: 500,
+  reconnectTries: Number.MAX_VALUE,
+  useMongoClient: true,
+};
 
 // Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
 //  This assignment addresses the Mongoose mpromise library deprecation warning.
 Mongoose.Promise = global.Promise;
+Mongoose.set('debug', true);
 
 const [Db, Server] = [Mongo.Db, Mongo.Server];
 // const db = new Db('events', new Server('localhost', 27017));
 // const db = Mongoose.connection;
-Mongoose.set('debug', true);
 
 // Connect to the database:
 Mongoose
   .connect('mongodb://localhost:27017/events', {
+    autoIndex: true,
+    autoReconnect: true,
+    promiseLibrary: global.Promise,
+    reconnectInterval: 500,
+    reconnectTries: Number.MAX_VALUE,
     useMongoClient: true,
   })
-  .on('error', (err) => console.error.bind(console, `Connection Error:\t${err}`))
+  .on('error', (err) => console.error.bind(console, `Connection Error:\t${err && err.stack}`))
   .on('close', () => console.info('Seeding Finished!'))
   .once('open', () => {
     Mongoose.connection.collections.EventData.drop();
@@ -71,6 +95,30 @@ Mongoose
       Promise.all([newEvt.save(), newPhoto.save(), newTag.save()]);
     });
   });
+
+// Mongoose.connection.once('open', function() {
+//   console.info('MongoDB event open');
+//   console.info('MongoDB connected [%s]', MONGO_URL);
+
+//   Mongoose.connection.on('connected', function() {
+//     console.info('MongoDB event connected');
+//   });
+
+//   Mongoose.connection.on('disconnected', function() {
+//     console.warn('MongoDB event disconnected');
+//   });
+
+//   Mongoose.connection.on('reconnected', function() {
+//     console.info('MongoDB event reconnected');
+//   });
+
+//   Mongoose.connection.on('error', function(err) {
+//     console.error(`MongoDB event error:\t${err}`);
+//   });
+
+//   // return resolve();
+//   return Server.start();
+// });
 
 // .put or .patch
 // App.put('/api/events/edit/:id', ApI.updateEvents);

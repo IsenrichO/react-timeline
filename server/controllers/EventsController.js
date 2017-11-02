@@ -22,7 +22,8 @@ const listEvents = (req, res, next) => {
 // Queries the DB for a single document (record) whose UUID corresponds
 //  to the routing param:
 const getSingleEvent = (req, res, next) => {
-  const sendResponse = (err, docs) => { res.send(docs); }
+  const sendResponse = (err, docs) => { res.send(docs); };
+
   Event
     .find({})
     .limit(+req.params.eventId)
@@ -96,10 +97,10 @@ const deleteBatchEvents = (req, res, next) => {
 
 
 module.exports = {
-  getSingleEvent,
   addSingleEvent,
+  deleteBatchEvents,
+  deleteSingleEvent,
+  getSingleEvent,
   listEvents,
   updateSingleEvent,
-  deleteSingleEvent,
-  deleteBatchEvents
 };
