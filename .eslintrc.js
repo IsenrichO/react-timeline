@@ -29,6 +29,26 @@ module.exports = {
     "xdescribe": true,
     "xit": true,
   },
+  "overrides": [{
+    "files": [
+      "**/*.Styled.{js,jsx}",
+    ],
+    "excludedFiles": [
+      "**/*.Pure.{js,jsx}",
+      "**/index.js",
+    ],
+    "rules": {
+      "sort-keys": [0],
+      "import/no-named-default": 0,
+    },
+  }, {
+    "files": [
+      "db/**/*.js",
+    ],
+    "rules": {
+      "import/unambiguous": 0,
+    },
+  }],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 7,
@@ -50,6 +70,7 @@ module.exports = {
     "react",
     "react-native",
   ],
+  "root": true,
   "rules": {
     /* BEST PRACTICES */
     "consistent-return": 0,
@@ -148,10 +169,8 @@ module.exports = {
                               // config specifies both the 'node' & 'commonjs' environments.
     "symbol-description": 1,
 
-
     /* POSSIBLE ERRORS */
     "valid-jsdoc": 2,
-
 
     /* STYLISTIC RULES */
     "array-bracket-spacing": [2, "never", {
@@ -317,7 +336,6 @@ module.exports = {
       "after": true,
     }],
 
-
     /* IMPORT RULES */
     "import/default": 2,
     "import/export": 2,
@@ -376,6 +394,7 @@ module.exports = {
         "**/db/**",       // Whitelist internal database resources
         "**/server/**",   // Whitelist 'server' directory resources
         "**/src/**/*",    // Whitelist primary app dir
+        "date-fns/**",    // Enable to allow for `react-infinite-calendar` localization support
         "lodash/**",      // Enable `lodash` module accession: `import map from 'lodash/map';`
         "material-ui/**", // Enable `material-ui` module accession: `import FontIcon from 'material-ui/FontIcon';`
         "react-infinite-calendar/**", // Enable `react-infinite-calendar` CSS stylesheet import(s)
@@ -420,14 +439,13 @@ module.exports = {
     }],
     "import/no-webpack-loader-syntax": 2,
     "import/prefer-default-export": 2,
-
+    "import/unambiguous": 1,
 
     /* ACCESSIBILITY RULES */
     "jsx-a11y/img-has-alt": 0,
     "jsx-a11y/label-has-for": 1,
     "jsx-a11y/no-interactive-element-to-noninteractive-role": 0,
     "jsx-a11y/no-noninteractive-element-interactions": 0,
-
 
     /* REACT/JSX RULES */
     "react/boolean-prop-naming": [2, {
@@ -492,7 +510,6 @@ module.exports = {
     "react/react-in-jsx-scope": 2,
     "react/require-default-props": 1,
     "react/sort-comp": 1,
-
 
     /* REACT NATIVE PLUGIN */
     "react-native/no-color-literals": 1,          // CORRECT: `<MyComponent style={{ color: theme.colors.ltGrey }} />`

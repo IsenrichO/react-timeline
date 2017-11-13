@@ -69,7 +69,7 @@ export default class StaticGMapPure extends Component {
 
   static propTypes = {
     classNames: ClassNamesPropType.isRequired,
-    evtLocation: PropTypes.string.isRequired,
+    evtLocation: PropTypes.string,
   };
 
   static defaultProps = {
@@ -81,18 +81,6 @@ export default class StaticGMapPure extends Component {
     const { evtLocation } = props;
 
     this.BASE_URL = 'https://maps.googleapis.com/maps/api/staticmap';
-    this.staticMapOpts = [
-      this.BASE_URL,
-      { key: process.env.GMAPS_STATIC_KEY },
-      { center: evtLocation },
-      { scale: 1 },
-      // { markers: 'sdgaags' },  &markers=sdgaags
-      { zoom: 9 },
-      { format: 'png' },
-      { maptype: 'roadmap' },
-      this.translateJsonToUrl(StaticGMapsStyles),
-      { size: '400x200' },
-    ];
   }
 
   getStyleStrFromObj = (styleObj, delimiter = '%7C') => {
@@ -147,12 +135,25 @@ export default class StaticGMapPure extends Component {
   render() {
     const { classNames, evtLocation } = this.props;
 
+    const STATIC_MAP_OPTS = [
+      this.BASE_URL,
+      { key: process.env.GMAPS_STATIC_KEY },
+      { center: evtLocation },
+      { scale: 1 },
+      // { markers: 'sdgaags' },  &markers=sdgaags
+      { zoom: 9 },
+      { format: 'png' },
+      { maptype: 'roadmap' },
+      this.translateJsonToUrl(StaticGMapsStyles),
+      { size: '400x200' },
+    ];
+
     return (
       <div className={classNames.staticMapWrapper}>
         <img
           className={classNames.staticMapImage}
           alt={`Google Static Map for ${evtLocation}.`}
-          src={this.genereateFinalUrl(this.staticMapOpts)}
+          src={this.genereateFinalUrl(STATIC_MAP_OPTS)}
         />
       </div>
     );

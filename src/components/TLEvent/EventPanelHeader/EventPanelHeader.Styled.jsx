@@ -1,10 +1,10 @@
 import EventPanelHeaderPure from './EventPanelHeader.Pure';
 import styler from '../../../style/styler';
 
-const headerTailLeft = 'polygon(0 0, 100% 0, 100% 100%, 1.5rem 100%, 1.5rem 1.5rem)';
-const headerTailRight = 'polygon(0 0, 100% 0, calc(100% - 1.5rem) 1.5rem, calc(100% - 1.5rem) 100%, 0 100%)';
+const headerTailLeft = 'polygon(0 0, 100% 0, 100% 100%, 1.45rem 100%, 1.45rem 1.45rem)';
+const headerTailRight = 'polygon(0 0, 100% 0, calc(100% - 1.45rem) 1.45rem, calc(100% - 1.45rem) 100%, 0 100%)';
 
-export default styler(({ colors, helpers, transitions }) => ({
+export default styler(({ colors, helpers, keywords, transitions }) => ({
   // Static declarations necessary for nested reference(s):
   invertedPanel: {},
   panelHeaderShapeWithPointer: {},
@@ -23,7 +23,7 @@ export default styler(({ colors, helpers, transitions }) => ({
       size: 100,
     },
     backgroundBlendMode: 'multiply',
-    border: 'none',
+    border: keywords.none,
     maxHeight: 150,
     minHeight: '7.142857142857143rem',  // => (100 / 14)px
     padding: '1.25rem',
@@ -75,7 +75,7 @@ export default styler(({ colors, helpers, transitions }) => ({
     fontVariant: 'small-caps',
     marginRight: '1.5rem',
     position: 'relative',
-    textAlign: '-webkit-auto', // Fallback used when inline value is `null`
+    textAlign: 'right', // Fallback used when inline value is `null`
     textShadow: {
       blur: 5,
       color: colors.grey.dim,

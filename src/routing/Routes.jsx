@@ -5,8 +5,8 @@ import { Route, Switch } from 'react-router-dom';
 import styler from '../style/styler';
 
 // Page-level layout component imports:
-import App from '../components/pages/App';
-import TimelineEventPage from '../components/pages/TimelineEventPage';
+import App from '../components/views/App';
+import TimelineEventPage from '../containers/EventPage';
 import SearchResults from '../components/search/SearchResults';
 import SearchSidebar from '../components/search/SearchSidebar';
 // import SearchWrapper from '../components/search/SearchWrapper';
@@ -48,16 +48,21 @@ export default class RouteWrapper extends Component {
           path="/"
         />
         <Route
+          exact
           component={TimelineEventPage}
           path="/events/edit/:uuid"
         />
         <div className={classNames.composedRoutesWrapper}>
           <Route
+            key={location.key}
             component={SearchSidebar}
+            location={location}
             path="/search"
           />
           <Route
+            key={location.key}
             component={SearchResults}
+            location={location}
             path="/search/:filter?"
           />
         </div>

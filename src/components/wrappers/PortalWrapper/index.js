@@ -1,2 +1,2 @@
 export PortalWrapperPure from './PortalWrapper.Pure';
-export default from './PortalWrapper';
+export default from './PortalWrapper.Styled';

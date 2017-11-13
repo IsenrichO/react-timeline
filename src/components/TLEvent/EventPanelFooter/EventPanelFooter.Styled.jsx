@@ -10,7 +10,7 @@ export default styler(({ colors, fonts, helpers, keywords }) => ({
   panelFooter: {
     ...helpers.flexify('row', 'space-between'),
     backgroundColor: colors.white.eggShell,
-    border: 'none',
+    border: keywords.none,
     padding: '1.25rem',
     position: 'relative',
     width: '100%',

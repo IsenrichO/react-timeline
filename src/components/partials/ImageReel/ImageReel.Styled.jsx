@@ -2,7 +2,7 @@ import { capitalize } from 'lodash';
 import ImageReelPure from './ImageReel.Pure';
 import styler from '../../../style/styler';
 
-const renderNavigationButton = (direction = 'right', colors, helpers, keywords, transitions) => {
+export const renderNavigationButton = (direction = 'right', colors, helpers, keywords, transitions) => {
   const formattedDir = capitalize(direction.toLowerCase());
   const [isNext, isPrev] = [formattedDir === 'Right', formattedDir === 'Left'];
 
@@ -45,9 +45,9 @@ export default styler(({ colors, fonts, helpers, imageAssets, keywords, transiti
 
   imageReel: {
     ...helpers.flexify('row'),
-    height: 'calc(10vw + 0.5rem - 1px)',
-    lineHeight: 'calc(10vw + 0.5rem - 1px)',
-    margin: ['0.5rem', 0, '0.25rem', '0.5rem'],
+    height: 'calc(10vw + 0.50rem - 1px)',
+    lineHeight: 'calc(10vw + 0.50rem - 1px)',
+    margin: ['0.75rem', 0, '0.25rem', '0.50rem'],
     paddingTop: 0,
     transition: transitions.transitionAll(),
 
@@ -65,7 +65,7 @@ export default styler(({ colors, fonts, helpers, imageAssets, keywords, transiti
     overflow: 'hidden',
     position: 'absolute',
     transition: transitions.transitionAll(),
-    width: '1.5rem',
+    width: '1.50rem',
     zIndex: 10,
 
     '&$navAlignLeft': { left: 0 },
@@ -80,7 +80,7 @@ export default styler(({ colors, fonts, helpers, imageAssets, keywords, transiti
 
     '&:hover': {
       '& $navArrowWrapper': {
-        width: '2.8rem',
+        width: '2.80rem',
       },
     },
 
@@ -131,91 +131,6 @@ export default styler(({ colors, fonts, helpers, imageAssets, keywords, transiti
   reelNavArrowIcon: {
     color: `${colors.white.primary} ${keywords.important}`,
   },
-  // thumb: {
-  //   background: {
-  //     attachment: null,
-  //     color: keywords.transparent,
-  //     position: 'center',
-  //     repeat: 'no-repeat',
-  //     size: 'cover',
-  //   },
-  //   flexShrink: 0,
-  //   height: 'calc(10vw - 6px)',
-  //   overflow: 'hidden',
-  //   position: 'relative',
-  //   top: 3,
-  //   width: 'calc(10vw - 10px)',
-  // },
-
-  //   '&:before': {
-  //   //   background: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.69) 20%, rgba(0, 0, 0, 0.35) 65%, transparent 95%);
-  //   //   background:    -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0.69) 20%, rgba(0, 0, 0, 0.35) 65%, transparent 95%);
-  //   //   background:      -o-linear-gradient(to bottom, rgba(0, 0, 0, 0.69) 20%, rgba(0, 0, 0, 0.35) 65%, transparent 95%);
-  //     backgroundImage: 'linear-gradient('
-  //       + 'to bottom, '
-  //       + 'rgba(0, 0, 0, 0.69) 20%, '
-  //       + 'rgba(0, 0, 0, 0.35) 65%, '
-  //       + `${keywords.transparent} 95%`
-  //       + ')',
-  //     borderRadius: [6, 6, 0, 0],
-  //     content: '""',
-  //     height: '35%',
-  //     left: 0,
-  //     top: 0,
-  //     position: 'absolute',
-  //     width: '100%',
-  //     zIndex: 1,
-  //   },
-
-  //   [[
-  //     '&:hover:before',
-  //     '&:hover .glyphicon',
-  //     '&:hover .material-icons',
-  //   ].join(', ')]: helpers.visible,
-
-  //   '&:hover .material-icons': {
-  //     fontSize: '1.5rem',
-  //     lineHeight: '1.35rem',
-  //     opacity: 0.4,
-  //     transition: {
-  //       delay: null,
-  //       duration: 250,
-  //       property: 'opacity',
-  //       timingFunction: 'ease',
-  //     },
-
-  //     '&:hover': {
-  //       ...helpers.visible,
-  //     },
-  //   },
-
-  //   '.glyphicon, .material-icons': {
-  //     ...helpers.hide,
-  //     color: colors.white.primary,
-  //     cursor: 'pointer',
-  //     font: {
-  //       family: '"Glyphicons Halflings", sans-serif',
-  //       lineHeight: 1,
-  //       size: '1.35rem',
-  //       style: 'normal',
-  //       weight: 'lighter',
-  //     },
-  //     position: 'absolute',
-  //     right: '0.35rem',
-  //     top: '0.35rem',
-  //     zIndex: 1,
-  //   },
-
-  //   '.material-icons': {
-  //     left: '0.35rem',
-  //     right: 'auto',
-
-  //     '&$selectedBckg': {
-  //       ...helpers.visible,
-  //       opacity: `1 ${keywords.important}`,
-  //     },
-  //   },
-  // },
 }), {
   styleName: 'ImageReelStyles',
 })(ImageReelPure);

@@ -1,4 +1,2 @@
-import EventPanelHeaderPure from './EventPanelHeader.Pure';
-
-export { EventPanelHeaderPure };
-export { default } from './EventPanelHeader';
+export EventPanelHeaderPure from './EventPanelHeader.Pure';
+export default from './EventPanelHeader.Styled';

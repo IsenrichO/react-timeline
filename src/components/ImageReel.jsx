@@ -13,7 +13,6 @@ export default class ImageReel extends Component {
   }
 
   componentDidMount() {
-    // console.log('IMAGE REEL props:', this.props);
     const { cloudinaryImageStore: imgStore } = this.props;
     if (!!imgStore && Array.isArray(imgStore)) ::this._loadImagesToState(this.props);
     ::this.injectImages(this.props);
@@ -66,6 +65,7 @@ export default class ImageReel extends Component {
         );
         output.insertBefore(newThumb, null);
       };
+
       // Read in the image file as a data URL:
       Reader.readAsDataURL(file);
     })(file);
@@ -81,6 +81,7 @@ export default class ImageReel extends Component {
         self.setState({ uploads });
         self.createNewThumbnail(evt.target.result, output);
       };
+
       // Read in the image file as a data URL:
       Reader.readAsDataURL(file);
     })(file)

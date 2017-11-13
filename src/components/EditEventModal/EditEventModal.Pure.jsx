@@ -139,17 +139,28 @@ export default class EditEventModal extends Component<Props> {
         isRequired: true,
       },
     }, {
-      icon: 'event',  // calendar
-      label: 'date',  // edit-evt-date-inpt
-      label: 'date',  // edit-evt-date-inpt
-      element: 'date',
+      // icon: 'event',  // calendar
+      // label: 'date',  // edit-evt-date-inpt
+      // label: 'date',  // edit-evt-date-inpt
+      // element: 'date',
+      // class: 'form-cont',
+      // type: 'date',
+      // title: 'When did this event occur?',
+      // placeholder: '03/15/2016',
+      // ctxAttrs: {},
+      // otherAttrs: {
+      //   // ref={(editEvtDateInpt) => { this.editEvtDateInpt = editEvtDateInpt; }},
+      //   isRequired: true,
+      // },
+      icon: 'today',
+      label: 'date',
+      name: 'date',
+      element: 'DATE_SINGLE',
       class: 'form-cont',
       type: 'date',
-      title: 'When did this event occur?',
-      placeholder: '03/15/2016',
+      placeholder: '11/08/2017',
       ctxAttrs: {},
       otherAttrs: {
-        // ref={(editEvtDateInpt) => { this.editEvtDateInpt = editEvtDateInpt; }},
         isRequired: true,
       },
     }, {
@@ -206,7 +217,6 @@ export default class EditEventModal extends Component<Props> {
     this.updateSingleEvent = ::this.updateSingleEvent;
   }
 
-
   componentDidMount() {
     // this.props.fetchTags();
   }
@@ -222,10 +232,32 @@ export default class EditEventModal extends Component<Props> {
       }, 200);
     }
   }
+  onSubmit = (values) => {
+    console.info(`
+      *****************************
+      EDIT EVENT MODAL FORM DATA SUBMITTED
+      *****************************
+    `);
+  };
 
-  constructCurrentFormattedDate() {
+  onKeyPress = (key) => {
+    const tagDelimiters = [' ', ',', 'Enter'];
+    // return tagDelimiters.includes(key);
+  };
+
+  constructCurrentFormattedDate = () => {
     const DATE = new Date();
     return `${DATE.getUTCMonth() + 1}/${DATE.getUTCDate()}/${DATE.getUTCFullYear()}`;
+  };
+
+  prepopulateTags(evtTags) {
+    return evtTags.map((tag, index) =>
+      <EventTag
+        key={`EventTag_${tag}_${index}`}
+        tagTitle={tag}
+        index={index}
+      />,
+    );
   }
 
   updateSingleEvent() {
@@ -238,30 +270,6 @@ export default class EditEventModal extends Component<Props> {
 
     updateEvent({ ...eventData, date, description, location, name });
     toggleModal();
-  }
-
-  onSubmit(values) {
-    console.log(`
-      *****************************
-      EDIT EVENT MODAL FORM DATA SUBMITTED
-      *****************************
-    `);
-    console.log(values);
-  }
-
-  prepopulateTags(evtTags) {
-    return evtTags.map((tag, index) =>
-      <EventTag
-        key={`EventTag_${tag}_${index}`}
-        tagTitle={tag}
-        index={index}
-      />,
-    );
-  }
-
-  onKeyPress(key) {
-    const tagDelimiters = [' ', ',', 'Enter'];
-    // return tagDelimiters.includes(key);
   }
 
   closeDrawer() {
@@ -339,10 +347,6 @@ export default class EditEventModal extends Component<Props> {
         <span className="validation-msg">{touched ? error : ''}</span>
       </div>
     );
-
-    // return (
-    //   getInputGroup(other.element.toUpperCase())()
-    // );
   }
 
   render() {

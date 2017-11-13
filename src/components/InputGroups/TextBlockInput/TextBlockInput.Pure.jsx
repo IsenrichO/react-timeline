@@ -1,7 +1,16 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
 import TextBasedInput from '../TextBasedInput';
+
+type Props = {
+  error?: boolean,
+  id?: string,
+  isRequired?: boolean,
+  theme?: string,
+  touched?: boolean,
+};
 
 const TextBlockInputPure = ({
   classNames,
@@ -11,10 +20,9 @@ const TextBlockInputPure = ({
   isRequired,
   theme = 'base',
   touched,
-}) => (
+}: Props) => (
   <TextBasedInput
     icon="subject"
-    tagName="TEXTAREA"
     inputProps={{
       ...input,
       id,
@@ -24,10 +32,11 @@ const TextBlockInputPure = ({
       title: `Provide details for this event${!!isRequired ? ' (REQUIRED)' : ''}`,
       type: 'text',
     }}
+    tagName="TEXTAREA"
   />
 );
 
-TextBlockInputPure.displayName = 'TitleBlockInput';
+TextBlockInputPure.displayName = 'TextBlockInputField';
 
 TextBlockInputPure.propTypes = {
   classNames: ClassNamesPropType.isRequired,

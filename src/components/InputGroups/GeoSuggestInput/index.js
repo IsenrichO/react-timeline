@@ -1,2 +1,2 @@
 export GeoSuggestInputPure from './GeoSuggestInput.Pure';
-export default from './GeoSuggestInput';
+export default from './GeoSuggestInput.Styled';

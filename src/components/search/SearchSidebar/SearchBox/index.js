@@ -1,2 +1,2 @@
 export SearchBoxPure from './SearchBox.Pure';
-export default from './SearchBox';
+export default from './SearchBox.Styled';

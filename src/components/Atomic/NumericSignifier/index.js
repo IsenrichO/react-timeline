@@ -1,2 +1,2 @@
 export NumericSignifierPure from './NumericSignifier.Pure';
-export default from './NumericSignifier';
+export default from './NumericSignifier.Styled';

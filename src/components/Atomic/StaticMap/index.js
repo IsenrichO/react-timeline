@@ -1,2 +1,2 @@
 export StaticGMapPure from './StaticMap.Pure';
-export default from './StaticMap';
+export default from './StaticMap.Styled';

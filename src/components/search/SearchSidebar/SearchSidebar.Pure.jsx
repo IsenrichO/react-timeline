@@ -1,24 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import update from 'immutability-helper';
-import { capitalize, isBoolean } from 'lodash';
+import { capitalize } from 'lodash';
 import { classes, ClassNamesPropType } from 'aesthetic';
 import HomeIcon from 'material-ui/svg-icons/action/home';
 import ActiveFilterIcon from 'material-ui/svg-icons/image/lens';
 import SearchBox from './SearchBox';
 import SidebarSettingsBar from './SidebarSettingsBar';
-import RangeSlider from '../../partials/RangeSlider';
+// import RangeSlider from '../../partials/RangeSlider';
+import { AppActionCreators, AppActionCreatorPropTypes, AppStateInitializer, AppStatePropTypes } from '../../../state/app';
 import ComponentUtils from '../../../util/ComponentHelpers';
 import { aesthetic } from '../../../style/styler';
 
 //
+@connect(
+  ({ appState }) => ({ appState }),
+  (dispatch) => ({
+    appActions: bindActionCreators(AppActionCreators, dispatch),
+  }),
+)
 export default class SearchSidebarPure extends Component {
   static displayName = 'SearchSideBar';
 
   static propTypes = {
+    appActions: AppActionCreatorPropTypes,
+    appState: AppStatePropTypes,
     classNames: ClassNamesPropType.isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -33,6 +44,8 @@ export default class SearchSidebarPure extends Component {
   };
 
   static defaultProps = {
+    appActions: AppActionCreators,
+    appState: AppStateInitializer,
     theme: 'base',
   };
 
@@ -42,10 +55,6 @@ export default class SearchSidebarPure extends Component {
       history: { push },
       theme = 'base',
     } = props;
-
-    this.state = {
-      isSidebarExpanded: true,
-    };
 
     this.SUB_ROUTES = [{
       category: 'all',
@@ -97,18 +106,15 @@ export default class SearchSidebarPure extends Component {
   }
 
   toggleSidebarState(explicitOverride) {
-    return this.setState(update(this.state, {
-      isSidebarExpanded: {
-        $apply: (currState) => explicitOverride && isBoolean(explicitOverride)
-          ? !!explicitOverride
-          : !currState,
-      },
-    }));
+    const { collapseSearchSidebar } = this.props.appActions;
+    return collapseSearchSidebar(explicitOverride);
   }
 
   renderSidebarView({ clickHandler, glyph, isAccordion, name }, isActiveFilter = false) {
-    const { classNames } = this.props;
-    const { isSidebarExpanded } = this.state;
+    const {
+      appState: { isSearchSidebarOpen: isSidebarExpanded },
+      classNames,
+    } = this.props;
     const { colors: baseThemeColors } = this.theme;
 
     const searchFilterIcon = (
@@ -182,8 +188,11 @@ export default class SearchSidebarPure extends Component {
   }
 
   renderSearchSubRoutes() {
-    const { classNames, location: { pathname = '/search' } } = this.props;
-    const { isSidebarExpanded } = this.state;
+    const {
+      appState: { isSearchSidebarOpen: isSidebarExpanded },
+      classNames,
+      location: { pathname = '/search' },
+    } = this.props;
 
     return this.SUB_ROUTES.map(({ category, path, ...subRoute }, index) => {
       const isActiveFilter = (pathname.trim().toLowerCase() === path);
@@ -207,8 +216,11 @@ export default class SearchSidebarPure extends Component {
   }
 
   render() {
-    const { classNames, history: { push } } = this.props;
-    const { isSidebarExpanded } = this.state;
+    const {
+      appState: { isSearchSidebarOpen: isSidebarExpanded },
+      classNames,
+      history: { push },
+    } = this.props;
     const { colors: baseThemeColors } = this.theme;
 
     return (

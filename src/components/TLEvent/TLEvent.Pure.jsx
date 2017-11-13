@@ -9,6 +9,8 @@ import EventPanelBody from './EventPanelBody';
 import EventPanelFooter from './EventPanelFooter';
 import TLToolbar from './TLToolbar';
 import { formatDate } from '../../../server/utilities';
+import { checkIfStarredEvent } from '../../util/general';
+import { nullable, tlEventPropTypes, tlImagePropTypes } from '../../util/TypeChecking';
 // import ConfirmDeletionPrompt from '../partials/ConfirmDeletionPrompt';
 
 type Props = {
@@ -21,27 +23,26 @@ type Props = {
   withToolbar?: boolean,
 };
 
-const destructureEvent = (evtObj) => {
-  const oo = {};
-
-  for (const key in evtObj) {
-    const formattedKey = `evt${key.charAt(0).toUpperCase()}${key.slice(1)}`;
-    oo[formattedKey] = evtObj[key];
-  }
-
-  return function() {
-    return {};
-  };
-};
-
 export default class TLEventPure extends Component<Props> {
-  static displayName = 'TimelineEventPure';
+  static displayName = 'TimelineEvent';
 
   static propTypes = {
+    addEventToFavorites: PropTypes.func,
+    addSelectionToBatch: PropTypes.func,
     classNames: ClassNamesPropType.isRequired,
+    confirmDeleteModal: PropTypes.func,
+    confirmDeletionEvt: PropTypes.func,
+    deleteEvt: PropTypes.func,
+    evt: tlEventPropTypes.isRequired,
     evtClassName: PropTypes.string,
+    imageData: nullable(PropTypes.shape({
+      images: PropTypes.arrayOf(tlImagePropTypes),
+      name: PropTypes.string,
+      path: PropTypes.string,
+    })),
     index: PropTypes.number.isRequired,
     isInverted: PropTypes.bool,
+    logModalData: PropTypes.func,
     setEventInvertedState: PropTypes.func,
     setNewBackgroundImage: PropTypes.func,
     withAlternation: PropTypes.bool,
@@ -51,8 +52,15 @@ export default class TLEventPure extends Component<Props> {
   };
 
   static defaultProps = {
+    addEventToFavorites() {},
+    addSelectionToBatch() {},
+    confirmDeleteModal() {},
+    confirmDeletionEvt() {},
+    deleteEvt() {},
     evtClassName: null,
+    imageData: null,
     isInverted: false,
+    logModalData() {},
     setEventInvertedState() {},
     setNewBackgroundImage() {},
     withAlternation: false,
@@ -83,6 +91,19 @@ export default class TLEventPure extends Component<Props> {
     return setNewBackgroundImage(imgUrl);
   }
 
+  destructureEvent = (evtObj) => {
+    const oo = {};
+
+    for (const key in evtObj) {
+      const formattedKey = `evt${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+      oo[formattedKey] = evtObj[key];
+    }
+
+    return function() {
+      return {};
+    };
+  };
+
   render() {
     const {
       classNames,
@@ -98,8 +119,18 @@ export default class TLEventPure extends Component<Props> {
       },
       evtClassName,
       index,
-      logModalData, toggleModal, deleteEvt, addSelectionToBatch, isInBatch, addEventToFavorites, getStarGlyphClass,
-      hasMultipleTags, confirmDeleteModal, confirmDeletionEvt, imageData, isBatchSelectMode, cloudinaryImageStore,
+      logModalData,
+      toggleModal,
+      deleteEvt,
+      addSelectionToBatch,
+      isInBatch,
+      addEventToFavorites,
+      hasMultipleTags,
+      confirmDeleteModal,
+      confirmDeletionEvt,
+      imageData,
+      isBatchSelectMode,
+      cloudinaryImageStore,
       getMyImgs,
       setEventInvertedState,
       withAlternation,
@@ -107,9 +138,10 @@ export default class TLEventPure extends Component<Props> {
       withPointer,
       withToolbar,
     } = this.props;
+
     const isInverted = !!(index % 2);
     const isPassedEvtClassValid = !!evtClassName && isString(evtClassName);
-
+    const isStarred = checkIfStarredEvent(evt);
     const ci = cloudinaryImageStore.hasOwnProperty(uuid) && cloudinaryImageStore[uuid].images.length
       ? cloudinaryImageStore[uuid].images
       : null;
@@ -135,7 +167,7 @@ export default class TLEventPure extends Component<Props> {
                 classNames.tlMarkerIcon,
               )}
             >
-              {!!getStarGlyphClass ? 'stars' : 'adjust'}
+              {!!isStarred ? 'stars' : 'adjust'}
             </FontIcon>
           </div>
         )}
@@ -190,8 +222,8 @@ export default class TLEventPure extends Component<Props> {
             addEventToFavorites={addEventToFavorites}
             evt={evt}
             evtType={evtType}
-            getStarGlyphClass={getStarGlyphClass}
             hasMultipleTags={hasMultipleTags}
+            isStarred={isStarred}
           />
         </div>
       </li>

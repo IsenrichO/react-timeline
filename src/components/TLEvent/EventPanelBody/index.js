@@ -1,2 +1,2 @@
 export EventPanelBodyPure from './EventPanelBody.Pure';
-export default from './EventPanelBody';
+export default from './EventPanelBody.Styled';

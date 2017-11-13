@@ -1,2 +1,2 @@
 export SidebarSettingsBarPure from './SidebarSettingsBar.Pure';
-export default from './SidebarSettingsBar';
+export default from './SidebarSettingsBar.Styled';

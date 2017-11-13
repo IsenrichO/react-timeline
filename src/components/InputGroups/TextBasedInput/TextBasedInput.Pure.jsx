@@ -1,9 +1,19 @@
+// @flow
 import React, { createElement, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
 import isString from 'lodash/isString';
 import FontIcon from 'material-ui/FontIcon';
 import { aesthetic } from '../../../style/styler';
+
+type Props = {
+  error?: boolean,
+  icon?: string,
+  id?: string,
+  isRequired?: boolean,
+  theme?: string,
+  touched?: boolean,
+};
 
 const TextBasedInputPure = ({
   children,
@@ -16,7 +26,7 @@ const TextBasedInputPure = ({
   tagName,
   theme,
   touched,
-}) => (
+}: Props) => (
   <div
     className={classes(
       classNames.inputGroup,
@@ -49,7 +59,7 @@ const TextBasedInputPure = ({
   </div>
 );
 
-TextBasedInputPure.displayName = 'TitleBlockInput';
+TextBasedInputPure.displayName = 'TextBasedInputField';
 
 TextBasedInputPure.propTypes = {
   children: PropTypes.node,

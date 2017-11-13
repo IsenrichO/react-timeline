@@ -3,20 +3,7 @@ import styler, { aesthetic } from '../../../style/styler';
 
 const { colors: baseThemeColors } = aesthetic.themes.base;
 
-const TlLocNPhotos = {
-  cursor: 'pointer',
-  height: 16,
-  margin: ['1rem', 0, 0],
-  overflow: 'hidden',
-  transition: {
-    delay: 125,
-    duration: 750,
-    property: 'height',
-    timingFunction: 'ease',
-  },
-};
-
-const quotesPseudoShared = (color = baseThemeColors.grey.border) => ({
+export const quotesPseudoShared = (color = baseThemeColors.grey.border) => ({
   color,
   font: {
     family: '-webkit-pictograph, sans-serif',
@@ -36,9 +23,10 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssets }) => ({
   collapsibleDescription: {},
   emptySummary: {},
   hidden: {},
-  panelBodyDivider: {},
   shown: {},
   tlDescription: {},
+  tlLocation: {},
+  tlPhotos: {},
 
   accordionContainer: {
     // Remove focus ring produced as consequence of making `<div />` tabbable/focusable:
@@ -66,9 +54,27 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssets }) => ({
       height: '6em',
     },
   },
+  contentSectionLocation: {
+    ...helpers.hideOverflow,
+  },
+  eventPanelBodyAccordionSection: {
+    height: 35,
+    overflow: 'hidden',
+    padding: ['0.75rem', '1.25rem'],
+    transition: {
+      delay: 125,
+      duration: 750,
+      property: 'height',
+      timingFunction: 'ease',
+    },
+
+    '&:hover': {
+      backgroundColor: colors.white.eggShell,
+    },
+  },
   panelBody: {
     border: 'none',
-    padding: '1.25rem',
+    margin: ['1rem', 0],
     position: 'relative',
     width: '100%',
 
@@ -88,7 +94,7 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssets }) => ({
     },
 
     '& $tlDescription': {
-      margin: ['1rem', 0, 0],
+      padding: [0, '1.25rem'],
       position: 'relative',
 
       '&$collapsibleDescription': {
@@ -101,23 +107,23 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssets }) => ({
         ...quotesPseudoShared(colors.grey.border),
         bottom: '-1.50rem',
         content: 'close-quote',
-        right: 0,
+        right: '1.25rem',
       },
 
       '&::before': {
         ...quotesPseudoShared(colors.grey.border),
         content: 'open-quote',
-        left: '-0.75rem',
+        left: '0.50rem',
         top: '-0.75rem',
       },
     },
   },
+  panelBodyDivider: {
+    margin: ['1.428571rem', '1.25rem'],
+  },
   tlDate: {
     ...helpers.flexify('row', 'flex-start', ['center', 'center']),
-    margin: ['1rem', 0, 0],
   },
-  tlLocation: { ...TlLocNPhotos },
-  tlPhotos: { ...TlLocNPhotos },
   tlRowSummary: {
     ...helpers.flexify('row', 'flex-start', ['center', 'center']),
 

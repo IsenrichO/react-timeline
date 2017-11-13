@@ -1,9 +1,12 @@
 import React from 'react';
+import { isEmpty } from 'lodash';
 import { getTimeDifferenceInMs } from './date-and-time';
 
 // 
-const orderTimelineEvents = (evts) => evts && evts.length
-  ? evts.sort((evt1, evt2) => getTimeDifferenceInMs(evt2.date, evt1.date))
+const orderTimelineEvents = (evts) => !isEmpty(evts)
+  ? Object
+    .values(evts)
+    .sort(({ date: date1 }, { date: date2 }) => getTimeDifferenceInMs(date2, date1))
   : [];
 
 /* EXPORTS */

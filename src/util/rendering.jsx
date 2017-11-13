@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FontIcon from 'material-ui/FontIcon';
 import { classes } from 'aesthetic';
-import SingleEvent from '../components/search/SingleEvent';
 import BatchSelectCheckbox from '../components/Atomic/BatchSelectCheckbox';
-import { addEventToFavorites, collapseBody, getStarGlyphClass, hasMultipleTags } from './general';
+import { collapseBody } from './general';
 
 //
 const renderItemActionControl = (hasSelectionState, evtUuid, callback) => hasSelectionState ? (
@@ -35,7 +34,7 @@ renderItemActionControl.defaultProps = {
   hasSelectionState: false,
 };
 
-/* EXPORTS */
+/* COMPILED DEFAULT EXPORT */
 export default {
   renderItemActionControl,
 };

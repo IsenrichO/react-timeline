@@ -18,7 +18,7 @@ lib-cov
 coverage
 
 # JetBrains IDE-generated dot-folders:
-.idea
+.idea/
 
 # Grunt Intermediate Storage: 
 #   > [Ref. URL]:  <http://gruntjs.com/creating-plugins#storing-task-files>

@@ -1,44 +1,54 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
 import TLEventHeader from '../TLEvent/EventPanelHeader';
 import TLEventBody from '../TLEvent/EventPanelBody';
 import TLEventFooter from '../TLEvent/EventPanelFooter';
+import { checkIfStarredEvent } from '../../util/general';
+
 const formatDate = require('../../../server/utilities');
+
+type Props = {
+  hasMultipleTags?: boolean,
+};
 
 const SingleEventPure = ({
   addEventToFavorites,
-  getStarGlyphClass,
   hasMultipleTags,
   imageStore,
   evt,
   evt: { date, description, location, name, photoCount, type, uuid },
   setNewBackgroundImage,
-}) => (
-  <li className="evt-card">
-    <TLEventHeader
-      evtName={name}
-      evtUuid={uuid}
-      imageData={imageStore}
-    />
-    <TLEventBody
-      evtDescription={description}
-      evtLocation={location}
-      evtDate={date}
-      photoCount={photoCount}
-      evtFormattedDate={formatDate(date)}
-      setNewBackgroundImage={setNewBackgroundImage}
-      uuid={uuid}
-    />
-    <TLEventFooter
-      evt={evt}
-      evtType={type}
-      addEventToFavorites={addEventToFavorites}
-      getStarGlyphClass={getStarGlyphClass}
-      hasMultipleTags={hasMultipleTags}
-    />
-  </li>
-);
+}: Props) => {
+  const isStarred = checkIfStarredEvent(evt);
+
+  return (
+    <li className="evt-card">
+      <TLEventHeader
+        evtName={name}
+        evtUuid={uuid}
+        imageData={imageStore}
+      />
+      <TLEventBody
+        evtDescription={description}
+        evtLocation={location}
+        evtDate={date}
+        photoCount={photoCount}
+        evtFormattedDate={formatDate(date)}
+        setNewBackgroundImage={setNewBackgroundImage}
+        uuid={uuid}
+      />
+      <TLEventFooter
+        evt={evt}
+        evtType={type}
+        addEventToFavorites={addEventToFavorites}
+        hasMultipleTags={hasMultipleTags}
+        isStarred={isStarred}
+      />
+    </li>
+  );
+};
 
 SingleEventPure.displayName = 'SingleEvent';
 

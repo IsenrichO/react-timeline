@@ -1,2 +1,2 @@
 export TimelinePure from './Timeline.Pure';
-export default from './Timeline';
+export default from './Timeline.Styled';

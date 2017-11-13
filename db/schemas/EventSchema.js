@@ -8,6 +8,7 @@ const { Schema } = Mongoose;
 
 const EventSchema = new Schema({
   archived: Boolean,
+  coverImageId: String,
   date: {
     required: [true, 'This event requires a date.'],
     type: Date,

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
+import update from 'immutability-helper';
 import InfiniteCalendar from 'react-infinite-calendar';
 import { aesthetic } from '../../../style/styler';
 import 'react-infinite-calendar/styles.css'; // Only needs to be imported once
@@ -39,41 +40,74 @@ export default class CalendarDateInputPure extends Component<Props> {
     touched: false,
   };
 
+  static displayOpts = {
+    hideYearsOnSelect: true,
+    layout: 'landscape',
+    overscanMonthCount: 4,
+    shouldHeaderAnimate: true,
+    showHeader: true,
+    showOverlay: true,
+    showTodayHelper: true,
+    showWeekdays: true,
+    todayHelperRowOffset: 6,
+  };
+
+  static getCalendarTheme = (themeColors) => ({
+    floatingNav: {
+      background: themeColors.red.dark,
+      chevron: themeColors.green.oxidized,
+      color: themeColors.white.primary,
+    },
+    headerColor: themeColors.red.secondary,
+    selectionColor: themeColors.red.primary,
+    textColor: {
+      active: themeColors.white.primary,
+      default: themeColors.grey.primary,
+    },
+    weekdayColor: themeColors.red.primary,
+  });
+
+  static localeOpts = {
+    blank: 'Select a date for this event',
+    headerFormat: 'dddd, MMMM Do',
+    locale: require('date-fns/locale/en'),
+    todayLabel: {
+      long: 'Today',
+      short: 'Today',
+    },
+    weekStartsOn: 0,
+    weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  };
+
   constructor(props) {
     super(props);
-    const { theme = 'base' } = props;
+    const { theme, input: { value: initialDate } } = props;
 
-    this.theme = aesthetic.themes[theme];
-    const { colors: baseThemeColors } = this.theme;
-
-    this.calendarTheme = {
-      floatingNav: {
-        background: baseThemeColors.red.dark,
-        chevron: baseThemeColors.green.oxidized,
-        color: baseThemeColors.white.primary,
-      },
-      headerColor: baseThemeColors.red.secondary,
-      selectionColor: baseThemeColors.red.primary,
-      textColor: {
-        active: baseThemeColors.white.primary,
-        default: baseThemeColors.grey.primary,
-      },
-      weekdayColor: baseThemeColors.red.primary,
+    this.state = {
+      selectedDate: initialDate,
     };
 
+    this.dateClickHandler = ::this.dateClickHandler;
     this.handleDateSelection = ::this.handleDateSelection;
+    this.theme = aesthetic.themes[theme];
   }
 
-  handleDateSelection(selectedDate) {
+  dateClickHandler(selectedDate) {
+    return this.setState(update(this.state, {
+      selectedDate: { $set: selectedDate },
+    }));
+  }
+
+  handleDateSelection(evt) {
     const { changeHandler } = this.props;
+    const { selectedDate } = this.state;
+
     return changeHandler('date', selectedDate);
   }
 
   render() {
-    const {
-      classNames,
-      input,
-    } = this.props;
+    const { classNames, input } = this.props;
+    const { colors: themeColors } = this.theme;
 
     return (
       <InfiniteCalendar
@@ -81,25 +115,13 @@ export default class CalendarDateInputPure extends Component<Props> {
         autoFocus
         className={classNames.infiniteCalendarRootContainer}
         display="days"
-        displayOptions={{
-          layout: 'landscape',
-        }}
-        locale={{
-          blank: 'Select a date for this event',
-          headerFormat: 'ddd., Do of MMMM',
-          // locale: require('date-fns/locale/fr'),
-          todayLabel: {
-            long: 'Today',
-            short: 'Today',
-          },
-          weekStartsOn: 0,
-          weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-        }}
+        displayOptions={CalendarDateInputPure.displayOpts}
+        locale={CalendarDateInputPure.localeOpts}
         onSelect={this.handleDateSelection}
         rowHeight={50}
-        selected={input.value} // new Date()}
-        tabIndex={1}
-        theme={this.calendarTheme}
+        selected={input.value}
+        tabIndex={0}
+        theme={CalendarDateInputPure.getCalendarTheme(themeColors)}
       />
     );
   }

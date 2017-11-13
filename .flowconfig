@@ -1,2 +1,66 @@
+# =========================================================
+# 💩 Recursively include all `src` files and its constituent sub-directories:
+[include]
+./src/
+
+# =========================================================
+# 💩 Dictate which files and/or file types to specifically exclude from Flow-typing:
+[ignore]
+.*/node_modules/
+.*/**/*\.\(spec\|test\)\.jsx?
+.*\.ignore\.jsx?
+
+# =========================================================
+# 💩 Direct Flow to nclude the specified library definitions when type-checking source code:
+[libs]
+.*/flow-typed
+
+# =========================================================
+# 💩 Customized set of `rule=severity` linting pairs::
+[lints]
+all=warn
+sketchy-null=warn
+sketchy-null-bool=warn
+untyped-type-import=error
+
+# =========================================================
+# 💩 Customize the project's Flow integration:
 [options]
+emoji=true
+esproposal.class_instance_fields=enable
+esproposal.class_static_fields=enable
+esproposal.decorators=ignore
+esproposal.export_star_as=enable
+include_warnings=true
+max_header_tokens=7
+
+# Declare file formats against which Flow may check typings:
+module.file_ext='.js'
+module.file_ext='.json'
+module.file_ext='.jsx'
+module.file_ext='.ts'
+
+module.ignore_non_literal_requires=true
+
+# Reference the repository's root directory via the `<PROJECT_ROOT>` macro:
+module.name_mapper.extension='css' -> '<PROJECT_ROOT>/config/flow/css.flow'
+module.name_mapper.extension='jpg' -> '<PROJECT_ROOT>/config/flow/assets.flow'
+module.name_mapper.extension='png' -> '<PROJECT_ROOT>/config/flow/assets.flow'
+
+module.use_strict=true
+
+# Specify the available Flow comment suppression directives:
+suppress_comment=\\(.\\|\n\\)*\\$FLOW_FIX_ME
+suppress_comment=\\(.\\|\n\\)*\\$FLOW_ISSUE
 suppress_comment= \\(.\\|\n\\)*\\flow-disable-next-line
+
+# Allow aliasing of Flow's `any` type:
+suppress_type=$FlowFixMe
+suppress_type=$FlowTODO
+
+unsafe.enable_getters_and_setters=true
+
+# =========================================================
+# 💩 Equivalent to `>=0.57.3 <0.58.0`:
+[version]
+^0.57.3

@@ -4,6 +4,7 @@ import GeneralUtils from './general';
 import RenderingUtils from './rendering';
 import SortingUtils from './sorting';
 
+/* COMPILED DEFAULT EXPORT */
 export default {
   ...DateAndTimeUtils,
   ...FunctionalUtils,

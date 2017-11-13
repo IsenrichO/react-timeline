@@ -3,7 +3,7 @@ import JSSAdapter from 'aesthetic-adapter-jss';
 import DefaultPreset from 'jss-preset-default';
 import Aesthetic, { createStyler } from 'aesthetic';
 
-// Theming Styles:
+// Import all separate styling themes:
 import BaseTheme from './theming/base';
 
 const defaultUnit = {
@@ -25,19 +25,35 @@ const globalStyles = {
       backgroundColor: baseThemeColors.red.primary,
       color: baseThemeColors.white.primary,
     },
+    '[role="button"]': {
+      cursor: 'pointer',
+    },
     'a:focus, a:hover': {
       textDecoration: 'none',
     },
 
-    // Remove scroll on the body when `react-modal` is open:
-    '.ReactModal__Body--open': {
-      overflow: 'hidden',
+    // ReactTransitionGroup styles:
+    '.fade-enter': {
+      opacity: 0,
+      zIndex: 1,
+    },
+    '.fade-enter.fade-enter-active': {
+      opacity: 1,
+      transition: 'opacity 250ms ease-in',
     },
 
     // React-Infinite-Calendar:
     '.Cal__Header__active': {
       height: '156px !important',
       textTransform: 'unset !important',
+    },
+    '.Cal__Header__day': {
+      fontSize: '2rem !important',
+    },
+
+    // Remove scroll on the body when `react-modal` is open:
+    '.ReactModal__Body--open': {
+      overflow: 'hidden',
     },
 
     // React-Geosuggest Library Internal HTML Styles:
@@ -78,6 +94,6 @@ const aestheticInstance = new Aesthetic(
 // Register all separate Aesthetic theming profiles:
 aestheticInstance.registerTheme('base', BaseTheme);
 
-// Exports:
+/* EXPORTS */
 export { aestheticInstance as aesthetic };
 export default createStyler(aestheticInstance);

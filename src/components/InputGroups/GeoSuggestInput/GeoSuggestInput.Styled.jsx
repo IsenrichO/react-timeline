@@ -3,6 +3,9 @@ import styler from '../../../style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords, shared, transitions }) => ({
   // Static declarations necessary for subsequent reference(s):
+  geoSuggestEmptyResponseContainer: {},
+  geoSuggestEmptyResponseIcon: {},
+  geoSuggestEmptyResponseLabel: {},
   geoSuggestInputContainerWithFocus: {},
   geoSuggestItemContainer: {},
   geoSuggestItemLabel: {},
@@ -33,6 +36,22 @@ export default styler(({ colors, fonts, helpers, keywords, shared, transitions }
         color: colors.grey.granite,
         style: 'solid',
         width: 1,
+      },
+    },
+
+    '& $geoSuggestEmptyResponseContainer': {
+      ...helpers.flexify('row', 'flex-start', ['center', 'center']),
+      padding: ['0.25rem', '0.75rem', '0.25rem', '0.25rem'],
+
+      '& $geoSuggestEmptyResponseIcon': {
+        color: `${colors.red.semiTransparent} ${keywords.important}`,
+        height: `22px ${keywords.important}`,
+        minWidth: 24,
+      },
+
+      '& $geoSuggestEmptyResponseLabel': {
+        ...helpers.hideOverflow,
+        marginLeft: '0.5rem',
       },
     },
 

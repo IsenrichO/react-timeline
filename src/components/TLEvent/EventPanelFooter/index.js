@@ -1,2 +1,2 @@
 export EventPanelFooterPure from './EventPanelFooter.Pure';
-export default from './EventPanelFooter';
+export default from './EventPanelFooter.Styled';

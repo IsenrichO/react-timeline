@@ -12,7 +12,7 @@ export default styler(({ colors }) => ({
       style: 'dashed',
       width: 'thin',
     },
-    margin: ['0.5rem', 0, '0.25rem', '0.5rem'],
+    margin: ['0.75rem', 0, '0.25rem', '0.5rem'],
     position: 'relative',
   },
 }), {

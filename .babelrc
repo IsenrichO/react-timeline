@@ -39,8 +39,8 @@
       "tdz": true,
     }],
     "transform-async-to-generator",
-    "transform-class-properties",
     "transform-decorators-legacy",
+    "transform-class-properties",
     ["transform-flow-strip-types", {
       "requireDirective": true,
     }],

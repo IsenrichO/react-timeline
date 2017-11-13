@@ -1,4 +1,2 @@
-import TLEventPure from './TLEvent.Pure';
-
-export { TLEventPure };
-export { default } from './TLEvent';
+export TLEventPure from './TLEvent.Pure';
+export default from './TLEvent.Styled';

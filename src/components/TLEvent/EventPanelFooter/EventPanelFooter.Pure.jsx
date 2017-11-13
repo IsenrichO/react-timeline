@@ -1,20 +1,29 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import FontIcon from 'material-ui/FontIcon';
 import { classes, ClassNamesPropType } from 'aesthetic';
 import { aesthetic } from '../../../style/styler';
-import { THEME_RED } from '../../../style/theming/base';
+import constants from '../../../style/theming/base/constants';
+import { tlEventPropTypes } from '../../../util/TypeChecking';
+
+type Props = {
+  evtType: string,
+  hasMultipleTags?: boolean,
+  theme?: string,
+};
 
 const EventPanelFooterPure = ({
   addEventToFavorites,
   classNames,
   evt,
   evtType,
-  getStarGlyphClass,
   hasMultipleTags,
+  isStarred,
   theme,
-}) => {
+}: Props) => {
   const { fonts } = aesthetic.themes[theme];
+  const { THEME_RED: ThemeRed = '#B15B5B' } = constants;
 
   const getIconStyles = (withRightMargin = false) => ({
     fontSize: fonts.size.large,
@@ -33,7 +42,7 @@ const EventPanelFooterPure = ({
               'material-icons',
               classNames.eventLabelIcon,
             )}
-            color={THEME_RED}
+            color={ThemeRed}
             style={getIconStyles(true)}
           >
             label
@@ -46,11 +55,11 @@ const EventPanelFooterPure = ({
           'material-icons',
           classNames.favoriteEventStar,
         )}
-        color={THEME_RED}
+        color={ThemeRed}
         style={getIconStyles()}
         onClick={() => addEventToFavorites(evt)}
       >
-        {`star${!!getStarGlyphClass ? '' : '_border'}`}
+        {`star${!!isStarred ? '' : '_border'}`}
       </FontIcon>
     </footer>
   );
@@ -61,15 +70,14 @@ EventPanelFooterPure.displayName = 'EventPanelFooterPure';
 EventPanelFooterPure.propTypes = {
   addEventToFavorites: PropTypes.func.isRequired,
   classNames: ClassNamesPropType.isRequired,
-  evt: PropTypes.object,
+  evt: tlEventPropTypes.isRequired,
   evtType: PropTypes.string,
-  getStarGlyphClass: PropTypes.func.isRequired,
   hasMultipleTags: PropTypes.bool,
+  isStarred: PropTypes.bool.isRequired,
   theme: PropTypes.string,
 };
 
 EventPanelFooterPure.defaultProps = {
-  evt: {},
   evtType: 'Personal',
   hasMultipleTags: false,
   theme: 'base',

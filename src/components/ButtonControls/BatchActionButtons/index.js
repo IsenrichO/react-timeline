@@ -1,2 +1,2 @@
 export BatchActionButtonsPure from './BatchActionButtons.Pure';
-export default from './BatchActionButtons';
+export default from './BatchActionButtons.Styled';

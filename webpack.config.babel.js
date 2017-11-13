@@ -83,14 +83,13 @@ const BASE_CONFIG = {
   context: __dirname,
   devtool: 'eval-source-map', // `cheap-${isProdEnv ? '' : 'module'}-source-map`,
   entry: {
-    patch: 'react-hot-loader/patch',
+    bundle: path.resolve(__dirname, 'src/HMR'),
+    hmr: 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&overlay=false&name=hmr&reload=true',
     polyfills: [
       'babel-polyfill',
       require.resolve('./config/polyfills'),
     ],
-    hmr: 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&overlay=false&name=hmr&reload=true',
     vendor: VENDOR_LIBS,
-    bundle: path.resolve(__dirname, 'src/HMR'),
   },
   module: {
     rules: [{

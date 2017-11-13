@@ -44,14 +44,17 @@ export default (state = initialState, action = null) => {
   switch (action.type) {
     case FETCH_CLOUDINARY_IMAGES_SUCCESS: {
       const { subfolderNames = [], tlImages } = action.payload;
-      const foldersObj = subfolderNames.reduce((memo, curr) => {
+
+      const foldersObj = subfolderNames.reduce((acc, curr) => {
         const regTest = new RegExp(`^${curr.path}`);
         const images = tlImages.filter((img) => regTest.test(img.public_id));
-        memo[curr.name] = Object.assign({}, curr, { images });
-        return memo;
+        acc[curr.name] = Object.assign({}, curr, { images });
+        return acc;
       }, {});
 
-      return Object.assign({}, state, foldersObj);
+      // console.log({ foldersObj });
+      // return Object.assign({}, state, foldersObj);
+      return update(state, { $set: foldersObj });
     }
 
     case SET_BACKGROUND_IMAGE: {

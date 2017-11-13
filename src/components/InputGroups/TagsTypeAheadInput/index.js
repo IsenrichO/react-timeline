@@ -1,2 +1,2 @@
 export TagsTypeAheadInputPure from './TagsTypeAheadInput.Pure';
-export default from './TagsTypeAheadInput';
+export default from './TagsTypeAheadInput.Styled';

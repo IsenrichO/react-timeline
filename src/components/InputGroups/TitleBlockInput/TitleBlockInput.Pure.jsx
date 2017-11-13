@@ -1,7 +1,16 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
 import TextBasedInput from '../TextBasedInput';
+
+type Props = {
+  error?: boolean,
+  id?: string,
+  isRequired?: boolean,
+  theme?: string,
+  touched?: boolean,
+};
 
 const TitleBlockInputPure = ({
   classNames,
@@ -11,7 +20,7 @@ const TitleBlockInputPure = ({
   isRequired,
   theme = 'base',
   touched,
-}) => (
+}: Props) => (
   <TextBasedInput
     error={error}
     icon="title"
@@ -28,7 +37,7 @@ const TitleBlockInputPure = ({
   />
 );
 
-TitleBlockInputPure.displayName = 'TitleBlockInput';
+TitleBlockInputPure.displayName = 'TitleBlockInputField';
 
 TitleBlockInputPure.propTypes = {
   classNames: ClassNamesPropType.isRequired,

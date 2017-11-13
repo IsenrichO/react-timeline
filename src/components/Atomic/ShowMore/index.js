@@ -1,2 +1,2 @@
 export ShowMorePure from './ShowMore.Pure';
-export default from './ShowMore';
+export default from './ShowMore.Styled';

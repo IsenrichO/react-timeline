@@ -5,7 +5,8 @@ const BodyParser = require('body-parser');
 const Path = require('path');
 const Request = require('request');
 const Multer = require('multer');
-const UUID = require('uuid/v4'); // Generate a v4 (randomized) UUID
+const uuidv4 = require('uuid/v4'); // Generate a v4 (randomized) UUID
+const { merge } = require('lodash/fp');
 
 const Event = require('../db/models/Event');
 const Photo = require('../db/models/EventPhoto');
@@ -43,16 +44,31 @@ Mongoose
     useMongoClient: true,
   })
   .on('error', (err) => console.error.bind(console, `Connection Error:\t${err}`))
-  .on('close', () => console.info('Seeding Finished!'))
+  .on('close', () => {
+    console.info('Seeding Finished!');
+
+    Mongoose.connection.collections.EventData.drop();
+    Mongoose.connection.collections.EventPhotos.drop();
+    Mongoose.connection.collections.EventTags.drop();
+  })
   .once('open', () => {
     Mongoose.connection.collections.EventData.drop();
     Mongoose.connection.collections.EventPhotos.drop();
     Mongoose.connection.collections.EventTags.drop();
 
     seedData.forEach((evt, index) => {
-      [evt.uuid, evt.photos, evt.dateModified, evt.starred] = [evt.uuid || UUID(), [], Date.now(), index % 2];
+      const defaultsFallback = {
+        coverImageId: null,
+        dateModified: Date.now(),
+        photos: [],
+        starred: index % 2,
+        uuid: uuidv4(),
+      };
+      const { coverImageId, dateModified, photos, starred, uuid } = merge(defaultsFallback, evt);
+      const structuredEvent = Object.assign({}, evt, { coverImageId, dateModified, photos, starred, uuid });
+      // [evt.uuid, evt.photos, evt.dateModified, evt.starred] = [evt.uuid || UUID(), [], Date.now(), index % 2];
 
-      const newEvt = new Event(evt);
+      const newEvt = new Event(structuredEvent);
       const newPhoto = new Photo({
         title: 'Medium site hero image',
         url: 'https://cdn-images-1.medium.com/max/2000/1*J-jjDviwGUfzka1HX5LG9A.jpeg',

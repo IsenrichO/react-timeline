@@ -70,8 +70,8 @@ export default class EventPanelBodyPure extends Component {
     this.theme = aesthetic.themes[theme];
 
     this.expansionTimer = null;
-    this.delayLinkTextChange = throttle(::this.delayLinkTextChange, 600);
-    this.slideExpandableContent = throttle(::this.slideExpandableContent, 600);
+    this.delayLinkTextChange = throttle(::this.delayLinkTextChange, 875);
+    this.slideExpandableContent = throttle(::this.slideExpandableContent, 875);
     this.toggleAccordionSection = throttle(toggleAccordionSection);
     this.throttleMapToggle = null;
     this.throttlePhotoToggle = null;
@@ -79,7 +79,7 @@ export default class EventPanelBodyPure extends Component {
 
   componentDidMount() {
     const { classNames } = this.props;
-    const throttleOpts = [600, { leading: true, trailing: false }];
+    const throttleOpts = [875, { leading: true, trailing: false }];
 
     this.throttleMapToggle = throttle(this.toggleAccordionSection(classNames, this.mapToggle), ...throttleOpts);
     this.throttlePhotoToggle = throttle(this.toggleAccordionSection(classNames, this.photosToggle), ...throttleOpts);
@@ -206,7 +206,12 @@ export default class EventPanelBodyPure extends Component {
           />,
         ]}
 
-        <section className={classNames.tlDate}>
+        <section
+          className={classes(
+            classNames.eventPanelBodyAccordionSection,
+            classNames.tlDate,
+          )}
+        >
           <FontIcon
             className={classes('material-icons', bodyFieldIcon)}
             color={themeRed}
@@ -216,7 +221,12 @@ export default class EventPanelBodyPure extends Component {
           <em>{evtFormattedDate}</em>
         </section>
 
-        <section className={classNames.tlLocation}>
+        <section
+          className={classes(
+            classNames.eventPanelBodyAccordionSection,
+            classNames.tlLocation,
+          )}
+        >
           <div
             className={classes(accordionContainer, accordionToggleBtn)}
             onClick={this.throttleMapToggle}
@@ -230,7 +240,12 @@ export default class EventPanelBodyPure extends Component {
               >
                 place
               </FontIcon>
-              <em>{evtLocation}</em>
+              <em
+                className={classNames.contentSectionLocation}
+                title={evtLocation}
+              >
+                {evtLocation}
+              </em>
               <FontIcon
                 ref={(mapToggle) => { this.mapToggle = mapToggle; }}
                 className={classes('material-icons', toggleGlyph)}
@@ -243,7 +258,12 @@ export default class EventPanelBodyPure extends Component {
           </div>
         </section>
 
-        <section className={classNames.tlPhotos}>
+        <section
+          className={classes(
+            classNames.eventPanelBodyAccordionSection,
+            classNames.tlPhotos,
+          )}
+        >
           <div
             className={classes(accordionContainer, accordionToggleBtn)}
             onClick={this.throttlePhotoToggle}

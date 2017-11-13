@@ -1,2 +1,2 @@
 export ImageThumbnailPure from './ImageThumbnail.Pure';
-export default from './ImageThumbnail';
+export default from './ImageThumbnail.Styled';

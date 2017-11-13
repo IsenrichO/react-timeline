@@ -7,7 +7,6 @@ import SingleEvent from './SingleEvent';
 import { updateSingleEvent as UpdateSingleEvent } from '../../state/sourceEventData';
 import Utils from '../../util';
 
-
 @connect(
   ({ eventEditingModalData, eventEditingModalState, seedDataAggregator }) => ({
     eventEditingModalData,
@@ -45,14 +44,13 @@ export default class AllEvents extends Component {
         {...evt}
         key={`EventCard${evt.uuid}`}
         addEventToFavorites={() => Utils.addEventToFavorites(updateSingleEvent, evt)}
-        getStarGlyphClass={Utils.getStarGlyphClass(seedDataAggregator, evt.uuid)}
         hasMultipleTags={Utils.hasMultipleTags(seedDataAggregator, evt.uuid)}
       />
     ));
   }
 
   render() {
-    const eventData = this.props.seedDataAggregator;
+    const { seedDataAggregator: eventData } = this.props;
 
     return (
       <ul className="evt-search">

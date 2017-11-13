@@ -1,2 +1,2 @@
 export AppBarPure from './AppBar.Pure';
-export default from './AppBar';
+export default from './AppBar.Styled';

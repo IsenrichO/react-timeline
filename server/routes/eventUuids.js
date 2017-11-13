@@ -1,10 +1,9 @@
-'use strict';
-const Express = require('express'),
-      router = Express.Router(),
-      BodyParser = require('body-parser'),
-      parseUrlEncoded = BodyParser.urlencoded({ extended: false }),
-      EventController = require('../controllers/EventsController');
+const Express = require('express');
+const BodyParser = require('body-parser');
+const EventController = require('../controllers/EventsController');
 
+const router = Express.Router();
+const parseUrlEncoded = BodyParser.urlencoded({ extended: false });
 
 router
   .route('/:uuid')

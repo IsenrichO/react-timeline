@@ -13,6 +13,7 @@ import AppBar from '../../components/partials/AppBar';
 // import NewEventModal from '../../components/NewEventModal';
 import TLEvent from '../../components/TLEvent';
 import Utils from '../../util';
+import { tlEventPropTypes } from '../../util/TypeChecking';
 import { BatchSelectActionCreators, BatchSelectActionCreatorPropTypes, BatchSelectStateInitializer, BatchSelectStatePropTypes } from '../../state/batchSelectionItems';
 import { CloudinaryActionCreators, CloudinaryActionCreatorPropTypes, CloudinaryStateInitializer, CloudinaryStatePropTypes } from '../../state/cloudinaryImageStore';
 import { EventModalActionCreators, EventModalActionCreatorPropTypes, EventModalStateInitializer, EventModalStatePropTypes } from '../../state/eventModal';
@@ -46,7 +47,7 @@ export default class TimelinePure extends Component {
     cloudinaryState: CloudinaryStatePropTypes,
     eventModalActions: EventModalActionCreatorPropTypes,
     eventModalState: EventModalStatePropTypes,
-    seedData: PropTypes.arrayOf(PropTypes.object).isRequired,
+    seedData: SourceEventDataStatePropTypes,
     sourceEventDataActions: SourceEventDataActionCreatorPropTypes,
     sourceEventDataState: SourceEventDataStatePropTypes,
     tagsActions: TagsActionCreatorPropTypes,
@@ -60,7 +61,7 @@ export default class TimelinePure extends Component {
     cloudinaryState: CloudinaryStateInitializer,
     eventModalActions: EventModalActionCreators,
     eventModalState: EventModalStateInitializer,
-    seedData: [],
+    seedData: {},
     sourceEventDataActions: SourceEventDataActionCreators,
     sourceEventDataState: SourceEventDataStateInitializer,
     tagsActions: TagsActionCreators,
@@ -190,14 +191,11 @@ export default class TimelinePure extends Component {
           confirmDeletionEvt={this.confirmDeletionEvt}
           deleteEvt={() => deleteSingleEvt(evt)}
           evt={evt}
-          // evtAlign={new Array('', 'Invert')[index % 2]}
           getMyImgs={self.getMyImgs}
-          getStarGlyphClass={Utils.getStarGlyphClass(seedDataAggregator, evt.uuid)}
           hasMultipleTags={Utils.hasMultipleTags(seedDataAggregator, evt.uuid)}
           index={index}
           isBatchSelectMode={isEnabled}
           isInBatch={items.includes(evt.uuid.toLowerCase())}
-          // isInverted={!!(index % 2)}
           logModalData={(data) => logEventModalData(data)}
           setEventInvertedState={this.setEventInvertedState}
           setNewBackgroundImage={setNewBackgroundImage}

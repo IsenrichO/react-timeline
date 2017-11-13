@@ -1,4 +1,11 @@
 import { reducer as formReducer } from 'redux-form';
+import appState, {
+  AppActionCreators,
+  AppActionCreatorPropTypes,
+  AppActionTypes,
+  AppStateInitializer,
+  AppStatePropTypes,
+} from './app';
 import batchSelectState, {
   BatchSelectActionCreators,
   BatchSelectActionCreatorPropTypes,
@@ -44,6 +51,7 @@ import tags, {
 
 /* ROOT REDUCER */
 export default {
+  appState,
   batchSelectState,
   cloudinaryState,
   eventModalState,
@@ -55,6 +63,7 @@ export default {
 
 /* AGGREGATE EXPORTS */
 const AllActionCreators = {
+  ...AppActionCreators,
   ...BatchSelectActionCreators,
   ...CloudinaryActionCreators,
   ...EventModalActionCreators,
@@ -63,6 +72,7 @@ const AllActionCreators = {
   ...TagsActionCreators,
 };
 const AllActionTypes = {
+  ...AppActionTypes,
   ...BatchSelectActionTypes,
   ...CloudinaryActionTypes,
   ...EventModalActionTypes,
@@ -71,6 +81,7 @@ const AllActionTypes = {
   ...TagsActionTypes,
 };
 const AllActionCreatorPropTypes = {
+  AppActionCreatorPropTypes,
   BatchSelectActionCreatorPropTypes,
   CloudinaryActionCreatorPropTypes,
   EventModalActionCreatorPropTypes,
@@ -79,6 +90,7 @@ const AllActionCreatorPropTypes = {
   TagsActionCreatorPropTypes,
 };
 const AllStateInitializers = {
+  AppStateInitializer,
   BatchSelectStateInitializer,
   CloudinaryStateInitializer,
   EventModalStateInitializer,
@@ -87,6 +99,7 @@ const AllStateInitializers = {
   TagsStateInitializer,
 };
 const AllStatePropTypes = {
+  AppStatePropTypes,
   BatchSelectStatePropTypes,
   CloudinaryStatePropTypes,
   EventModalStatePropTypes,

@@ -1,5 +1,6 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
+import { isPlainObject } from 'lodash';
 import { getOtherItem } from './functional';
 
 // 
@@ -27,16 +28,17 @@ export const collapseBody = (evt) => {
 };
 
 // 
-export const getStarGlyphClass = (srcData, uuid) => {
+export const checkIfStarredEvent = function(srcData = [], uuid) {
+  // If called with a single argument that is a POJO, return the value of its `starred` property:
+  if (isPlainObject(srcData) && arguments.length === 1) return srcData.starred;
+
+  // Else find the relevant event based on the passed `uuid` and return its `starred` property:
   const evtIndex = srcData.findIndex(({ uuid: evtUuid }) => evtUuid === uuid);
   return !!~evtIndex ? srcData[evtIndex].starred : false;
 };
 
 // 
-export const hasMultipleTags = (srcData, uuid) => {
-  const evtIndex = srcData.findIndex(({ uuid: evtUuid }) => evtUuid === uuid);
-  return srcData[evtIndex].tags.length > 1;
-};
+export const hasMultipleTags = (srcData, uuid) => srcData[uuid.toLowerCase()].tags.length > 1;
 
 //
 export const hexToRgba = (hexCode = '#FFF', alpha = 1.0) => {
@@ -60,7 +62,6 @@ export const toggleAccordionSection = (classNames, ref) => (evt) => {
   evt.persist();
   const evtTarget = evt.target;
   const accordionContainer = evt.currentTarget.parentNode;
-  console.log({ accordionContainer });
 
   if (!!evtTarget
     && !!evtTarget.parentNode
@@ -68,12 +69,12 @@ export const toggleAccordionSection = (classNames, ref) => (evt) => {
     && !evtTarget.parentNode.classList.contains(classNames.accordionContainer)
   ) return evt.stopPropagation();
 
-  const openAndClosedHeights = [accordionContainer.scrollHeight, 16];
+  const openAndClosedHeights = [accordionContainer.scrollHeight, 35];
   const currHeight = Math.round(Number.parseInt(window.getComputedStyle(accordionContainer).height, 10));
   const toggleIcon = findDOMNode(ref || this);
 
   accordionContainer.style.height = `${getOtherItem(openAndClosedHeights, currHeight)}px`;
-  toggleIcon.style.transform = `rotateZ(${currHeight === 16 ? 90 : 0}deg)`; // ${Math.sign(currHeight) === 16}90deg
+  toggleIcon.style.transform = `rotateZ(${currHeight === 35 ? 90 : 0}deg)`;
 
   // console.log('Event:', evt);
   // const { currentTarget: currTarg, currentTarget: { lastChild: toggleGlyph }} = evt,
@@ -87,8 +88,8 @@ export const toggleAccordionSection = (classNames, ref) => (evt) => {
 
 export default {
   addEventToFavorites,
+  checkIfStarredEvent,
   collapseBody,
-  getStarGlyphClass,
   hasMultipleTags,
   hexToRgba,
   toggleAccordionSection,

@@ -1,26 +1,26 @@
 [
   {
-    "name": "Moved To San Francisco",
-    "uuid": "TEST001-cd94-4187-ab6f-e201289724af",
-    "eventId": "1mv2",
-    "type": "Life",
+    "date": "2016-05-26",
     "description": [
       "Moved to SF from Raleigh, NC to begin the Hack Reactor software engineering immersive."
     ],
+    "eventId": "1mv2",
     "location": "San Francisco, CA",
-    "date": "2016-05-26",
-    "photos": []
+    "name": "Moved To San Francisco",
+    "photos": [],
+    "type": "Life",
+    "uuid": "test001-cd94-4187-ab6f-e201289724af"
   }, {
-    "name": "Began Work At Robert Half",
-    "uuid": "TEST0002-c08e-4be6-9459-51cf632a2e79",
-    "eventId": "2kk1",
-    "type": "Professional",
+    "date": "2017-01-03",
     "description": [
       "Accepted offer to work at Robert Half Technology, beginning January 2017."
     ],
+    "eventId": "2kk1",
     "location": "San Ramon, CA",
-    "date": "2017-01-03",
-    "photos": []
+    "name": "Began Work At Robert Half",
+    "photos": [],
+    "type": "Professional",
+    "uuid": "test0002-c08e-4be6-9459-51cf632a2e79"
   }, {
     "name": "Date of Birth",
     "eventId": "3ihl",
@@ -30,26 +30,26 @@
     "date": "1991-10-13",
     "photos": []
   }, {
-    "name": "Began School At The University of North Carolina at Chapel Hill",
-    "eventId": "441k",
-    "type": "Education",
+    "date": "2010-08-17",
     "description": [
       "Started university majoring in polymer chemistry and with ambitions of becoming a research scientist."
     ],
+    "eventId": "441k",
     "location": "Chapel Hill, NC",
-    "date": "2010-08-17",
-    "photos": []
+    "name": "Began School At The University of North Carolina at Chapel Hill",
+    "photos": [],
+    "type": "Education"
   }, {
-    "name": "Graduated From Hack Reactor",
-    "uuid": "TEST0003-c1b8-4835-8caa-1568f1e5531c",
-    "eventId": "5kso",
-    "type": "Education",
+    "date": "2016-08-26",
     "description": [
       "Date of matriculation from the world's premier software engineering immersive — Hack Reactor! Here I received my first true exposure to what the world of software engineering is really about. Divided into two distinct parts, the HR program begins with a grueling six-week onslaught of video and instructor-led lectures, gating student assessments and topical paired code sprints.",
       "The 'juniors', as students of the first half of the program are known, then transition into the thesis portion of the program. The intent behind this phase is to develop a Full-Stack application that, ultimately, may serve as a testament to the student's evolution as a developer, résumé padding and content for discussion in interviews."
     ],
+    "eventId": "5kso",
     "location": "San Francisco, CA",
-    "date": "2016-08-26",
-    "photos": []
+    "name": "Graduated From Hack Reactor",
+    "photos": [],
+    "type": "Education",
+    "uuid": "test0003-c1b8-4835-8caa-1568f1e5531c"
   }
 ]

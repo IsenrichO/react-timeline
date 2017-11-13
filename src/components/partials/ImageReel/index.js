@@ -1,2 +1,2 @@
 export ImageReelPure from './ImageReel.Pure';
-export default from './ImageReel';
+export default from './ImageReel.Styled';

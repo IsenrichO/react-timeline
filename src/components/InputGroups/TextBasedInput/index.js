@@ -1,2 +1,2 @@
 export TextBasedInputPure from './TextBasedInput.Pure';
-export default from './TextBasedInput';
+export default from './TextBasedInput.Styled';

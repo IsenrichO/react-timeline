@@ -1,2 +1,2 @@
 export BatchSelectCheckboxPure from './BatchSelectCheckbox.Pure';
-export default from './BatchSelectCheckbox';
+export default from './BatchSelectCheckbox.Styled';

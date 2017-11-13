@@ -2347,7 +2347,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@^1.27.2:
+date-fns@^1.27.2, date-fns@^1.29.0:
   version "1.29.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.29.0.tgz#12e609cdcb935127311d04d33334e2960a2a54e6"
 
@@ -2692,6 +2692,21 @@ download@^4.0.0, download@^4.1.2:
     vinyl "^1.0.0"
     vinyl-fs "^2.2.0"
     ware "^1.2.0"
+
+draft-convert@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/draft-convert/-/draft-convert-2.0.0.tgz#e7afbc8054bfb2f53464e6dd47e50125403879d8"
+  dependencies:
+    immutable "~3.7.4"
+    invariant "^2.2.1"
+
+draft-js@^0.10.3:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.10.4.tgz#147741642097c8120d8edc232e9503e8b7fb8d35"
+  dependencies:
+    fbjs "^0.8.15"
+    immutable "~3.7.4"
+    object-assign "^4.1.0"
 
 duplexer2@0.0.2:
   version "0.0.2"
@@ -3525,7 +3540,7 @@ faye-websocket@~0.11.0:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fbjs@^0.8.1, fbjs@^0.8.16, fbjs@^0.8.4, fbjs@^0.8.6, fbjs@^0.8.9:
+fbjs@^0.8.1, fbjs@^0.8.15, fbjs@^0.8.16, fbjs@^0.8.4, fbjs@^0.8.6, fbjs@^0.8.9:
   version "0.8.16"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.16.tgz#5e67432f550dc41b572bf55847b8aca64e5337db"
   dependencies:
@@ -4544,6 +4559,10 @@ immutability-helper@^2.4.0:
   resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-2.4.0.tgz#00d421e2957c17f0f0781475f05ffd837e73458d"
   dependencies:
     invariant "^2.2.0"
+
+immutable@~3.7.4:
+  version "3.7.6"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.7.6.tgz#13b4d3cb12befa15482a26fe1b2ebae640071e4b"
 
 import-lazy@^2.1.0:
   version "2.1.0"
@@ -5873,6 +5892,15 @@ md5.js@^1.3.4:
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
+
+medium-draft@^0.6.0-beta1:
+  version "0.6.0-beta1"
+  resolved "https://registry.yarnpkg.com/medium-draft/-/medium-draft-0.6.0-beta1.tgz#de1a786a73bd0d6c2cbaae09f4451108828a0f69"
+  dependencies:
+    draft-js "^0.10.3"
+    immutable "~3.7.4"
+    prop-types "^15.5.8"
+    react-transition-group "^1.1.2"
 
 memory-fs@^0.2.0:
   version "0.2.0"
@@ -7647,7 +7675,7 @@ react-tiny-virtual-list@^2.0.0:
   dependencies:
     prop-types "^15.5.7"
 
-react-transition-group@^1.1.3, react-transition-group@^1.2.1:
+react-transition-group@^1.1.2, react-transition-group@^1.1.3, react-transition-group@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.2.1.tgz#e11f72b257f921b213229a774df46612346c7ca6"
   dependencies:
@@ -7655,6 +7683,17 @@ react-transition-group@^1.1.3, react-transition-group@^1.2.1:
     dom-helpers "^3.2.0"
     loose-envify "^1.3.1"
     prop-types "^15.5.6"
+    warning "^3.0.0"
+
+react-transition-group@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.2.1.tgz#e9fb677b79e6455fd391b03823afe84849df4a10"
+  dependencies:
+    chain-function "^1.0.0"
+    classnames "^2.2.5"
+    dom-helpers "^3.2.0"
+    loose-envify "^1.3.1"
+    prop-types "^15.5.8"
     warning "^3.0.0"
 
 react@^16.0.0:

@@ -3,10 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { classes, ClassNamesPropType } from 'aesthetic';
-import { isEmpty, isString } from 'lodash';
+import { isEmpty, isFunction, isString } from 'lodash';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import { aesthetic } from '../../../style/styler';
+import { tlEventPropTypes } from '../../../util/TypeChecking';
 
 type Props = {
   isInverted?: boolean,
@@ -20,9 +21,9 @@ const getIconButtonStyles = ({ colors, fonts, keywords }) => ({
   boxShadow: '0 0 10px 1px rgba(0, 0, 0, 0.175)',
   fontFamily: fonts.face.neue,
   fontSize: '1.7rem',
-  fontStretch: 'normal',
-  fontStyle: 'normal',
-  fontVariant: 'normal',
+  fontStretch: keywords.normal,
+  fontStyle: keywords.normal,
+  fontVariant: keywords.normal,
   fontWeight: 700,
   height: '2.5rem',
   lineHeight: 1.5,
@@ -87,7 +88,10 @@ const TLToolbarPure = ({
       <IconButton
         key={Math.random()}
         iconStyle={getIconButtonStyles(themeStyles)}
-        onClick={clickHandler}
+        onClick={isFunction(clickHandler)
+          ? clickHandler
+          : Function.prototype
+        }
         style={buttonStyles}
         tooltip={tooltip}
         tooltipPosition={`top-${!!isInverted ? 'right' : 'left'}`}
@@ -110,13 +114,14 @@ const TLToolbarPure = ({
         children={toolbarButton}
         key={Math.random()}
         to={link}
-      />) : toolbarButton;
+      />
+    ) : toolbarButton;
   });
 
   return (
     <div
       className={classes(
-        'tlToolbar',  // Creates global '.tlToolbar' class accessible inside the scoped `tlEventPanel:hover` selector
+        'tlToolbar', // Creates global '.tlToolbar' class accessible inside the scoped `tlEventPanel:hover` selector
         classNames.tlToolbar,
         !!isInverted && classNames.inverted,
       )}
@@ -126,14 +131,14 @@ const TLToolbarPure = ({
   );
 };
 
-TLToolbarPure.displayName = 'TLToolbar';
+TLToolbarPure.displayName = 'TimelineEventToolbar';
 
 TLToolbarPure.propTypes = {
   classNames: ClassNamesPropType.isRequired,
   confirmDeleteModal: PropTypes.func.isRequired,
   confirmDeletionEvt: PropTypes.func.isRequired,
   deleteEvt: PropTypes.func.isRequired,
-  evt: PropTypes.object.isRequired,
+  evt: tlEventPropTypes.isRequired,
   isInverted: PropTypes.bool,
   logModalData: PropTypes.func.isRequired,
   setEventInvertedState: PropTypes.func.isRequired,
