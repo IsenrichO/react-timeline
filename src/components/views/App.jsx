@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { ClassNamesPropType } from 'aesthetic';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, Route, Redirect, withRouter } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 import Timeline from '../../containers/Timeline';
 import EditEventModal from '../EditEventModal';
 import { fetchAllCloudinary } from '../../state/cloudinaryImageStore';
 import { fetchSeedData } from '../../actions/asyncActions';
+import { tlEventPropTypes } from '../../util/TypeChecking';
 import styler from '../../style/styler';
 
 // Import global CSS transpiled stylesheet:
@@ -55,7 +56,7 @@ export default class App extends Component {
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
     }).isRequired,
-    seedData: PropTypes.arrayOf(PropTypes.object),
+    seedData: PropTypes.objectOf(tlEventPropTypes),
   };
 
   static defaultProps = {
@@ -96,8 +97,9 @@ export default class App extends Component {
     return (
       <div className={classNames.tlContainer}>
         <Timeline
-          seedData={seedData}
+          withOpenInterval
           cIS={cloudinaryImageStore}
+          seedData={seedData}
         />
         {children}
       </div>

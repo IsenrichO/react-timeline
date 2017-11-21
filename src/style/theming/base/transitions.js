@@ -5,6 +5,14 @@ import keywords from './keywords';
 export const BUTTON_TIMING_FUNCTION = 'cubic-bezier(0, 0.44, 0.94, 1.29)';
 
 /* TRANSITION STYLES */
+export const accordionReveal = (transitionPropsOverride) => ({
+  delay: 125,
+  duration: 750,
+  property: 'height',
+  timingFunction: 'ease-in-out',
+  ...(isPlainObject(transitionPropsOverride) ? transitionPropsOverride : null),
+});
+
 export const buttonRevealTransition = (transitionPropsOverride) => ({
   delay: null,
   duration: 250,
@@ -53,6 +61,7 @@ export const transitionVisibility = (transitionPropsOverride) => [{
 
 /* COMPILED DEFAULT EXPORT */
 export default {
+  accordionReveal,
   buttonRevealTransition,
   customTimingFunction,
   hoverTransition,

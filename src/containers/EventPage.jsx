@@ -2,24 +2,31 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { classes, ClassNamesPropType } from 'aesthetic';
+import { ClassNamesPropType } from 'aesthetic';
 import { isEmpty } from 'lodash';
 import TimelineEventPage from '../components/views/TimelineEventPage';
+import {
+  EventEditorActionCreators,
+  EventEditorActionCreatorPropTypes,
+  EventEditorStatePropTypes,
+  EventEditorStateInitializer,
+} from '../state/eventEditor';
 import {
   SourceEventDataActionCreators,
   SourceEventDataActionCreatorPropTypes,
   SourceEventDataStateInitializer,
 } from '../state/sourceEventData';
 import {
+  constructRoutePropTypesWithParams,
   historyPropTypes,
   nullable,
-  routeMatchPropTypes,
   tlEventPropTypes,
 } from '../util/TypeChecking';
 
 @connect(
-  ({ seedDataAggregator }) => ({ seedData: seedDataAggregator }),
+  ({ eventEditorState, seedDataAggregator }) => ({ eventEditorState, seedData: seedDataAggregator }),
   (dispatch) => ({
+    editorActions: bindActionCreators(EventEditorActionCreators, dispatch),
     eventActions: bindActionCreators(SourceEventDataActionCreators, dispatch),
   }),
 )
@@ -27,16 +34,21 @@ export default class EventPage extends Component {
   static displayName = 'TimelineEventPageContainer';
 
   static propTypes = {
-    // classNames: ClassNamesPropType.isRequired,
+    classNames: ClassNamesPropType,
+    editorActions: EventEditorActionCreatorPropTypes,
     eventActions: SourceEventDataActionCreatorPropTypes,
+    eventEditorState: EventEditorStatePropTypes,
     history: historyPropTypes.isRequired,
-    match: routeMatchPropTypes.isRequired,
-    seedData: tlEventPropTypes,
+    match: constructRoutePropTypesWithParams('uuid').isRequired,
+    seedData: PropTypes.objectOf(tlEventPropTypes),
     staticContext: nullable(PropTypes.any),
   };
 
   static defaultProps = {
+    classNames: {},
+    editorActions: EventEditorActionCreators,
     eventActions: SourceEventDataActionCreators,
+    eventEditorState: EventEditorStateInitializer,
     seedData: SourceEventDataStateInitializer,
     staticContext: null,
   };
@@ -59,18 +71,21 @@ export default class EventPage extends Component {
   }
 
   render() {
-    console.log('THIS.PROPS:', this.props);
     const {
+      editorActions: { updateRichText },
+      eventEditorState: { textBody },
       match: { params: { uuid } },
       seedData,
     } = this.props;
     const tlEvent = seedData[uuid];
-    console.log('EVENT DATA:', tlEvent);
 
     return !isEmpty(tlEvent) && (
       <main>
         <TimelineEventPage
           event={tlEvent}
+          eventData={seedData}
+          richText={textBody}
+          updateRichText={updateRichText}
         />
       </main>
     );

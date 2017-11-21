@@ -3,6 +3,7 @@ import styler from '../../../style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords }) => ({
   // Static declarations necessary for subsequent reference(s):
+  eventsDrawerIcon: {},
 
   boxedDisplayContainer: {
     position: 'relative',
@@ -10,10 +11,10 @@ export default styler(({ colors, fonts, helpers, keywords }) => ({
   boxedDisplayHeader: {
     margin: [0, keywords.auto],
     maxWidth: 800,
-    position: 'relative',
+    position: 'absolute',
     textAlign: 'center',
-    top: '100%',
-    transform: 'translateY(-55%)',
+    top: '80%',
+    transform: 'translateY(-50%)',
     zIndex: 1,
   },
   boxedDisplayHeroContainer: {
@@ -26,6 +27,11 @@ export default styler(({ colors, fonts, helpers, keywords }) => ({
       size: [keywords.auto, '60%'],
     },
     height: 400,
+    position: 'relative',
+  },
+  eventsDrawerToggleButton: {
+    position: `absolute ${keywords.important}`,
+    zIndex: 1,
   },
   eventTitle: {
     background: {

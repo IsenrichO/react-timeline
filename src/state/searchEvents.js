@@ -6,8 +6,9 @@ import { onFetchStarredEventsSuccess, FETCH_STARRED_EVENTS_SUCCESS } from './sou
 import { crudAsync2 } from '../actions/asyncActions';
 
 /* ACTION TYPES */
-export const FETCH_ALL_EVENTS_SUCCESS = 'FETCH_ALL_EVENTS_SUCCESS';
-export const FETCH_RECENTLY_MODIFIED_EVENTS_SUCCESS = 'FETCH_RECENTLY_MODIFIED_EVENTS_SUCCESS';
+const PREFIX = 'rt/timeline/search/';
+export const FETCH_ALL_EVENTS_SUCCESS = `${PREFIX}FETCH_ALL_EVENTS_SUCCESS`;
+export const FETCH_RECENTLY_MODIFIED_EVENTS_SUCCESS = `${PREFIX}FETCH_RECENTLY_MODIFIED_EVENTS_SUCCESS`;
 
 /* ACTION CREATORS */
 export const onFetchAllEventsSuccess = (data) => ({
@@ -62,7 +63,9 @@ export default (state = initialState, action = null) => {
 const SearchEventsActionTypes = {
   FETCH_ALL_EVENTS_SUCCESS,
   FETCH_RECENTLY_MODIFIED_EVENTS_SUCCESS,
+  SEARCH_EVENTS_PREFIX: PREFIX,
 };
+
 const SearchEventsActionCreators = {
   fetchRecentlyModifiedEvents,
   fetchStarredEvents,
@@ -70,6 +73,7 @@ const SearchEventsActionCreators = {
   onFetchRecentlyModifiedEventsSuccess,
   onFetchStarredEventsSuccess,
 };
+
 const SearchEventsActionCreatorPropTypes = PropTypes.shape({
   fetchRecentlyModifiedEvents: PropTypes.func,
   fetchStarredEvents: PropTypes.func,
@@ -77,6 +81,7 @@ const SearchEventsActionCreatorPropTypes = PropTypes.shape({
   onFetchRecentlyModifiedEventsSuccess: PropTypes.func,
   onFetchStarredEventsSuccess: PropTypes.func,
 }).isRequired;
+
 const SearchEventsStatePropTypes = PropTypes.shape({
   all: PropTypes.arrayOf(PropTypes.object),
   recent: PropTypes.arrayOf(PropTypes.object),

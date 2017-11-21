@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -20,6 +21,10 @@ import { EventModalActionCreators, EventModalActionCreatorPropTypes, EventModalS
 import { TagsActionCreators, TagsActionCreatorPropTypes, TagsStateInitializer, TagsStatePropTypes } from '../../state/tags';
 import { SourceEventDataActionCreators, SourceEventDataActionCreatorPropTypes, SourceEventDataStateInitializer, SourceEventDataStatePropTypes } from '../../state/sourceEventData';
 
+type Props = {
+  withOpenInterval?: boolean,
+};
+
 @connect(
   ({ batchSelectState, cloudinaryState, eventModalState, form, seedDataAggregator }) => ({
     batchSelectState,
@@ -36,7 +41,7 @@ import { SourceEventDataActionCreators, SourceEventDataActionCreatorPropTypes, S
     tagsActions: bindActionCreators(TagsActionCreators, dispatch),
   }),
 )
-export default class TimelinePure extends Component {
+export default class TimelinePure extends Component<Props> {
   static displayName = 'TimelineView';
 
   static propTypes = {
@@ -52,6 +57,7 @@ export default class TimelinePure extends Component {
     sourceEventDataState: SourceEventDataStatePropTypes,
     tagsActions: TagsActionCreatorPropTypes,
     tagsState: TagsStatePropTypes,
+    withOpenInterval: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -66,6 +72,7 @@ export default class TimelinePure extends Component {
     sourceEventDataState: SourceEventDataStateInitializer,
     tagsActions: TagsActionCreators,
     tagsState: TagsStateInitializer,
+    withOpenInterval: false,
   };
 
   constructor(props) {
@@ -170,7 +177,7 @@ export default class TimelinePure extends Component {
 
     // const imageStore = this.props.cloudinaryImageStore;
     const self = this;
-    // console.log('STORE OF IMAGESSSSS:', cloudinaryState);
+
     return events.map((evt, index) => {
       let attrs;
       if (cloudinaryState.hasOwnProperty(evt.uuid)) {
@@ -267,13 +274,19 @@ export default class TimelinePure extends Component {
       classNames,
       seedData,
       sourceEventDataActions: { deleteSingleEvt, deleteBatchEvents },
+      withOpenInterval,
     } = this.props;
     const { confirmationEvt, confirmModal, newModal } = this.state;
 
     return (
       <div>
         <AppBar />
-        <ul className={classNames.timeline}>
+        <ul
+          className={classes(
+            classNames.timeline,
+            !!withOpenInterval && classNames.timelineWithOpenInterval,
+          )}
+        >
           <li className={classNames.tlEventBeginning}>
             <FontIcon
               className={classes(
@@ -284,17 +297,24 @@ export default class TimelinePure extends Component {
               timeline
             </FontIcon>
           </li>
-          {this.renderOrderedEvents(Utils.orderTimelineEvents(seedData))}
-          <li className={classNames.tlEventEnd}>
-            <FontIcon
-              className={classes(
-                'material-icons',
-                classNames.tlMarkerEnd,
-              )}
-            >
-              more_vert
-            </FontIcon>
-          </li>
+          {[
+            this.renderOrderedEvents(Utils.orderTimelineEvents(seedData)),
+            !withOpenInterval && (
+              <li
+                key="timelineEndingMarker"
+                className={classNames.tlEventEnd}
+              >
+                <FontIcon
+                  className={classes(
+                    'material-icons',
+                    classNames.tlMarkerEnd,
+                  )}
+                >
+                  more_vert
+                </FontIcon>
+              </li>
+            ),
+          ]}
         </ul>
 
         {this.injectEditingModal()}

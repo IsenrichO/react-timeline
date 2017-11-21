@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
@@ -6,7 +7,18 @@ import ExpandMenuIcon from 'material-ui/svg-icons/navigation/chevron-right';
 import IconButton from 'material-ui/IconButton';
 import { aesthetic } from '../../../../style/styler';
 
-const SidebarSettingsBarPure = ({ classNames, clickHandler, isSidebarExpanded, theme, ...props }) => {
+type Props = {
+  isSidebarExpanded?: boolean,
+  theme?: string,
+};
+
+const SidebarSettingsBarPure = ({
+  classNames,
+  clickHandler,
+  isSidebarExpanded,
+  theme,
+  ...rest
+}: Props) => {
   const { colors: baseThemeColors } = aesthetic.themes[theme];
 
   return (

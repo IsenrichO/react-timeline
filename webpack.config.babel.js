@@ -95,8 +95,11 @@ const BASE_CONFIG = {
     rules: [{
       exclude: /(node_modules|bower_components)/,
       include: path.resolve(__dirname, 'src'),
+      loader: 'babel', // Rather than the `use` key, `loader` is required in conjunction with `query`
+      query: {
+        cacheDirectory: !!isProdEnv,
+      },
       test: /\.jsx?$/i,
-      use: 'babel',
     }, {
       test: /\.css$/i,
       use: ExtractTextPlugin.extract({
@@ -209,7 +212,7 @@ const BASE_CONFIG = {
         yandex: false,
       },
       inject: true,
-      logo: path.resolve(__dirname, 'assets/images/rt-logo.png'),
+      logo: path.resolve(__dirname, 'assets/images/rt-logo.svg'),
       persistentCache: true,
       prefix: 'images/favicons-[hash]/',
       statsFilename: 'iconStats-[hash].json',

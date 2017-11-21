@@ -13,11 +13,11 @@ import Routes from './Routes';
 export default (
   <Provider store={store}>
     <ThemeProvider name="base">
-      <ConnectedRouter history={history}>
-        <MuiThemeProvider>
+      <MuiThemeProvider>
+        <ConnectedRouter history={history}>
           <Routes />
-        </MuiThemeProvider>
-      </ConnectedRouter>
+        </ConnectedRouter>
+      </MuiThemeProvider>
     </ThemeProvider>
   </Provider>
 );

@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 
 /* ACTION TYPES */
-export const LOG_EVENT_MODAL_DATA = 'LOG_EVENT_MODAL_DATA';
-export const TOGGLE_EVENT_MODAL = 'TOGGLE_EVENT_MODAL';
+const PREFIX = 'rt/timeline/modal/';
+export const LOG_EVENT_MODAL_DATA = `${PREFIX}LOG_EVENT_MODAL_DATA`;
+export const TOGGLE_EVENT_MODAL = `${PREFIX}TOGGLE_EVENT_MODAL`;
 
 /* ACTION CREATORS */
 export const logEventModalData = (payload) => ({
@@ -47,16 +48,20 @@ export default (state = initialState, action) => {
 /* EXPORTS */
 const EventModalActionTypes = {
   LOG_EVENT_MODAL_DATA,
+  MODAL_PREFIX: PREFIX,
   TOGGLE_EVENT_MODAL,
 };
+
 const EventModalActionCreators = {
   logEventModalData,
   toggleEventModal,
 };
+
 const EventModalActionCreatorPropTypes = PropTypes.shape({
   logEventModalData: PropTypes.func,
   toggleEventModal: PropTypes.func,
 }).isRequired;
+
 const EventModalStatePropTypes = PropTypes.shape({
   eventData: PropTypes.shape({
     date: PropTypes.date,

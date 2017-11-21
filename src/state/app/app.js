@@ -3,7 +3,7 @@ import { isNil } from 'lodash';
 import update from 'immutability-helper';
 
 /* ACTION TYPES */
-const PREFIX = 'tl/app/';
+const PREFIX = 'rt/timeline/app/';
 export const COLLAPSE_SEARCH_SIDEBAR = `${PREFIX}COLLAPSE_SEARCH_SIDEBAR`;
 
 /* ACTION CREATORS */
@@ -35,14 +35,18 @@ export default (state = initialState, action = {}) => {
 
 /* EXPORTS */
 const AppActionTypes = {
+  APP_PREFIX: PREFIX,
   COLLAPSE_SEARCH_SIDEBAR,
 };
+
 const AppActionCreators = {
   collapseSearchSidebar,
 };
+
 const AppActionCreatorPropTypes = PropTypes.shape({
   collapseSearchSidebar: PropTypes.func.isRequired,
 }).isRequired;
+
 const AppStatePropTypes = PropTypes.shape({
   isSearchSidebarOpen: PropTypes.bool.isRequired,
 }).isRequired;

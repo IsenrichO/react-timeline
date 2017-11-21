@@ -8,11 +8,10 @@ type Props = {
 };
 
 const PaperShredderGlyph = ({ theme }: Props) => {
-  const appTheme = aesthetic.themes[theme];
   const {
     colors: themeColors,
     keywords: themeKeywords,
-  } = appTheme;
+  } = aesthetic.themes[theme];
 
   return (
     <svg
@@ -22,8 +21,8 @@ const PaperShredderGlyph = ({ theme }: Props) => {
       }}
       version={1.1}
       viewBox="0 0 487.729 487.729"
-      xmlns="http://www.w3.org/2000/svg"
       x={0}
+      xmlns="http://www.w3.org/2000/svg"
       y={0}
     >
       <g>

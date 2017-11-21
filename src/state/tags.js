@@ -5,7 +5,8 @@ import { Tags } from '../routing/RoutePaths';
 import { crudAsync2 } from '../actions/asyncActions';
 
 /* ACTION TYPES */
-export const FETCH_ALL_EVENT_TAGS_SUCCESS = 'FETCH_ALL_EVENT_TAGS_SUCCESS';
+const PREFIX = 'rt/timeline/tags/';
+export const FETCH_ALL_EVENT_TAGS_SUCCESS = `${PREFIX}FETCH_ALL_EVENT_TAGS_SUCCESS`;
 
 /* ACTION CREATORS */
 export const onFetchAllEventTagsSuccess = (payload) => ({
@@ -24,7 +25,9 @@ const initialState = [];
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case FETCH_ALL_EVENT_TAGS_SUCCESS:
-      return [...new Set(action.payload.map(({ name = '' }) => name))];
+      return update(state, {
+        $set: [...new Set(action.payload.map(({ name = '' }) => name))],
+      });
 
     default:
       return state;
@@ -34,6 +37,7 @@ export default (state = initialState, action = null) => {
 /* EXPORTS */
 const TagsActionTypes = {
   FETCH_ALL_EVENT_TAGS_SUCCESS,
+  TAGS_PREFIX: PREFIX,
 };
 
 const TagsActionCreators = {
@@ -46,7 +50,9 @@ const TagsActionCreatorPropTypes = PropTypes.shape({
   onFetchAllEventTagsSuccess: PropTypes.func,
 }).isRequired;
 
-const TagsStatePropTypes = PropTypes.arrayOf(PropTypes.string);
+const TagsStatePropTypes = PropTypes.arrayOf(
+  PropTypes.string,
+);
 
 export {
   TagsActionCreators,

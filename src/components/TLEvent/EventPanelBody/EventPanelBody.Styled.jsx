@@ -15,7 +15,7 @@ export const quotesPseudoShared = (color = baseThemeColors.grey.border) => ({
   position: 'absolute',
 });
 
-export default styler(({ colors, fonts, helpers, keywords, imageAssets }) => ({
+export default styler(({ colors, fonts, helpers, keywords, imageAssets, transitions }) => ({
   // Static `className` declarations necessary for nested references:
   accordionToggleBtn: {},
   active: {},
@@ -60,13 +60,8 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssets }) => ({
   eventPanelBodyAccordionSection: {
     height: 35,
     overflow: 'hidden',
-    padding: ['0.75rem', '1.25rem'],
-    transition: {
-      delay: 125,
-      duration: 750,
-      property: 'height',
-      timingFunction: 'ease',
-    },
+    padding: [0, '1.25rem'],
+    transition: transitions.accordionReveal,
 
     '&:hover': {
       backgroundColor: colors.white.eggShell,
@@ -126,6 +121,7 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssets }) => ({
   },
   tlRowSummary: {
     ...helpers.flexify('row', 'flex-start', ['center', 'center']),
+    padding: ['0.75rem', 0],
 
     '&:hover $toggleGlyph': {
       transform: 'scale(1.25)',

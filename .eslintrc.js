@@ -126,7 +126,7 @@ module.exports = {
                           // CORRECT:   `foo.apply(bar, [1, 2, 3]);`
     "no-useless-computed-key": 2,
     "no-useless-concat": 2,
-    "no-useless-constructor": 2,
+    "no-useless-constructor": 0,
     "no-useless-rename": [2, {
       "ignoreImport": true,
       "ignoreExport": true,
@@ -397,6 +397,7 @@ module.exports = {
         "date-fns/**",    // Enable to allow for `react-infinite-calendar` localization support
         "lodash/**",      // Enable `lodash` module accession: `import map from 'lodash/map';`
         "material-ui/**", // Enable `material-ui` module accession: `import FontIcon from 'material-ui/FontIcon';`
+        "medium-draft/**", // Enable importing associated library's CSS styles
         "react-infinite-calendar/**", // Enable `react-infinite-calendar` CSS stylesheet import(s)
         "promise/**",     // Enables setting a polyfill for the ES2015 Promise object
         "uuid/*",         // Enable `uuid` module accession: `import uuidv4 from 'uuid/v4';`
@@ -417,12 +418,13 @@ module.exports = {
       "allow": [
         // Whitelist stylesheet & image asset imports:
         "**/assets/**",
+        "medium-draft/**",
+        "react-infinite-calendar/**",
 
         // Polyfill packages:
         "**/promise/**",
         "core-js",
         "match-media",
-        "react-infinite-calendar/**",
         "url-search-params-polyfill",
         "whatwg-fetch",
       ],

@@ -6,8 +6,9 @@ import { Photos } from '../routing/RoutePaths';
 import { crudAsync2 } from '../actions/asyncActions';
 
 /* ACTION TYPES */
-export const FETCH_CLOUDINARY_IMAGES_SUCCESS = 'FETCH_CLOUDINARY_IMAGES_SUCCESS';
-export const SET_BACKGROUND_IMAGE = 'SET_BACKGROUND_IMAGE';
+const PREFIX = 'rt/timeline/cloudinary/';
+export const FETCH_CLOUDINARY_IMAGES_SUCCESS = `${PREFIX}FETCH_CLOUDINARY_IMAGES_SUCCESS`;
+export const SET_BACKGROUND_IMAGE = `${PREFIX}SET_BACKGROUND_IMAGE`;
 
 /* ACTION CREATORS */
 export const onFetchCloudinaryImagesSuccess = (payload) => ({
@@ -52,8 +53,6 @@ export default (state = initialState, action = null) => {
         return acc;
       }, {});
 
-      // console.log({ foldersObj });
-      // return Object.assign({}, state, foldersObj);
       return update(state, { $set: foldersObj });
     }
 
@@ -89,9 +88,11 @@ export default (state = initialState, action = null) => {
 
 /* EXPORTS */
 const CloudinaryActionTypes = {
+  CLOUDINARY_PREFIX: PREFIX,
   FETCH_CLOUDINARY_IMAGES_SUCCESS,
   SET_BACKGROUND_IMAGE,
 };
+
 const CloudinaryActionCreators = {
   fetchAllCloudinary,
   fetchCloudinaryImageData,
@@ -99,6 +100,7 @@ const CloudinaryActionCreators = {
   setNewBackgroundImage,
   uploadToCloudinary,
 };
+
 const CloudinaryActionCreatorPropTypes = PropTypes.shape({
   fetchAllCloudinary: PropTypes.func,
   fetchCloudinaryImageData: PropTypes.func,
@@ -106,7 +108,10 @@ const CloudinaryActionCreatorPropTypes = PropTypes.shape({
   setNewBackgroundImage: PropTypes.func,
   uploadToCloudinary: PropTypes.func,
 }).isRequired;
-const CloudinaryStatePropTypes = PropTypes.objectOf(PropTypes.object);
+
+const CloudinaryStatePropTypes = PropTypes.objectOf(
+  PropTypes.object,
+);
 
 export {
   CloudinaryActionCreators,

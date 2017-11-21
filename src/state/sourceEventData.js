@@ -6,14 +6,14 @@ import { crudAsync2 } from '../actions/asyncActions';
 import { tlEventPropTypes } from '../util/TypeChecking';
 
 /* ACTION TYPES */
-const PREFIX = 'rt/events/';
-export const ADD_SINGLE_EVENT_SUCCESS = 'ADD_SINGLE_EVENT_SUCCESS';
-export const DELETE_BATCH_EVENTS_SUCCESS = 'DELETE_BATCH_EVENTS_SUCCESS';
-export const DELETE_SINGLE_EVENT_SUCCESS = 'DELETE_SINGLE_EVENT_SUCCESS';
-export const FETCH_SEED_DATA_SUCCESS = 'FETCH_SEED_DATA_SUCCESS';
+const PREFIX = 'rt/timeline/source/';
+export const ADD_SINGLE_EVENT_SUCCESS = `${PREFIX}ADD_SINGLE_EVENT_SUCCESS`;
+export const DELETE_BATCH_EVENTS_SUCCESS = `${PREFIX}DELETE_BATCH_EVENTS_SUCCESS`;
+export const DELETE_SINGLE_EVENT_SUCCESS = `${PREFIX}DELETE_SINGLE_EVENT_SUCCESS`;
+export const FETCH_SEED_DATA_SUCCESS = `${PREFIX}FETCH_SEED_DATA_SUCCESS`;
 export const FETCH_SINGLE_EVENT_SUCCESS = `${PREFIX}FETCH_SINGLE_EVENT_SUCCESS`;
-export const FETCH_STARRED_EVENTS_SUCCESS = 'FETCH_STARRED_EVENTS_SUCCESS';
-export const UPDATE_EVENT_DATA = 'UPDATE_EVENT_DATA';
+export const FETCH_STARRED_EVENTS_SUCCESS = `${PREFIX}FETCH_STARRED_EVENTS_SUCCESS`;
+export const UPDATE_EVENT_DATA = `${PREFIX}UPDATE_EVENT_DATA`;
 
 /* ACTION CREATORS */
 export const onAddSingleEventSuccess = (payload) => ({
@@ -138,8 +138,10 @@ const SourceEventDataActionTypes = {
   FETCH_SEED_DATA_SUCCESS,
   FETCH_SINGLE_EVENT_SUCCESS,
   FETCH_STARRED_EVENTS_SUCCESS,
+  SOURCE_EVENTS_PREFIX: PREFIX,
   UPDATE_EVENT_DATA,
 };
+
 const SourceEventDataActionCreators = {
   addSingleEvent,
   deleteBatchEvents,
@@ -154,6 +156,7 @@ const SourceEventDataActionCreators = {
   onUpdateSingleEventSuccess,
   updateSingleEvent,
 };
+
 const SourceEventDataActionCreatorPropTypes = PropTypes.shape({
   addSingleEvent: PropTypes.func,
   deleteBatchEvents: PropTypes.func,
@@ -168,7 +171,10 @@ const SourceEventDataActionCreatorPropTypes = PropTypes.shape({
   onUpdateSingleEventSuccess: PropTypes.func,
   updateSingleEvent: PropTypes.func,
 }).isRequired;
-const SourceEventDataStatePropTypes = PropTypes.objectOf(tlEventPropTypes);
+
+const SourceEventDataStatePropTypes = PropTypes.objectOf(
+  tlEventPropTypes,
+);
 
 export {
   SourceEventDataActionCreators,

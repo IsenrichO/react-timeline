@@ -20,6 +20,13 @@ import cloudinaryState, {
   CloudinaryStateInitializer,
   CloudinaryStatePropTypes,
 } from './cloudinaryImageStore';
+import eventEditorState, {
+  EventEditorActionCreators,
+  EventEditorActionCreatorPropTypes,
+  EventEditorActionTypes,
+  EventEditorStatePropTypes,
+  EventEditorStateInitializer,
+} from './eventEditor';
 import eventModalState, {
   EventModalActionCreators,
   EventModalActionCreatorPropTypes,
@@ -54,6 +61,7 @@ export default {
   appState,
   batchSelectState,
   cloudinaryState,
+  eventEditorState,
   eventModalState,
   form: formReducer,
   searchEvents,
@@ -66,42 +74,51 @@ const AllActionCreators = {
   ...AppActionCreators,
   ...BatchSelectActionCreators,
   ...CloudinaryActionCreators,
+  ...EventEditorActionCreators,
   ...EventModalActionCreators,
   ...SearchEventsActionCreators,
   ...SourceEventDataActionCreators,
   ...TagsActionCreators,
 };
+
 const AllActionTypes = {
   ...AppActionTypes,
   ...BatchSelectActionTypes,
   ...CloudinaryActionTypes,
+  ...EventEditorActionTypes,
   ...EventModalActionTypes,
   ...SearchEventsActionTypes,
   ...SourceEventDataActionTypes,
   ...TagsActionTypes,
 };
+
 const AllActionCreatorPropTypes = {
   AppActionCreatorPropTypes,
   BatchSelectActionCreatorPropTypes,
   CloudinaryActionCreatorPropTypes,
+  EventEditorActionCreatorPropTypes,
   EventModalActionCreatorPropTypes,
   SearchEventsActionCreatorPropTypes,
   SourceEventDataActionCreatorPropTypes,
   TagsActionCreatorPropTypes,
 };
+
 const AllStateInitializers = {
   AppStateInitializer,
   BatchSelectStateInitializer,
   CloudinaryStateInitializer,
+  EventEditorStateInitializer,
   EventModalStateInitializer,
   SearchEventsStateInitializer,
   SourceEventDataStateInitializer,
   TagsStateInitializer,
 };
+
 const AllStatePropTypes = {
   AppStatePropTypes,
   BatchSelectStatePropTypes,
   CloudinaryStatePropTypes,
+  EventEditorStatePropTypes,
   EventModalStatePropTypes,
   SearchEventsStatePropTypes,
   SourceEventDataStatePropTypes,

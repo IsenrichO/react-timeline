@@ -18,7 +18,7 @@ export const nullable = (...propTypes) => PropTypes.oneOfType([
 /* PREDEFINED PROP-TYPE VALUES */
 export const browserLocationPropTypes = PropTypes.shape({
   hash: PropTypes.string.isRequired,
-  key: PropTypes.string.isRequired,
+  key: PropTypes.string,
   pathname: PropTypes.string.isRequired,
   search: PropTypes.string.isRequired,
 });
@@ -48,14 +48,18 @@ export const routeMatchPropTypes = PropTypes.shape({
   url: PropTypes.string.isRequired,
 });
 
-export const stylePropTypes = nullable(PropTypes.objectOf(
-  PropTypes.number,
-  PropTypes.string,
-));
+export const stylePropTypes = nullable(
+  PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+  ),
+);
 
 export const tlEventPropTypes = PropTypes.shape({
   coverImageId: nullable(PropTypes.string),
-  date: PropTypes.string.isRequired,
+  date: PropTypes.string,
   dateModified: nullable(PropTypes.string),
   description: nullable(PropTypes.arrayOf(PropTypes.string)),
   eventId: PropTypes.string.isRequired,

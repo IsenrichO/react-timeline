@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -14,17 +15,20 @@ import SearchBox from './SearchBox';
 import SidebarSettingsBar from './SidebarSettingsBar';
 // import RangeSlider from '../../partials/RangeSlider';
 import { AppActionCreators, AppActionCreatorPropTypes, AppStateInitializer, AppStatePropTypes } from '../../../state/app';
-import ComponentUtils from '../../../util/ComponentHelpers';
+import { keyFormatter } from '../../../util/ComponentHelpers';
 import { aesthetic } from '../../../style/styler';
 
-//
+type Props = {
+  theme?: string,
+};
+
 @connect(
   ({ appState }) => ({ appState }),
   (dispatch) => ({
     appActions: bindActionCreators(AppActionCreators, dispatch),
   }),
 )
-export default class SearchSidebarPure extends Component {
+export default class SearchSidebarPure extends Component<Props> {
   static displayName = 'SearchSideBar';
 
   static propTypes = {
@@ -101,11 +105,12 @@ export default class SearchSidebarPure extends Component {
       name: 'Filter', // 'Filter By Range',
       path: '/search/filter',
     }];
+
     this.theme = aesthetic.themes[theme];
     this.toggleSidebarState = ::this.toggleSidebarState;
   }
 
-  toggleSidebarState(explicitOverride) {
+  toggleSidebarState(evt, explicitOverride) {
     const { collapseSearchSidebar } = this.props.appActions;
     return collapseSearchSidebar(explicitOverride);
   }
@@ -119,7 +124,7 @@ export default class SearchSidebarPure extends Component {
 
     const searchFilterIcon = (
       <IconButton
-        key={ComponentUtils.keyFormatter(name, 'sidebarCategoryIconButton')}
+        key={keyFormatter(name, 'sidebarCategoryIconButton')}
         className={classNames.searchCategoryButton}
         style={{
           height: !isSidebarExpanded ? 64 : 54,
@@ -163,7 +168,7 @@ export default class SearchSidebarPure extends Component {
     );
     const categoryTitle = (
       <h4
-        key={ComponentUtils.keyFormatter(name, 'sidebarCategoryTitle')}
+        key={keyFormatter(name, 'sidebarCategoryTitle')}
         className={classes(
           classNames.searchCategoryTitle,
           !isSidebarExpanded && classNames.searchCategoryTitleHidden,
@@ -174,7 +179,7 @@ export default class SearchSidebarPure extends Component {
     );
     const activeFilterIndicator = !!isActiveFilter && (
       <ActiveFilterIcon
-        key={ComponentUtils.keyFormatter(name, 'sidebarActiveCategoryIndicator')}
+        key={keyFormatter(name, 'sidebarActiveCategoryIndicator')}
         className={classNames.activeFilterIndicator}
         color={baseThemeColors.white.pure}
       />

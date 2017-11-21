@@ -1,6 +1,7 @@
 /* TRUE CONSTANTS */
 export const PURE_WHITE = '#FFFFFF';
 export const THEME_RED = '#B15B5B';
+export const BLUE_GREEN_MESH = '#5DB7B7';
 
 /* THEME COLORS */
 export default {
@@ -9,11 +10,13 @@ export default {
     boxShadow: 'rgba(0, 0, 0, 0.175)',
     boxShadowStrong: '#474747',
     charcoal: '#625F5F',
+    diesel: '#232323',
     navReelBackground: 'rgba(0, 0, 0, 0.75)',
     primary: '#111111',
     pure: '#000000', // Black
   },
   blue: {
+    fountain: BLUE_GREEN_MESH,
     hover: '#4689F8',
     link: '#5395AF',
     note: '#C4D8FB',
@@ -24,7 +27,7 @@ export default {
   green: {
     corduroy: '#5B736A',
     lite: '#8DBB9E',
-    oxidized: '#5DB7B7',
+    oxidized: BLUE_GREEN_MESH,
     pure: '#008000',  // Green
   },
   grey: {
@@ -62,8 +65,10 @@ export default {
     oysterPink: '#E8CECE',
     primary: THEME_RED,
     pure: '#FF0000', // Red
+    quaternary: '#BE7A7A',
     secondary: '#DA7A7A',
     semiTransparent: 'rgba(177, 91, 91, 0.30)',
+    tertiary: '#D1B3B3',
   },
   status: {
     danger: '#C0182B',

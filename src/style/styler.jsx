@@ -32,6 +32,11 @@ const globalStyles = {
       textDecoration: 'none',
     },
 
+    // Medium-Draft styles:
+    '.md-RichEditor-root': {
+      backgroundColor: 'transparent !important',
+    },
+
     // ReactTransitionGroup styles:
     '.fade-enter': {
       opacity: 0,

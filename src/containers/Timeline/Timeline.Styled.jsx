@@ -1,7 +1,7 @@
 import TimelinePure from './Timeline.Pure';
 import styler from '../../style/styler';
 
-const getEventFontStyles = (fonts, keywords) => ({
+export const getEventFontStyles = (fonts, keywords) => ({
   family: fonts.face.material,
   lineHeight: 1,
   size: '3rem',
@@ -11,10 +11,13 @@ const getEventFontStyles = (fonts, keywords) => ({
   weight: 'bold',
 });
 
-const constructOrderedFontShorthand = ({ family, lineHeight = 1, size, style, variant, weight, ...rest }) =>
+export const constructOrderedFontShorthand = ({ family, lineHeight = 1, size, style, variant, weight, ...rest }) =>
   `${style} ${variant} ${weight} ${size}/${lineHeight} ${family}`;
 
 export default styler(({ colors, fonts, helpers, keywords }) => ({
+  // Static `className` declarations necessary for nested references:
+  timelineWithOpenInterval: {},
+
   timeline: {
     display: 'table',
     height: '100%',
@@ -36,8 +39,16 @@ export default styler(({ colors, fonts, helpers, keywords }) => ({
       position: 'absolute',
       top: '2rem',
       webkitFilter: `drop-shadow(0 0 7.5px ${colors.grey.medium})`,
-      filter:       `drop-shadow(0 0 7.5px ${colors.grey.medium})`, // eslint-disable-line key-spacing, no-multi-spaces, sort-keys
+      filter: `drop-shadow(0 0 7.5px ${colors.grey.medium})`, // eslint-disable-line sort-keys
       width: 5,
+    },
+
+    '&$timelineWithOpenInterval': {
+      marginBottom: 0,
+
+      '&:before': {
+        bottom: '-10rem',
+      },
     },
   },
   tlEventBeginning: {
