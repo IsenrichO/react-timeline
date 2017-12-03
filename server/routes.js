@@ -1,4 +1,3 @@
-'use strict';
 const contr = require('./aaa');
 // const EventsController = require('./controllers/EventsController');
 
@@ -9,5 +8,5 @@ module.exports = (app) => {
   app.get('/api/events', contr.listEvents),
   app.post('/api/events', contr.addEvents),
   app.put('/api/events/edit/:uuid', contr.updateEvents),
-  app.delete('/api/events/edit/:uuid', contr.deleteEvents)
+  app.delete('/api/events/edit/:uuid', contr.deleteEvents),
 };

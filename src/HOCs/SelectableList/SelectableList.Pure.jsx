@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { classes, ClassNamesPropType } from 'aesthetic';
 import update from 'immutability-helper';
 import { isEmpty, size } from 'lodash';
@@ -24,7 +25,7 @@ const withListSelection = (ComposedComponent) =>
         PropTypes.arrayOf(PropTypes.instanceOf(ListItem)),
         PropTypes.instanceOf(ListItem),
         PropTypes.node,
-      ]).isRequired,
+      ]),
       classNames: ClassNamesPropType,
       defaultValue: PropTypes.string.isRequired,
       eventData: PropTypes.objectOf(tlEventPropTypes),
@@ -33,6 +34,7 @@ const withListSelection = (ComposedComponent) =>
     };
 
     static defaultProps = {
+      children: null,
       classNames: {},
       eventData: null,
       theme: 'base',
@@ -76,7 +78,7 @@ const withListSelection = (ComposedComponent) =>
           <ListItem
             key={`drawerEvent__${uuid}`}
             insetChildren
-            containerElement="LI"
+            containerElement={<Link to={`/events/edit/${uuid}`} />}
             innerDivStyle={{
               padding: '20px 16px 20px 72px',
               position: 'relative',

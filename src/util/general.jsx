@@ -61,7 +61,7 @@ export const hexToRgba = (hexCode = '#FFF', alpha = 1.0) => {
 export const toggleAccordionSection = (classNames, ref) => (evt) => {
   evt.persist();
   const evtTarget = evt.target;
-  const accordionContainer = evt.currentTarget.parentNode;
+  const accordionContainer = evt.currentTarget; // .parentNode;
 
   if (!!evtTarget
     && !!evtTarget.parentNode
@@ -75,17 +75,9 @@ export const toggleAccordionSection = (classNames, ref) => (evt) => {
 
   accordionContainer.style.height = `${getOtherItem(openAndClosedHeights, currHeight)}px`;
   toggleIcon.style.transform = `rotateZ(${currHeight === 35 ? 90 : 0}deg)`;
-
-  // console.log('Event:', evt);
-  // const { currentTarget: currTarg, currentTarget: { lastChild: toggleGlyph }} = evt,
-  //       $heights = [$(currTarg).parent('section').get(0).scrollHeight, 16];
-  // console.log('Curr Target:', currTarg);
-
-  // $(toggleGlyph).toggleClass('active');
-  // $(currTarg).parent('section').css({ height: `${getOtherItem($heights, $(currTarg).parent('section').height())}px` });
 };
 
-
+/* COMPILED DEFAULT EXPORT */
 export default {
   addEventToFavorites,
   checkIfStarredEvent,

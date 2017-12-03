@@ -26,13 +26,8 @@ type Props = {
 };
 
 @connect(
-  ({ batchSelectState, cloudinaryState, eventModalState, form, seedDataAggregator }) => ({
-    batchSelectState,
-    cloudinaryState,
-    eventModalState,
-    form,
-    seedDataAggregator,
-  }),
+  ({ batchSelectState, cloudinaryState, eventModalState, form, seedDataAggregator }) =>
+    ({ batchSelectState, cloudinaryState, eventModalState, form, seedDataAggregator }),
   (dispatch) => ({
     batchSelectActions: bindActionCreators(BatchSelectActionCreators, dispatch),
     cloudinaryActions: bindActionCreators(CloudinaryActionCreators, dispatch),
@@ -93,6 +88,7 @@ export default class TimelinePure extends Component<Props> {
   }
 
   componentDidMount() {
+    console.log('PROCESS ENV', process.env);
     const { fetchAllEventTags } = this.props.tagsActions;
     return fetchAllEventTags();
   }

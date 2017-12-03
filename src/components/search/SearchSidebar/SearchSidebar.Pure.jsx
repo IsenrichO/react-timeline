@@ -104,6 +104,17 @@ export default class SearchSidebarPure extends Component<Props> {
       isAccordion: true,
       name: 'Filter', // 'Filter By Range',
       path: '/search/filter',
+    }, {
+      category: 'map',
+      childRoute: '/map',
+      glyph: {
+        altClass: 'null',
+        htmlEntity: null,
+        materialClass: 'map',
+      },
+      isAccordion: false,
+      name: 'Map',
+      path: '/search/map',
     }];
 
     this.theme = aesthetic.themes[theme];

@@ -18,22 +18,19 @@ export const quotesPseudoShared = (color = baseThemeColors.grey.border) => ({
 export default styler(({ colors, fonts, helpers, keywords, imageAssets, transitions }) => ({
   // Static `className` declarations necessary for nested references:
   accordionToggleBtn: {},
-  active: {},
   bodyFieldIcon: {},
   collapsibleDescription: {},
   emptySummary: {},
   hidden: {},
   shown: {},
   tlDescription: {},
-  tlLocation: {},
-  tlPhotos: {},
 
-  accordionContainer: {
-    // Remove focus ring produced as consequence of making `<div />` tabbable/focusable:
-    '&:focus': {
-      outline: keywords.none,
-    },
-  },
+  // accordionContainer: {
+  //   // Remove focus ring produced as consequence of making `<div />` tabbable/focusable:
+  //   '&:focus': {
+  //     outline: keywords.none,
+  //   },
+  // },
   bodyText: {
     display: `block ${keywords.important}`,
     lineHeight: 1.2,
@@ -54,19 +51,19 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssets, transiti
       height: '6em',
     },
   },
-  contentSectionLocation: {
-    ...helpers.hideOverflow,
-  },
-  eventPanelBodyAccordionSection: {
-    height: 35,
-    overflow: 'hidden',
-    padding: [0, '1.25rem'],
-    transition: transitions.accordionReveal,
+  // contentSectionLocation: {
+  //   ...helpers.hideOverflow,
+  // },
+  // eventPanelBodyAccordionSection: {
+  //   height: 35,
+  //   overflow: 'hidden',
+  //   padding: [0, '1.25rem'],
+  //   transition: transitions.accordionReveal,
 
-    '&:hover': {
-      backgroundColor: colors.white.eggShell,
-    },
-  },
+  //   '&:hover': {
+  //     backgroundColor: colors.white.eggShell,
+  //   },
+  // },
   panelBody: {
     border: 'none',
     margin: ['1rem', 0],
@@ -119,37 +116,37 @@ export default styler(({ colors, fonts, helpers, keywords, imageAssets, transiti
   tlDate: {
     ...helpers.flexify('row', 'flex-start', ['center', 'center']),
   },
-  tlRowSummary: {
-    ...helpers.flexify('row', 'flex-start', ['center', 'center']),
-    padding: ['0.75rem', 0],
+  // tlRowSummary: {
+  //   ...helpers.flexify('row', 'flex-start', ['center', 'center']),
+  //   padding: ['0.75rem', 0],
 
-    '&:hover $toggleGlyph': {
-      transform: 'scale(1.25)',
-    },
+  //   '&:hover $toggleGlyph': {
+  //     transform: 'scale(1.25)',
+  //   },
 
-    '& > em': {
-      width: '100%',
-    },
-  },
-  toggleGlyph: {
-    float: 'right',
-    font: {
-      lineHeight: '16px',
-      size: `2rem ${keywords.important}`,
-    },
-    position: 'relative',
-    right: '-0.5rem',
-    transition: helpers.condenseStyles({
-      duration: 750,
-      delay: 125, // eslint-disable-line sort-keys
-      property: 'transform',
-      timingFunction: 'ease',
-    }, true),
+  //   '& > em': {
+  //     width: '100%',
+  //   },
+  // },
+  // toggleGlyph: {
+  //   float: 'right',
+  //   font: {
+  //     lineHeight: '16px',
+  //     size: `2rem ${keywords.important}`,
+  //   },
+  //   position: 'relative',
+  //   right: '-0.5rem',
+  //   transition: helpers.condenseStyles({
+  //     duration: 750,
+  //     delay: 125, // eslint-disable-line sort-keys
+  //     property: 'transform',
+  //     timingFunction: 'ease',
+  //   }, true),
 
-    '&$active': {
-      transform: 'rotateZ(90deg)',
-    },
-  },
+  //   '&$active': {
+  //     transform: 'rotateZ(90deg)',
+  //   },
+  // },
 }), {
   styleName: 'EventPanelBodyStyles',
 })(EventPanelBodyPure);

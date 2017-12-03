@@ -1,31 +1,28 @@
-'use strict';
-const Mongoose = require('mongoose'),
-      Schema = Mongoose.Schema;
-
+const { Schema } = require('mongoose');
 
 const EventPhotoSchema = new Schema({
+  dateTaken: Date,
+  event: {
+    ref: 'Event',
+    type: Schema.Types.ObjectId,
+  },
+  isCoverPhoto: Boolean,
+  locationTaken: String,
   title: {
     type: String,
     validate: {
+      message: 'Please provide a title for this image.',
       validator: (title) => Boolean(title.length),
-      message: 'Please provide a title for this image.'
-    }
-  },
-  event: {
-    type: Schema.Types.ObjectId,
-    ref: 'Event'
+    },
   },
   url: {
+    required: [true, 'This photo requires a URL.'],
     type: String,
-    required: [true, 'This photo requires a URL.']
   },
-  dateTaken: Date,
-  locationTaken: String,
-  isCoverPhoto: Boolean
 }, {
-  toObject: { virtuals: true },
+  collection: 'EventPhotos',
   toJSON: { virtuals: true },
-  collection: 'EventPhotos'
+  toObject: { virtuals: true },
 });
 
 module.exports = EventPhotoSchema;

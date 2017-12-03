@@ -8,12 +8,12 @@
 }
 
 .input-gr {
-  // position: relative;
-  // display: table;
-  // width: 100%;
-  // margin-bottom: 1rem;
-  // border-radius: 0.25rem;
-  // border-collapse: separate;
+  position: relative;
+  display: table;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  border-collapse: separate;
   &-addon {
     @include brCorners(left, 1px solid $theme-red);
     @extend %input-group;
@@ -28,62 +28,62 @@
   }
 }
 
-// .validation-msg {
-//   position: absolute;
-//   right: 15%;
-//   bottom: calc(100% + 0.375rem);
-//   font: normal 600 0.75rem/1 $theme-fonts;
-//   color: $theme-danger;
-// }
+.validation-msg {
+  position: absolute;
+  right: 15%;
+  bottom: calc(100% + 0.375rem);
+  font: normal 600 0.75rem/1 $theme-fonts;
+  color: $theme-danger;
+}
 
 .warn-field {
   box-shadow: 0 0 5px #FF2F47;
   border-radius: 0.25rem;
 }
 
-// .required-field {
-//   &:after {
-//     @include equalSides(0.5rem);
-//     @extend %br-circle;
-//     position: absolute;
-//     content: '';
-//     left: calc(100% + 0.5rem);
-//     top: 50%;
-//     margin-top: -0.125rem;
-//     background-color: $theme-danger;
-//   }
-// }
+.required-field {
+  &:after {
+    @include equalSides(0.5rem);
+    @extend %br-circle;
+    position: absolute;
+    content: '';
+    left: calc(100% + 0.5rem);
+    top: 50%;
+    margin-top: -0.125rem;
+    background-color: $theme-danger;
+  }
+}
 
-// .form-cont {
-//   @include brCorners(right);
-//   width: 100%;
-//   padding: 0.5rem .75rem;
-//   font: normal normal 1.25rem/1.75rem $theme-fonts;
-//   color: #464A4C;
-//   background-color: $theme-content-lt;
-//   background-image: none;
-//   -webkit-background-clip: padding-box;
-//           background-clip: padding-box;
-//   border-left: none;
-//   -webkit-transition: border-color ease-in-out 0.15s,
-//                       -webkit-box-shadow ease-in-out 0.15s;
-//   -moz-transition:    border-color ease-in-out 0.15s,
-//                       -webkit-box-shadow ease-in-out 0.15s;
-//   transition:         border-color ease-in-out 0.15s,
-//                       -webkit-box-shadow ease-in-out 0.15s;
-//   -o-transition:      border-color ease-in-out 0.15s,
-//                       box-shadow ease-in-out 0.15s;
-//   transition:         border-color ease-in-out 0.15s,
-//                       box-shadow ease-in-out 0.15s;
-//   transition:         all 0.35s ease-in-out;
-//   &:focus {
-//     outline: 0;
-//     font: normal normal 2rem/3rem $theme-fonts;
-//     border-color: transparent;
-//     -webkit-box-shadow: inset 0 0 4px 0 rgba(210, 210, 210, 0.3),
-//                         0 0 2px 0 rgba(0, 183, 255, 0.42);
-//     box-shadow:         inset 0 0 4px 0 rgba(210, 210, 210, 0.3),
-//                         0 0 2px 0 rgba(0, 183, 255, 0.42);
-//   }
-// }
-// textarea.form-cont { max-height: 250px; }
+.form-cont {
+  @include brCorners(right);
+  width: 100%;
+  padding: 0.5rem .75rem;
+  font: normal normal 1.25rem/1.75rem $theme-fonts;
+  color: #464A4C;
+  background-color: $theme-content-lt;
+  background-image: none;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border-left: none;
+  -webkit-transition: border-color ease-in-out 0.15s,
+                      -webkit-box-shadow ease-in-out 0.15s;
+  -moz-transition:    border-color ease-in-out 0.15s,
+                      -webkit-box-shadow ease-in-out 0.15s;
+  transition:         border-color ease-in-out 0.15s,
+                      -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition:      border-color ease-in-out 0.15s,
+                      box-shadow ease-in-out 0.15s;
+  transition:         border-color ease-in-out 0.15s,
+                      box-shadow ease-in-out 0.15s;
+  transition:         all 0.35s ease-in-out;
+  &:focus {
+    outline: 0;
+    font: normal normal 2rem/3rem $theme-fonts;
+    // border-color: transparent;
+    // -webkit-box-shadow: inset 0 0 4px 0 rgba(210, 210, 210, 0.3),
+    //                     0 0 2px 0 rgba(0, 183, 255, 0.42);
+    // box-shadow:         inset 0 0 4px 0 rgba(210, 210, 210, 0.3),
+    //                     0 0 2px 0 rgba(0, 183, 255, 0.42);
+  }
+}
+textarea.form-cont { max-height: 250px; }

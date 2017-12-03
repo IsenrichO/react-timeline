@@ -1,74 +1,90 @@
 require('babel-register');
 require('react-hot-loader/patch');
 
+const express = require('express');
+const http = require('http');
 const path = require('path');
-const fs = require('fs');
 const dedent = require('dedent');
-const dotenv = require('dotenv').config();
+// const expressStaticGzip = require('express-static-gzip');
+// const path = require('path');
 const { v2: Cloudinary } = require('cloudinary');
-const Webpack = require('webpack');
-const WebpackDevMiddleware = require('webpack-dev-middleware');
-const WebpackHotMiddleware = require('webpack-hot-middleware');
-const App = require('./server/app.js');
-const { default: WebpackConfig } = require('./webpack.config.babel');
+const DotEnvExpand = require('dotenv-expand');
+const app = require('./server/app');
 
-Cloudinary.config({
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET,
-  cloud_name: process.env.CLOUD_NAME,
+const appEnv = require('dotenv-safe').load({
+  allowEmptyValues: false,
+  encoding: 'utf8',
+  path: path.resolve(__dirname, './.env'),
+  sample: path.resolve(__dirname, './.env.example'),
 });
 
-// App.get('*', (req, res) => {
-//   res.redirect('http://localhost:3000');
+DotEnvExpand(appEnv);
+
+// Register Cloudinary configuration tokens:
+// Cloudinary.config({
+//   api_key: process.env.API_KEY,
+//   api_secret: process.env.API_SECRET,
+//   cloud_name: process.env.CLOUD_NAME,
 // });
+const {
+  API_KEY: api_key,
+  API_SECRET: api_secret,
+  CLOUD_NAME: cloud_name,
+} = (process.env || {});
 
-//
-const webpackBundleInvalidator = (instance) => (evt, fileName) => {
-  console.info(`Changes to this project's webpack configuration detected in ${fileName}`);
+Cloudinary.config({ api_key, api_secret, cloud_name });
 
-  // Recompile the bundle on file change detection:
-  instance.invalidate();
-};
+(function() {
+  // Step 1) Create & configure a webpack compiler:
+  const Webpack = require('webpack');
+  const { default: webpackConfigFunction } = require('./webpack.config.babel');
 
-const serveApplication = ((compiler) => {
-  const DevMiddlewareInstance = WebpackDevMiddleware(compiler, {
-    noInfo: false, // Supress all but warnings and errors in console 
-    headers: {
-      'Access-Control-Allow-Credentials': true,
-      'Access-Control-Allow-Origin': 'http://<appserver hostname>:<appserver port>',
-    },
+  const WebpackConfig = webpackConfigFunction(appEnv);
+  const compiler = Webpack(WebpackConfig);
+
+  // Step 2) Attach the dev middleware to the compiler & the server:
+  app.use(require('webpack-dev-middleware')(compiler, {
     historyApiFallback: true,
-    hot: true,
+    noInfo: false, // Supress all but warnings and errors in console 
     publicPath: WebpackConfig.output.publicPath,
     quiet: false,
     stats: { colors: true },
-  });
+  }));
 
-  // Register the `webpack-dev-middleware` with the Express app:
-  App.use(DevMiddlewareInstance);
-
-  // Watch for changes occurring in files external to the (already monitored) `src` directory,
-  // including any Webpack configuration file(s), and subsequently initiate a bundle rebuild:
-  fs.watch('./webpack.config.babel.js', webpackBundleInvalidator(DevMiddlewareInstance));
-
-  App.use(WebpackHotMiddleware(compiler, {
-    heartbeat: 2000,
-    hot: true,
+  // Step 3) Attach the hot middleware to the compiler & the server:
+  app.use(require('webpack-hot-middleware')(compiler, {
+    heartbeat: 10 * 1000,
     log: console.info,
     path: '/__webpack_hmr',
   }));
-})(Webpack(WebpackConfig));
+})();
 
-const Server = App.listen(process.env.PORT || 3000, () => {
-  // Include the below to obviate the `ERR_INCOMPLETE_CHUNKED_ENCODING` console error:
-  Server.keepAliveTimeout = 0;
-
-  const serverPort = Server.address().port;
-  console.info(dedent(`
-    ================================================================
-    🌎 Server is up and running on LocalHost at Port ${serverPort}:
-                  < http://localhost:${serverPort}/ >
-    ================================================================
-    \\n
-  `));
+// Do anything you like with the rest of your express application:
+app.get('/', function(req, res, next) {
+  res.sendFile(__dirname + '/index.html');
+  next();
 });
+
+app.use(express.static(__dirname + '/build'));
+
+if (require.main === module) {
+  const server = http.createServer(app);
+  const { PORT = 3000 } = (process.env || {});
+
+  server.listen(PORT, () => {
+    // Include the below to obviate the `ERR_INCOMPLETE_CHUNKED_ENCODING` console error:
+    server.keepAliveTimeout = 0;
+
+    const { port: PORT } = server.address();
+    console.info(dedent(`
+      \\n
+      ========================================================================
+          🌎 Server is running on localhost and listening at port ${PORT}:
+                          < http://localhost:${PORT} >
+      ========================================================================
+      \\n
+    `));
+  });
+}
+
+module.exports = app;

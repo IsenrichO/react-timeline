@@ -51,23 +51,27 @@ export default {
     pure: '#808080', // Grey|Gray
     tuna: '#464A4C',
     unchecked: '#5A5A5A',
+    veryLight: '#CDCDCD',
   },
   purple: {
     background: '#AB76C2',
     pure: '#800080', // Purple
   },
   red: {
+    auburn: '#995858',
     dark: '#7C3939',
     disabled: 'rgba(177, 91, 91, 0.50)',
     focus: '#AB5252',
     hover: '#B86969',
     noTransparent: '#CDABAC',
+    oldRose: '#BE7A7A',
     oysterPink: '#E8CECE',
     primary: THEME_RED,
     pure: '#FF0000', // Red
-    quaternary: '#BE7A7A',
+    quinary: '#854545',
     secondary: '#DA7A7A',
     semiTransparent: 'rgba(177, 91, 91, 0.30)',
+    senary: '#8A4747',
     tertiary: '#D1B3B3',
   },
   status: {

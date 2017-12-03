@@ -1,12 +1,12 @@
-'use strict';
-const Express = require('express'),
-      router = Express.Router(),
-      BodyParser = require('body-parser'),
-      Multer = require('multer'),
-      Upload = Multer({ dest: 'uploads/' }),
-      parseUrlEncoded = BodyParser.urlencoded({ extended: false }),
-      PhotosController = require('../controllers/PhotosController');
+const Express = require('express');
+const BodyParser = require('body-parser');
+const Multer = require('multer');
+const PhotosController = require('../controllers/PhotosController');
 
+const router = Express.Router();
+const parseUrlEncoded = BodyParser.urlencoded({ extended: false });
+
+const Upload = Multer({ dest: 'uploads/' });
 
 router
   .route('/')

@@ -1,5 +1,3 @@
-'use strict';
-
 /* The API controller
    Exports 3 methods:
    * post - Creates a new thread
@@ -8,7 +6,6 @@
 */
 var Event = require('../db/models/Event');
 const formatDate = require('./utilities');
-
 
 const warn = (head = 'Error:', ...warningMsg) => console.warn.apply(console, ``);
 
@@ -28,19 +25,19 @@ const getTLRange = (req, res) => {
     .find({})
     .sort({ date: 1 })
     .limit(1)
-    .then(evts => evts[0].date);
+    .then((evts) => evts[0].date);
 
   const maxQuery = Event
     .find({})
     .sort({ date: -1 })
     .limit(1)
-    .then(evts => evts[0].date);
+    .then((evts) => evts[0].date);
 
   return Promise
     .all([minQuery, maxQuery])
-    .then(result => ({
+    .then((result) => ({
       min: result[0],
-      max: result[1]
+      max: result[1],
     }));
 };
 
@@ -62,11 +59,11 @@ const customQuery = (criteria, sortProperty, offset = 0, limit = 20) => {
 
   return Promise
     .all([query, Event.find(buildQuery(criteria)).count()])
-    .then(results => ({
+    .then((results) => ({
       all: results[0],
       count: results[1],
       offset,
-      limit
+      limit,
     }));
 };
 
@@ -80,7 +77,7 @@ const buildQuery = (criteria) => {
   if (criteria.date) {
     query.range = {
       $gte: criteria.date.min,
-      $lte: criteria.date.max
+      $lte: criteria.date.max,
     };
   }
 
@@ -97,7 +94,7 @@ const batchUpdate = (_ids) => {
   return Event
     .update(
       { _id: { $in: _ids } },
-      { multi: true }
+      { multi: true },
     );
 };
 
@@ -159,9 +156,9 @@ const batchUpdate = (_ids) => {
 
 module.exports = {
   addEvents,
+  deleteBatchEvents,
+  deleteEvents,
   getIndividualEvent,
   listEvents,
   updateSingleEvent,
-  deleteEvents,
-  deleteBatchEvents
 };

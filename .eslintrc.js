@@ -43,10 +43,15 @@ module.exports = {
     },
   }, {
     "files": [
+      "config/**/*.js",
       "db/**/*.js",
+      "server/**/*.js",
+      "services/**/*.js",
     ],
     "rules": {
+      "import/no-unassigned-import": 0,
       "import/unambiguous": 0,
+      "no-param-reassign": 0,
     },
   }],
   "parser": "babel-eslint",
@@ -391,6 +396,7 @@ module.exports = {
       "allow": [
         "**/actions/*",   // Whitelist Redux 'actions' directory
         "**/assets/**",   // Whitelist stylesheet & image asset imports
+        "**/config/**",   // Whitelist the `config` directory
         "**/db/**",       // Whitelist internal database resources
         "**/server/**",   // Whitelist 'server' directory resources
         "**/src/**/*",    // Whitelist primary app dir

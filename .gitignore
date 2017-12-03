@@ -1,10 +1,10 @@
-### Node etc ###
-
 # Logs:
 logs
 *.log
-.env
 .DS_Store
+
+# Secured app tokens and runtime variables:
+.env
 
 # Runtime Data:
 pids
@@ -28,6 +28,9 @@ coverage
 #   > [Ref. URL]:  <http://nodejs.org/api/addons.html>
 build/
 dist/
+
+# Temporary data:
+.tmp/
 
 # Dependency Directories:
 #   > Deployed apps should consider commenting these lines out...

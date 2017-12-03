@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { aesthetic } from '../../style/styler';
+import { DEFAULT_LOGO_HEIGHT, DEFAULT_LOGO_WIDTH } from '../../style/theming/base/constants';
 import { reciprocal } from '../../util/Math';
 import { stylePropTypes } from '../../util/TypeChecking';
 
@@ -12,19 +13,25 @@ type Props = {
   withWhiteTheme?: boolean,
 };
 
-const RTLogoGlyph = ({
+const RTLogoGlyphV2 = ({
   height,
   styles,
   theme,
   width,
   withWhiteTheme,
 }: Props) => {
-  const ASPECT_RATIO = (284 / 344);
+  const ASPECT_RATIO = (726 / 893);
   const {
     colors: {
+      grey: {
+        veryLight: veryLightGray = '#CDCDCD',
+      },
       red: {
+        auburn = '#995858',
         primary: themeRed = '#B15B5B',
-        quaternary: themeMediumRed = '#BE7A7A',
+        oldRose: themeMediumRed = '#BE7A7A',
+        quinary: themeRedDark = '#854545',
+        senary: themePink = '#8A4747',
         tertiary: themeLightRed = '#D1B3B3',
       },
       white: { primary: themeWhite = '#FFFFFF' },
@@ -37,26 +44,61 @@ const RTLogoGlyph = ({
 
   return (
     <svg
-      height={height !== 344
+      height={height !== DEFAULT_LOGO_HEIGHT
         ? height
         : getAdjustedLength(width, false)
       }
       style={styles}
       version={1.1}
-      viewBox="0 0 284 344"
-      width={width !== 284
+      viewBox={`0 0 ${DEFAULT_LOGO_WIDTH} ${DEFAULT_LOGO_HEIGHT}`}
+      width={width !== DEFAULT_LOGO_WIDTH
         ? width
         : getAdjustedLength(height)
       }
       xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
     >
+      <desc>Created with Sketch.</desc>
+
       <defs>
         <linearGradient
-          id="rtLogoDorsalFaceGradient-letterR-bowl"
-          x1="30.3663911%"
-          x2="75.6176189%"
-          y1="73.7628923%"
-          y2="34.4150369%"
+          id="rtLogo-linearGradient-1"
+          x1="13.9105375%"
+          x2="83.0185148%"
+          y1="40.813412%"
+          y2="66.4848851%"
+        >
+          <stop
+            offset="0%"
+            stopColor={!!withWhiteTheme ? veryLightGray : themeRedDark}
+          />
+          <stop
+            offset="100%"
+            stopColor={!!withWhiteTheme ? themeWhite : themeRed}
+          />
+        </linearGradient>
+        <linearGradient
+          id="rtLogo-linearGradient-2"
+          x1="64.9001343%"
+          x2="100%"
+          y1="61.4467117%"
+          y2="100%"
+        >
+          <stop
+            offset="0%"
+            stopColor={!!withWhiteTheme ? veryLightGray : themeRedDark}
+          />
+          <stop
+            offset="100%"
+            stopColor={!!withWhiteTheme ? themeWhite : themeRed}
+          />
+        </linearGradient>
+        <linearGradient
+          id="rtLogo-linearGradient-3"
+          x1="58.6986196%"
+          x2="74.0448851%"
+          y1="38.2859226%"
+          y2="9.06164623%"
         >
           <stop
             offset="0%"
@@ -64,75 +106,74 @@ const RTLogoGlyph = ({
           />
           <stop
             offset="100%"
+            stopColor={!!withWhiteTheme ? veryLightGray : themePink}
+          />
+        </linearGradient>
+        <linearGradient
+          id="rtLogo-linearGradient-4"
+          x1="5.83474089%"
+          x2="50%"
+          y1="74.8826349%"
+          y2="20.7363834%"
+        >
+          <stop
+            offset="0%"
+            stopColor={!!withWhiteTheme ? themeWhite : auburn}
+          />
+          <stop
+            offset="100%"
             stopColor={themeLightRed}
           />
         </linearGradient>
       </defs>
+
       <g
-        fill={keywords.none}
         fillRule="evenodd"
-        id="rtLogoSvgGroup"
+        fill={keywords.none}
+        id="rtLogo-svgGroup"
         stroke={keywords.none}
         strokeWidth={1}
       >
-        <g
-          id="rtLogoTransformGroup"
-          transform="translate(-402.000000, -276.000000)"
-        >
-          <g
-            id="rtLogoPathGroup"
-            transform="translate(402.000000, 276.000000)"
-          >
-            <path
-              d="M77.7862665,221.5 C20.7150668,198.807464 -4.95159983,161.640797 0.786266511,110 C5.11959984,71 36.4529332,42.6666667 94.7862665,25 L141.286267,40.5 C69.2862665,61.5 32.4529332,92.1666667 30.7862665,132.5 C28.613719,185.075651 54.113719,218.075651 107.286267,231.5 L77.7862665,221.5 Z"
-              fill="url(#rtLogoDorsalFaceGradient-letterR-bowl)"
-              id="rtLogoDorsalFace-letterR-bowl"
-            />
-            <polygon
-              fill={!!withWhiteTheme ? themeWhite : themeRed}
-              id="rtLogoDorsalFace-letterT-stem"
-              points="110 93.5000153 141.5 75 141.5 294.000015 110.185348 317.200012"
-              transform="translate(125.750000, 196.100006) scale(-1, 1) translate(-125.750000, -196.100006)"
-            />
-            <polygon
-              fill={!!withWhiteTheme ? themeWhite : themeRed}
-              id="rtLogoDorsalFace-letterR-tail"
-              points="35.37518 216 114.5 326.417672 91 343.417672 3 224.417672"
-              transform="translate(58.750000, 279.708836) scale(-1, 1) translate(-58.750000, -279.708836)"
-            />
-            <polygon
-              fill={themeMediumRed}
-              id="rtLogoAnteriorFace-letterR-tail"
-              points="26 184 143 343 78.5 328 26 256"
-              transform="translate(84.500000, 263.500000) scale(-1, 1) translate(-84.500000, -263.500000)"
-            />
-            <path
-              d="M283.351321,100.2517 L283.370696,100.255405 L283.370696,41 L141,16 L141,73.0303994 L229.710007,89.9940761 L229.710007,305.255405 L283.185348,317.200012 L283.351321,100.2517 Z"
-              fill={themeMediumRed}
-              id="rtLogoAnteriorFace-letterT"
-              transform="translate(212.185348, 166.600006) scale(-1, 1) translate(-212.185348, -166.600006)"
-            />
-            <path
-              d="M30,41 C106.333333,61.191497 143.5,95.3676767 141.5,143.528539 C139.137208,200.425597 101.970541,232.076946 30,238.482587 L30,186.946514 L30,99.9896432 L30,41 Z M30,99.5789227 L30,187.478155 C67.1921986,181.826052 85.7882979,167.833333 85.7882979,145.5 C85.7882979,123.166667 67.1921986,107.859641 30,99.5789227 Z"
-              fill={themeMediumRed}
-              id="rtLogoAnteriorFace-letterR-bowl"
-              transform="translate(85.788298, 139.741293) scale(-1, 1) translate(-85.788298, -139.741293)"
-            />
-            <polygon
-              fill={themeLightRed}
-              id="rtLogoAerialFace-letterT-arm"
-              points="95 25.5 237.5 0 283.5 16 140.5 41"
-            />
-          </g>
+        <g id="rtLogoPolygonGroup">
+          <polygon
+            fill="url(#rtLogo-linearGradient-1)"
+            id="rtLogo-anterior-letterT-stem-dorsalHalf"
+            points="119 95 178.817044 111.5 178.817044 239.5 119 223"
+          />
+          <polygon
+            fill="url(#rtLogo-linearGradient-2)"
+            id="rtLogo-anterior-letterT-stem-caudalHalf"
+            points="119 223 178.817044 239.5 178.817044 334.5 119 318"
+          />
+          <polygon
+            fill={themeMediumRed}
+            id="rtLogo-dorsal-letterT-stem"
+            points="178 111.81063 237.817044 93 237.817044 315.530691 178 334.341321"
+          />
+          <polygon
+            fill="url(#rtLogo-linearGradient-3)"
+            id="rtLogo-anterior-letterR-tail"
+            points="59.5 236 118.75 252 59.25 362 0 346"
+          />
+          <path
+            d="M237,0 C237,0 256.333333,5.83333333 295,17.5 L114,66.5 C98.9470878,72.2621026 86.1137545,79.7621026 75.5,89 C64.4206318,98.6431538 59,117.849987 59,131.5 C59,164 59,169 59,203.5 C59,216.5 66,234 68,236 C75.7901813,243.790181 92.1235146,249.956848 117,254.5 C84.1347799,247.618487 52.3014465,238.45182 21.5,227 C9.20216979,222.42773 1,210.401159 1,199 C1,143.5 1,153.5 1,104 C1,84.6928893 7.07773845,71.978725 25.5,62 C33.5,57.6666667 47.1666667,52.5 66.5,46.5 C180.166667,15.5 237,0 237,0 Z"
+            fill="url(#rtLogo-linearGradient-4)"
+            id="rtLogo-anterior-letterR-bowl"
+          />
+          <path
+            d="M179.182034,237.70441 L195.34219,234 L138.84219,342.5 L59.3421898,362 L118.224096,252.937154 C99.8763978,249.879009 83.0367453,245.714843 72.8421898,240.5 C66,237 59,223 59,207.981664 C59,176.830368 59,143.459066 59,129.5 C59,121.5 63.5188907,103.785352 67.3421898,98 C76.0945721,84.756042 92.8421898,72.5 116.84219,65.5 C148.767406,56.1884787 208.21402,40.021812 295.182034,17 L295.182034,77.5 C237.728909,94.1666667 184.782294,110.333333 136.34219,126 C121.291468,130.867757 119.84219,144.5 119.495017,155.5 C119.147845,166.5 119.34219,176 119.495017,187.737832 C119.574857,193.869921 122.34219,207.481664 130.34219,209.5 C138.966129,211.675751 157.84219,211 179.182034,207.5 C179.182034,217.470388 179.182034,228.644686 179.182034,239.005507 Z"
+            fill={themeMediumRed}
+            id="rtLogo-aerial-letterUnion-arm"
+          />
         </g>
       </g>
     </svg>
   );
 };
 
-RTLogoGlyph.displayName = 'ReactTimelineSVGLogo';
+RTLogoGlyphV2.displayName = 'ReactTimelineSVGLogoV3';
 
-RTLogoGlyph.propTypes = {
+RTLogoGlyphV2.propTypes = {
   height: PropTypes.number,
   styles: stylePropTypes,
   theme: PropTypes.string,
@@ -140,12 +181,12 @@ RTLogoGlyph.propTypes = {
   withWhiteTheme: PropTypes.bool,
 };
 
-RTLogoGlyph.defaultProps = {
-  height: 344,
+RTLogoGlyphV2.defaultProps = {
+  height: DEFAULT_LOGO_HEIGHT,
   styles: null,
   theme: 'base',
-  width: 284,
+  width: DEFAULT_LOGO_WIDTH,
   withWhiteTheme: false,
 };
 
-export default RTLogoGlyph;
+export default RTLogoGlyphV2;

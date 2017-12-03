@@ -1,17 +1,14 @@
-'use strict';
-const Mongoose = require('mongoose'),
-      Schema = Mongoose.Schema;
-
+const { Schema } = require('mongoose');
 
 const PointSchema = new Schema({
-  type: {
-    type: String,
-    default: 'Point'
-  },
   coordinates: {
+    index: '2dsphere',
     type: [Number],
-    index: '2dsphere'
-  }
+  },
+  type: {
+    default: 'Point',
+    type: String,
+  },
 });
 
 module.exports = PointSchema;

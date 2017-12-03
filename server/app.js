@@ -2,11 +2,14 @@ const Express = require('express');
 const Mongo = require('mongodb');
 const Mongoose = require('mongoose');
 const BodyParser = require('body-parser');
-const Path = require('path');
+const path = require('path');
 const Request = require('request');
 const Multer = require('multer');
 const uuidv4 = require('uuid/v4'); // Generate a v4 (randomized) UUID
 const { merge } = require('lodash/fp');
+
+// const app = require('../server');
+const app = Express();
 
 const Event = require('../db/models/Event');
 const Photo = require('../db/models/EventPhoto');
@@ -16,8 +19,6 @@ const Tag = require('../db/models/EventTag');
 const ApI = require('./controllers/EventsController');
 const seedData = require('../src/constants/json/SeedData.json');
 
-
-const App = Express();
 const PathnameBase = '/api/v1/';
 
 const Upload = Multer({ dest: 'uploads/' });
@@ -25,15 +26,19 @@ const Upload = Multer({ dest: 'uploads/' });
 // Invoke Express's `static` middleware for configuring `assets`
 // as our default static locale; defaults to serving the index.html
 // file location therein.
-App.use(Express.static(Path.join(__dirname, 'build')));
-App.use(BodyParser.json());                         // Parses application/json
-App.use(BodyParser.urlencoded({ extended: true })); // Parses application/x-www-form-urlencoded
+// App.use(Express.static(path.join(__dirname, 'build')));
+
+// Invoke the Morgan server-side logging middleware:
+app.use(require('morgan')('short'));
+
+// Invoke the BodyParser middleware to allow parsing `application/x-www-form-urlencoded` form data:
+app.use(BodyParser.urlencoded({ extended: true }));
 
 // Specify ECMAScript2015 Promise object as default Promise library for Mongoose to use.
 //  This assignment addresses the Mongoose mpromise library deprecation warning.
 Mongoose.Promise = global.Promise;
 
-const [Db, Server] = [Mongo.Db, Mongo.Server];
+const { Db, Server } = Mongo;
 // const db = new Db('events', new Server('localhost', 27017));
 // const db = Mongoose.connection;
 Mongoose.set('debug', true);
@@ -111,12 +116,12 @@ const searchStarredEventsRoute = require('./routes/eventSearchStarred');
 const photosRoute = require('./routes/photos');
 const tagsRoute = require('./routes/tags');
 
-App.use('/api/events', eventsRoute);
-App.use('/api/events/edit', eventUuidsRoute);
-App.use('/api/search', searchEventsAllRoute);
-App.use('/api/search/recent', searchEventsRoute);
-App.use('/api/search/starred', searchStarredEventsRoute);
-App.use('/api/photos', photosRoute);
-App.use('/api/tags', tagsRoute);
+app.use('/api/events', eventsRoute);
+app.use('/api/events/edit', eventUuidsRoute);
+app.use('/api/search', searchEventsAllRoute);
+app.use('/api/search/recent', searchEventsRoute);
+app.use('/api/search/starred', searchStarredEventsRoute);
+app.use('/api/photos', photosRoute);
+app.use('/api/tags', tagsRoute);
 
-module.exports = App;
+module.exports = app;

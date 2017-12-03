@@ -6,6 +6,7 @@ import FontIcon from 'material-ui/FontIcon';
 import update from 'immutability-helper';
 import { isEmpty, size, throttle } from 'lodash';
 import ShowMoreControl from '../../Atomic/ShowMore';
+import ContentRevealAccordion from '../../partials/ContentRevealAccordion';
 import ImageReel from '../../partials/ImageReel';
 import StaticGMap from '../../Atomic/StaticMap';
 import { aesthetic } from '../../../style/styler';
@@ -72,7 +73,7 @@ export default class EventPanelBodyPure extends Component {
     this.expansionTimer = null;
     this.delayLinkTextChange = throttle(::this.delayLinkTextChange, 875);
     this.slideExpandableContent = throttle(::this.slideExpandableContent, 875);
-    this.toggleAccordionSection = throttle(toggleAccordionSection);
+    // this.toggleAccordionSection = throttle(toggleAccordionSection);
     this.throttleMapToggle = null;
     this.throttlePhotoToggle = null;
   }
@@ -81,8 +82,8 @@ export default class EventPanelBodyPure extends Component {
     const { classNames } = this.props;
     const throttleOpts = [875, { leading: true, trailing: false }];
 
-    this.throttleMapToggle = throttle(this.toggleAccordionSection(classNames, this.mapToggle), ...throttleOpts);
-    this.throttlePhotoToggle = throttle(this.toggleAccordionSection(classNames, this.photosToggle), ...throttleOpts);
+    this.throttleMapToggle = throttle(toggleAccordionSection(classNames, this.mapToggle), ...throttleOpts);
+    this.throttlePhotoToggle = throttle(toggleAccordionSection(classNames, this.photosToggle), ...throttleOpts);
   }
 
   componentWillUnmount = () => this.clearExistingTimers();
@@ -144,7 +145,7 @@ export default class EventPanelBodyPure extends Component {
   render() {
     const {
       classNames,
-      classNames: { accordionContainer, accordionToggleBtn, bodyFieldIcon, tlRowSummary, toggleGlyph },
+      classNames: { accordionContainer, accordionToggleBtn, tlRowSummary, toggleGlyph },
       cloudinaryImageStore,
       evtDescription,
       evtFormattedDate,
@@ -153,12 +154,11 @@ export default class EventPanelBodyPure extends Component {
       uuid,
     } = this.props;
     const { isExpanded, linkText } = this.state;
-    const { colors } = this.theme;
-
     const {
       black: { primary: themeBlack },
       red: { primary: themeRed },
-    } = colors;
+    } = this.theme.colors;
+
     const combinedDescription = evtDescription.join(' ').trim();
     const hasOverflowDescription = combinedDescription.length >= 240;
 
@@ -206,95 +206,125 @@ export default class EventPanelBodyPure extends Component {
           />,
         ]}
 
-        <section
-          className={classes(
-            classNames.eventPanelBodyAccordionSection,
-            classNames.tlDate,
-          )}
-        >
-          <FontIcon
-            className={classes('material-icons', bodyFieldIcon)}
-            color={themeRed}
-          >
-            event
-          </FontIcon>
-          <em>{evtFormattedDate}</em>
-        </section>
+        <ContentRevealAccordion
+          iconLeftName="event"
+          label={evtFormattedDate}
+          withAccordion={false}
+          withContent={false}
+        />
 
-        <section
-          className={classes(
-            classNames.eventPanelBodyAccordionSection,
-            classNames.tlLocation,
-          )}
-        >
-          <div
-            className={classes(accordionContainer, accordionToggleBtn)}
-            onClick={this.throttleMapToggle}
-            role="button"
-            tabIndex={0}
-          >
-            <div className={classes(accordionContainer, tlRowSummary)}>
-              <FontIcon
-                className={classes('material-icons', bodyFieldIcon)}
-                color={themeRed}
-              >
-                place
-              </FontIcon>
-              <em
-                className={classNames.contentSectionLocation}
-                title={evtLocation}
-              >
-                {evtLocation}
-              </em>
-              <FontIcon
-                ref={(mapToggle) => { this.mapToggle = mapToggle; }}
-                className={classes('material-icons', toggleGlyph)}
-                color={themeBlack}
-              >
-                keyboard_arrow_right
-              </FontIcon>
-            </div>
-            <StaticGMap evtLocation={evtLocation} />
-          </div>
-        </section>
+        <ContentRevealAccordion
+          children={<StaticGMap evtLocation={evtLocation} />}
+          iconLeftName="place"
+          label={evtLocation}
+        />
 
-        <section
-          className={classes(
-            classNames.eventPanelBodyAccordionSection,
-            classNames.tlPhotos,
-          )}
-        >
-          <div
-            className={classes(accordionContainer, accordionToggleBtn)}
-            onClick={this.throttlePhotoToggle}
-            role="button"
-            tabIndex={0}
-          >
-            <div className={classes(accordionContainer, tlRowSummary)}>
-              <FontIcon
-                className={classes('material-icons', bodyFieldIcon)}
-                color={themeRed}
-              >
-                collections
-              </FontIcon>
-              <em>{EventPanelBodyPure.getPhotosTagLine(size(cloudinaryImageStore) || 0)}</em>
-              <FontIcon
-                ref={(photosToggle) => { this.photosToggle = photosToggle; }}
-                className={classes('material-icons', toggleGlyph)}
-                color={themeBlack}
-              >
-                keyboard_arrow_right
-              </FontIcon>
-            </div>
+        <ContentRevealAccordion
+          children={
             <ImageReel
               withEventCard
               images={cloudinaryImageStore}
               setNewBackgroundImage={setNewBackgroundImage}
               uuid={uuid}
             />
-          </div>
-        </section>
+          }
+          iconLeftName="collections"
+          label={EventPanelBodyPure.getPhotosTagLine(size(cloudinaryImageStore) || 0)}
+        />
       </div>
     );
   }
 }
+
+// <section
+//   className={classes(
+//     classNames.eventPanelBodyAccordionSection,
+//     classNames.tlDate,
+//   )}
+// >
+//   <FontIcon
+//     className={classes(
+//       'material-icons',
+//       classNames.bodyFieldIcon,
+//     )}
+//     color={themeRed}
+//   >
+//     event
+//   </FontIcon>
+//   <em>{evtFormattedDate}</em>
+// </section>
+
+// <section
+//   className={classes(
+//     classNames.eventPanelBodyAccordionSection,
+//     classNames.tlLocation,
+//   )}
+// >
+//   <div
+//     className={classes(accordionContainer, accordionToggleBtn)}
+//     onClick={this.throttleMapToggle}
+//     role="button"
+//     tabIndex={0}
+//   >
+//     <div className={classes(accordionContainer, tlRowSummary)}>
+//       <FontIcon
+//         className={classes('material-icons', classNames.bodyFieldIcon)}
+//         color={themeRed}
+//       >
+//         place
+//       </FontIcon>
+//       <em
+//         className={classNames.contentSectionLocation}
+//         title={evtLocation}
+//       >
+//         {evtLocation}
+//       </em>
+//       <FontIcon
+//         ref={(mapToggle) => { this.mapToggle = mapToggle; }}
+//         className={classes('material-icons', toggleGlyph)}
+//         color={themeBlack}
+//       >
+//         keyboard_arrow_right
+//       </FontIcon>
+//     </div>
+//     <StaticGMap evtLocation={evtLocation} />
+//   </div>
+// </section>
+
+
+// <section
+//   className={classes(
+//     classNames.eventPanelBodyAccordionSection,
+//     classNames.tlPhotos,
+//   )}
+// >
+//   <div
+//     className={classes(accordionContainer, accordionToggleBtn)}
+//     onClick={this.throttlePhotoToggle}
+//     role="button"
+//     tabIndex={0}
+//   >
+//     <div className={classes(accordionContainer, tlRowSummary)}>
+//       <FontIcon
+//         className={classes('material-icons', bodyFieldIcon)}
+//         color={themeRed}
+//       >
+//         collections
+//       </FontIcon>
+//       <em>{EventPanelBodyPure.getPhotosTagLine(size(cloudinaryImageStore) || 0)}</em>
+//       <FontIcon
+//         ref={(photosToggle) => { this.photosToggle = photosToggle; }}
+//         className={classes('material-icons', toggleGlyph)}
+//         color={themeBlack}
+//       >
+//         keyboard_arrow_right
+//       </FontIcon>
+//     </div>
+//     <ImageReel
+//       withEventCard
+//       images={cloudinaryImageStore}
+//       setNewBackgroundImage={setNewBackgroundImage}
+//       uuid={uuid}
+//     />
+//   </div>
+// </section>

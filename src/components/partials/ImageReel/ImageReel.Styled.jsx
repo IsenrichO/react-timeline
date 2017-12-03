@@ -47,7 +47,7 @@ export default styler(({ colors, fonts, helpers, imageAssets, keywords, transiti
     ...helpers.flexify('row'),
     height: 'calc(10vw + 0.50rem - 1px)',
     lineHeight: 'calc(10vw + 0.50rem - 1px)',
-    margin: ['0.75rem', 0, '0.25rem', '0.50rem'],
+    margin: [0, 0, '0.25rem', '0.50rem'],
     paddingTop: 0,
     transition: transitions.transitionAll(),
 

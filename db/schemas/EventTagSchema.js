@@ -1,25 +1,22 @@
-'use strict';
-const Mongoose = require('mongoose'),
-      Schema = Mongoose.Schema;
-
+const { Schema } = require('mongoose');
 
 const EventTagSchema = new Schema({
+  event: {
+    ref: 'Event',
+    type: Schema.Types.ObjectId,
+  },
   name: {
+    required: [true, 'This tag requires a name.'],
     type: String,
     validate: {
+      message: 'You have not given a name to your tag.',
       validator: (tag) => !!tag.length,
-      message: 'You have not given a name to your tag.'
     },
-    required: [true, 'This tag requires a name.']
   },
-  event: {
-    type: Schema.Types.ObjectId,
-    ref: 'Event'
-  }
 }, {
-  toObject: { virtuals: true },
+  collection: 'EventTags',
   toJSON: { virtuals: true },
-  collection: 'EventTags'
+  toObject: { virtuals: true },
 });
 
 module.exports = EventTagSchema;

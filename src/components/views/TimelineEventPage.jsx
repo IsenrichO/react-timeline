@@ -42,7 +42,7 @@ export default class TimelineEventPagePure extends Component<Props> {
 
   handleDrawerToggle(open, reason = null) {
     // Throw warning log if unrecognized `reason` is given:
-    if (!['clickaway', 'escape', 'swipe', null].includes(reason)) console.warn(`Invalid reason: ${reason}`);
+    if (!['clickaway', 'escape', 'swipe', null].includes(reason)) console.warn(`Invalid reason:\t`, reason);
 
     return this.setState(update(this.state, {
       $toggle: ['isDrawerOpen'],

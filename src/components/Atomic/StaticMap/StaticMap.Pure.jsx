@@ -134,7 +134,6 @@ export default class StaticGMapPure extends Component {
 
   render() {
     const { classNames, evtLocation } = this.props;
-
     const STATIC_MAP_OPTS = [
       this.BASE_URL,
       { key: process.env.GMAPS_STATIC_KEY },

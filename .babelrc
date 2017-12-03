@@ -12,7 +12,7 @@
           "last 3 versions",
           "safari >= 7",
           // "Safari > 10%",
-          "not IE <= 6",
+          "not IE <= 8", // React doesn't support IE8 anyway
         ],
         "chrome": 52,
         "edge": 14,

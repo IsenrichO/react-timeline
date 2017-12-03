@@ -1,0 +1,20 @@
+# Non-critical meta-files:
+.cache
+alias
+HEAD
+v*
+
+# For testing
+test/**/test_output
+test/bak
+.urchin.log
+.urchin_stdout
+
+# Module directories & extraneous package manager output:
+bower_components/
+node_modules/
+npm-debug.log
+
+# Cache stores:
+.DS_Store
+current

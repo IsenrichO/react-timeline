@@ -4,6 +4,8 @@ import { BUTTON_TIMING_FUNCTION } from './transitions';
 
 /* TRUE CONSTANTS */
 export const APP_BAR_HEIGHT = 64;
+export const DEFAULT_LOGO_HEIGHT = 362;
+export const DEFAULT_LOGO_WIDTH = 296;
 
 /* COMPILED DEFAULT EXPORT */
 export default {
@@ -12,5 +14,6 @@ export default {
   DEFAULT_FONTS,
   HEIGHT_OFFSET_VP: `calc(100vh - ${APP_BAR_HEIGHT}px)`,
   HELVETICA_NEUE,
+  LOGO: { DEFAULT_LOGO_HEIGHT, DEFAULT_LOGO_WIDTH },
   THEME_RED,
 };

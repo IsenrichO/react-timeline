@@ -1,10 +1,9 @@
-'use strict';
-const Express = require('express'),
-      router = Express.Router(),
-      BodyParser = require('body-parser'),
-      parseUrlEncoded = BodyParser.urlencoded({ extended: false }),
-      SearchController = require('../controllers/SearchController');
+const Express = require('express');
+const BodyParser = require('body-parser');
+const SearchController = require('../controllers/SearchController');
 
+const router = Express.Router();
+const parseUrlEncoded = BodyParser.urlencoded({ extended: false });
 
 router
   .route('/')
