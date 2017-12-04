@@ -41,7 +41,7 @@ const addNewPhoto = (req, res, next) => {
   new Photo(photoData)
     .save()
     .then(() => Photo.findOne({ url }))
-    .then((photo) => res.json(photo))
+    .then((photo) => res.json && res.json(photo))
     .catch(() => {
       res.status(400).send('Failed to create new photo!');
       next();

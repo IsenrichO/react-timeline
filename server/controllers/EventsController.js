@@ -16,7 +16,9 @@ const listEvents = (req, res, next) => {
       res.send(structuredEvtData);
     })
     .catch((err) => {
-      res.status(400).send('Failed to fetch requested events!');
+      res
+        .status(400)
+        .send('Failed to fetch requested events!');
       next();
     });
 };
@@ -35,7 +37,9 @@ const getSingleEvent = (req, res, next) => {
       res.send(structuredEvtData);
     })
     .catch((err) => {
-      res.status(400).send('Failed to fetch requested event!');
+      res
+        .status(400)
+        .send('Failed to fetch requested event!');
       next();
     });
 };
@@ -50,7 +54,9 @@ const addSingleEvent = (req, res, next) => {
     .then(() => Event.findOne({ name }))
     .then((evt) => res.json(evt))
     .catch(() => {
-      res.status(400).send('Failed to create new event!');
+      res
+        .status(400)
+        .send('Failed to create new event!');
       next();
     });
 };
@@ -72,7 +78,9 @@ const updateSingleEvent = (req, res, next) => {
     .then(() => Event.findOne({ uuid }))
     .then((evt) => res.send(evt))
     .catch(() => {
-      res.status(400).send('Failed to update specified event!');
+      res
+        .status(400)
+        .send('Failed to update specified event!');
       next();
     });
 };
@@ -83,9 +91,11 @@ const deleteSingleEvent = (req, res, next) => {
 
   Event
     .findOneAndRemove({ uuid })
-    .then(() => res.json(uuid))
+    .then(() => res.json && res.json(uuid))
     .catch(() => {
-      res.status(400).send('Failed to delete specified event!');
+      res
+        .status(400)
+        .send('Failed to delete specified event!');
       next();
     });
 };
@@ -96,9 +106,11 @@ const deleteBatchEvents = (req, res, next) => {
 
   Event
     .remove({ uuid: { $in: uuids }})
-    .then(() => res.json(uuids))
+    .then(() => res.json && res.json(uuids))
     .catch(() => {
-      res.status(400).send('Failed to delete selected events!');
+      res
+        .status(400)
+        .send('Failed to delete selected events!');
       next();
     });
 };

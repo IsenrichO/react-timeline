@@ -1,13 +1,11 @@
-'use strict';
-const JWT = require('jwt-simple'),
-      User = require('../../db/models/User');
+const JWT = require('jwt-simple');
+const User = require('../../db/models/User');
 
-
-const genTimestamp = () => new Date().getTime(),
-      genUserToken = (user) => JWT.encode({
-        sub: user.id,         // `sub`: Subject
-        iat: genTimestamp()   // `iat`: Issued At Time
-      }, process.env.JWT_SECRET);
+const genTimestamp = () => new Date().getTime();
+const genUserToken = (user) => JWT.encode({
+  iat: genTimestamp(), // `iat`: Issued At Time
+  sub: user.id,        // `sub`: Subject
+}, process.env.JWT_SECRET);
 
 exports.signup = function(req, res, next) {
   const { firstName, lastName, email, password } = req.body;
@@ -36,9 +34,9 @@ exports.signup = function(req, res, next) {
     }
 
     // If a pre-existing record can't be found, create and save new user record:
-    const newUser = new User({ firstName, lastName, email, password })
+    const newUser = new User({ email, firstName, lastName, password })
       .save()
       .then(() => res.json({ token: genUserToken(newUser) }))
-      .catch(err => next(err));
+      .catch((userErr) => next(userErr));
   });
 };

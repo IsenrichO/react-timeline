@@ -33,11 +33,11 @@ UserSchema.pre('save', function(next) {
 
   // Generate a password salt before executing callback:
   Bcrypt.genSalt(10, (err, salt) => {
-    if (err) { return next(err); }
+    if (err) return next(err);
 
     // Hash (i.e., encrypt) password using generated salt:
-    Bcrypt.hash(User.password, salt, null, (err, hash) => {
-      if (err) { return next(err); }
+    Bcrypt.hash(User.password, salt, null, (hashErr, hash) => {
+      if (hashErr) return next(hashErr);
 
       // Reassign plain-text password to encrypted password:
       User.password = hash;

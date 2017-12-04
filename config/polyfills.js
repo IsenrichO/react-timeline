@@ -4,7 +4,7 @@
  * Consequently, the user is left with no knowledge of what had caused this erratic behavior and/or
  * how to obviate it going forward.
  */
-if (typeof Promise === 'undefined') {
+if (typeof Promise === 'undefined' || !window.Promise) {
   require('promise/lib/rejection-tracking').enable();
   window.Promise = require('promise/lib/es6-extensions.js');
 }

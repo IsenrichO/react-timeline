@@ -28,6 +28,7 @@ export const crudOperation = new Map([
 export const crudAsync2 = (operation, endpoint = RoutePaths.Events, dispatch, actionCreator, curriedArgs, ...configOpts) => {
   const reqData = { data: curriedArgs };
   const request = operation.bind(null, endpoint, reqData, Object.assign({}, config, reqData, ...configOpts));
+
   return request()
     .then((resp) => {
       actionCreator && !!actionCreator

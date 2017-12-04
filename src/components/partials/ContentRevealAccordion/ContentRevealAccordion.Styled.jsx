@@ -37,6 +37,7 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
   },
   tlRowSummary: {
     ...helpers.flexify('row', 'flex-start', ['center', 'center']),
+    maxHeight: 37,
     padding: ['0.75rem', 0],
 
     '&:hover $toggleGlyph': {

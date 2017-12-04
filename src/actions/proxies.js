@@ -1,7 +1,5 @@
-'use strict';
 import Axios from 'axios';
-import * as Types from './types';
 import * as RoutePaths from '../routing/RoutePaths';
-
+// import * as Types from './types';
 
 export const SearchEventsProxy = (...criteria) => {};

@@ -1,4 +1,5 @@
 module.exports = {
+  ident: 'postcss',
   plugins: [
     require('autoprefixer'),
     require('postcss-import'),
@@ -11,5 +12,6 @@ module.exports = {
     require('postcss-selector-matches'),
     require('postcss-will-change'),
   ],
+  stringifier: 'midas',
   syntax: 'postcss-scss',
 };

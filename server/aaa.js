@@ -4,7 +4,7 @@
    * list - Returns a list of threads
    * show - Displays a thread and its posts
 */
-var Event = require('../db/models/Event');
+const Event = require('../db/models/Event');
 const formatDate = require('./utilities');
 
 const warn = (head = 'Error:', ...warningMsg) => console.warn.apply(console, ``);
@@ -14,7 +14,7 @@ const warn = (head = 'Error:', ...warningMsg) => console.warn.apply(console, ``)
 //  1.) `err` error parameter
 //  2.) `data` response value parameter
 const handleResponse = (err, data) => {
-  if (err) { throw new Error(`Mongo encountered an error!\t${err}`); }
+  if (err) throw new Error(`Mongo encountered an error!\t${err}`);
   // res.send(data);
 };
 
@@ -71,7 +71,7 @@ const buildQuery = (criteria) => {
   const query = {};
 
   if (criteria.name) {
-    criteria.$text = { $search: critera.name };
+    criteria.$text = { $search: criteria.name };
   }
 
   if (criteria.date) {
@@ -90,13 +90,11 @@ const buildQuery = (criteria) => {
  * @param  {Array} _ids  An Array of the _ids denoting those Event records to update
  * @return {Promise}     A Promise that resolves after the update
  */
-const batchUpdate = (_ids) => {
-  return Event
-    .update(
-      { _id: { $in: _ids } },
-      { multi: true },
-    );
-};
+const batchUpdate = (_ids) => Event
+  .update(
+    { _id: { $in: _ids } },
+    { multi: true },
+  );
 
 
 // router.post('/tasks', function(req, res) {

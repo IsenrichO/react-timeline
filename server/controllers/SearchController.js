@@ -1,20 +1,22 @@
-'use strict';
 const Event = require('../../db/models/Event');
 
-
 // 
-const fetchSearchCategoryEvents = (params = {}, category = 'all', sort = { date: -1 }, limit = Number.MAX_SAFE_INTEGER) =>
-  (req, res, next) => Event
-    .find(params)
-    .sort(sort)
-    .limit(limit)
-    .then(evts => res.json(evts))
-    .catch(err => {
-      res
-        .status(400)
-        .send(`Failed to fetch <${category}> events!\n>\t${err}`);
-      next();
-    });
+const fetchSearchCategoryEvents = (
+  params = {},
+  category = 'all',
+  sort = { date: -1 },
+  limit = Number.MAX_SAFE_INTEGER,
+) => (req, res, next) => Event
+  .find(params)
+  .sort(sort)
+  .limit(limit)
+  .then((evts) => res.json && res.json(evts))
+  .catch((err) => {
+    res
+      .status(400)
+      .send(`Failed to fetch <${category}> events!\n>\t${err}`);
+    next();
+  });
 
 //
 const getAllEvents = fetchSearchCategoryEvents();
@@ -39,17 +41,20 @@ const getAgeRange = () => {
     .find({})
     .sort({ date: 1 })
     .limit(1)
-    .then(evts => evts[0].date);
+    .then((evts) => evts[0].date);
 
   const maxQuery = Event
     .find({})
     .sort({ date: -1 })
     .limit(1)
-    .then(evts => evts[0].date);
+    .then((evts) => evts[0].date);
 
   return Promise
     .all([minQuery, maxQuery])
-    .then(result => ({ min: result[0], max: result[1] }));
+    .then((result) => ({
+      min: result[0],
+      max: result[1],
+    }));
 };
 
 
@@ -71,11 +76,11 @@ const customQuery = (criteria, sortProperty = 'date', offset = 0, limit = 20) =>
 
   return Promise
     .all([query, Event.count()])
-    .then(results => ({
+    .then((results) => ({
       all: results[0],
       count: results[1],
       offset,
-      limit
+      limit,
     }));
 };
 
@@ -86,7 +91,7 @@ const buildQuery = (criteria) => {
   if (criteria.date) {
     query.date = {
       $gte: criteria.date.min,
-      $lte: criteria.date.max
+      $lte: criteria.date.max,
     };
   }
   return query;
@@ -98,5 +103,5 @@ module.exports = {
   customQuery,
   getAllEvents,
   getRecentlyModified,
-  getStarredEvents
+  getStarredEvents,
 };

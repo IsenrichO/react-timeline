@@ -3,17 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import RouterConfig from './routing/RouterConfig';
 
-console.info(process.env.CLOUD_NAME);
-console.info(process.env.API_KEY);
-console.info(process.env.API_SECRET);
-console.info(process.env.HAPPY_VERBOSE);
-console.info(process.env.UPLOAD_PRESET);
-console.info(process.env.CLOUDINARY_URL);
-console.info(process.env.BASE_DELIVERY_URL);
-console.info(process.env.SECURE_DELIVERY_URL);
-console.info(process.env.API_BASE_URL);
-console.info(process.env.ADMIN_URL);
-
 const predicateFunc = (componentName, elementId, failureMsg) => {
   console.info(`\
     • Component/React Element:\t${componentName}\n\

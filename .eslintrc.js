@@ -416,8 +416,10 @@ module.exports = {
     "import/no-namespace": 0,
     "import/no-nodejs-modules": [2, {
       "allow": [
-        "fs",       // Node.js FileSystem Module
-        "path",     // Node.js path Module
+        "fs",       // Node.js FileSystem module
+        "http",     // Node.js HTTP server module
+        "path",     // Node.js path module
+        "zlib",     // Node.js GZip compression and Deflate protocol module
       ],
     }],
     "import/no-unassigned-import": [2, {
