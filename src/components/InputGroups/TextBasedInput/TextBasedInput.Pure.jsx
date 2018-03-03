@@ -1,10 +1,10 @@
 // @flow
 import React, { createElement, isValidElement } from 'react';
-import PropTypes from 'prop-types';
-import { classes, ClassNamesPropType } from 'aesthetic';
-import isString from 'lodash/isString';
-import FontIcon from 'material-ui/FontIcon';
-import { aesthetic } from '../../../style/styler';
+import PropTypes                                from 'prop-types';
+import { classes, ClassNamesPropType }          from 'aesthetic';
+import isString                                 from 'lodash/isString';
+import FontIcon                                 from 'material-ui/Icon';
+import { aesthetic }                            from '~/style/styler';
 
 type Props = {
   error?: boolean,

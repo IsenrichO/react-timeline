@@ -1,21 +1,17 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import Modal from 'react-modal';
-import { classes, ClassNamesPropType } from 'aesthetic';
-import update from 'immutability-helper';
-import EventEditingModalStyles from '../../constants/json/EventEditingModalStyles.json';
-import FileUploadAPI from '../partials/FileUploadApi';
-import { updateSingleEvent } from '../../state/sourceEventData';
-import { EventModalStateInitializer, EventModalStatePropTypes } from '../../state/eventModal';
-import CloseButton from '../Atomic/CloseButton';
-import FormButton from '../Atomic/FormButton';
-import getInputGroup from '../InputGroups';
-import GMap from '../GMap';
-import EventTag from '../EventTag';
+import React, { Component }                                     from 'react';
+import PropTypes                                                from 'prop-types';
+import { Field, reduxForm }                                     from 'redux-form';
+import { connect }                                              from 'react-redux';
+import { classes, ClassNamesPropType }                          from 'aesthetic';
+import update                                                   from 'immutability-helper';
+import CloseButton                                              from '../Atomic/CloseButton';
+import FormButton                                               from '../Atomic/FormButton';
+import getInputGroup                                            from '../InputGroups';
+import EventTag                                                 from '../EventTag';
+import FileUploadAPI                                            from '../partials/FileUploadApi';
+import GMap                                                     from '../partials/GMap';
+import { EventModalStateInitializer, EventModalStatePropTypes } from '~/state/eventModal';
 
 type Props = {
   isInverted?: boolean,
@@ -378,6 +374,9 @@ export default class EditEventModal extends Component<Props> {
         >
           <div className={classNames.modalWrapper}>
             <CloseButton
+              classes={{
+                root: classNames.closeButton,
+              }}
               className={classes(
                 classNames.closeButton,
                 classNames[`closeButtonPanel${!!isInverted ? 'Left' : 'Right'}`],

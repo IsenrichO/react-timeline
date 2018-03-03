@@ -1,14 +1,14 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { ClassNamesPropType } from 'aesthetic';
-import update from 'immutability-helper';
-import Dialog from 'material-ui/Dialog';
-import RaisedButton from 'material-ui/RaisedButton';
-import CalendarDateInput from '../CalendarDateInput';
-import TextBasedInput from '../TextBasedInput';
-import { parseAndFormatIsoDateTime } from '../../../util/DateTime';
-import { aesthetic } from '../../../style/styler';
+import React, { Component }          from 'react';
+import PropTypes                     from 'prop-types';
+import { ClassNamesPropType }        from 'aesthetic';
+import update                        from 'immutability-helper';
+import Dialog                        from 'material-ui/Dialog';
+import Button                        from 'material-ui/Button';
+import CalendarDateInput             from '../CalendarDateInput';
+import TextBasedInput                from '../TextBasedInput';
+import { aesthetic }                 from '~/style/styler';
+import { parseAndFormatIsoDateTime } from '~/util/DateTime';
 
 type Props = {
   error?: boolean,
@@ -79,17 +79,16 @@ export default class DateInputPure extends Component<Props> {
     const { isOpen } = this.state;
     const { keywords } = this.theme;
 
-    console.log('INPUT DATE:', input.value);
-    console.log('PARSED DATE:', parseAndFormatIsoDateTime(input.value));
-
     const modalActions = [
-      <RaisedButton
-        primary
+      <Button
+        // primary
+        raised
         label="Cancel"
         onClick={this.handleRequestClose}
       />,
-      <RaisedButton
-        primary
+      <Button
+        // primary
+        raised
         keyboardFocused
         label="Confirm"
         onClick={this.handleRequestClose}

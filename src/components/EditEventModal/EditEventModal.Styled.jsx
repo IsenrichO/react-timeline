@@ -1,5 +1,5 @@
 import EditEventModalPure from './EditEventModal.Pure';
-import styler from '../../style/styler';
+import styler             from '~/style/styler';
 
 const getDrawerAnimationStyle = (keywords, isClosing = false, isInverted = false) => ({
   delay: null,
@@ -67,7 +67,7 @@ export default styler(({ colors, fonts, keywords, helpers, imageAssets, transiti
       weight: 'bolder',
     },
     height: '4rem',
-    position: 'absolute',
+    position: `absolute ${keywords.important}`,
     textAlign: 'center',
     top: '1rem',
     width: '4rem',

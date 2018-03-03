@@ -1,11 +1,5 @@
-import React from 'react';
-import {
-  ImageSideButton,
-  Block,
-  addNewBlock,
-  createEditorState,
-  Editor,
-} from 'medium-draft';
+import React                                   from 'react';
+import { addNewBlock, Block, ImageSideButton } from 'medium-draft';
 import 'isomorphic-fetch';
 
 export default class CustomImageSideButtonPure extends ImageSideButton {

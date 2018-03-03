@@ -1,0 +1,111 @@
+module.exports = {
+  // Direct Nodemon to display output with resource color-coding:
+  "colours": true,
+
+  /**
+   * Specify a latency period before Nodemon actually restarts after having initially detected a
+   * change. This integer value is given to be in milliseconds (ms). In contrast, throttling the
+   * restart by passing an integer or float via the CLI (using the `--delay` flag) is interpreted
+   * in units of seconds (s) unless explicitly using the time specifier `<Number>ms`.
+   */
+  "delay": 1750,
+
+  "env": {
+    "NODE_ENV": "development"
+  },
+
+  "events": {
+    "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
+  },
+
+  /**
+   * Additional mappings may be added here (e.g., `ls: lsc`). However, it's advised that one ensure
+   * it be cross-compatible with Linux, Mac and Windows operating systems. Alternatively, one can
+   * make the `default.js` dynamically append the `.cmd` for node based utilities.
+   */
+  "execMap": {
+    "js": "node --harmony",
+    "ls": "lsc",
+    "pde": "processing --sketch={{pwd}} --run",
+    "pl": "perl",
+    "py": "python",
+    "rb": "ruby"
+  },
+
+  // Specify which files Nodemon checks against for changes:
+  "ext": "js json jsx",
+
+  /**
+   * With this configuration option one may specify the files and/or directories – in the form of
+   * glob patterns – within the project against which Nodemon will not look for changes. Note that
+   * the newer `nodemon.json` RC-type file supersedes the older `.nodemonignore` file, meaning that
+   * this configuration option has absolute precedence over a `.nodemonignore` file (if present).
+   */
+  "ignore": [
+    ".git",
+    "bower_components",
+    "node_modules"
+  ],
+
+  /**
+   * Nodemon ultimately creates a modified list of items to ignore by merging those custom set
+   * inside the `ignore` option with those set by default in the herein `ignoreRoot` option. By
+   * default, this has as its value the contents of the `ignore-by-default` package's directories.
+   */
+  "ignoreRoot": [
+    ".git",
+  ],
+
+  /**
+   * In rare cases, one may find that Nodemon isn't restarting when it should or that it reports
+   * zero files as being watched (even in the face of a valid config). This issue can likely be
+   * traced back to some behavior with Chokidar, the underlying watch system Nodemon has used since
+   * version 1.4.2+. The fix for this may be to enable the legacy polling mode (which can also be
+   * triggered by passing the `--legacy-watch` CLI command or its `-L` shorthand).
+   */
+  "legacyWatch": false,
+
+  // Defines the restart command – in this case, we use the default `rs` CLI command:
+  "restartable": "rs",
+
+  // Allow Nodemon to run when passed the restart command as well as in response to changes:
+  "runOnChangeOnly": false,
+
+  // The signal – `SIGUSR2` by default – used internally by Nodemon to detect it should restart:
+  "signal": "SIGUSR2",
+
+  "stdin": true,
+
+  /**
+   * Below, 'stdout' refers to the default behaviour of a required nodemon's child, but also
+   * includes `stderr`. If this configuration option is set to `false`, data is still dispatched
+   * via `nodemon.on('stdout/stderr')`.
+   */
+  "stdout": true,
+
+  /**
+   * The `verbose` configuration option (which can alternatively be set by passing the `--verbbose`
+   * CLI flag or its equivalent `-v` shorthand) provides additional detail when starting or
+   * restarting. Included among this (re)start information is which nodemon configs are loaded,
+   * ignore rules in effect, the app's process ID (i.e, the `child pid`) and which file extensions\
+   * are being watched.
+   */
+  "verbose": true,
+
+  /**
+   * Similar but conversely to the `ignore` option, `watch` takes a list of glob patterns that
+   * gives Nodemon direction as to where it should look for detecting file changes before triggering
+   * a restart. Note that
+   */
+  "watch": [
+    "db/",
+    "graphql/",
+    "server/",
+    "services/",
+    "src/",
+    "test/"
+  ],
+
+  // Additional `watch` mode options:
+  "watchOptions": {}
+};

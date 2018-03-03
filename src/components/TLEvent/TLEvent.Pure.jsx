@@ -1,16 +1,16 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { classes, ClassNamesPropType } from 'aesthetic';
-import { isArray, isEmpty, isString } from 'lodash';
-import FontIcon from 'material-ui/FontIcon';
-import EventPanelHeader from './EventPanelHeader';
-import EventPanelBody from './EventPanelBody';
-import EventPanelFooter from './EventPanelFooter';
-import TLToolbar from './TLToolbar';
-import { formatDate } from '../../../server/utilities';
-import { checkIfStarredEvent } from '../../util/general';
-import { nullable, tlEventPropTypes, tlImagePropTypes } from '../../util/TypeChecking';
+import React, { Component }                                     from 'react';
+import PropTypes                                                from 'prop-types';
+import { classes, ClassNamesPropType }                          from 'aesthetic';
+import { isArray, isEmpty, isString }                           from 'lodash';
+import Icon                                                     from 'material-ui/Icon';
+import EventPanelHeader                                         from './EventPanelHeader';
+import EventPanelBody                                           from './EventPanelBody';
+import EventPanelFooter                                         from './EventPanelFooter';
+import TLToolbar                                                from './TLToolbar';
+import { formatDate }                                           from '../../../server/utilities';
+import { checkIfStarredEvent }                                  from '~/util/general';
+import { cloudinaryImagePropTypes, nullable, tlEventPropTypes } from '~/util/TypeChecking';
 // import ConfirmDeletionPrompt from '../partials/ConfirmDeletionPrompt';
 
 type Props = {
@@ -36,7 +36,7 @@ export default class TLEventPure extends Component<Props> {
     evt: tlEventPropTypes.isRequired,
     evtClassName: PropTypes.string,
     imageData: nullable(PropTypes.shape({
-      images: PropTypes.arrayOf(tlImagePropTypes),
+      images: PropTypes.arrayOf(cloudinaryImagePropTypes),
       name: PropTypes.string,
       path: PropTypes.string,
     })),
@@ -106,7 +106,13 @@ export default class TLEventPure extends Component<Props> {
 
   render() {
     const {
+      addEventToFavorites,
+      addSelectionToBatch,
       classNames,
+      cloudinaryImageStore,
+      confirmDeleteModal,
+      confirmDeletionEvt,
+      deleteEvt,
       evt,
       evt: {
         name: evtName,
@@ -118,21 +124,15 @@ export default class TLEventPure extends Component<Props> {
         uuid,
       },
       evtClassName,
-      index,
-      logModalData,
-      toggleModal,
-      deleteEvt,
-      addSelectionToBatch,
-      isInBatch,
-      addEventToFavorites,
-      hasMultipleTags,
-      confirmDeleteModal,
-      confirmDeletionEvt,
-      imageData,
-      isBatchSelectMode,
-      cloudinaryImageStore,
       getMyImgs,
+      hasMultipleTags,
+      imageData,
+      index,
+      isBatchSelectMode,
+      isInBatch,
+      logModalData,
       setEventInvertedState,
+      toggleModal,
       withAlternation,
       withNumeral,
       withPointer,
@@ -161,14 +161,14 @@ export default class TLEventPure extends Component<Props> {
               !!isInverted && classNames.invertedMarker,
             )}
           >
-            <FontIcon
+            <Icon
               className={classes(
                 'material-icons',
                 classNames.tlMarkerIcon,
               )}
             >
               {!!isStarred ? 'stars' : 'adjust'}
-            </FontIcon>
+            </Icon>
           </div>
         )}
         <div
@@ -182,10 +182,10 @@ export default class TLEventPure extends Component<Props> {
         >
           {!!withToolbar && (
             <TLToolbar
-              evt={evt}
-              confirmDeletionEvt={confirmDeletionEvt}
               confirmDeleteModal={confirmDeleteModal}
+              confirmDeletionEvt={confirmDeletionEvt}
               deleteEvt={deleteEvt}
+              evt={evt}
               isInverted={isInverted}
               logModalData={logModalData}
               setEventInvertedState={setEventInvertedState}

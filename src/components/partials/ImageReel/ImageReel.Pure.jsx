@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
-import update from 'immutability-helper';
-import uuidv4 from 'uuid/v4';
-import { FontIcon, IconButton} from 'material-ui';
+import React, { Component }                                   from 'react';
+import { findDOMNode }                                        from 'react-dom';
+import PropTypes                                              from 'prop-types';
+import update                                                 from 'immutability-helper';
+import uuidv4                                                 from 'uuid/v4';
+import { Icon, IconButton }                                   from 'material-ui';
 import { capitalize, isArray, isEmpty, isEqual, isNil, size } from 'lodash';
-import { classes, ClassNamesPropType } from 'aesthetic';
-import ImageThumbnail from './ImageThumbnail';
-import { aesthetic } from '../../../style/styler';
+import { classes, ClassNamesPropType }                        from 'aesthetic';
+import ImageThumbnail                                         from './ImageThumbnail';
+import { aesthetic }                                          from '~/style/styler';
 
 export default class ImageReelPure extends Component {
   static displayName = 'ImageReel';
@@ -225,7 +225,7 @@ export default class ImageReelPure extends Component {
     })(file);
   };
 
-  // 
+  //
   renderReelNavigation(direction = this.DIRS.NEXT, numImages) {
     const { classNames } = this.props;
     const { helpers } = this.theme;
@@ -246,7 +246,7 @@ export default class ImageReelPure extends Component {
             ...helpers.styleInheritor('height', 'width'),
           }}
         >
-          <FontIcon
+          <Icon
             className={classes(
               'material-icons',
               classNames.reelNavArrowIcon,
@@ -254,7 +254,7 @@ export default class ImageReelPure extends Component {
             )}
           >
             {`chevron_${currDir.toLowerCase()}`}
-          </FontIcon>
+          </Icon>
         </IconButton>
       </div>
     );
@@ -307,7 +307,7 @@ export default class ImageReelPure extends Component {
               : 'space-around',
           }}
         >
-          {!!withNavArrows && this.renderReelNavigation(PREV, size(thumbs))}
+          {withNavArrows && this.renderReelNavigation(PREV, size(thumbs))}
           <div
             ref={(imageReelEl) => { this.imageReelEl = imageReelEl; }}
             className={classes(
@@ -320,7 +320,7 @@ export default class ImageReelPure extends Component {
           >
             {this.renderThumbs(thumbs)}
           </div>
-          {!!withNavArrows && this.renderReelNavigation(NEXT, size(thumbs))}
+          {withNavArrows && this.renderReelNavigation(NEXT, size(thumbs))}
         </div>
       </output>
     );

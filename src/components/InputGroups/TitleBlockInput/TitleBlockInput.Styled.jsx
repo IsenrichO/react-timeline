@@ -1,5 +1,5 @@
 import TitleBlockInputPure from './TitleBlockInput.Pure';
-import styler from '../../../style/styler';
+import styler from '~/style/styler';
 
 export default styler(({ colors, fonts, keywords }) => ({
   // Static declarations necessary for subsequent reference(s):

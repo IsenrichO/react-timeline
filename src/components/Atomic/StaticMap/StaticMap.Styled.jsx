@@ -1,5 +1,5 @@
 import StaticGMapPure from './StaticMap.Pure';
-import styler from '../../../style/styler';
+import styler from '~/style/styler';
 
 export default styler(({ colors }) => ({
   staticMapImage: {

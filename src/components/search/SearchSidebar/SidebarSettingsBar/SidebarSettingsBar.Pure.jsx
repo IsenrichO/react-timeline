@@ -1,11 +1,12 @@
 // @flow
-import React from 'react';
-import PropTypes from 'prop-types';
+import React                  from 'react';
+import PropTypes              from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
-import CollapseMenuIcon from 'material-ui/svg-icons/navigation/chevron-left';
-import ExpandMenuIcon from 'material-ui/svg-icons/navigation/chevron-right';
-import IconButton from 'material-ui/IconButton';
-import { aesthetic } from '../../../../style/styler';
+import IconButton             from 'material-ui/IconButton';
+import Tooltip                from 'material-ui/Tooltip';
+import CollapseMenuIcon       from 'material-ui-icons/ChevronLeft';
+import ExpandMenuIcon         from 'material-ui-icons/ChevronRight';
+import { aesthetic }          from '~/style/styler';
 
 type Props = {
   isSidebarExpanded?: boolean,
@@ -19,40 +20,39 @@ const SidebarSettingsBarPure = ({
   theme,
   ...rest
 }: Props) => {
-  const { colors: baseThemeColors } = aesthetic.themes[theme];
+  const { colors } = aesthetic.themes[theme];
+  const sidebarToggleId = 'sidebar-chevron-toggle-icon';
+  const toggleIconProps = {
+    className: classNames.sidebarToggleIcon,
+    fontSize: true,
+    nativeColor: colors.white.pure,
+    titleAccess: `${!!isSidebarExpanded ? 'Collapse' : 'Expand'} Icon`
+  };
 
   return (
     <footer className={classNames.sidebarSettingsBar}>
-      <IconButton
-        className={classNames.collapseSidebarButton}
-        iconStyle={{
-          fill: baseThemeColors.white.pure,
-          height: 48,
-          width: 48,
-        }}
-        onClick={clickHandler}
-        style={{
-          height: 64,
-          padding: 8,
-          width: 64,
-        }}
-        tooltip={
+      <Tooltip
+        enterDelay={350}
+        id={sidebarToggleId}
+        placement="right-start"
+        title={
           <span className={classNames.sidebarCloseIconTooltip}>
             {`${!!isSidebarExpanded ? 'Collapse' : 'Expand'} Menu`}
           </span>
         }
-        tooltipPosition="top-right"
-        tooltipStyles={{
-          left: '100%',
-          transform: 'translateY(50%)',
-          zIndex: 30,
-        }}
       >
-        {!!isSidebarExpanded
-          ? (<CollapseMenuIcon />)
-          : (<ExpandMenuIcon />)
-        }
-      </IconButton>
+        <IconButton
+          aria-describedby={sidebarToggleId}
+          aria-label="Sidebar Toggle"
+          className={classNames.collapseSidebarButton}
+          onClick={clickHandler}
+        >
+          {!!isSidebarExpanded
+            ? (<CollapseMenuIcon {...toggleIconProps} />)
+            : (<ExpandMenuIcon {...toggleIconProps} />)
+          }
+        </IconButton>
+      </Tooltip>
     </footer>
   );
 };

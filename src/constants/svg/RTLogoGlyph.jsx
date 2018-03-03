@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import PropTypes from 'prop-types';
-import { aesthetic } from '../../style/styler';
+import { aesthetic } from '~/style/styler';
 import { DEFAULT_LOGO_HEIGHT, DEFAULT_LOGO_WIDTH } from '../../style/theming/base/constants';
 import { reciprocal } from '../../util/Math';
 import { stylePropTypes } from '../../util/TypeChecking';
@@ -13,7 +13,7 @@ type Props = {
   withWhiteTheme?: boolean,
 };
 
-const RTLogoGlyphV2 = ({
+const RTLogoGlyph = ({
   height,
   styles,
   theme,
@@ -171,9 +171,9 @@ const RTLogoGlyphV2 = ({
   );
 };
 
-RTLogoGlyphV2.displayName = 'ReactTimelineSVGLogoV3';
+RTLogoGlyph.displayName = 'ReactTimelineSVGLogo';
 
-RTLogoGlyphV2.propTypes = {
+RTLogoGlyph.propTypes = {
   height: PropTypes.number,
   styles: stylePropTypes,
   theme: PropTypes.string,
@@ -181,7 +181,7 @@ RTLogoGlyphV2.propTypes = {
   withWhiteTheme: PropTypes.bool,
 };
 
-RTLogoGlyphV2.defaultProps = {
+RTLogoGlyph.defaultProps = {
   height: DEFAULT_LOGO_HEIGHT,
   styles: null,
   theme: 'base',
@@ -189,4 +189,4 @@ RTLogoGlyphV2.defaultProps = {
   withWhiteTheme: false,
 };
 
-export default RTLogoGlyphV2;
+export default RTLogoGlyph;

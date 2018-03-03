@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import PropTypes from 'prop-types';
-import { aesthetic } from '../../style/styler';
+import { aesthetic } from '~/style/styler';
 
 type Props = {
   theme?: string,

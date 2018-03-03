@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
+import React, { Component }            from 'react';
+import { findDOMNode }                 from 'react-dom';
+import PropTypes                       from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
-import FontIcon from 'material-ui/FontIcon';
-import update from 'immutability-helper';
-import { isEmpty, size, throttle } from 'lodash';
-import ShowMoreControl from '../../Atomic/ShowMore';
-import ContentRevealAccordion from '../../partials/ContentRevealAccordion';
-import ImageReel from '../../partials/ImageReel';
-import StaticGMap from '../../Atomic/StaticMap';
-import { aesthetic } from '../../../style/styler';
-import { toggleAccordionSection } from '../../../util/general';
+import update                          from 'immutability-helper';
+import { isEmpty, size, throttle }     from 'lodash';
+import ShowMoreControl                 from '../../Atomic/ShowMore';
+import StaticGMap                      from '../../Atomic/StaticMap';
+import ContentRevealAccordion          from '../../partials/ContentRevealAccordion';
+import ImageReel                       from '../../partials/ImageReel';
+import { aesthetic }                   from '~/style/styler';
+import { toggleAccordionSection }      from '~/util/general';
 
 
 // Returns a function, that, as long as it continues to be invoked, will not

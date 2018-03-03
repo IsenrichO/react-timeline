@@ -1,5 +1,5 @@
 import SearchBoxPure from './SearchBox.Pure';
-import styler, { aesthetic } from '../../../../style/styler';
+import styler, { aesthetic } from '~/style/styler';
 
 const { colors: baseThemeColors } = aesthetic.themes.base;
 const expandingSearchInputStyles = (colors = baseThemeColors.white.pure) => ({

@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ClassNamesPropType } from 'aesthetic';
+import React                  from 'react';
+import PropTypes              from 'prop-types';
+import { classes, ClassNamesPropType } from 'aesthetic';
 
 const ShowMorePure = ({
   classNames,
@@ -18,7 +18,12 @@ const ShowMorePure = ({
         type="button"
         value={linkText.toLowerCase()}
       />
-      <span className={classNames.bgLine} />
+      <span
+        className={classes(
+          classNames.bgLine,
+          classNames.bgLineWithMargin,
+        )}
+      />
     </div>
   </div>
 );

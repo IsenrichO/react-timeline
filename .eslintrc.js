@@ -53,6 +53,15 @@ module.exports = {
       "import/unambiguous": 0,
       "no-param-reassign": 0,
     },
+  }, {
+    "files": [
+      "webpack/**/*.js",
+    ],
+    "rules": {
+      "camelcase": [2, {
+        "properties": "never",
+      }],
+    },
   }],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -183,7 +192,7 @@ module.exports = {
       "objectsInArrays": false,
       "arraysInArrays": false,
     }],
-    "arrow-parens": [2, "always", {
+    "arrow-parens": [2, "as-needed", {
       "requireForBlockBody": false, // CORRECT: `(x) => x + 1`, `(x, y) => x + y`
     }],
     "camelcase": [2, {        // CORRECT:   `const myFavoriteColor = 'Orange';`
@@ -236,9 +245,6 @@ module.exports = {
     //   "returnAssign": true,
     // }],
     "no-extra-semi": 2,
-    "no-fallthrough": [2, {
-      "commentPattern": "Break[\\s\\w]*omitted",
-    }],
     "no-mixed-operators": [2, {
       "allowSamePrecedence": true,
       "groups": [
@@ -251,6 +257,9 @@ module.exports = {
     }],
     "no-multi-assign": 0,
     "no-multi-spaces": [2, {
+      "exceptions": {
+        "ImportDeclaration": true,
+      },
       "ignoreEOLComments": true,
     }],
     "no-trailing-spaces": [2, {
@@ -289,7 +298,7 @@ module.exports = {
     }],
     "one-var": [0, {
       "const": "never", // As many `const` declarations per function as there are `const` assignments
-      "let": "never",   // As many `let` declarations per block as there are `let` assignemtns
+      "let": "never",   // As many `let` declarations per block as there are `let` assignments
       "var": "always",  // Exactly one `var` declaration per function
     }],
     "one-var-declaration-per-line": [2, "initializations"],
@@ -345,7 +354,15 @@ module.exports = {
     "import/default": 2,
     "import/export": 2,
     "import/extensions": [2, "never", {
+      "css": "always",
+      "gif": "always",
+      "jpeg": "always",
+      "jpg": "always",
       "json": "always",
+      "jsx": "never",
+      "less": "always",
+      "pdf": "always",
+      "png": "always",
       "sass": "always",
       "scss": "always",
       "svg": "always",
@@ -365,7 +382,7 @@ module.exports = {
     "import/no-amd": 2,
     "import/no-anonymous-default-export": [2, {
       "allowArray": false,              // INCORRECT: `export default ['foo', 'bar'];`
-      "allowArrowFunction": true,       // CORRECT:   `export default () => { console.log('Hello World!'); };` 
+      "allowArrowFunction": true,       // CORRECT:   `export default () => { console.log('Hello World!'); };`
       "allowAnonymousClass": false,     // INCORRECT: `export default class { /* class internals */ };`
       "allowAnonymousFunction": true,   // CORRECT:   `export default function() { /* function internals */ };`
       "allowLiteral": false,            // INCORRECT: `export default 42;`
@@ -394,19 +411,21 @@ module.exports = {
     }],
     "import/no-internal-modules": [2, {
       "allow": [
-        "**/actions/*",   // Whitelist Redux 'actions' directory
-        "**/assets/**",   // Whitelist stylesheet & image asset imports
-        "**/config/**",   // Whitelist the `config` directory
-        "**/db/**",       // Whitelist internal database resources
-        "**/server/**",   // Whitelist 'server' directory resources
-        "**/src/**/*",    // Whitelist primary app dir
-        "date-fns/**",    // Enable to allow for `react-infinite-calendar` localization support
-        "lodash/**",      // Enable `lodash` module accession: `import map from 'lodash/map';`
-        "material-ui/**", // Enable `material-ui` module accession: `import FontIcon from 'material-ui/FontIcon';`
-        "medium-draft/**", // Enable importing associated library's CSS styles
+        "**/actions/*",               // Whitelist Redux 'actions' directory
+        "**/assets/**",               // Whitelist stylesheet & image asset imports
+        "**/config/**",               // Whitelist the `config` directory
+        "**/db/**",                   // Whitelist internal database resources
+        "**/server/**",               // Whitelist 'server' directory resources
+        "**/src/**/*",                // Whitelist primary app dir
+        "core-js/**",                 // Enabled so that the smaller `shim` entry point may be used
+        "date-fns/**",                // Enabled to allow for `react-infinite-calendar` localization support
+        "lodash/**",                  // Enabled `lodash` module accession: `import map from 'lodash/map';`
+        "material-ui/**",             // Enabled `material-ui` module accession: `import FontIcon from 'material-ui/FontIcon';`
+        "material-ui-icons/**",       // Enabled to pull from nested paths for Material SVG icons
+        "medium-draft/**",            // Enabled importing associated library's CSS styles
         "react-infinite-calendar/**", // Enable `react-infinite-calendar` CSS stylesheet import(s)
-        "promise/**",     // Enables setting a polyfill for the ES2015 Promise object
-        "uuid/*",         // Enable `uuid` module accession: `import uuidv4 from 'uuid/v4';`
+        "promise/**",                 // Enables setting a polyfill for the ES2015 Promise object
+        "uuid/*",                     // Enabled `uuid` module accession: `import uuidv4 from 'uuid/v4';`
       ],
     }],
     "import/no-mutable-exports": 2,
@@ -418,6 +437,7 @@ module.exports = {
       "allow": [
         "fs",       // Node.js FileSystem module
         "http",     // Node.js HTTP server module
+        "https",    // Node.js HTTPS server module
         "path",     // Node.js path module
         "zlib",     // Node.js GZip compression and Deflate protocol module
       ],
@@ -425,6 +445,7 @@ module.exports = {
     "import/no-unassigned-import": [2, {
       "allow": [
         // Whitelist stylesheet & image asset imports:
+        "**/animations/**",
         "**/assets/**",
         "medium-draft/**",
         "react-infinite-calendar/**",
@@ -438,13 +459,15 @@ module.exports = {
       ],
     }],
     "import/no-unresolved": [2, {
-      "amd": false,       // INCORRECT: `define(['./foo'], function (foo) { /*...*/ });`
-      "commonjs": false,  // INCORRECT: `const { default: x } = require('./foo');`
+      "amd": false,     // INCORRECT: `define(['./foo'], function (foo) { /*...*/ });`
+      "commonjs": true, // INCORRECT: `const { default: x } = require('./foo');`
       // Default Setting: { "es6": true } -> CORRECT: `import { bar } from 'foo';`
       "caseSensitive": true,
       "ignore": [
         '\.((jp|pn|sv)g)$',
         'server\.js$',
+        '^@root\/',
+        '^~\/',
       ],
     }],
     "import/no-webpack-loader-syntax": 2,
@@ -452,10 +475,16 @@ module.exports = {
     "import/unambiguous": 1,
 
     /* ACCESSIBILITY RULES */
+    "jsx-a11y/anchor-is-valid": [1, {
+      "aspects": [
+        "invalidHref",
+      ],
+    }],
     "jsx-a11y/img-has-alt": 0,
-    "jsx-a11y/label-has-for": 1,
-    "jsx-a11y/no-interactive-element-to-noninteractive-role": 0,
-    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "jsx-a11y/label-has-for": 2,
+    "jsx-a11y/media-has-caption": 2,
+    "jsx-a11y/no-interactive-element-to-noninteractive-role": 2,
+    "jsx-a11y/no-noninteractive-element-interactions": 2,
 
     /* REACT/JSX RULES */
     "react/boolean-prop-naming": [2, {
@@ -463,7 +492,7 @@ module.exports = {
         "bool",
         "mutuallyExclusiveTrueProps",
       ],
-      "rule": "^disabled|error|mini|submit|touched|(with|(doe|[hw]a|i)s)[A-Z]([\w\d]?)+", 
+      "rule": "^disabled|error|mini|submit|touched|(with|(doe|[hw]a|i)s)[A-Z]([\w\d]?)+",
       // CORRECT: `doesWork`, `hasChildren`, `isEnabled`, `wasCalled`
     }],
     "react/default-props-match-prop-types": [2, {
@@ -524,7 +553,7 @@ module.exports = {
     /* REACT NATIVE PLUGIN */
     "react-native/no-color-literals": 1,          // CORRECT: `<MyComponent style={{ color: theme.colors.ltGrey }} />`
     "react-native/no-inline-styles": 0,           // CORRECT: `<MyComponent style={{ font: this.props.font, width: '100vw' }} />`
-    "react-native/no-unused-styles": 2, 
+    "react-native/no-unused-styles": 2,
     "react-native/split-platform-components": 2,  // CORRECT: 'App.ios.js', 'App.android.js'
   },
   "settings": {
@@ -558,6 +587,8 @@ module.exports = {
             "alias": {
               "@": "./src",
               "@app": "./src",
+              "@root": __dirname,
+              "~": "./src",
             },
           },
         },

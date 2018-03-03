@@ -1,0 +1,63 @@
+/**
+ * Blink-based browser support (targeting mainly Safari)
+ * with vendor-prefixed `box-shadow` & `transform` support
+ */
+@-webkit-keyframes hoverCard {
+  from  {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    transform-origin: center;
+    -webkit-box-shadow: 0 0 0 transparent;
+    box-shadow: 0 0 0 transparent;
+  }
+  to    {
+    transform: scale(1.03);
+    -webkit-box-shadow: 0 0 8px 1px #D6EAF8;
+    box-shadow: 0 0 8px 1px #D6EAF8;
+  }
+}
+
+/* Browser support for Mozilla Firefox with legacy support for
+ * the vendor-prefixed `box-shadow` & `transform` properties
+ */
+@-moz-keyframes hoverCard {
+  from  {
+    transform: scale(1);
+    transform-origin: center;
+    -webkit-box-shadow: 0 0 0 transparent;
+    box-shadow: 0 0 0 transparent;
+  }
+  to    {
+    transform: scale(1.03);
+    -webkit-box-shadow: 0 0 8px 1px #D6EAF8;
+    box-shadow: 0 0 8px 1px #D6EAF8;
+  }
+}
+
+/* Opera browser support */
+@-o-keyframes hoverCard {
+  from {
+    transform: scale(1);
+    transform-origin: center;
+    -webkit-box-shadow: 0 0 0 transparent;
+    box-shadow: 0 0 0 transparent;
+  }
+  to {
+    transform: scale(1.03);
+    -webkit-box-shadow: 0 0 8px 1px #D6EAF8;
+    box-shadow: 0 0 8px 1px #D6EAF8;
+  }
+}
+
+/* Evergreen/modern browser support */
+@keyframes hoverCard {
+  from {
+    transform: scale(1);
+    transform-origin: center;
+    box-shadow: 0 0 0 transparent;
+  }
+  to {
+    transform: scale(1.03);
+    box-shadow: 0 0 8px 1px #D6EAF8;
+  }
+}

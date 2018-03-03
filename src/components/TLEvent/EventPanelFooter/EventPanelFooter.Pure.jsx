@@ -1,11 +1,11 @@
 // @flow
-import React from 'react';
-import PropTypes from 'prop-types';
-import FontIcon from 'material-ui/FontIcon';
+import React                           from 'react';
+import PropTypes                       from 'prop-types';
+import Icon                            from 'material-ui/Icon';
 import { classes, ClassNamesPropType } from 'aesthetic';
-import { aesthetic } from '../../../style/styler';
-import constants from '../../../style/theming/base/constants';
-import { tlEventPropTypes } from '../../../util/TypeChecking';
+import { aesthetic }                   from '~/style/styler';
+import constants                       from '~/style/theming/base/constants';
+import { tlEventPropTypes }            from '~/util/TypeChecking';
 
 type Props = {
   evtType: string,
@@ -36,36 +36,36 @@ const EventPanelFooterPure = ({
     <footer className={classNames.panelFooter}>
       <div className={classNames.evtTags}>
         {[
-          <FontIcon
+          <Icon
             key={`TagsGlyph`}
             className={classes(
               'material-icons',
               classNames.eventLabelIcon,
             )}
-            color={ThemeRed}
+            color="primary"
             style={getIconStyles(true)}
           >
             label
-          </FontIcon>,
+          </Icon>,
           evtType,
         ]}
       </div>
-      <FontIcon
+      <Icon
         className={classes(
           'material-icons',
           classNames.favoriteEventStar,
         )}
-        color={ThemeRed}
-        style={getIconStyles()}
+        color="primary"
         onClick={() => addEventToFavorites(evt)}
+        style={getIconStyles()}
       >
         {`star${!!isStarred ? '' : '_border'}`}
-      </FontIcon>
+      </Icon>
     </footer>
   );
 };
 
-EventPanelFooterPure.displayName = 'EventPanelFooterPure';
+EventPanelFooterPure.displayName = 'EventPanelFooter';
 
 EventPanelFooterPure.propTypes = {
   addEventToFavorites: PropTypes.func.isRequired,

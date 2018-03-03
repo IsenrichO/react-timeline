@@ -1,11 +1,12 @@
 import EventsListDrawerPure from './EventsListDrawer.Pure';
-import styler from '../../../style/styler';
+import styler               from '~/style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords }) => ({
   // Static `className` declarations necessary for nested references:
   eventsListDrawerCloseButton: {},
   eventsListDrawerOverlay: {},
   eventsListDrawerRootContainer: {},
+  eventsListDrawerTooltip: {},
 
   eventsListDrawerContainer: {
     maxWidth: 450,
@@ -16,6 +17,9 @@ export default styler(({ colors, fonts, helpers, keywords }) => ({
   },
   eventsDrawerMenuItem: {
     ...helpers.hideOverflow,
+  },
+  eventsListDrawerTypography: {
+    flex: 1,
   },
 }), {
   styleName: 'EventsListDrawerStyles',

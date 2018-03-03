@@ -1,5 +1,5 @@
 import FormButtonPure from './FormButton.Pure';
-import styler from '../../../style/styler';
+import styler from '~/style/styler';
 
 const getButtonPseudoState = (pixelOffset = 1) => ({
   borderBottomWidth: 4 - +pixelOffset,

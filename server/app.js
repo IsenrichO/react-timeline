@@ -1,7 +1,7 @@
 const Express = require('express');
 const Mongo = require('mongodb');
 const Mongoose = require('mongoose');
-const BodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const compression = require('compression');
 const path = require('path');
 const zlib = require('zlib');
@@ -16,6 +16,7 @@ const Photo = require('../db/models/EventPhoto');
 const Tag = require('../db/models/EventTag');
 const ApI = require('./controllers/EventsController');
 const { constructApiEndpoint } = require('./utils');
+const { formatDate } = require('./utilities');
 const seedData = require('../src/constants/json/SeedData.json');
 
 // Configure application secrets:
@@ -42,8 +43,9 @@ const app = Express();
 // Invoke the Morgan server-side logging middleware with the standard Apache combined log output:
 app.use(require('morgan')('combined'));
 
-// Invoke the BodyParser middleware to allow parsing `application/x-www-form-urlencoded` form data:
-app.use(BodyParser.urlencoded({ extended: true }));
+// Invoke the `body-parser` middleware to allow parsing `application/x-www-form-urlencoded` form data:
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Invoke the `cookie-parser` middleware:
 app.use(cookieParser());
@@ -56,6 +58,7 @@ const {
   Z_DEFAULT_STRATEGY,
   Z_DEFAULT_WINDOWBITS,
 } = zlib;
+
 app.use(compression({
   chunkSize: Z_DEFAULT_CHUNK, // 16384, // Equivalent to `zlib.Z_DEFAULT_CHUNK`
   level: Z_DEFAULT_COMPRESSION, // 6, // Equivalent to `zlib.Z_DEFAULT_COMPRESSION`
@@ -80,21 +83,15 @@ const { MONGO_CLIENT_CONNECTION_BASE } = (process.env || {});
 
 // Connect to the database:
 Mongoose
-  .connect(`${MONGO_CLIENT_CONNECTION_BASE}events`, { // `${process.env.MONGO_CLIENT_CONNECTION_BASE}/events`, {
+  .connect(`${process.env.MONGO_CLIENT_CONNECTION_BASE}events`, { // `${process.env.MONGO_CLIENT_CONNECTION_BASE}/events`, {
     useMongoClient: true,
   })
-  .on('error', (err) => console.error.bind(console, `Connection Error:\t${err}`))
-  .on('close', () => {
-    console.info('Seeding Finished!');
-
-    Mongoose.connection.collections.EventData.drop();
-    Mongoose.connection.collections.EventPhotos.drop();
-    Mongoose.connection.collections.EventTags.drop();
-  })
   .once('open', () => {
-    Mongoose.connection.collections.EventData.drop();
-    Mongoose.connection.collections.EventPhotos.drop();
-    Mongoose.connection.collections.EventTags.drop();
+    Promise.all([
+      Mongoose.connection.collections.EventData.drop(),
+      Mongoose.connection.collections.EventPhotos.drop(),
+      Mongoose.connection.collections.EventTags.drop(),
+    ]);
 
     seedData.forEach((evt, index) => {
       const defaultsFallback = {
@@ -123,8 +120,21 @@ Mongoose
       newEvt.tags.push(newTag);
       newTag.event = newEvt;
 
-      Promise.all([newEvt.save(), newPhoto.save(), newTag.save()]);
+      Promise.all([
+        newEvt.save(),
+        newPhoto.save(),
+        newTag.save(),
+      ]);
     });
+  })
+  .on('error', (err) => console.error.bind(console, `Connection Error:\t${err}`))
+  .on('close', () => {
+    console.info('Seeding Finished!');
+
+    // Event.collection.drop();
+    // Mongoose.connection.collections.EventData.drop();
+    // Mongoose.connection.collections.EventPhotos.drop();
+    // Mongoose.connection.collections.EventTags.drop();
   });
 
 const eventsRoute = require('./routes/events');

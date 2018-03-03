@@ -1,9 +1,9 @@
 import AppBarMenuPure from './AppBarMenu.Pure';
-import styler from '../../../../style/styler';
+import styler         from '~/style/styler';
 
 export default styler(({ colors, fonts, helpers }) => ({
   // Static `className` declarations necessary for nested references:
-
+  moreOptionsIcon: {},
 }), {
   styleName: 'AppBarMenuStyles',
 })(AppBarMenuPure);

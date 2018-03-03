@@ -1,4 +1,6 @@
 import React from 'react';
+import isArray from 'lodash/isArray';
+import reduce from 'lodash/reduce';
 
 /* CONSTANTS */
 export const ALPH = [
@@ -6,8 +8,8 @@ export const ALPH = [
   'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
 ];
 
-// 
-export const getOtherItem = (list = [], entry) => list.find(item => item !== entry);
+//
+export const getOtherItem = (list = [], entry) => list.find((item) => item !== entry);
 
 // Returns a function, that, as long as it continues to be invoked, will not
 //  be triggered. The function will be called after it stops being called for
@@ -16,22 +18,54 @@ export const getOtherItem = (list = [], entry) => list.find(item => item !== ent
 export const debounce = (func, wait, immediate) => {
   let timeout;
   return function() {
-    const [context, args] = [this, arguments],
-          later = () => {
-            timeout = null;
-            if (!immediate) { func.apply(context, args); }
-          },
-          callNow = (immediate && !timeout);
+    const [context, args] = [this, arguments];
+    const later = () => {
+      timeout = null;
+      if (!immediate) { func.apply(context, args); }
+    };
+    const callNow = (immediate && !timeout);
+
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
-    if (callNow) { func.apply(context, args); }
+    if (!!callNow) { func.apply(context, args); }
   };
 };
 
-// 
+/**
+ * This FP-style function returns from a given `list` input an associative (two-dimensional) array
+ * whose constituent entries (i.e., the sub-arrays) comprise partitioned subsets of the original
+ * list.
+ * @param  {Array}    list            [description]
+ * @param  {Number}   subsetSize      [description]
+ * @param  {Boolean}  withRemainder   [description]
+ * @return {Array}                    [description]
+ */
+export const toPartitions = (list = [], subsetSize = 1, withRemainder = true) => {
+  // Preliminary type-check upon provided `list` parameter to ensure it's an array:
+  if (!isArray(list)) throw new TypeError(`Provided list is of type ${typeof list}. Must be an Array.`);
+
+  const subRoutine = (size = subsetSize) => {
+    let partition = [];
+
+    return (acc, curr, index, collection) => {
+      partition.push(curr);
+      if ((partition.length === size) || ((index === collection.length - 1) && !!withRemainder)) {
+        acc.push(partition);
+        partition = [];
+      }
+
+      return acc;
+    };
+  };
+
+  return reduce(list, subRoutine(subsetSize), []);
+};
+
+//
 const getRange = function(start = 0, stop, step = 1, inclusive = false) {
-  const outputRange = (rangeLen, mapFunc) => Array.from(rangeLen, mapFunc),
-        regCharSet = new RegExp('[A-Z]', 'i');
+  const outputRange = (rangeLen, mapFunc) => Array.from(rangeLen, mapFunc);
+  const regCharSet = new RegExp('[A-Z]', 'i');
+
   let rangeLen, mapFunc, isDescending = false;
 
   if (typeof start !== 'number' && typeof start !== 'string') {
@@ -43,8 +77,7 @@ const getRange = function(start = 0, stop, step = 1, inclusive = false) {
   if (arguments.length === 0) { return new Array(0); }
 
   if (typeof start === 'string' && regCharSet.test(start) && start.length === 1) {
-    // Test that `start` parameter (if not default value) is a valid, single-unit
-    //  alphabetic character:
+    // Test that `start` parameter (if not default value) is a valid, single-unit alphabetic character:
     if (stop !== 0 && typeof stop === 'string') {
       if (start > stop) { isDescending = true; }
       let endChar;
@@ -90,4 +123,5 @@ export default {
   debounce,
   getOtherItem,
   getRange,
+  toPartitions,
 };

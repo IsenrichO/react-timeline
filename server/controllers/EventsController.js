@@ -1,5 +1,5 @@
 const uuidv4 = require('uuid/v4');
-const { keyBy } = require('lodash');
+const keyBy = require('lodash/keyBy');
 const Event = require('../../db/models/Event');
 const formatDate = require('../utilities');
 
@@ -10,7 +10,7 @@ const listEvents = (req, res, next) => {
   Event
     .find({})
     .sort({ date: 'desc'})
-    .limit(20)
+    .limit(10)
     .then((evts) => {
       const structuredEvtData = keyBy(evts, ({ uuid = uuidv4() }) => uuid);
       res.send(structuredEvtData);
@@ -87,7 +87,7 @@ const updateSingleEvent = (req, res, next) => {
 
 // Perform
 const deleteSingleEvent = (req, res, next) => {
-  const { uuid } = req.body;
+  const { uuid } = req.params;
 
   Event
     .findOneAndRemove({ uuid })
@@ -100,7 +100,7 @@ const deleteSingleEvent = (req, res, next) => {
     });
 };
 
-// 
+//
 const deleteBatchEvents = (req, res, next) => {
   const uuids = req.body;
 

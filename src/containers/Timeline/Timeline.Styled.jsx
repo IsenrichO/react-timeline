@@ -1,5 +1,5 @@
 import TimelinePure from './Timeline.Pure';
-import styler from '../../style/styler';
+import styler from '~/style/styler';
 
 export const getEventFontStyles = (fonts, keywords) => ({
   family: fonts.face.material,

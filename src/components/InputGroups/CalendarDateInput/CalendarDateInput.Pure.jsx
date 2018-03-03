@@ -1,10 +1,10 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component }   from 'react';
+import PropTypes              from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
-import update from 'immutability-helper';
-import InfiniteCalendar from 'react-infinite-calendar';
-import { aesthetic } from '../../../style/styler';
+import update                 from 'immutability-helper';
+import InfiniteCalendar       from 'react-infinite-calendar';
+import { aesthetic }          from '~/style/styler';
 import 'react-infinite-calendar/styles.css'; // Only needs to be imported once
 
 type Props = {

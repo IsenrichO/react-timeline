@@ -1,13 +1,13 @@
 // @flow
-import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
+import React, { Component }            from 'react';
+import { findDOMNode }                 from 'react-dom';
+import PropTypes                       from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
-import { isString, size, throttle } from 'lodash';
-import update from 'immutability-helper';
-import FontIcon from 'material-ui/FontIcon';
-import { getOtherItem } from '../../../util/functional';
-import { aesthetic } from '../../../style/styler';
+import { isString, size, throttle }    from 'lodash';
+import update                          from 'immutability-helper';
+import FontIcon                        from 'material-ui/Icon';
+import { getOtherItem }                from '~/util/functional';
+import { aesthetic }                   from '~/style/styler';
 
 type Props = {
   iconLeftName?: string,
@@ -16,7 +16,11 @@ type Props = {
   withContent?: boolean,
 };
 
-export default class ContentRevealAccordionPure extends Component<Props> {
+type State = {
+  isCollapsed: boolean,
+};
+
+export default class ContentRevealAccordionPure extends Component<Props, State> {
   static displayName = 'ContentRevealAccordion';
 
   static propTypes = {
@@ -53,11 +57,12 @@ export default class ContentRevealAccordionPure extends Component<Props> {
   }
 
   /**
-   * Inside the `constructor` function above, the `throttleAccordionToggle` class method is initialized to the Function
-   * prototype (as opposed to `null`), because it is delegated to an event prop (namely, `onClick`). While this alone
-   * does nothing, it is inside this here lifecycle event where the substantive assignment is made. One must reassign
-   * the `throttleAccordionToggle` method only after the component has mounted because it depends on the existence of a
-   * DOM node reference (a.k.a., a `ref`).
+   * Inside the `constructor` function above, the `throttleAccordionToggle` class method is
+   * initialized to the Function prototype (as opposed to `null`), because it is delegated to an
+   * event prop (namely, `onClick`). While this alone does nothing, it is inside this here
+   * lifecycle event where the substantive assignment is made. One must reassign the
+   * `throttleAccordionToggle` method only after the component has mounted because it depends on
+   * the existence of a DOM node reference (a.k.a., a `ref`).
    * @return {[type]} [description]
    */
   componentDidMount() {
@@ -68,9 +73,9 @@ export default class ContentRevealAccordionPure extends Component<Props> {
   }
 
   /**
-   * A pseudo-private class method whose purpose is simply to toggle between a binary (i.e., `true` or `false` Boolean)
-   * state inside this class component's local state. It is currently not being used but is let to remain should it be
-   * required going forward.
+   * A pseudo-private class method whose purpose is simply to toggle between a binary (i.e., `true`
+   * or `false` Boolean) state inside this class component's local state. It is currently not being
+   * used but is let to remain should it be required going forward.
    * @return {undefined}  Implicit return value
    */
   _toggleInternalDisplayState() {
@@ -80,12 +85,13 @@ export default class ContentRevealAccordionPure extends Component<Props> {
   }
 
   /**
-   * This class method abstracts out the primary component logic for handling smooth toggling of the accordion's
-   * display state. Note that it accepts a single parameter — a DOM node reference — from which is returned a new
-   * function that accepts an event parameter. Thus, by invoking it with a valid `ref`, one then acquires a function
-   * that may reliably serve as an event handler.
+   * This class method abstracts out the primary component logic for handling smooth toggling of
+   * the accordion's display state. Note that it accepts a single parameter — a DOM node reference
+   * — from which is returned a new function that accepts an event parameter. Thus, by invoking it
+   * with a valid `ref`, one then acquires a function that may reliably serve as an event handler.
    * @param  {Node}     ref   A valid reference to an existing (i.e., mounted) DOM node
-   * @return {Fucntion}       A function whose purpose is to handle the toggle/collapse accordion functionality
+   * @return {Function}       A function whose purpose is to handle the toggle/collapse accordion
+   *   functionality
    */
   toggleAccordion = (ref) => (evt) => {
     const { classNames } = this.props;
@@ -141,7 +147,7 @@ export default class ContentRevealAccordionPure extends Component<Props> {
                 'material-icons',
                 classNames.bodyFieldIcon,
               )}
-              color={themeRed}
+              color="primary"
             >
               {isString(iconLeftName)
                 ? iconLeftName
@@ -163,7 +169,7 @@ export default class ContentRevealAccordionPure extends Component<Props> {
                   'material-icons',
                   classNames.toggleGlyph,
                 )}
-                color={themeBlack}
+                color="inherit" // themeBlack
               >
                 keyboard_arrow_right
               </FontIcon>

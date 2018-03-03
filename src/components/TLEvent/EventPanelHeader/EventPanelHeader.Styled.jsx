@@ -1,5 +1,5 @@
 import EventPanelHeaderPure from './EventPanelHeader.Pure';
-import styler from '../../../style/styler';
+import styler from '~/style/styler';
 
 const headerTailLeft = 'polygon(0 0, 100% 0, 100% 100%, 1.45rem 100%, 1.45rem 1.45rem)';
 const headerTailRight = 'polygon(0 0, 100% 0, calc(100% - 1.45rem) 1.45rem, calc(100% - 1.45rem) 100%, 0 100%)';

@@ -1,5 +1,5 @@
 import DateViewScrollerPure from './DateViewScroller.Pure';
-import styler from '../../../style/styler';
+import styler from '~/style/styler';
 
 export default styler(({ colors, constants, fonts, helpers, keywords }) => ({
   // Static declarations necessary for subsequent reference(s):

@@ -1,5 +1,5 @@
 import TlEventItemActionControlPure from './TlEventItemActionControl.Pure';
-import styler from '../../../style/styler';
+import styler from '~/style/styler';
 
 const rightAlignedActionControlStyles = (keywords) => ({
   left: keywords.auto,

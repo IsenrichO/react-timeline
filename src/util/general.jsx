@@ -3,14 +3,13 @@ import { findDOMNode } from 'react-dom';
 import { isPlainObject } from 'lodash';
 import { getOtherItem } from './functional';
 
-// 
-export const addEventToFavorites = (func, { uuid, starred }) =>
-  func({
-    starred: !starred,
-    uuid,
-  });
+//
+export const addEventToFavorites = (func, { uuid, starred, ...rest }) => func({
+  starred: !starred,
+  uuid,
+});
 
-// 
+//
 export const collapseBody = (evt) => {
   evt.stopPropagation();
 
@@ -27,7 +26,7 @@ export const collapseBody = (evt) => {
   $parentListItem.css({ maxHeight: !isCollapsed ? $(evt.target).parent()[0].getClientRects()[0].height : '1000px' });
 };
 
-// 
+//
 export const checkIfStarredEvent = function(srcData = [], uuid) {
   // If called with a single argument that is a POJO, return the value of its `starred` property:
   if (isPlainObject(srcData) && arguments.length === 1) return srcData.starred;
@@ -37,7 +36,7 @@ export const checkIfStarredEvent = function(srcData = [], uuid) {
   return !!~evtIndex ? srcData[evtIndex].starred : false;
 };
 
-// 
+//
 export const hasMultipleTags = (srcData, uuid) => srcData[uuid.toLowerCase()].tags.length > 1;
 
 //

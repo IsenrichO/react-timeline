@@ -1,10 +1,10 @@
 // @flow
-import React from 'react';
-import PropTypes from 'prop-types';
+import React                  from 'react';
+import PropTypes              from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
-import CircularProgress from 'material-ui/CircularProgress';
-import { stylePropTypes } from '../../../util/TypeChecking';
-import { aesthetic } from '../../../style/styler';
+import { CircularProgress }   from 'material-ui/Progress';
+import { stylePropTypes }     from '../../../util/TypeChecking';
+import { aesthetic }          from '~/style/styler';
 
 type Props = {
   max?: number,

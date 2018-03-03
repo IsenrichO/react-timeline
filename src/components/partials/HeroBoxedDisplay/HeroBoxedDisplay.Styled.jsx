@@ -1,24 +1,12 @@
 import { default as HeroBoxedDisplayPure } from './HeroBoxedDisplay.Pure';
-import styler from '../../../style/styler';
+import styler                              from '~/style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords }) => ({
   // Static declarations necessary for subsequent reference(s):
   eventsDrawerIcon: {},
 
-  boxedDisplayContainer: {
-    position: 'relative',
-  },
-  boxedDisplayHeader: {
-    margin: [0, keywords.auto],
-    maxWidth: 800,
-    position: 'absolute',
-    textAlign: 'center',
-    top: '80%',
-    transform: 'translateY(-50%)',
-    zIndex: 1,
-  },
-  boxedDisplayHeroContainer: {
-    ...helpers.flexify('column', 'center', ['center', 'center']),
+  backgroundImageContainer: {
+    ...helpers.flexify('row', 'center'),
     background: {
       attachment: null,
       color: colors.grey.line,
@@ -26,8 +14,30 @@ export default styler(({ colors, fonts, helpers, keywords }) => ({
       position: ['center', 'center'],
       size: [keywords.auto, '60%'],
     },
-    height: 400,
-    position: 'relative',
+    height: 600,
+    left: 0,
+    position: 'absolute',
+    top: 0,
+    width: '100vw',
+  },
+  boxedDisplayContainer: {
+    height: 600,
+    overflow: 'hidden',
+    position: 'fixed',
+    width: '100%',
+  },
+  boxedDisplayHeader: {
+    margin: [0, keywords.auto],
+    maxWidth: 800,
+    position: 'absolute',
+    textAlign: 'center',
+    top: '40%',
+    transform: 'translateY(-50%)',
+    zIndex: 1,
+  },
+  boxedDisplayHeroContainer: {
+    ...helpers.flexify('column', 'center', ['center', 'center']),
+    height: 600,
   },
   eventsDrawerToggleButton: {
     position: `absolute ${keywords.important}`,

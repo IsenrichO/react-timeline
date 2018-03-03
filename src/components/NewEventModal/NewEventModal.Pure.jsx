@@ -1,10 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import Modal from 'react-modal';
-import FileUploadAPI from '../partials/FileUploadApi';
-import { addSingleEvent } from '../../state/sourceEventData';
+import React, { Component }    from 'react';
+import Modal                   from 'react-modal';
+import FileUploadAPI           from '../partials/FileUploadApi';
 import EventEditingModalStyles from '../../constants/json/EventEditingModalStyles.json';
 
 export default class NewEventModal extends Component {

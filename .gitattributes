@@ -1,1 +1,61 @@
+# Auto detect text files and perform LF normalization. For users that have not
+# set `core.autocrlf`, this defines the default behavior:
+# • Ref. <http://davidlaing.com/2012/09/19/customise-your-gitattributes-to-become-a-git-ninja/>
 * text=auto
+
+# ==============================================================================
+# Control End-of-Line (EoL) line break representation:
+* text eol=lf
+
+# ==============================================================================
+# Declare files that will always have CRLF (\r\n) line endings on checkout.
+*.sln text eol=crlf
+
+# ==============================================================================
+# Convert and normalize text files that should have native line endings on
+# checkout (Convert crlf => lf):
+*.c text
+*.css text
+*.h text
+*.htm text
+*.html text
+*.inc text
+*.ini text
+*.js text
+*.php text
+*.txt text
+*.xml text
+.htaccess text
+
+# ==============================================================================
+# These files are binary and should be left untouched (binary is a macro
+# for `-text -diff`):
+*.7z binary
+*.ai binary
+*.fla binary
+*.flv binary
+*.gif binary
+*.gz binary
+*.ico binary
+*.jpeg binary
+*.jpg binary
+*.mov binary
+*.mp3 binary
+*.mp4 binary
+*.png binary
+*.swf binary
+*.ttf binary
+*.zip binary
+
+# ==============================================================================
+# Document formats:
+*.doc  diff=astextplain
+*.DOC  diff=astextplain
+*.docx diff=astextplain
+*.DOCX diff=astextplain
+*.dot  diff=astextplain
+*.DOT  diff=astextplain
+*.pdf  diff=astextplain
+*.PDF  diff=astextplain
+*.rtf  diff=astextplain
+*.RTF  diff=astextplain

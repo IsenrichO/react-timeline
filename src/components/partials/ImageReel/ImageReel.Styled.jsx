@@ -1,6 +1,6 @@
 import { capitalize } from 'lodash';
-import ImageReelPure from './ImageReel.Pure';
-import styler from '../../../style/styler';
+import ImageReelPure  from './ImageReel.Pure';
+import styler         from '~/style/styler';
 
 export const renderNavigationButton = (direction = 'right', colors, helpers, keywords, transitions) => {
   const formattedDir = capitalize(direction.toLowerCase());

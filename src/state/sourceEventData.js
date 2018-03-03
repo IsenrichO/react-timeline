@@ -52,15 +52,15 @@ export const onUpdateSingleEventSuccess = (payload) => ({
 });
 
 /* ASYNC ACTION CREATORS */
-// 
+//
 export const addSingleEvent = (evtData) => (dispatch) =>
   crudAsync2(Axios.post, Events, dispatch, onAddSingleEventSuccess, evtData);
 
-// 
+//
 export const deleteBatchEvents = (evts) => (dispatch) =>
   crudAsync2(Axios.delete, Events, dispatch, onDeleteBatchEventsSuccess, evts);
 
-// 
+//
 export const deleteSingleEvt = (evt) => (dispatch) =>
   crudAsync2(Axios.delete, getEditEvent(evt.uuid), dispatch, onDeleteSingleEventSuccess, evt);
 
@@ -68,7 +68,7 @@ export const deleteSingleEvt = (evt) => (dispatch) =>
 export const fetchSingleEvent = (eventId) => (dispatch) =>
   crudAsync2(Axios.get, getEditEvent(eventId), dispatch, onFetchSingleEventSuccess);
 
-// 
+//
 export const updateSingleEvent = (evtData) => (dispatch) =>
   crudAsync2(Axios.put, getEditEvent(evtData.uuid), dispatch, onUpdateSingleEventSuccess, evtData);
 

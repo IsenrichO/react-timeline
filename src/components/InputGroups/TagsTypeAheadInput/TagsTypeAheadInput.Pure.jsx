@@ -1,14 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+// @flow
+import React, { Component }   from 'react';
+import PropTypes              from 'prop-types';
+import { connect }            from 'react-redux';
 import { ClassNamesPropType } from 'aesthetic';
-import { isEmpty } from 'lodash';
-import ChipInput from 'material-ui-chip-input';
+import { isEmpty }            from 'lodash';
+import ChipInput              from 'material-ui-chip-input';
+
+type Props = {
+  id: string,
+  theme?: string,
+};
 
 @connect(
   ({ tags }) => ({ tags }),
 )
-export default class TagsTypeAheadInputPure extends Component {
+export default class TagsTypeAheadInputPure extends Component<Props> {
   static displayName = 'TagsTypeAheadInput';
 
   static propTypes = {
@@ -37,7 +43,6 @@ export default class TagsTypeAheadInputPure extends Component {
       label,
       tags,
     } = this.props;
-    // console.log('tags:', tags[0]);
 
     return (
       <ChipInput

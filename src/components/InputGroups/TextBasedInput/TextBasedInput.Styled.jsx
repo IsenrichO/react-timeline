@@ -1,5 +1,5 @@
 import TextBasedInputPure from './TextBasedInput.Pure';
-import styler from '../../../style/styler';
+import styler from '~/style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords, shared, transitions }) => ({
   // Static declarations necessary for subsequent reference(s):

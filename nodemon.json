@@ -1,0 +1,43 @@
+{
+  "colours": true,
+  "delay": 1750,
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "events": {
+    "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
+  },
+  "execMap": {
+    "js": "node --harmony",
+    "ls": "lsc",
+    "pde": "processing --sketch={{pwd}} --run",
+    "pl": "perl",
+    "py": "python",
+    "rb": "ruby"
+  },
+  "ext": "js json jsx",
+  "ignore": [
+    ".git",
+    "bower_components",
+    "node_modules"
+  ],
+  "ignoreRoot": [
+    ".git"
+  ],
+  "legacyWatch": false,
+  "restartable": "rs",
+  "runOnChangeOnly": false,
+  "signal": "SIGUSR2",
+  "stdin": true,
+  "stdout": true,
+  "verbose": true,
+  "watch": [
+    "db/",
+    "graphql/",
+    "server/",
+    "services/",
+    "src/",
+    "test/"
+  ],
+  "watchOptions": {}
+}

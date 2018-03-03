@@ -1,18 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React                           from 'react';
 import { classes, ClassNamesPropType } from 'aesthetic';
-import FontIcon from 'material-ui/FontIcon';
+import Icon                            from 'material-ui/Icon';
 
 const SearchBoxPure = ({ classNames, ...props }) => (
   <div className={classNames.searchBox}>
-    <FontIcon
+    <Icon
       className={classes(
         'material-icons',
         classNames.searchMagnifyingGlassGlyph,
       )}
     >
       search
-    </FontIcon>
+    </Icon>
     <div className={classNames.searchInputField} />
   </div>
 );

@@ -1,14 +1,14 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { ClassNamesPropType } from 'aesthetic';
-import update from 'immutability-helper';
-import { debounce } from 'lodash';
-import { Editor, createEditorState } from 'medium-draft';
-import mediumDraftExporter from 'medium-draft/lib/exporter';
+import React, { Component }          from 'react';
+import PropTypes                     from 'prop-types';
+import { ClassNamesPropType }        from 'aesthetic';
+import update                        from 'immutability-helper';
+import { debounce }                  from 'lodash';
+import { createEditorState, Editor } from 'medium-draft';
+import mediumDraftExporter           from 'medium-draft/lib/exporter';
 
 // Import custom sidebar button components:
-import { CustomImageSideButton } from './EditorSideButtons';
+import { CustomImageSideButton }     from './EditorSideButtons';
 
 // Import the associated styles for `medium-draft`:
 import 'medium-draft/lib/index.css';

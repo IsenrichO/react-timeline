@@ -1,16 +1,42 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { ClassNamesPropType } from 'aesthetic';
+import React, { Component }       from 'react';
+import { bindActionCreators }     from 'redux';
+import { connect }                from 'react-redux';
+import { ClassNamesPropType }     from 'aesthetic';
 import { get, isUndefined, size } from 'lodash';
-import TLEvent from '../../TLEvent';
-// import { fetchAllCloudinary, fetchCloudinaryImageData } from '../../../state/cloudinaryImageStore';
-import { CloudinaryActionCreators, CloudinaryActionCreatorPropTypes, CloudinaryStateInitializer, CloudinaryStatePropTypes } from '../../../state/cloudinaryImageStore';
-import { EventModalActionCreators, EventModalActionCreatorPropTypes, EventModalStateInitializer, EventModalStatePropTypes } from '../../../state/eventModal';
-import { SearchEventsActionCreators, SearchEventsActionCreatorPropTypes, SearchEventsStateInitializer, SearchEventsStatePropTypes } from '../../../state/searchEvents';
-import { SourceEventDataActionCreators, SourceEventDataActionCreatorPropTypes, SourceEventDataStateInitializer, SourceEventDataStatePropTypes } from '../../../state/sourceEventData';
-import { TagsActionCreators, TagsActionCreatorPropTypes, TagsStateInitializer, TagsStatePropTypes } from '../../../state/tags';
+import TLEvent                    from '../../TLEvent';
+// import { fetchAllCloudinary, fetchCloudinaryImageData } from
+// '../../../state/cloudinaryImageStore';
+import {
+  CloudinaryActionCreatorPropTypes,
+  CloudinaryActionCreators,
+  CloudinaryStateInitializer,
+  CloudinaryStatePropTypes,
+}                                 from '~/state/cloudinaryImageStore';
+import {
+  EventModalActionCreatorPropTypes,
+  EventModalActionCreators,
+  EventModalStateInitializer,
+  EventModalStatePropTypes,
+}                                 from '~/state/eventModal';
+import {
+  SearchEventsActionCreatorPropTypes,
+  SearchEventsActionCreators,
+  SearchEventsStateInitializer,
+  SearchEventsStatePropTypes,
+}                                 from '~/state/searchEvents';
+import {
+  SourceEventDataActionCreatorPropTypes,
+  SourceEventDataActionCreators,
+  SourceEventDataStateInitializer,
+  SourceEventDataStatePropTypes,
+}                                 from '~/state/sourceEventData';
+import {
+  TagsActionCreatorPropTypes,
+  TagsActionCreators,
+  TagsStateInitializer,
+  TagsStatePropTypes,
+}                                 from '~/state/tags';
+import { routeMatchPropTypes }    from '~/util/TypeChecking';
 
 @connect(
   ({ cloudinaryState, eventModalState, form, searchEvents, seedDataAggregator }) => ({
@@ -42,6 +68,7 @@ export default class SearchResults extends Component {
     cloudinaryState: CloudinaryStatePropTypes,
     eventModalActions: EventModalActionCreatorPropTypes,
     eventModalState: EventModalStatePropTypes,
+    match: routeMatchPropTypes.isRequired,
     searchEvents: SearchEventsStatePropTypes,
     searchEventsActions: SearchEventsActionCreatorPropTypes,
     seedDataAggregator: SourceEventDataStatePropTypes.isRequired,
@@ -61,7 +88,6 @@ export default class SearchResults extends Component {
     eventModalState: EventModalStateInitializer,
     searchEvents: SearchEventsStateInitializer,
     searchEventsActions: SearchEventsActionCreators,
-    seedDataAggregator: {},
     sourceEventDataActions: SourceEventDataActionCreators,
     sourceEventDataState: SourceEventDataStateInitializer,
     tagsActions: TagsActionCreators,

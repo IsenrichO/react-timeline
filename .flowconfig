@@ -1,21 +1,21 @@
-# =========================================================
+# ==============================================================================
 # 💩 Recursively include all `src` files and its constituent sub-directories:
 [include]
 ./src/
 
-# =========================================================
+# ==============================================================================
 # 💩 Dictate which files and/or file types to specifically exclude from Flow-typing:
 [ignore]
 .*/node_modules/
 .*/**/*\.\(spec\|test\)\.jsx?
 .*\.ignore\.jsx?
 
-# =========================================================
+# ==============================================================================
 # 💩 Direct Flow to nclude the specified library definitions when type-checking source code:
 [libs]
 .*/flow-typed
 
-# =========================================================
+# ==============================================================================
 # 💩 Customized set of `rule=severity` linting pairs::
 [lints]
 all=warn
@@ -23,7 +23,7 @@ sketchy-null=warn
 sketchy-null-bool=warn
 untyped-type-import=error
 
-# =========================================================
+# ==============================================================================
 # 💩 Customize the project's Flow integration:
 [options]
 emoji=true
@@ -55,12 +55,12 @@ suppress_comment=\\(.\\|\n\\)*\\$FLOW_ISSUE
 suppress_comment= \\(.\\|\n\\)*\\flow-disable-next-line
 
 # Allow aliasing of Flow's `any` type:
-suppress_type=$FlowFixMe
+suppress_type=$FlowFIX_ME
 suppress_type=$FlowTODO
 
 unsafe.enable_getters_and_setters=true
 
-# =========================================================
+# ==============================================================================
 # 💩 Equivalent to `>=0.57.3 <0.58.0`:
 [version]
 ^0.57.3

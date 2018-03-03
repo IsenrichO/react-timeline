@@ -1,5 +1,5 @@
 import ButtonControlsPure from './ButtonControls.Pure';
-import styler from '../../../style/styler';
+import styler             from '~/style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
   // Static declarations necessary for subsequent reference(s):
@@ -55,7 +55,7 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
     // i {
     //   font-size: 1.5rem;
     //   line-height: 1;
-    // }    
+    // }
   },
   mainButtonControls: {
     ...helpers.flexify('row', 'center'),
@@ -96,7 +96,9 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
     width: '5rem',
     zIndex: 0,
   },
-}))(ButtonControlsPure);
+}), {
+  styleName: 'ButtonControlsStyles',
+})(ButtonControlsPure);
 
 // > i {
 //   display: block;

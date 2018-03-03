@@ -16,6 +16,58 @@ export const nullable = (...propTypes) => PropTypes.oneOfType([
 ]);
 
 /* PREDEFINED PROP-TYPE VALUES */
+export const childrenPropTypes = nullable(
+  PropTypes.element,
+  PropTypes.node,
+  PropTypes.string,
+);
+
+export const stylePropTypes = nullable(
+  PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+  ),
+);
+
+/* IMAGE MEDIA PROP-TYPES */
+export const cloudinaryImagePropTypes = PropTypes.shape({
+  access_mode: PropTypes.oneOf([
+    'private',
+    'public',
+  ]).isRequired,
+  bytes: PropTypes.number,
+  created_at: PropTypes.string.isRequired,
+  format: PropTypes.oneOf([
+    'bmp',
+    'gif',
+    'jpg',
+    'png',
+    'svg',
+  ]).isRequired,
+  height: PropTypes.number.isRequired,
+  public_id: PropTypes.string.isRequired,
+  resource_type: PropTypes.oneOf([
+    'image',
+    'video',
+  ]).isRequired,
+  secure_url: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  url: PropTypes.string.isRequired,
+  version: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+});
+
+export const cloudinaryImageDataPropTypes = PropTypes.shape({
+  images: PropTypes.arrayOf(nullable(cloudinaryImagePropTypes)),
+  name: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
+});
+
+export const cloudinaryPropTypes = PropTypes.objectOf(cloudinaryImageDataPropTypes);
+
+/* ROUTER PROP-TYPES */
 export const browserLocationPropTypes = PropTypes.shape({
   hash: PropTypes.string.isRequired,
   key: PropTypes.string,
@@ -48,14 +100,12 @@ export const routeMatchPropTypes = PropTypes.shape({
   url: PropTypes.string.isRequired,
 });
 
-export const stylePropTypes = nullable(
-  PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-  ),
-);
+/* EVENT PROP-TYPES */
+export const eventLayoutPropTypes = nullable(PropTypes.oneOf([
+  'grid',
+  'hybrid',
+  'modern',
+]));
 
 export const tlEventPropTypes = PropTypes.shape({
   coverImageId: nullable(PropTypes.string),
@@ -64,6 +114,7 @@ export const tlEventPropTypes = PropTypes.shape({
   description: nullable(PropTypes.arrayOf(PropTypes.string)),
   eventId: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  layout: eventLayoutPropTypes,
   links: PropTypes.arrayOf(PropTypes.object),
   location: nullable(PropTypes.string),
   name: PropTypes.string.isRequired,
@@ -75,33 +126,6 @@ export const tlEventPropTypes = PropTypes.shape({
   uuid: PropTypes.string.isRequired,
 });
 
-export const tlImagePropTypes = PropTypes.shape({
-  access_mode: PropTypes.oneOf([
-    'private',
-    'public',
-  ]).isRequired,
-  bytes: PropTypes.number,
-  created_at: PropTypes.string.isRequired,
-  format: PropTypes.oneOf([
-    'bmp',
-    'gif',
-    'jpg',
-    'png',
-    'svg',
-  ]).isRequired,
-  height: PropTypes.number.isRequired,
-  public_id: PropTypes.string.isRequired,
-  resource_type: PropTypes.oneOf([
-    'image',
-    'video',
-  ]).isRequired,
-  secure_url: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  url: PropTypes.string.isRequired,
-  version: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-});
-
 /* CATEGORIZED EXPORTS */
 export const TypeCheckUtils = {
   constructRoutePropTypesWithParams,
@@ -110,11 +134,15 @@ export const TypeCheckUtils = {
 
 export const SharedPropTypes = {
   browserLocationPropTypes,
+  childrenPropTypes,
+  cloudinaryImageDataPropTypes,
+  cloudinaryImagePropTypes,
+  cloudinaryPropTypes,
+  eventLayoutPropTypes,
   historyPropTypes,
   routeMatchPropTypes,
   stylePropTypes,
   tlEventPropTypes,
-  tlImagePropTypes,
 };
 
 /* COMPILED DEFAULT EXPORT */

@@ -1,14 +1,27 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { classes, ClassNamesPropType } from 'aesthetic';
-import update from 'immutability-helper';
-import FontIcon from 'material-ui/FontIcon';
-import IconButton from 'material-ui/IconButton';
-import { Motion, StaggeredMotion, TransitionMotion, spring, presets } from 'react-motion';
-import MotionComponent from '../MotionComponent';
-import { aesthetic } from '../../../style/styler';
+// @flow
+import React                                from 'react';
+import PropTypes                            from 'prop-types';
+import { classes, ClassNamesPropType }      from 'aesthetic';
+import update                               from 'immutability-helper';
+import Icon                                 from 'material-ui/Icon';
+import IconButton                           from 'material-ui/IconButton';
+import Tooltip                              from 'material-ui/Tooltip';
+import { Motion, spring, TransitionMotion } from 'react-motion';
+import MotionComponent                      from '../MotionComponent';
+import { aesthetic }                        from '~/style/styler';
+import { keyFormatter }                      from '~/util/ComponentHelpers';
 
-export default class ButtonControlsPure extends MotionComponent {
+type Props = {
+  theme?: string,
+};
+
+type State = {
+  NUM_CHILDREN: number,
+  OFFSET: number,
+  isOpen: boolean,
+};
+
+export default class ButtonControlsPure extends MotionComponent<Props, State> {
   static displayName = 'ButtonControls';
 
   static propTypes = {
@@ -40,26 +53,26 @@ export default class ButtonControlsPure extends MotionComponent {
   }
 
   componentDidMount() {
+    const { isOpen } = this.state;
+
     window.addEventListener('click', (evt) => {
-      !$(evt.target).parents('[class^="buttonControlsContainer"]').length && this.state.isOpen
+      !$(evt.target).parents('[class^="buttonControlsContainer"]').length && !!isOpen
         ? this.toggleMenu(evt)
         : null;
     });
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('click', this.closeMenu);
-  }
+  componentWillUnmount = () => window.removeEventListener('click', this.closeMenu);
 
   toggleMenu(evt) {
     evt.stopPropagation();
-
-    const { isOpen } = this.state;
-    this.setState({ isOpen: !isOpen });
+    return this.setState(update(this.state, { $toggle: ['isOpen'] }));
   }
 
   closeMenu() {
-    this.setState({ isOpen: false });
+    return this.setState(update(this.state, {
+      isOpen: { $set: false },
+    }));
   }
 
   execChildBtnAction(evt, index) {
@@ -73,7 +86,7 @@ export default class ButtonControlsPure extends MotionComponent {
 
     return this.childBtns().map((childBtn, index) => ({
       ...childBtn,
-      style: isOpen
+      style: !!isOpen
         ? this.finalChildBtnStylesInit(index)
         : this.initialChildBtnStylesInit(),
     }));
@@ -84,7 +97,7 @@ export default class ButtonControlsPure extends MotionComponent {
 
     return this.childBtns().map((childBtn, index) => ({
       ...childBtn,
-      style: isOpen
+      style: !!isOpen
         ? this.finalChildBtnStyles(index)
         : this.initialChildBtnStyles(),
     }));
@@ -102,27 +115,31 @@ export default class ButtonControlsPure extends MotionComponent {
           <div>
             {interpolatedStyles.map(({ key, style }, index) => (
               <div
-                key={`ChildBtn_${key}`}
+                key={keyFormatter(key, 'ChildBtn__')}
                 className={classNames.childButtonControl}
                 onClick={(evt) => this.execChildBtnAction(evt, index)}
                 role="button"
                 style={style}
                 tabIndex={0}
               >
-                <IconButton
-                  className={classes(
-                    'material-icons',
-                    classNames.childButtonControlIcon,
-                  )}
-                  tooltip={(
+                <Tooltip
+                  enterDelay={350}
+                  placement="top-start"
+                  title={(
                     <span className={classNames.childButtonControlTooltip}>
                       {this.getChildBtnGlyph(index).tooltipText()}
                     </span>
                   )}
-                  tooltipPosition="top-left"
                 >
-                  {this.getChildBtnGlyph(index).glyphName()}
-                </IconButton>
+                  <IconButton
+                    className={classes(
+                      'material-icons',
+                      classNames.childButtonControlIcon,
+                    )}
+                  >
+                    {this.getChildBtnGlyph(index).glyphName()}
+                  </IconButton>
+                </Tooltip>
               </div>
             ))}
           </div>
@@ -134,28 +151,26 @@ export default class ButtonControlsPure extends MotionComponent {
   renderMainBtn() {
     const { classNames } = this.props;
     const { isOpen } = this.state;
-    const { colors: themeColors } = this.theme;
 
     return ({ rotate }) => (
       <button
         className={classNames.mainButtonControls} // "btn-controls"
-        type="button"
         name="mainControlBtn"
+        onClick={this.toggleMenu}
         style={{
           ...this.mainBtnStyles(),
           transform: `rotate(${rotate}deg)`,
         }}
-        onClick={this.toggleMenu}
+        type="button"
       >
-        <FontIcon
+        <Icon
           className={classes(
             'material-icons',
             classNames.mainButtonIcon,
           )}
-          color={themeColors.white.primary}
         >
-          {isOpen ? 'apps' : 'edit'}
-        </FontIcon>
+          {!!isOpen ? 'apps' : 'edit'}
+        </Icon>
       </button>
     );
   }
@@ -163,9 +178,13 @@ export default class ButtonControlsPure extends MotionComponent {
   render() {
     const { classNames } = this.props;
     const { isOpen } = this.state;
-    const mainBtnRotation = isOpen
-      ? { rotate: spring(-135, { damping: 32, stiffness: 175 }) }
-      : { rotate: spring(0, { damping: 32, stiffness: 175 }) };
+
+    const mainBtnRotation = {
+      rotate: spring(
+        !!isOpen ? -135 : 0,
+        { damping: 32, stiffness: 175 },
+      ),
+    };
 
     return (
       <div className={classNames.buttonControlsContainer}>

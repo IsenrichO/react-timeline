@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { ClassNamesPropType } from 'aesthetic';
+import React, { Component }                              from 'react';
+import PropTypes                                         from 'prop-types';
+import { ClassNamesPropType }                            from 'aesthetic';
 import { flow, get, has, isEmpty, mapKeys, merge, pick } from 'lodash';
-import update from 'immutability-helper';
-import FileUploadGlyph from '../../../constants/svg/FileUploadGlyph_SVG';
-import ImageReel from '../ImageReel';
+import update                                            from 'immutability-helper';
+import ImageReel                                         from '../ImageReel';
+import FileUploadGlyph                                   from '~/constants/svg/FileUploadGlyph_SVG';
 
 export default class FileUploadApiPure extends Component {
   static displayName = 'FileUploadAPI';
@@ -206,7 +206,7 @@ export default class FileUploadApiPure extends Component {
     }
   }
 
-  // 
+  //
   renderUploadedCloudinaryImages(imgUrls = null) {
     if (!imgUrls || !imgUrls.length) return null;
 
@@ -216,7 +216,7 @@ export default class FileUploadApiPure extends Component {
     }
   }
 
-  // 
+  //
   renderSubmitButton() {
     return (
       <input

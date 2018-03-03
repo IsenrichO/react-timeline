@@ -86,6 +86,12 @@ export const markObjectValuesImportant = (styleObject = {}) => Object
   .map(([property, value]) => [property, `${value} ${keywords.important}`])
   .reduce((acc, [currProperty, currValue]) => ({ ...acc, [currProperty]: currValue }), {});
 
+export const multiPropertyStyle = (value, [...properties]) => properties
+  .reduce((acc, curr) => ({
+    ...acc,
+    [curr]: value,
+  }), {});
+
 export const styleInheritor = (...propNames) => propNames.reduce((acc, curr) => ({
   ...acc,
   [curr]: 'inherit',
@@ -116,6 +122,7 @@ export default {
   hide,
   hideOverflow,
   markObjectValuesImportant,
+  multiPropertyStyle,
   setElementVisibility,
   styleInheritor,
   visible,

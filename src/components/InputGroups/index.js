@@ -1,11 +1,11 @@
-import React from 'react';
+import React             from 'react';
 import CalendarDateInput from './CalendarDateInput';
-import DateInput from './DateInput';
-import GeoSuggestInput from './GeoSuggestInput';
-import TagsTypeAhead from './TagsTypeAheadInput';
-import TextBasedInput from './TextBasedInput';
-import TextBlockInput from './TextBlockInput';
-import TitleBlockInput from './TitleBlockInput';
+import DateInput         from './DateInput';
+import GeoSuggestInput   from './GeoSuggestInput';
+import TagsTypeAhead     from './TagsTypeAheadInput';
+import TextBasedInput    from './TextBasedInput';
+import TextBlockInput    from './TextBlockInput';
+import TitleBlockInput   from './TitleBlockInput';
 
 export const inputGroupMap = new Map([
   ['DATE_SINGLE', (props) => (<DateInput {...props} />)],

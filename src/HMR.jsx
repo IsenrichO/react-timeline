@@ -1,9 +1,9 @@
 require('react-hot-loader/patch');
-import React from 'react';
-import ReactDOM from 'react-dom';
+
+import React            from 'react';
+import ReactDOM         from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import App from './containers/App';
-// import RouterConfig from './routing/RouterConfig';
+import App              from './containers/App';
 
 const render = (Component) => {
   // The `AppContainer` import is a necessary wrapper component for HMR:

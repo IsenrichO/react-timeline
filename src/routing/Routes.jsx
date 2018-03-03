@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component }   from 'react';
+import PropTypes              from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
-import { Route, Switch } from 'react-router-dom';
-import styler from '../style/styler';
+import { Route, Switch }      from 'react-router-dom';
+import styler                 from '@styles/styler';
 
 // Page-level layout component imports:
-import App from '../components/views/App';
-import TimelineEventPage from '../containers/EventPage';
-import SearchResults from '../components/search/SearchResults';
-import SearchSidebar from '../components/search/SearchSidebar';
+import App                    from '@components/views/App';
+import TimelineEventPage      from '@containers/EventPage';
+import SearchResults          from '@components/search/SearchResults';
+import SearchSidebar          from '@components/search/SearchSidebar';
+import SearchMap              from '@components/search/SearchMap';
 // import SearchWrapper from '../components/search/SearchWrapper';
 
 // Child route configuration imports:
@@ -59,12 +60,20 @@ export default class RouteWrapper extends Component {
             location={location}
             path="/search"
           />
-          <Route
-            key={location.key}
-            component={SearchResults}
-            location={location}
-            path="/search/:filter?"
-          />
+          <Switch>
+            <Route
+              exact
+              key={location.key}
+              component={SearchMap}
+              path="/search/map"
+            />
+            <Route
+              key={location.key}
+              component={SearchResults}
+              location={location}
+              path="/search/:filter?"
+            />
+          </Switch>
         </div>
       </div>
     );

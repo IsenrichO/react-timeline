@@ -1,5 +1,5 @@
 import SearchResultsPure from './SearchResults.Pure';
-import styler from '../../../style/styler';
+import styler from '~/style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords }) => ({
   // Static declarations necessary for subsequent reference(s):

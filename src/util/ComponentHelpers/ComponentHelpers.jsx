@@ -1,4 +1,4 @@
-import { map, camelCase, compact, concat, flow, join, trim, upperFirst, words } from 'lodash';
+import { camelCase, compact, concat, flow, join, map, trim, upperFirst, words } from 'lodash';
 
 export const keyFormatter = (identifyingProp = '', keyPrefix = 'key') => flow([
   trim,
@@ -12,7 +12,7 @@ export const keyFormatter = (identifyingProp = '', keyPrefix = 'key') => flow([
   (mappedWords = []) => join(mappedWords, ''),
 ])(identifyingProp);
 
-/* COMPILED EXPORT */
+/* COMPILED DEFAULT EXPORT */
 export default {
   keyFormatter,
 };

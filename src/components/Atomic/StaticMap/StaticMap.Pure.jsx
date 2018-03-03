@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component }   from 'react';
+import PropTypes              from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
-import StaticGMapsStyles from '../../../constants/json/GoogleMapsAPIStyles.json';
+import StaticGMapsStyles      from '~/constants/json/GoogleMapsAPIStyles.json';
 
 const MapStyle = `\
   https://maps.googleapis.com/maps/api/staticmap\
@@ -126,7 +126,7 @@ export default class StaticGMapPure extends Component {
     return styleSubStrs.join('');
   };
 
-  genereateFinalUrl = (queryParams) => queryParams.reduce((acc, curr, index) => acc +=
+  generateFinalUrl = (queryParams) => queryParams.reduce((acc, curr, index) => acc +=
     (index === 1 ? '?' : !!index ? '&' : '') +
     (Object.prototype.toString.call(curr) === '[object Object]'
       ? this.getStyleStrFromObj1(curr)
@@ -152,7 +152,7 @@ export default class StaticGMapPure extends Component {
         <img
           className={classNames.staticMapImage}
           alt={`Google Static Map for ${evtLocation}.`}
-          src={this.genereateFinalUrl(STATIC_MAP_OPTS)}
+          src={this.generateFinalUrl(STATIC_MAP_OPTS)}
         />
       </div>
     );

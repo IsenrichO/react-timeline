@@ -1,13 +1,13 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component }            from 'react';
+import PropTypes                       from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
-import GeoSuggest from 'react-geosuggest';
-import update from 'immutability-helper';
-import { get, isEmpty } from 'lodash';
-import MapMarkerPlaceIcon from 'material-ui/svg-icons/maps/place';
-import ErrorOutlineIcon from 'material-ui/svg-icons/alert/error-outline';
-import TextBasedInput from '../TextBasedInput';
+import GeoSuggest                      from 'react-geosuggest';
+import update                          from 'immutability-helper';
+import { get, isEmpty }                from 'lodash';
+import MapMarkerPlaceIcon              from 'material-ui-icons/Place';
+import ErrorOutlineIcon                from 'material-ui-icons/ErrorOutline';
+import TextBasedInput                  from '../TextBasedInput';
 
 type Props = {
   geoLocation?: string,

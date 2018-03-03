@@ -5,7 +5,7 @@
 
 ### MongoDB / Mongoose
 
-As a matter of semantics, it is best to draw a distinction between Mongo/Mongoose methods (particularly, [queries](http://mongoosejs.com/docs/queries.html)) that return a plurality of records vs. those that return a singular record. Calls to Mongoose's `find()` method — even when no records match the passed query criteria — always return an Array (whose individual values are records) while calls to its `findOne()` method return a single record given to be the first which meets those criteria (or, in the absence of such, `null`). With this in mind, it follows that any chained function calls and their taken parameters reflect this singular/plural distinction. Rather than
+As a matter of semantics, it is best to draw a distinction between Mongo/Mongoose methods (particularly, [queries][mongoose-queries]) that return a plurality of records vs. those that return a singular record. Calls to Mongoose's `find()` method — even when no records match the passed query criteria — always return an Array (whose individual values are records) while calls to its `findOne()` method return a single record given to be the first which meets those criteria (or, in the absence of such, `null`). With this in mind, it follows that any chained function calls and their taken parameters reflect this singular/plural distinction. Rather than
 
 <pre lang="javascript">
 Users
@@ -37,7 +37,7 @@ Users
 
 #### Tests
 
-When writing tests using the Mocha library (whether as a standalone unit-testing suite or in conjunction with helper libraries like the [Chai assertion library](http://chaijs.com/), [Should.js](http://shouldjs.github.io/), [Expect.js](https://github.com/Automattic/expect.js), _etc_.), it is imperative that the only curried arguments to the `it()` callback function are ones that are also used inside that callback's body. (This is, of course, a good practice for code more generally but merits individual note here). For example, a test like that below
+When writing tests using the Mocha library (whether as a standalone unit-testing suite or in conjunction with helper libraries like the [Chai.js] assertion library, [Should.js], [Expect.js], _etc_.), it is imperative that the only curried arguments to the `it()` callback function are ones that are also used inside that callback's body. (This is, of course, a good practice for code more generally but merits individual note here). For example, a test like that below
 
 ```javascript
 it('should not curry unused arguments', (done) => {
@@ -364,9 +364,9 @@ When writing any block of code that is logically subordinate to the line immedia
 ### Variable declaration
 
 * Use a new var statement for each line you declare a variable on.
-* Do not break variable declarations onto mutiple lines.
+* Do not break variable declarations onto multiple lines.
 * Use a new line for each variable declaration.
-* See http://benalman.com/news/2012/05/multiple-var-statements-javascript/ for more details
+* See [this article][ref-multiple-var-statements] for more details
 
     ```javascript
     // good:
@@ -383,7 +383,7 @@ When writing any block of code that is logically subordinate to the line immedia
 
 ### Capital letters in variable names
 
-* Some people choose to use capitalization of the first letter in their variable names to indicate that they contain a [class](http://en.wikipedia.org/wiki/Class_(computer_science\)). This capitalized variable might contain a function, a prototype, or some other construct that acts as a representative for the whole class.
+* Some people choose to use capitalization of the first letter in their variable names to indicate that they contain a [`Class`]. This capitalized variable might contain a function, a prototype, or some other construct that acts as a representative for the whole class.
 * Optionally, some people use a capital letter only on functions that are written to be run with the keyword `new`.
 * Do not use all-caps for any variables. Some people use this pattern to indicate an intended "constant" variable, but the language does not offer true constants, only mutable variables.
 
@@ -422,7 +422,7 @@ When writing any block of code that is logically subordinate to the line immedia
     ];
     ```
 
-* Avoid use of `switch` statements altogether. They are hard to outdent using the standard whitespace rules above, and are prone to error due to missing `break` statements. See [this article](http://ericleads.com/2012/12/switch-case-considered-harmful/) for more detail.
+* Avoid use of `switch` statements altogether. They are hard to outdent using the standard whitespace rules above, and are prone to error due to missing `break` statements. See [this article][ref-switch-case-harmful] for more detail.
 
 * Prefer single quotes around JavaScript strings, rather than double quotes. Having a standard of any sort is preferable to a mix-and-match approach, and single quotes allow for easy embedding of HTML, which prefers double quotes around tag attributes.
 
@@ -462,3 +462,12 @@ When writing any block of code that is logically subordinate to the line immedia
     <!-- bad -->
     <script src="a.js" type="text/javascript"></script>
     ```
+
+
+[Chai.js]: http://chaijs.com
+[`Class`]: http://en.wikipedia.org/wiki/Class_(computer_science\)
+[Expect.js]: https://github.com/Automattic/expect.js
+[mongoose-queries]: http://mongoosejs.com/docs/queries.html
+[Should.js]: http://shouldjs.github.io/
+[ref-multiple-var-statements]: http://benalman.com/news/2012/05/multiple-var-statements-javascript/
+[ref-switch-case-harmful]: http://ericleads.com/2012/12/switch-case-considered-harmful/

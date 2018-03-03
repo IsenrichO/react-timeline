@@ -1,6 +1,6 @@
 const Event = require('../../db/models/Event');
 
-// 
+//
 const fetchSearchCategoryEvents = (
   params = {},
   category = 'all',
@@ -52,8 +52,8 @@ const getAgeRange = () => {
   return Promise
     .all([minQuery, maxQuery])
     .then((result) => ({
-      min: result[0],
       max: result[1],
+      min: result[0],
     }));
 };
 
@@ -79,8 +79,8 @@ const customQuery = (criteria, sortProperty = 'date', offset = 0, limit = 20) =>
     .then((results) => ({
       all: results[0],
       count: results[1],
-      offset,
       limit,
+      offset,
     }));
 };
 

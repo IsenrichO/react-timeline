@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React                from 'react';
+import PropTypes            from 'prop-types';
+import { Link }             from 'react-router-dom';
+import { tlEventPropTypes } from '~/util/TypeChecking';
 
-const TimelineEventToolbar = ({
+const TimelineEventToolbarPure = ({
   confirmDeleteModal,
   confirmDeletionEvt,
   // deleteEvt,
@@ -12,60 +13,66 @@ const TimelineEventToolbar = ({
 }) => (
   <div className="tl-toolbar">
     <button
-      type="button"
       name="View full event"
-      title="Show full note">
-      <Link to={ `/events/edit/${evt.uuid}` }>
+      title="Show full note"
+      type="button"
+    >
+      <Link to={`/events/edit/${evt.uuid}`}>
         <i className="glyphicon glyphicon-eye-open" />
       </Link>
     </button>
     <button
-      type="button"
       name="EditEventBtn"
-      title="Enter quick edit mode">
+      title="Enter quick edit mode"
+      type="button"
+    >
       <i
         className="glyphicon glyphicon-pencil"
-        onClick={ () => {
+        onClick={() => {
           logModalData(evt);
           toggleModal();
         }}
       />
     </button>
     <button
-      type="button"
       name="SocialShareBtn"
-      title="Share to your social networks">
+      title="Share to your social networks"
+      type="button"
+    >
       <i
         className="glyphicon glyphicon-send"
         // onClick={ () => {} }
       />
     </button>
     <button
-      type="button"
       name="deleteEvtBtn"
-      title="Delete this event from your timeline">
+      title="Delete this event from your timeline"
+      type="button"
+    >
       <i
         className="glyphicon glyphicon-trash"
-        onClick={ () => {
+        onClick={() => {
           confirmDeletionEvt(evt);
           confirmDeleteModal();
-          // deleteEvt(evt); }
+          // deleteEvt(evt);
         }}
       />
     </button>
   </div>
 );
 
-TimelineEventToolbar.propTypes = {
+TimelineEventToolbarPure.displayName = 'TimelineEventToolbarPure';
+
+TimelineEventToolbarPure.propTypes = {
   confirmDeleteModal: PropTypes.func.isRequired,
   confirmDeletionEvt: PropTypes.func.isRequired,
   deleteEvt: PropTypes.func.isRequired,
-  evt: PropTypes.object,
+  evt: tlEventPropTypes,
   logModalData: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
 };
 
-TimelineEventToolbar.defaultProp = {
+TimelineEventToolbarPure.defaultProp = {
   confirmDeleteModal() {},
   confirmDeletionEvt() {},
   deleteEvt() {},
@@ -74,4 +81,4 @@ TimelineEventToolbar.defaultProp = {
   toggleModal() {},
 };
 
-export default TimelineEventToolbar;
+export default TimelineEventToolbarPure;

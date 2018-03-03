@@ -1,28 +1,61 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { classes, ClassNamesPropType } from 'aesthetic';
-import FontIcon from 'material-ui/FontIcon';
-import update from 'immutability-helper';
-import { BatchActionButtons, ButtonControls } from '../../components/ButtonControls';
-// import BatchActionButtons from '../../components/ButtonControls/BatchActionButtons';
-import ConfirmDeletionPrompt from '../../components/partials/ConfirmDeletionPrompt';
-import EditEventModal from '../../components/EditEventModal';
-import AppBar from '../../components/partials/AppBar';
-// import NewEventModal from '../../components/NewEventModal';
-import TLEvent from '../../components/TLEvent';
-import Utils from '../../util';
-import { tlEventPropTypes } from '../../util/TypeChecking';
-import { BatchSelectActionCreators, BatchSelectActionCreatorPropTypes, BatchSelectStateInitializer, BatchSelectStatePropTypes } from '../../state/batchSelectionItems';
-import { CloudinaryActionCreators, CloudinaryActionCreatorPropTypes, CloudinaryStateInitializer, CloudinaryStatePropTypes } from '../../state/cloudinaryImageStore';
-import { EventModalActionCreators, EventModalActionCreatorPropTypes, EventModalStateInitializer, EventModalStatePropTypes } from '../../state/eventModal';
-import { TagsActionCreators, TagsActionCreatorPropTypes, TagsStateInitializer, TagsStatePropTypes } from '../../state/tags';
-import { SourceEventDataActionCreators, SourceEventDataActionCreatorPropTypes, SourceEventDataStateInitializer, SourceEventDataStatePropTypes } from '../../state/sourceEventData';
+import React, { Component }                   from 'react';
+import PropTypes                              from 'prop-types';
+import { bindActionCreators }                 from 'redux';
+import { connect }                            from 'react-redux';
+import { classes, ClassNamesPropType }        from 'aesthetic';
+import FontIcon                               from 'material-ui/Icon';
+import update                                 from 'immutability-helper';
+import { BatchActionButtons, ButtonControls } from '~/components/ButtonControls';
+// import BatchActionButtons                  from '~/components/ButtonControls/BatchActionButtons';
+import ConfirmDeletionPrompt                  from '~/components/partials/ConfirmDeletionPrompt';
+import EditEventModal                         from '~/components/EditEventModal';
+import AppBar                                 from '~/components/partials/AppBar';
+// import NewEventModal                       from '~/components/N~dal';
+import TimelineDialog                         from '~/components/views/TimelineDialog';
+import TLEvent                                from '~/components/TLEvent';
+import Utils                                  from '~/util';
+import {
+  BatchSelectActionCreatorPropTypes,
+  BatchSelectActionCreators,
+  BatchSelectStateInitializer,
+  BatchSelectStatePropTypes,
+}                                             from '~/state/batchSelectionItems';
+import {
+  CloudinaryActionCreatorPropTypes,
+  CloudinaryActionCreators,
+  CloudinaryStateInitializer,
+  CloudinaryStatePropTypes,
+}                                             from '~/state/cloudinaryImageStore';
+import {
+  EventModalActionCreatorPropTypes,
+  EventModalActionCreators,
+  EventModalStateInitializer,
+  EventModalStatePropTypes,
+}                                             from '~/state/eventModal';
+import {
+  TagsActionCreatorPropTypes,
+  TagsActionCreators,
+  TagsStateInitializer,
+  TagsStatePropTypes,
+}                                             from '~/state/tags';
+import {
+  SourceEventDataActionCreatorPropTypes,
+  SourceEventDataActionCreators,
+  SourceEventDataStateInitializer,
+  SourceEventDataStatePropTypes,
+}                                             from '~/state/sourceEventData';
 
+/* FLOW TYPINGS */
 type Props = {
+  theme?: string,
   withOpenInterval?: boolean,
+};
+
+type State = {
+  confirmModal: boolean,
+  isEditEventInverted: boolean,
+  newModal: boolean,
 };
 
 @connect(
@@ -36,7 +69,7 @@ type Props = {
     tagsActions: bindActionCreators(TagsActionCreators, dispatch),
   }),
 )
-export default class TimelinePure extends Component<Props> {
+export default class TimelinePure extends Component<Props, State> {
   static displayName = 'TimelineView';
 
   static propTypes = {
@@ -73,22 +106,22 @@ export default class TimelinePure extends Component<Props> {
   constructor(props) {
     super(props);
 
-    this.state = {
-      confirmModal: false,
-      confirmationEvt: null,
-      isEditEventInverted: false,
-      newModal: false,
-    };
-
     this.confirmDeletionEvt = ::this.confirmDeletionEvt;
     this.getMyImgs = ::this.getMyImgs;
     this.getTags = ::this.getTags;
     this.setEventInvertedState = ::this.setEventInvertedState;
     this.toggleModal = ::this.toggleModal;
+    // this.toggleTimelineDialog = ::this.toggleTimelineDialog;
   }
 
+  state = {
+    confirmModal: false,
+    confirmationEvt: null,
+    isEditEventInverted: false,
+    newModal: false,
+  };
+
   componentDidMount() {
-    console.log('PROCESS ENV', process.env);
     const { fetchAllEventTags } = this.props.tagsActions;
     return fetchAllEventTags();
   }
@@ -143,7 +176,9 @@ export default class TimelinePure extends Component<Props> {
   }
 
   confirmDeletionEvt(confirmationEvt) {
-    this.setState({ confirmationEvt });
+    this.setState(update(this.state, {
+      confirmationEvt: { $set: confirmationEvt },
+    }));
   }
 
   getTags() {
@@ -313,6 +348,8 @@ export default class TimelinePure extends Component<Props> {
           ]}
         </ul>
 
+        <TimelineDialog />
+
         {this.injectEditingModal()}
         <BatchActionButtons
           batchSelectionItems={items}
@@ -352,5 +389,5 @@ export default class TimelinePure extends Component<Props> {
   modalStatus={ this.state.newModal }
   toggleModal={ () => this.setState({ newModal: !this.state.newModal }) }
   addSingleEvent={ (evtData) => this.props.addSingleEvent(evtData) }
-  uploadToCloudinary={ this.props.uploadToCloudinary } /> 
+  uploadToCloudinary={ this.props.uploadToCloudinary } />
 */

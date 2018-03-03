@@ -1,22 +1,31 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import FontIcon from 'material-ui/FontIcon';
-import IconButton from 'material-ui/IconButton';
-import update from 'immutability-helper';
-import { capitalize } from 'lodash';
-import { classes, ClassNamesPropType } from 'aesthetic';
-import HomeIcon from 'material-ui/svg-icons/action/home';
-import ActiveFilterIcon from 'material-ui/svg-icons/image/lens';
-import SearchBox from './SearchBox';
-import SidebarSettingsBar from './SidebarSettingsBar';
+import React, { Component }             from 'react';
+import PropTypes                        from 'prop-types';
+import {
+  history as HistoryPropTypes,
+  location as LocationPropTypes,
+}                                       from 'react-router-prop-types';
+import { Link }                         from 'react-router-dom';
+import { connect }                      from 'react-redux';
+import { bindActionCreators }           from 'redux';
+import { classes, ClassNamesPropType, } from 'aesthetic';
+import { capitalize }                   from 'lodash';
+import Icon                             from 'material-ui/Icon';
+import IconButton                       from 'material-ui/IconButton';
+import Tooltip                          from 'material-ui/Tooltip';
+import HomeIcon                         from 'material-ui-icons/Home';
+import ActiveFilterIcon                 from 'material-ui-icons/Lens';
+import SearchBox                        from './SearchBox';
+import SidebarSettingsBar               from './SidebarSettingsBar';
 // import RangeSlider from '../../partials/RangeSlider';
-import { AppActionCreators, AppActionCreatorPropTypes, AppStateInitializer, AppStatePropTypes } from '../../../state/app';
-import { keyFormatter } from '../../../util/ComponentHelpers';
-import { aesthetic } from '../../../style/styler';
+import {
+  AppActionCreatorPropTypes,
+  AppActionCreators,
+  AppStateInitializer,
+  AppStatePropTypes,
+}                                       from '~/state/app';
+import { keyFormatter }                 from '~/util/ComponentHelpers';
+import { aesthetic }                    from '~/style/styler';
 
 type Props = {
   theme?: string,
@@ -35,15 +44,8 @@ export default class SearchSidebarPure extends Component<Props> {
     appActions: AppActionCreatorPropTypes,
     appState: AppStatePropTypes,
     classNames: ClassNamesPropType.isRequired,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      hash: PropTypes.string,
-      key: PropTypes.string,
-      pathname: PropTypes.string.isRequired,
-      search: PropTypes.string,
-    }).isRequired,
+    history: HistoryPropTypes.isRequired,
+    location: LocationPropTypes.isRequired,
     theme: PropTypes.string,
   };
 
@@ -57,7 +59,7 @@ export default class SearchSidebarPure extends Component<Props> {
     super(props);
     const {
       history: { push },
-      theme = 'base',
+      theme,
     } = props;
 
     this.SUB_ROUTES = [{
@@ -132,40 +134,40 @@ export default class SearchSidebarPure extends Component<Props> {
       classNames,
     } = this.props;
     const { colors: baseThemeColors } = this.theme;
+    const filterId = `search-page-${name.toLowerCase()}-filter`;
 
     const searchFilterIcon = (
-      <IconButton
+      <Tooltip
         key={keyFormatter(name, 'sidebarCategoryIconButton')}
-        className={classNames.searchCategoryButton}
-        style={{
-          height: !isSidebarExpanded ? 64 : 54,
-          padding: 0,
-          top: !!isSidebarExpanded && 7,
-          width: !isSidebarExpanded && 64,
+        classes={{
+          tooltip: classNames.searchCategoryButtonTooltip,
         }}
-        tooltip={!isSidebarExpanded && (
-          <span className={classNames.searchCategoryButtonTooltip}>
-            {`${name} Events`}
-          </span>
-        )}
-        tooltipPosition="top-right"
-        tooltipStyles={{
-          left: '100%',
-          transform: 'translateY(50%)',
-          zIndex: 30,
-        }}
+        enterDelay={350}
+        id={filterId}
+        placement="right-start"
+        title={!isSidebarExpanded && (<span>{`${name} Events`}</span>)}
       >
-        <FontIcon
-          key={`SearchSubRouteGlyphicon_${glyph.materialClass}`}
-          className={classes(
-            'material-icons',
-            classNames.searchCategoryIcon,
-            !isSidebarExpanded && classNames.searchCategoryIconCondensed,
-          )}
+        <IconButton
+          aria-describedby={filterId}
+          aria-label={name}
+          className={classNames.searchCategoryButton}
+          style={{
+            height: !isSidebarExpanded ? 64 : 54,
+            width: !isSidebarExpanded && 64,
+          }}
         >
-          {glyph.materialClass}
-        </FontIcon>
-      </IconButton>
+          <Icon
+            key={`SearchSubRouteGlyphicon_${glyph.materialClass}`}
+            className={classes(
+              'material-icons',
+              classNames.searchCategoryIcon,
+              !isSidebarExpanded && classNames.searchCategoryIconCondensed,
+            )}
+          >
+            {glyph.materialClass}
+          </Icon>
+        </IconButton>
+      </Tooltip>
     );
     const wrapInFilterHeader = (children) => (
       <header
@@ -192,7 +194,8 @@ export default class SearchSidebarPure extends Component<Props> {
       <ActiveFilterIcon
         key={keyFormatter(name, 'sidebarActiveCategoryIndicator')}
         className={classNames.activeFilterIndicator}
-        color={baseThemeColors.white.pure}
+        nativeColor={baseThemeColors.white.pure}
+        titleAccess="Active Filter"
       />
     );
 
@@ -238,6 +241,7 @@ export default class SearchSidebarPure extends Component<Props> {
       history: { push },
     } = this.props;
     const { colors: baseThemeColors } = this.theme;
+    const homeIconId = 'search-page-home-icon';
 
     return (
       <div
@@ -247,27 +251,26 @@ export default class SearchSidebarPure extends Component<Props> {
         )}
       >
         <div className={classNames.fixedPositioningContainer}>
-          <IconButton
-            className={classNames.homeSidebarButton}
-            iconStyle={{
-              height: 36,
-              width: 36,
-            }}
-            onClick={() => push('/')}
-            tooltip={
-              <span className={classNames.sidebarHomeIconTooltip}>
-                Return To Home
-              </span>
-            }
-            tooltipPosition="top-right"
-            tooltipStyles={{
-              left: '100%',
-              transform: 'translateY(50%)',
-              zIndex: 30,
-            }}
+          <Tooltip
+            enterDelay={350}
+            id={homeIconId}
+            placement="right-start"
+            title={<span className={classNames.sidebarHomeIconTooltip}>Return Home</span>}
           >
-            <HomeIcon color={baseThemeColors.white.pure} />
-          </IconButton>
+            <IconButton
+              aria-describedby={homeIconId}
+              aria-label="Home"
+              className={classNames.homeSidebarButton}
+              onClick={() => push('/')}
+            >
+              <HomeIcon
+                fontSize
+                className={classNames.homeIcon}
+                nativeColor={baseThemeColors.white.pure}
+                titleAccess="Home"
+              />
+            </IconButton>
+          </Tooltip>
           <SearchBox />
 
           <nav>

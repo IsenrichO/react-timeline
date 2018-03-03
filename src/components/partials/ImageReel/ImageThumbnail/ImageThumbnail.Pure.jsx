@@ -1,12 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import React                           from 'react';
+import PropTypes                       from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
-import { isNil, isNumber } from 'lodash';
-import IconButton from 'material-ui/IconButton';
-import SelectionCircleIcon from 'material-ui/svg-icons/image/panorama-fish-eye';
-import SelectedItemIcon from 'material-ui/svg-icons/av/fiber-manual-record';
-import RemoveIcon from 'material-ui/svg-icons/navigation/cancel';
-import { aesthetic } from '../../../../style/styler';
+import { isNil, isNumber }             from 'lodash';
+import IconButton                      from 'material-ui/IconButton';
+import Tooltip                         from 'material-ui/Tooltip';
+import SelectionCircleIcon             from 'material-ui-icons/PanoramaFishEye';
+import SelectedItemIcon                from 'material-ui-icons/FiberManualRecord';
+import RemoveIcon                      from 'material-ui-icons/Cancel';
+import { aesthetic }                   from '~/style/styler';
+
+type Props = {
+  bytes?: number,
+  horizontalTranslation?: number,
+  isSelected?: boolean,
+  size?: number,
+  theme?: string,
+  thumbSource?: string,
+};
 
 const ImageThumbnailPure = ({
   bytes,
@@ -19,7 +30,7 @@ const ImageThumbnailPure = ({
   theme,
   thumbRef,
   thumbSource,
-}) => {
+}: Props) => {
   const { colors, keywords } = aesthetic.themes[theme || 'base'];
 
   return (
@@ -32,42 +43,62 @@ const ImageThumbnailPure = ({
       }}
     >
       <div className={classNames.thumbnailActionsBar}>
-        <IconButton
-          className={classes(
-            'material-icons',
-            classNames.bckgSelectOption,
-            classNames.thumbnailActionIcon,
-            !!isSelected && classNames.selectedThumb,
-          )}
-          onClick={(evt) => imageSelectionHandler(thumbSource)}
-          tooltip={<span className={classNames.thumbnailTooltip}>Set Cover Image</span>}
-          tooltipPosition="bottom-right"
-          tooltipStyles={{
+        <Tooltip
+          className={classNames.thumbnailTooltip}
+          id="set-cover-thumbnail-tooltip"
+          placement="bottom-start"
+          style={{
             left: '10%',
             top: '75%',
           }}
+          title="Set Cover Image"
         >
-          {!!isSelected
-            ? (<SelectedItemIcon color={colors.white.pure} />)
-            : (<SelectionCircleIcon color={colors.white.pure} />)
-          }
-        </IconButton>
-        <IconButton
-          className={classes(
-            'material-icons',
-            classNames.removeThumbButton,
-            classNames.thumbnailActionIcon,
-          )}
-          onClick={imageRemovalHandler}
-          tooltip={<span className={classNames.thumbnailTooltip}>Remove Image</span>}
-          tooltipPosition="bottom-left"
-          tooltipStyles={{
+          <IconButton
+            className={classes(
+              'material-icons',
+              classNames.bckgSelectOption,
+              classNames.thumbnailActionIcon,
+              !!isSelected && classNames.selectedThumb,
+            )}
+            onClick={(evt) => imageSelectionHandler(thumbSource)}
+          >
+            {!!isSelected ? (
+              <SelectedItemIcon
+                nativeColor={colors.white.pure}
+                titleAccess="Selected Thumbnail"
+              />
+            ) : (
+              <SelectionCircleIcon
+                nativeColor={colors.white.pure}
+                titleAccess="Select Thumbnail"
+              />
+            )}
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          className={classNames.thumbnailTooltip}
+          id="remove-image-thumbnail-tooltip"
+          placement="bottom-end"
+          style={{
             right: '10%',
             top: '75%',
           }}
+          title="Remove Image"
         >
-          <RemoveIcon color={colors.white.pure} />
-        </IconButton>
+          <IconButton
+            className={classes(
+              'material-icons',
+              classNames.removeThumbButton,
+              classNames.thumbnailActionIcon,
+            )}
+            onClick={imageRemovalHandler}
+          >
+            <RemoveIcon
+              nativeColor={colors.white.pure}
+              titleAccess="Remove"
+            />
+          </IconButton>
+        </Tooltip>
       </div>
       <div
         className={classNames.thumb}

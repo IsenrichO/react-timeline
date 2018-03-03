@@ -1,16 +1,17 @@
 // @flow
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ClassNamesPropType } from 'aesthetic';
-import TLEventHeader from '../TLEvent/EventPanelHeader';
-import TLEventBody from '../TLEvent/EventPanelBody';
-import TLEventFooter from '../TLEvent/EventPanelFooter';
-import { checkIfStarredEvent } from '../../util/general';
+import React                   from 'react';
+import PropTypes               from 'prop-types';
+import { ClassNamesPropType }  from 'aesthetic';
+import TLEventHeader           from '../TLEvent/EventPanelHeader';
+import TLEventBody             from '../TLEvent/EventPanelBody';
+import TLEventFooter           from '../TLEvent/EventPanelFooter';
+import { checkIfStarredEvent } from '~/util/general';
 
 const formatDate = require('../../../server/utilities');
 
 type Props = {
   hasMultipleTags?: boolean,
+  theme?: string,
 };
 
 const SingleEventPure = ({

@@ -1,5 +1,5 @@
 import AppBarPure from './AppBar.Pure';
-import styler from '../../../style/styler';
+import styler     from '~/style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords }) => ({
   // Static `className` declarations necessary for nested references:
@@ -24,12 +24,17 @@ export default styler(({ colors, fonts, helpers, keywords }) => ({
   appBarRootNode: {
     backgroundColor: `${colors.red.primary} ${keywords.important}`,
     left: 0,
+    paddingRight: `0 ${keywords.important}`,
     position: `fixed ${keywords.important}`,
     top: 0,
   },
   appBarTitle: {
     ...helpers.styleInheritor('font'),
+    color: colors.white.primary,
     margin: [keywords.auto, '1rem'],
+  },
+  appBarTypographyHeader: {
+    width: '100%',
   },
 }), {
   styleName: 'AppBarStyles',

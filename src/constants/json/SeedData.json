@@ -5,6 +5,7 @@
       "Moved to SF from Raleigh, NC to begin the Hack Reactor software engineering immersive."
     ],
     "eventId": "1mv2",
+    "layout": null,
     "location": "San Francisco, CA",
     "name": "Moved To San Francisco",
     "photos": [],
@@ -16,25 +17,30 @@
       "Accepted offer to work at Robert Half Technology, beginning January 2017."
     ],
     "eventId": "2kk1",
+    "layout": null,
     "location": "San Ramon, CA",
     "name": "Began Work At Robert Half",
     "photos": [],
     "type": "Professional",
     "uuid": "test0002-c08e-4be6-9459-51cf632a2e79"
   }, {
-    "name": "Date of Birth",
-    "eventId": "3ihl",
-    "type": "Life",
-    "description": ["The day I came into this world. Alas... to be alive!"],
-    "location": "Jonesboro, AK",
     "date": "1991-10-13",
-    "photos": []
+    "description": [
+      "The day I came into this world. Alas... to be alive!"
+    ],
+    "eventId": "3ihl",
+    "layout": "grid",
+    "location": "Jonesboro, AK",
+    "name": "Date of Birth",
+    "photos": [],
+    "type": "Life"
   }, {
     "date": "2010-08-17",
     "description": [
       "Started university majoring in polymer chemistry and with ambitions of becoming a research scientist."
     ],
     "eventId": "441k",
+    "layout": null,
     "location": "Chapel Hill, NC",
     "name": "Began School At The University of North Carolina at Chapel Hill",
     "photos": [],
@@ -46,6 +52,7 @@
       "The 'juniors', as students of the first half of the program are known, then transition into the thesis portion of the program. The intent behind this phase is to develop a Full-Stack application that, ultimately, may serve as a testament to the student's evolution as a developer, résumé padding and content for discussion in interviews."
     ],
     "eventId": "5kso",
+    "layout": null,
     "location": "San Francisco, CA",
     "name": "Graduated From Hack Reactor",
     "photos": [],

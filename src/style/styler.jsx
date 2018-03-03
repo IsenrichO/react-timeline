@@ -2,6 +2,7 @@ import { create } from 'jss';
 import JSSAdapter from 'aesthetic-adapter-jss';
 import DefaultPreset from 'jss-preset-default';
 import Aesthetic, { createStyler } from 'aesthetic';
+import { order as socialShareRenderOrder } from '../constants/json/SocialMedia.json';
 
 // Import all separate styling themes:
 import BaseTheme from './theming/base';
@@ -18,7 +19,19 @@ const defaultUnit = {
   'transition-duration': 'ms',
 };
 
-const { colors: baseThemeColors } = BaseTheme;
+const {
+  colors: baseThemeColors,
+  keywords,
+} = BaseTheme;
+
+const socialShareStyleSelectors = socialShareRenderOrder
+  .reduce((acc, curr) => ({
+    ...acc,
+    [`.social-share[class*="${curr}"]:hover svg circle`]: {
+      fill: `${baseThemeColors.social[curr]} ${keywords.important}`,
+    },
+  }), {});
+
 const globalStyles = {
   '@global': {
     '*::selection': {
@@ -30,6 +43,15 @@ const globalStyles = {
     },
     'a:focus, a:hover': {
       textDecoration: 'none',
+    },
+
+    // Google Maps API v3:
+    '#map-canvas': {
+      maxWidth: 'none !important',
+
+      'img': {
+        maxWidth: 'none !important',
+      },
     },
 
     // Medium-Draft styles:
@@ -68,6 +90,9 @@ const globalStyles = {
     '.geosuggest__suggests-wrapper': {
       width: 'inherit',
     },
+
+    // React-Share Library social media icon styles:
+    ...socialShareStyleSelectors,
   },
 };
 

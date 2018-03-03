@@ -1,9 +1,100 @@
 {
+  // "babelrc": true,
+//  "code": true,
+  "comments": true,
+  "compact": "auto",
+  "env": {
+    "development": {
+      "plugins": [
+        ["emotion", {
+          "autoLabel": true,
+          "sourceMap": true,
+        }],
+        "react-hot-loader/babel",
+        "@babel/transform-react-display-name",
+        "@babel/transform-react-jsx-self",
+        "@babel/transform-react-jsx-source",
+      ],
+      "sourceMaps": true,
+    },
+    "production": {
+      "minified": true,
+      "plugins": [
+        ["emotion", {
+          "hoist": true,
+          "sourceMap": false,
+        }],
+        ["@babel/transform-flow-strip-types", {
+          "requireDirective": true,
+        }],
+        ["transform-imports", {
+          "lodash": {
+            "preventFullImport": true,
+            "transform": "lodash/${member}",
+          },
+          "react-bootstrap": {
+            "preventFullImport": true,
+            "transform": "react-bootstrap/lib/${member}",
+          },
+        }],
+        ["transform-react-remove-prop-types", {
+          "additionalLibraries": [
+            "prop-types-extra",
+            // "react-immutable-proptypes",
+            "react-router-prop-types",
+          ],
+          "mode": "remove", // Remove the `propTypes` declarations altogether
+          "removeImport": true, // Remove the `PropTypes` import statement
+        }],
+        "@babel/transform-react-inline-elements",
+        "@babel/transform-react-constant-elements",
+        "transform-remove-debugger",
+        ["minify-dead-code-elimination", {
+          "keepClassName": true,
+          "keepFnArgs": true,
+          "keepFnName": true,
+          "optimizeRawSize": true,
+          "tdz": true,
+        }],
+      ],
+    },
+  },
   "ignore": [
     "**/build/**/*.js*",
   ],
+  "plugins": [
+    "emotion",
+    "lodash",
+    "@babel/transform-async-to-generator",
+    "@babel/proposal-decorators",
+    "@babel/proposal-class-properties",
+    "@babel/proposal-function-bind",
+    "@babel/proposal-async-generator-functions",
+    "@babel/proposal-nullish-coalescing-operator",
+    "@babel/proposal-numeric-separator",
+    ["@babel/proposal-object-rest-spread", {
+      "useBuiltIns": false,
+    }],
+    "@babel/proposal-optional-catch-binding",
+    "@babel/proposal-optional-chaining",
+    "@babel/proposal-pipeline-operator",
+    "@babel/transform-object-super",
+    "@babel/transform-template-literals",
+    "@babel/transform-typeof-symbol",
+    "@babel/transform-exponentiation-operator",
+    "@babel/transform-for-of",
+    ["transform-builtin-extend", {
+      "globals": [
+        "Array",
+        "Date",
+        "DOM",
+        "Error",
+      ],
+      "approximate": true,
+    }],
+  ],
   "presets": [
-    ["env", {
+    ["@babel/env", {
       "debug": false,
       "modules": "commonjs",
       "spec": false,
@@ -21,47 +112,12 @@
       },
       "useBuiltIns": false,
     }],
-    "flow",
-    ["es2015", {
+    "@babel/flow",
+    ["@babel/es2015", {
       "loose": true,
       "modules": false,
     }],
-    "stage-0",
-    "react",
+    "@babel/stage-0",
+    "@babel/react",
   ],
-  "plugins": [
-    "react-hot-loader/babel",
-    ["minify-dead-code-elimination", {
-      "keepClassName": true,
-      "keepFnArgs": true,
-      "keepFnName": true,
-      "optimizeRawSize": true,
-      "tdz": true,
-    }],
-    "transform-async-to-generator",
-    "transform-decorators-legacy",
-    "transform-class-properties",
-    ["transform-flow-strip-types", {
-      "requireDirective": true,
-    }],
-    "transform-es2015-object-super",
-    "transform-es2015-template-literals",
-    "transform-es2015-typeof-symbol",
-    "transform-exponentiation-operator",
-    "transform-function-bind",
-    ["transform-builtin-extend", {
-      "globals": [
-        "Array",
-        "Date",
-        "DOM",
-        "Error",
-      ],
-      "approximate": true,
-    }],
-    ["transform-object-rest-spread", {
-      "useBuiltIns": false,
-    }],
-    "transform-remove-debugger",
-  ],
-  "sourceMaps": true,
 }

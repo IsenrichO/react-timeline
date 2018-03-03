@@ -1,13 +1,17 @@
-import React, { Component, cloneElement } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
-import SearchSidebar from './SearchSidebar';
-import { fetchSeedData } from '../../actions/asyncActions';
-import { fetchAllCloudinary, fetchCloudinaryImageData } from '../../state/cloudinaryImageStore';
-import { updateSingleEvent } from '../../state/sourceEventData';
-import Utils from '../../util';
+// @flow
+import React, { Component }                             from 'react';
+import PropTypes                                        from 'prop-types';
+import { bindActionCreators }                           from 'redux';
+import { connect }                                      from 'react-redux';
+import { push }                                         from 'react-router-redux';
+import SearchSidebar                                    from './SearchSidebar';
+import { fetchSeedData }                                from '~/actions/asyncActions';
+import { fetchAllCloudinary, fetchCloudinaryImageData } from '~/state/cloudinaryImageStore';
+import { updateSingleEvent }                            from '~/state/sourceEventData';
+
+type Props = {
+  theme?: string,
+};
 
 @connect(
   ({ cloudinaryState, searchEvents, seedDataAggregator }) => ({
@@ -23,7 +27,7 @@ import Utils from '../../util';
     updateSingleEvent,
   }, dispatch),
 )
-export default class SearchWrapper extends Component {
+export default class SearchWrapper extends Component<Props> {
   static displayName = 'SearchRouteWrapper';
 
   static propTypes = {

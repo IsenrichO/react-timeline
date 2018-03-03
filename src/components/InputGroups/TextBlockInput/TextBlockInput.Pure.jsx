@@ -1,8 +1,8 @@
 // @flow
-import React from 'react';
-import PropTypes from 'prop-types';
+import React                  from 'react';
+import PropTypes              from 'prop-types';
 import { ClassNamesPropType } from 'aesthetic';
-import TextBasedInput from '../TextBasedInput';
+import TextBasedInput         from '../TextBasedInput';
 
 type Props = {
   error?: boolean,

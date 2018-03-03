@@ -2,7 +2,7 @@
 
 We'd love for you to contribute to our source code and make _React-Timeline_ even better than it is.
 
-today! Here are the guidelines we'd like you to follow:
+Here are the guidelines we'd like you to follow:
 
 + Question or Problem?
 + Submission Guidelines
@@ -11,7 +11,7 @@ today! Here are the guidelines we'd like you to follow:
 
 <a name="question"></a> Got a Question or Problem?
 
-Reach out to me at [isenrich at yahoo dot com](mailto:isenrich@yahoo.com)! I try to be as responsive as possible and will reply to any inquiries as soon as possible.
+Reach out to me at [isenrich at yahoo dot com](mailto:isenrich@yahoo.com)! I try to be as responsive as possible and will reply to inquiries as such allows. 
 
 <a name="submit"></a> Submission Guidelines
 
@@ -38,7 +38,7 @@ If we suggest changes, then:
 
 + Make the required updates.
 + Re-run the test suite to ensure tests are still passing.
-+ Commit your changes to your branch (e.g. fix/cicc-1000).
++ Commit your changes to your branch (_e.g._, `fix/cicc-1000`).
 + Push the changes to your remote repository (this will update your Pull Request).
 
 If the PR gets too outdated we may ask you to rebase and force push to update the PR:
@@ -97,21 +97,19 @@ Other prefixes are up to your discretion. Suggested prefixes are docs, chore, st
 
 Scope
 
-The scope could be anything specifying place of the commit change. For example $location,
-
-$browser, $compile, $rootScope, ngHref, ngClick, ngView, etc...
+The scope could be anything specifying the general domain over which the commit in question applies changes. For example, `browser`, `docs`, `help`, `server`, `src`, `test`, `webpack`, _etc_.
 
 Subject
 
 The subject contains succinct description of the change:
 
-+ use the imperative, present tense: "change" not "changed" nor "changes"
-+ don't capitalize first letter
-+ no dot (.) at the end
++ Use the imperative, present tense: "_change_" not "_changed_" nor "_changes_"
++ Do not capitalize the first letter.
++ Do not punctuate the subject by terminating with a period (_i.e._, a dot, "_._") at the end. We are not writing proper English.
 
 Body
 
-Just as in the subject, use the imperative, present tense: "change" not "changed" nor "changes".
+Just as in the subject, use the imperative, present tense: "_change_" not "_changed_" nor "_changes_".
 
 The body should include the motivation for the change and contrast this with previous behavior.
 
@@ -119,12 +117,13 @@ Footer
 
 The footer should contain any information about Breaking Changes and is also the place to
 
-reference Jira issues that this commit Closes.
+reference JIRA issues that this commit closes.
 
-Breaking Changes should start with the word BREAKING CHANGE: with a space or two newlines. The rest of the commit message is then used for this.
+Breaking Changes should start with the word `BREAKING CHANGE`: with a space or two newlines. The rest of the commit message is then used for this.
 
 A detailed explanation can be found in this document.
 
-Based on https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#commit
+Based on the excellent [Angular _Contributing Guide_] [angular-contributing-guide].
 
+[angular-contributing-guide]: https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#commit
 [commit-message-format]: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#

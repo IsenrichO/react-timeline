@@ -1,9 +1,7 @@
-const Express = require('express');
-const BodyParser = require('body-parser');
+const { Router } = require('express');
 const TagsController = require('../controllers/TagsController');
 
-const router = Express.Router();
-const parseUrlEncoded = BodyParser.urlencoded({ extended: false });
+const router = Router();
 
 router
   .route('/')

@@ -1,9 +1,7 @@
-const Express = require('express');
-const BodyParser = require('body-parser');
+const { Router } = require('express');
 const EventController = require('../controllers/EventsController');
 
-const router = Express.Router();
-const parseUrlEncoded = BodyParser.urlencoded({ extended: false }); // eslint-disable-line no-unused-vars
+const router = Router();
 
 router
   .route('/')

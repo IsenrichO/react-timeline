@@ -1,8 +1,8 @@
-'use strict';
 import React, { Component } from 'react';
 
-
 export default class RangeSlider extends Component {
+  static displayName = 'RangeInputSlider';
+
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +44,7 @@ export default class RangeSlider extends Component {
           newPos = (evt.clientX - containerOffset),
           newBound = (newPos / containerWidth) * 100,
           fittedBound = (newBound < 0 ? 0 : newBound > 100 ? 100 : newBound);
-    
+
     const maxHandleCheck = ($dragEl.is($('[className$="max"]')) || $dragEl.is($('[class$="max"]'))),
           minHandleCheck = ($dragEl.is($('[className$="min"]')) || $dragEl.is($('[class$="min"]')));
 
@@ -95,56 +95,61 @@ export default class RangeSlider extends Component {
     return (
       <div className="slider slider-horizontal">
         <div
+          ref={(sliderTrack) => { this.sliderTrack = sliderTrack; }}
           className="slider-runnable-track"
-          ref={ (sliderTrack) => { this.sliderTrack = sliderTrack; }}>
+        >
           <div
             className="slider-track-lower"
             style={{
+              left: 0,
               width: `${this.state.lowerBound}%`,
-              left: 0
-            }} />
+            }}
+          />
           <div
             className="slider-track-selection"
             style={{
+              left: `${this.state.lowerBound}%`,
               width: `${this.state.upperBound - this.state.lowerBound}%`,
-              left: `${this.state.lowerBound}%`
-            }} />
+            }}
+          />
           <div
             className="slider-track-upper"
             style={{
+              left: `${this.state.upperBound}%`,
               width: `${100 - this.state.upperBound}%`,
-              left: `${this.state.upperBound}%`
-            }} />
+            }}
+          />
         </div>
 
         <div
           className="slider-handle handle-min"
           style={{ left: `${this.state.lowerBound}%` }}
           role="slider"
-          tabIndex={ 1 }
+          tabIndex={1}
           // aria-valuemin={ 10 }
           // aria-valuemax={ 200 }
-          
           // onDrag={ (evt) => ::this.handleDrag(evt) }
           // onDragStart={ this.handleDragStart }
           // onDragEnd={ (evt) => ::this.handleDragEnd(evt) }
-          onMouseDown={ () => { this.setState({ isSlidingEnabled: true }); }}
-          onMouseUp={ () => { this.setState({ isSlidingEnabled: false }); }}
-          onMouseMove={ (evt) => ::this.handleDrag('lower', evt) } />
+          onMouseDown={() => { this.setState({ isSlidingEnabled: true }); }}
+          onMouseUp={() => { this.setState({ isSlidingEnabled: false }); }}
+          onMouseMove={(evt) => ::this.handleDrag('lower', evt)}
+        />
         <div
           className="slider-handle handle-max"
           style={{ left: `${this.state.upperBound}%` }}
           role="slider"
-          tabIndex={ 2 }
+          tabIndex={2}
           // aria-valuemin={ 10 }
           // aria-valuemax={ 200 }
 
           // onDrag={ (evt) => ::this.handleDrag(evt) }
           // onDragStart={ this.handleDragStart }
           // onDragEnd={ (evt) => ::this.handleDragEnd(evt) }
-          onMouseDown={ () => { this.setState({ isSlidingEnabled: true }); }}
-          onMouseUp={ () => { this.setState({ isSlidingEnabled: false }); }}
-          onMouseMove={ (evt) => ::this.handleDrag('upper', evt) } />
+          onMouseDown={() => { this.setState({ isSlidingEnabled: true }); }}
+          onMouseUp={() => { this.setState({ isSlidingEnabled: false }); }}
+          onMouseMove={(evt) => ::this.handleDrag('upper', evt)}
+        />
       </div>
     );
   }

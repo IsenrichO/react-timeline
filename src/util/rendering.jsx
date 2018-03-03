@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import FontIcon from 'material-ui/FontIcon';
-import { classes } from 'aesthetic';
+import React               from 'react';
+import PropTypes           from 'prop-types';
+import Icon            from 'material-ui/Icon';
+import { classes }         from 'aesthetic';
 import BatchSelectCheckbox from '../components/Atomic/BatchSelectCheckbox';
-import { collapseBody } from './general';
+import { collapseBody }    from './general';
 
 //
 const renderItemActionControl = (hasSelectionState, evtUuid, callback) => hasSelectionState ? (
@@ -12,13 +12,13 @@ const renderItemActionControl = (hasSelectionState, evtUuid, callback) => hasSel
     evtUuid={evtUuid}
   />
 ) : (
-  <FontIcon
+  <Icon
     className={classes('material-icons')}
     // "collapse-up glyphicon glyphicon-chevron-up"
     onClick={collapseBody}
   >
     keyboard_arrow_up
-  </FontIcon>
+  </Icon>
 );
 
 renderItemActionControl.displayName = 'ItemActionControl';

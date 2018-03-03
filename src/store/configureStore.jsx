@@ -1,11 +1,10 @@
-import thunk from 'redux-thunk';
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import thunk                                             from 'redux-thunk';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 // import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
-import { ConnectedRouter, push, routerMiddleware, routerReducer } from 'react-router-redux';
-import createHistory from 'history/createBrowserHistory';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { Route } from 'react-router-dom';  // browserHistory
-import reducers from '../state';
+import { routerMiddleware, routerReducer }               from 'react-router-redux';
+import createHistory                                     from 'history/createBrowserHistory';
+import { composeWithDevTools }                           from 'redux-devtools-extension/logOnlyInProduction';
+import reducers                                          from '../state';
 
 
 // Build the appropriate navigation history — in this case a `BrowserHistory`:
@@ -32,8 +31,8 @@ const store = createStore(
 
 export default store;
 
-// ===========================================================================================================
-// ===========================================================================================================
+// =================================================================================================
+// =================================================================================================
 
 
 // const routerMid = routerMiddleware(browserHistory),

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Motion, spring, StaggeredMotion } from 'react-motion';
+import PropTypes            from 'prop-types';
+import { spring }           from 'react-motion';
 
 // // True constants:
 const MAIN_BTN_DIAM = 70;
@@ -193,7 +193,7 @@ export default class MotionComponent extends Component {
     // if (allEvtsOpen) {
     //   $.each($('.panel-header .collapse-up'), function(index, obj) {
     //     $(this).trigger('click');
-    //   });  
+    //   });
     // }
 
     $.each($('.panel-header .collapse-up'), function(index, obj) {

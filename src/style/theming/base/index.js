@@ -1,13 +1,13 @@
-import SharedStylesGenerator from '../../shared';
+import SharedStylesGenerator from '~/style/shared';
 
 // Base theme imports:
-import colors from './colors';
-import constants from './constants';
-import fonts from './fonts';
-import helpers from './helpers';
-import imageAssets from './imageAssets';
-import keywords from './keywords';
-import transitions from './transitions';
+import colors                from './colors';
+import constants             from './constants';
+import fonts                 from './fonts';
+import helpers               from './helpers';
+import imageAssets           from './imageAssets';
+import keywords              from './keywords';
+import transitions           from './transitions';
 
 /* COMPILED BASE THEME */
 export const baseTheme = {

@@ -1,18 +1,17 @@
+import React, { Component }   from 'react';
+import PropTypes              from 'prop-types';
+import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { ClassNamesPropType } from 'aesthetic';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link, Route, Redirect } from 'react-router-dom';
-import Timeline from '../../containers/Timeline';
-import EditEventModal from '../EditEventModal';
-import { fetchAllCloudinary } from '../../state/cloudinaryImageStore';
-import { fetchSeedData } from '../../actions/asyncActions';
-import { tlEventPropTypes } from '../../util/TypeChecking';
-import styler from '../../style/styler';
+import { Redirect }           from 'react-router-dom';
+import { fetchSeedData }      from '~/actions/asyncActions';
+import Timeline               from '~/containers/Timeline';
+import { fetchAllCloudinary } from '~/state/cloudinaryImageStore';
+import styler                 from '~/style/styler';
+import { tlEventPropTypes }   from '~/util/TypeChecking';
 
 // Import global CSS transpiled stylesheet:
-import '../../../assets/styles/master.scss';
+import '@root/assets/styles/master.scss';
 
 @connect(
   ({ cloudinaryImageStore, seedDataAggregator }) => ({
@@ -76,7 +75,7 @@ export default class App extends Component {
       .then((data) => fetchAllCloudinary());
   }
 
-  componentWillReceiveProps(nextProps) {  // Alternatively, use `componentDidUpdate()`
+  componentWillReceiveProps(nextProps) { // Alternatively, use `componentDidUpdate()`
     // console.log('Component Will Receive Props');
   }
 

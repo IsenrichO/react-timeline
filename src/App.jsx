@@ -1,8 +1,8 @@
-import a11y from 'react-a11y';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import RouterConfig from './routing/RouterConfig';
+import React        from 'react';
+import ReactDOM     from 'react-dom';
+import RouterConfig from '~/routing/RouterConfig';
 
+/* REACT-A11Y SETUP */
 const predicateFunc = (componentName, elementId, failureMsg) => {
   console.info(`\
     • Component/React Element:\t${componentName}\n\
@@ -23,6 +23,8 @@ const a11yConfig = {
 
 // if (process.env.NODE_ENV === 'dev') a11y(React, a11yConfig);
 
+
+/* SERVICEWORKER SETUP */
 // First, verify the existence of the `serviceWorker` object inside the Window's `navigator` entity:
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker

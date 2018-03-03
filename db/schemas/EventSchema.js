@@ -21,6 +21,7 @@ const EventSchema = new Schema({
   description: [String],
   eventId: String,
   geometry: PointSchema,
+  layout: String,
   links: [EventLinkSchema],
   location: String,
   name: {

@@ -1,32 +1,32 @@
 import SearchSidebarPure from './SearchSidebar.Pure';
-import styler from '../../../style/styler';
+import styler from '~/style/styler';
 
 export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
   // Static declarations necessary for subsequent reference(s):
   activeFilterIndicator: {},
   searchCategoryAccordion: {},
   searchCategoryActive: {},
-  searchCategoryButton: {},
-  searchCategoryButtonTooltip: {},
   searchCategoryCondensed: {},
   searchCategoryIconCondensed: {},
   searchCategoryTitle: {},
   searchCategoryTitleHidden: {},
   searchSidebarCollapsed: {},
-  sidebarHomeIconTooltip: {},
 
   fixedPositioningContainer: {
     ...helpers.styleInheritor('height', 'width'),
     backgroundColor: colors.red.primary,
     boxShadow: {
       blur: 16,
-      color: colors.grey.boxShadow,
+      color: colors.black.drawerShadow,
       inset: null,
       spread: 4,
       x: -2,
       y: 0,
     },
     position: 'fixed',
+  },
+  homeIcon: {
+    fontSize: fonts.size.subTitle,
   },
   homeSidebarButton: {
     font: {
@@ -124,6 +124,16 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
       },
     },
   },
+  searchCategoryButtonTooltip: {
+    // Hide the filter category tooltips for the toolbar in its expanded state:
+    ...helpers.setElementVisibility(true),
+    display: keywords.none,
+    left: '100%',
+    zIndex: 30,
+  },
+  searchCategoryButton: {
+    padding: 0,
+  },
   searchCategoryHeader: {
     ...helpers.flexify('row', 'flex-start', ['center', 'center']),
     color: colors.white.pure,
@@ -175,6 +185,7 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
         lineHeight: `64px ${keywords.important}`,
         size: `3.5rem ${keywords.important}`,
       },
+      height: 64,
       margin: keywords.auto,
       textAlign: 'center',
       width: 64,
@@ -195,7 +206,17 @@ export default styler(({ colors, fonts, helpers, keywords, transitions }) => ({
       '& $homeSidebarButton': {
         margin: `0 ${keywords.important}`,
       },
+
+      // Only reveal the tooltip for the toolbar in its condensed/snapped state:
+      '& $searchCategoryButtonTooltip': {
+        ...helpers.setElementVisibility(false),
+        display: 'block',
+      },
     },
+  },
+  sidebarHomeIconTooltip: {
+    left: '100%',
+    zIndex: 30,
   },
 }), {
   styleName: 'SearchSidebarStyles',

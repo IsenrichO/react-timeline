@@ -1,6 +1,6 @@
-import dedent from 'dedent';
+import dedent             from 'dedent';
 import ImageThumbnailPure from './ImageThumbnail.Pure';
-import styler from '../../../../style/styler';
+import styler             from '~/style/styler';
 
 export default styler(({ colors, fonts, helpers, imageAssets, keywords, transitions }) => ({
   // Static declarations necessary for subsequent reference(s):

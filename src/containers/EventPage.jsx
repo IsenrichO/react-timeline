@@ -1,27 +1,33 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+// @flow
+import React, { Component }   from 'react';
+import PropTypes              from 'prop-types';
+import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ClassNamesPropType } from 'aesthetic';
-import { isEmpty } from 'lodash';
-import TimelineEventPage from '../components/views/TimelineEventPage';
+import isEmpty                from 'lodash/isEmpty';
+import EventDetailPage        from '~/components/views/EventDetailPage';
 import {
-  EventEditorActionCreators,
   EventEditorActionCreatorPropTypes,
-  EventEditorStatePropTypes,
+  EventEditorActionCreators,
   EventEditorStateInitializer,
-} from '../state/eventEditor';
+  EventEditorStatePropTypes,
+}                             from '~/state/eventEditor';
 import {
-  SourceEventDataActionCreators,
   SourceEventDataActionCreatorPropTypes,
+  SourceEventDataActionCreators,
   SourceEventDataStateInitializer,
-} from '../state/sourceEventData';
+}                             from '~/state/sourceEventData';
 import {
   constructRoutePropTypesWithParams,
   historyPropTypes,
   nullable,
   tlEventPropTypes,
-} from '../util/TypeChecking';
+}                             from '~/util/TypeChecking';
+
+/* FLOW TYPES */
+type Props = {
+  theme?: string,
+};
 
 @connect(
   ({ eventEditorState, seedDataAggregator }) => ({ eventEditorState, seedData: seedDataAggregator }),
@@ -30,7 +36,7 @@ import {
     eventActions: bindActionCreators(SourceEventDataActionCreators, dispatch),
   }),
 )
-export default class EventPage extends Component {
+export default class EventPage extends Component<Props> {
   static displayName = 'TimelineEventPageContainer';
 
   static propTypes = {
@@ -80,14 +86,12 @@ export default class EventPage extends Component {
     const tlEvent = seedData[uuid];
 
     return !isEmpty(tlEvent) && (
-      <main>
-        <TimelineEventPage
-          event={tlEvent}
-          eventData={seedData}
-          richText={textBody}
-          updateRichText={updateRichText}
-        />
-      </main>
+      <EventDetailPage
+        event={tlEvent}
+        eventData={seedData}
+        richText={textBody}
+        updateRichText={updateRichText}
+      />
     );
   }
 }

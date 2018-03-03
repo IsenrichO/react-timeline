@@ -16,7 +16,7 @@ const isEmpty = require('lodash/isEmpty');
 const difference = (arr1, arr2) => arr1.filter((key) => !arr2.includes(key));
 
 /**
- * Another helper function that serves to 
+ * Another helper function that serves to
  * @param  {object} obj   The input object
  * @return {object}       The compacted object
  */
@@ -52,9 +52,9 @@ module.exports = (additionalVars = {}) => {
 
   return Object
     .keys(injectedVars)
-    .reduce((previous, current) => {
+    .reduce((acc, curr) => {
       // If value is a string, `DefinePlugin` will use it as a code fragment, so we need to hack around this behaviour:
-      previous[current] = JSON.stringify(injectedVars[current]);
-      return previous;
+      acc[curr] = JSON.stringify(injectedVars[curr]);
+      return acc;
     }, {});
 };

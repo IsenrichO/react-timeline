@@ -1,11 +1,8 @@
-const Express = require('express');
-const BodyParser = require('body-parser');
+const { Router } = require('express');
 const Multer = require('multer');
 const PhotosController = require('../controllers/PhotosController');
 
-const router = Express.Router();
-const parseUrlEncoded = BodyParser.urlencoded({ extended: false });
-
+const router = Router();
 const Upload = Multer({ dest: 'uploads/' });
 
 router

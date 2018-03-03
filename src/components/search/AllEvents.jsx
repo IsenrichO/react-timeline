@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { push } from 'react-router-redux';
-import { connect } from 'react-redux';
-import SingleEvent from './SingleEvent';
-import { updateSingleEvent as UpdateSingleEvent } from '../../state/sourceEventData';
-import Utils from '../../util';
+// @flow
+import React, { Component }                       from 'react';
+import PropTypes                                  from 'prop-types';
+import { bindActionCreators }                     from 'redux';
+import { push }                                   from 'react-router-redux';
+import { connect }                                from 'react-redux';
+import SingleEvent                                from './SingleEvent';
+import { updateSingleEvent as UpdateSingleEvent } from '~/state/sourceEventData';
+import Utils                                      from '~/util';
+
+type Props = {
+  theme?: string,
+};
 
 @connect(
   ({ eventEditingModalData, eventEditingModalState, seedDataAggregator }) => ({
@@ -18,7 +23,7 @@ import Utils from '../../util';
     updateSingleEvent: UpdateSingleEvent,
   }, dispatch),
 )
-export default class AllEvents extends Component {
+export default class AllEvents extends Component<Props> {
   static displayName = 'SearchAllEvents';
 
   static propTypes = {

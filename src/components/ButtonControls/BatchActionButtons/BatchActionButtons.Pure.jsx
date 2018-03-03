@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React                           from 'react';
+import PropTypes                       from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
-import FontIcon from 'material-ui/FontIcon';
-import IconButton from 'material-ui/IconButton';
-import size from 'lodash/size';
-import { aesthetic } from '../../../style/styler';
+import FontIcon                        from 'material-ui/Icon';
+import IconButton                      from 'material-ui/IconButton';
+import size                            from 'lodash/size';
+import { aesthetic }                   from '~/style/styler';
 
 const BatchActionButtonsPure = ({ classNames, isBatchSelectMode, theme, ...rest }) => {
   const { keywords: themeKeywords } = aesthetic.themes[theme || 'base'];

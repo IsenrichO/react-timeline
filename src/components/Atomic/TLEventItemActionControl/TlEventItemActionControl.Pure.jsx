@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React                           from 'react';
+import PropTypes                       from 'prop-types';
 import { classes, ClassNamesPropType } from 'aesthetic';
-import FontIcon from 'material-ui/FontIcon';
-import BatchSelectCheckbox from '../BatchSelectCheckbox';
+import FontIcon                        from 'material-ui/Icon';
+import BatchSelectCheckbox             from '../BatchSelectCheckbox';
 // import SingleEvent from '../../search/SingleEvent';
-import { collapseBody } from '../../../util/general';
+import { collapseBody }                from '../../../util/general';
 
 //
 const TlEventItemActionControlPure = ({

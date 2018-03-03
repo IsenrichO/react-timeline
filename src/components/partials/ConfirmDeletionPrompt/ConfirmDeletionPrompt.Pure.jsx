@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ClassNamesPropType } from 'aesthetic';
-import Modal from 'react-modal';
-import WarningIcon from 'material-ui/svg-icons/alert/warning';
-import FormButton from '../../Atomic/FormButton';
-import PaperShredderGlyph from '../../../constants/svg/PaperShredderGlyph';
-import ConfirmationModalStyles from '../../../constants/json/ConfirmationModalStyles.json';
+import React                   from 'react';
+import PropTypes               from 'prop-types';
+import { ClassNamesPropType }  from 'aesthetic';
+import Modal                   from 'react-modal';
+import WarningIcon             from 'material-ui-icons/Warning';
+import FormButton              from '../../Atomic/FormButton';
+import PaperShredderGlyph      from '~/constants/svg/PaperShredderGlyph';
+import ConfirmationModalStyles from '~/constants/json/ConfirmationModalStyles.json';
 
 const ConfirmDeletionPromptPure = ({
   classNames,

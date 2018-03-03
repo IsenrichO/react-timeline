@@ -1,10 +1,11 @@
 import dedent from 'dedent';
 import ShowMorePure from './ShowMore.Pure';
-import styler from '../../../style/styler';
+import styler from '~/style/styler';
 
 export default styler(({ colors, helpers, keywords }) => ({
   // Static `className` declarations necessary for nested references:
   bgLine: {},
+  bgLineWithMargin: {},
   contentExpansionLink: {},
 
   hidden: {
@@ -63,6 +64,11 @@ export default styler(({ colors, helpers, keywords }) => ({
         content: '""',
         display: 'block',
       },
+    },
+
+    '& $bgLineWithMargin': {
+      marginRight: '10%',
+      width: '35%',
     },
 
     '& > $contentExpansionLink': {

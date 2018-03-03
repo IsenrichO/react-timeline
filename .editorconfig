@@ -1,0 +1,62 @@
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# • Ref. <http://EditorConfig.org>
+
+# ==============================================================================
+# Root-level (i.e., top-most) EditorConfig file:
+root = true
+
+# ==============================================================================
+# Unix-style newlines with a newline ending every file:
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_size = 2
+indent_style = space
+tab_width = 2
+trim_trailing_whitespace = true
+
+# ==============================================================================
+# JavaScript (.js, .json) language styles, using brace-expansion notation:
+[*.{js,json,yml}]
+indent_size = 2
+indent_style = space
+max_line_length = 120
+
+# ==============================================================================
+# Python language indentation preferences:
+[*.py]
+indent_size = 4
+indent_style = space
+
+# ==============================================================================
+# Indentation override for all JS under lib directory:
+[lib/**.js]
+indent_style = space
+indent_size = 2
+
+# ==============================================================================
+# Matches exact config files, `package.json` or `.travis.yml`:
+[{package.json,.travis.yml}]
+indent_style = tab
+indent_size = 2
+
+# ==============================================================================
+# Vim editor styles:
+[*.vim]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 60
+
+# ==============================================================================
+# Tab indentation (size agnostic):
+[Makefile]
+indent_style = tab
+
+# ==============================================================================
+# Markdown file preferences:
+[*.md]
+trim_trailing_whitespace = true

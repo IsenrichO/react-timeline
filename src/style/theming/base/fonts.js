@@ -18,6 +18,7 @@ export default {
   },
   size: {
     appBar: 64,
+    colossal: 136,
     copy: 12,
     giant: 72,
     heading: 24,
@@ -30,5 +31,6 @@ export default {
     subTitle: 36,
     title: 48,
     tooltip: 8,
+    xLarge: 18,
   },
 };
